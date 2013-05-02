@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="clearfix">
-                    <label for="active">Active?</label>
+                    <label for="active">Confirmed?</label>
                     {{ form.render("active") }}
                 </div>
 

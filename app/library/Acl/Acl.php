@@ -65,22 +65,43 @@ class Acl extends Component
 	 */
 	public function getAcl()
 	{
+		//Check if the ACL is already created
 		if (is_object($this->_acl)) {
 			return $this->_acl;
 		}
 
+		//Check if the ACL is in APC
+		if (function_exists('apc_fetch')) {
+			$acl = apc_fetch('vokuro-acl');
+			if (is_object($apc)) {
+				$this->_acl = $acl;
+				return $acl;
+			}
+		}
+
+		//Check if the ACL is already generated
 		if (!file_exists(__DIR__ . '/../../cache/acl/data.txt')) {
 			$this->_acl = $this->rebuild();
 			return $this->_acl;
 		}
 
+		//Get the ACL from the data file
 		$data = file_get_contents(__DIR__ . '/../../cache/acl/data.txt');
 		$this->_acl = unserialize($data);
+
+		//Store the ACL in APC
+		if (function_exists('apc_store')) {
+			apc_store('vokuro-acl', $this->_acl);
+		}
+
 		return $this->_acl;
 	}
 
 	/**
+	 * Returns the permissions assigned to a profile
 	 *
+	 * @param Profiles $profile
+	 * @return array
 	 */
 	public function getPermissions(Profiles $profile)
 	{
@@ -122,6 +143,7 @@ class Acl extends Component
 	 */
 	public function rebuild()
 	{
+
 		$acl = new AclMemory();
 
 		$acl->setDefaultAction(\Phalcon\Acl::DENY);
@@ -150,6 +172,11 @@ class Acl extends Component
 		}
 
 		file_put_contents(__DIR__ . '/../../cache/acl/data.txt', serialize($acl));
+
+		//Store the ACL in APC
+		if (function_exists('apc_store')) {
+			apc_store('vokuro-acl', $acl);
+		}
 
 		return $acl;
 	}

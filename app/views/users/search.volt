@@ -20,7 +20,7 @@
             <th>Profile</th>
             <th>Banned?</th>
             <th>Suspended?</th>
-            <th>Active?</th>
+            <th>Confirmed?</th>
         </tr>
     </thead>
 {% endif %}
