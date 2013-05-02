@@ -1,0 +1,48 @@
+div.remember {
+	margin-top: 7px;
+	color: #969696;
+}
+
+div.remember label {
+	padding-top: 15px;
+}
+
+div.forgot {
+	margin-top: 7px;
+	color: #dadada;
+}
+
+footer {
+    background: url("../img/feature-gradient.png") no-repeat scroll center 100% white;
+    color: #B7B7B7;
+    font-size: 12px;
+    padding: 30px 0;
+    text-align: center;
+}
+
+footer a {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+table.signup td {
+	padding: 10px;
+}
+
+table.signup .alert {
+	margin-bottom: 0;
+    margin-top: 3px;
+}
+
+table.perms select {
+	margin-top: 5px;
+	margin-right: 10px;
+}
+
+table.perms label {
+	margin-right: 10px;
+}
+
+div.main-container {
+	min-height: 450px;
+}
