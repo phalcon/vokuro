@@ -8,23 +8,23 @@ use Vokuro\Models\Profiles,
 class PermissionsController extends ControllerBase
 {
 
-    public function indexAction()
-    {
-    	$this->view->setTemplateBefore('private');
+	public function indexAction()
+	{
+		$this->view->setTemplateBefore('private');
 
-    	if ($this->request->isPost()) {
+		if ($this->request->isPost()) {
 
-    		//Validate the profile
-    		$profile = Profiles::findFirstById($this->request->getPost('profileId'));
+			//Validate the profile
+			$profile = Profiles::findFirstById($this->request->getPost('profileId'));
 
-    		if ($profile) {
+			if ($profile) {
 
-    			if ($this->request->hasPost('permissions')) {
+				if ($this->request->hasPost('permissions')) {
 
-    				//Deletes the current permissions
-	    			$profile->getPermissions()->delete();
+					//Deletes the current permissions
+					$profile->getPermissions()->delete();
 
-	    			//Save the new permissions
+					//Save the new permissions
 					foreach ($this->request->getPost('permissions') as $permission) {
 
 						$parts = explode('.', $permission);
@@ -37,6 +37,7 @@ class PermissionsController extends ControllerBase
 						$permission->save();
 					}
 
+					$this->flash->success('Permissions were updated with success');
 				}
 
 				//Rebuild the ACL with
@@ -44,14 +45,15 @@ class PermissionsController extends ControllerBase
 
 				//Pass the current permissions to the view
 				$this->view->permissions = $this->acl->getPermissions($profile);
-    		}
 
-    		$this->view->profile = $profile;
-    	}
+			}
 
-    	//Pass all the active profiles
-    	$this->view->profiles = Profiles::find('active = "Y"');
-    }
+			$this->view->profile = $profile;
+		}
+
+		//Pass all the active profiles
+		$this->view->profiles = Profiles::find('active = "Y"');
+	}
 
 }
 

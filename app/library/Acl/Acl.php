@@ -20,7 +20,7 @@ class Acl extends Component
 	private $_acl;
 
 	private $_privateResources = array(
-		'users' => array('index', 'search', 'edit', 'create', 'delete'),
+		'users' => array('index', 'search', 'edit', 'create', 'delete', 'changePassword'),
 		'profiles' => array('index', 'search', 'edit', 'create', 'delete'),
 		'permissions' => array('index')
 	);
@@ -30,7 +30,8 @@ class Acl extends Component
 		'search' => 'Search',
 		'create' => 'Create',
 		'edit' => 'Edit',
-		'delete' => 'Delete'
+		'delete' => 'Delete',
+		'changePassword' => 'Change password'
 	);
 
 	/**
@@ -68,12 +69,12 @@ class Acl extends Component
 			return $this->_acl;
 		}
 
-		if (!file_exists(__DIR__ . '/../../cache/acl/data')) {
+		if (!file_exists(__DIR__ . '/../../cache/acl/data.txt')) {
 			$this->_acl = $this->rebuild();
 			return $this->_acl;
 		}
 
-		$data = file_get_contents(__DIR__ . '/../../cache/acl/data');
+		$data = file_get_contents(__DIR__ . '/../../cache/acl/data.txt');
 		$this->_acl = unserialize($data);
 		return $this->_acl;
 	}
@@ -88,13 +89,13 @@ class Acl extends Component
 			$permissions[$permission->resource . '.' . $permission->action] = true;
 		}
 		return $permissions;
- 	}
+	}
 
- 	/**
- 	 * Returns all the resoruces and their actions available in the application
- 	 *
- 	 * @return array
- 	 */
+	/**
+	 * Returns all the resoruces and their actions available in the application
+	 *
+	 * @return array
+	 */
 	public function getResources()
 	{
 		return $this->_privateResources;
@@ -138,12 +139,17 @@ class Acl extends Component
 
 		//Grant acess to private area to role Users
 		foreach ($profiles as $profile) {
+
+			//Grant permissions in "permissions" model
 			foreach ($profile->getPermissions() as $permission) {
 				$acl->allow($profile->name, $permission->resource, $permission->action);
 			}
+
+			//Always grant these permissions
+			$acl->allow($profile->name, 'users', 'changePassword');
 		}
 
-		file_put_contents(__DIR__ . '/../../cache/acl/data', serialize($acl));
+		file_put_contents(__DIR__ . '/../../cache/acl/data.txt', serialize($acl));
 
 		return $acl;
 	}
