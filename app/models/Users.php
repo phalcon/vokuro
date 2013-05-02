@@ -117,7 +117,7 @@ class Users extends Model
 		$this->validate(new Uniqueness(
 			array(
 				"field"   => "email",
-				"message" => "The email must be unique across users"
+				"message" => "The email is already registered"
 			)
 		));
 

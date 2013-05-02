@@ -5,7 +5,7 @@
         {{ link_to("users/index", "&larr; Go Back") }}
     </li>
     <li class="pull-right">
-        {{ link_to("users/new", "Create users", "class": "btn btn-primary") }}
+        {{ link_to("users/create", "Create users", "class": "btn btn-primary") }}
     </li>
 </ul>
 

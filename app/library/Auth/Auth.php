@@ -200,7 +200,7 @@ class Auth extends Component
 	public function checkUserFlags(Users $user)
 	{
 		if ($user->active <> 'Y')  {
-			throw new Exception('The user is inactive');
+			throw new Exception('The user is not confirmed');
 		}
 
 		if ($user->banned <> 'N')  {
