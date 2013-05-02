@@ -175,6 +175,13 @@ class Auth extends Component
 						//Check if the user was flagged
 						$this->checkUserFlags($user);
 
+						//Register identity
+						$this->session->set('auth-identity', array(
+							'id' => $user->id,
+							'name' => $user->name,
+							'profile' => $user->profile->name
+						));
+
 						//Register the successful login
 						$this->saveSuccessLogin($user);
 
@@ -200,7 +207,7 @@ class Auth extends Component
 	public function checkUserFlags(Users $user)
 	{
 		if ($user->active <> 'Y')  {
-			throw new Exception('The user is not confirmed');
+			throw new Exception('The user is inactive');
 		}
 
 		if ($user->banned <> 'N')  {
