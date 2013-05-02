@@ -73,7 +73,7 @@ class Acl extends Component
 		//Check if the ACL is in APC
 		if (function_exists('apc_fetch')) {
 			$acl = apc_fetch('vokuro-acl');
-			if (is_object($apc)) {
+			if (is_object($acl)) {
 				$this->_acl = $acl;
 				return $acl;
 			}
