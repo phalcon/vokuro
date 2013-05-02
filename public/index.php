@@ -1,7 +1,5 @@
 <?php
 
-//$m = microtime(true);
-
 error_reporting(E_ALL);
 
 try {
@@ -32,7 +30,3 @@ try {
 	echo $e->getMessage(), '<br>';
 	echo nl2br(htmlentities($e->getTraceAsString()));
 }
-
-//nl2br(print_r(get_included_files()));
-
-//echo microtime(true) - $m;
