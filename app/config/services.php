@@ -91,13 +91,11 @@ $di->set('session', function() {
 });
 
 /**
- * Encryption service
+ * Crypt service
  */
 $di->set('crypt', function() use ($config) {
 	$crypt = new Crypt();
-
-	$crypt->setKey('1234');
-
+	$crypt->setKey($config->application->cryptSalt);
 	return $crypt;
 });
 
@@ -111,7 +109,7 @@ $di->set('dispatcher', function() {
 });
 
 /**
- * Dispatcher use a default namespace
+ * Loading routes from the routes.php file
  */
 $di->set('router', function() {
 	return require __DIR__ . '/routes.php';
@@ -126,7 +124,6 @@ $di->set('flash', function(){
 		'success' => 'alert alert-success',
 		'notice' => 'alert alert-info',
 	));
-	return $flash;
 });
 
 /**
