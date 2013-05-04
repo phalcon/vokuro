@@ -19,6 +19,8 @@ class Acl extends Component
 
 	private $_acl;
 
+	private $_filePath = '/../../cache/acl/data.txt';
+
 	private $_privateResources = array(
 		'users' => array('index', 'search', 'edit', 'create', 'delete', 'changePassword'),
 		'profiles' => array('index', 'search', 'edit', 'create', 'delete'),
@@ -80,13 +82,13 @@ class Acl extends Component
 		}
 
 		//Check if the ACL is already generated
-		if (!file_exists(__DIR__ . '/../../cache/acl/data.txt')) {
+		if (!file_exists(__DIR__ . $this->_filePath)) {
 			$this->_acl = $this->rebuild();
 			return $this->_acl;
 		}
 
 		//Get the ACL from the data file
-		$data = file_get_contents(__DIR__ . '/../../cache/acl/data.txt');
+		$data = file_get_contents(__DIR__ . $this->_filePath);
 		$this->_acl = unserialize($data);
 
 		//Store the ACL in APC
@@ -169,13 +171,20 @@ class Acl extends Component
 
 			//Always grant these permissions
 			$acl->allow($profile->name, 'users', 'changePassword');
+
 		}
 
-		file_put_contents(__DIR__ . '/../../cache/acl/data.txt', serialize($acl));
+		if (is_writable(__DIR__ . $this->_filePath)) {
 
-		//Store the ACL in APC
-		if (function_exists('apc_store')) {
-			apc_store('vokuro-acl', $acl);
+			file_put_contents(__DIR__ . $this->_filePath, serialize($acl));
+
+			//Store the ACL in APC
+			if (function_exists('apc_store')) {
+				apc_store('vokuro-acl', $acl);
+			}
+
+		} else {
+			$this->flash->error('The user does not have write permissions');
 		}
 
 		return $acl;
