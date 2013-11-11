@@ -1,3 +1,7 @@
+Options +FollowSymLinks -MultiViews -Indexes
+
+DirectoryIndex index.html index.php
+
 <IfModule mod_rewrite.c>
 	RewriteEngine on
 	RewriteRule  ^$ public/    [L]
