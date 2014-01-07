@@ -1,55 +1,58 @@
 <?php
-
 namespace Vokuro\Models;
 
 use Phalcon\Mvc\Model;
 
 /**
  * RememberTokens
- *
  * Stores the remember me tokens
  */
 class RememberTokens extends Model
 {
-	/**
-	 * @var integer
-	 */
-	public $id;
 
-	/**
-	 * @var integer
-	 */
-	public $usersId;
+    /**
+     *
+     * @var integer
+     */
+    public $id;
 
-	/**
-	 * @var string
-	 */
-	public $token;
+    /**
+     *
+     * @var integer
+     */
+    public $usersId;
 
-	/**
-	 * @var string
-	 */
-	public $userAgent;
+    /**
+     *
+     * @var string
+     */
+    public $token;
 
-	/**
-	 * @var integer
-	 */
-	public $createdAt;
+    /**
+     *
+     * @var string
+     */
+    public $userAgent;
 
-	/**
-	 * Before create the user assign a password
-	 */
-	public function beforeValidationOnCreate()
-	{
-		//Timestamp the confirmaton
-		$this->createdAt = time();
-	}
+    /**
+     *
+     * @var integer
+     */
+    public $createdAt;
 
-	public function initialize()
-	{
-		$this->belongsTo('usersId', 'Vokuro\Models\Users', 'id', array(
-			'alias' => 'user'
-		));
-	}
+    /**
+     * Before create the user assign a password
+     */
+    public function beforeValidationOnCreate()
+    {
+        // Timestamp the confirmaton
+        $this->createdAt = time();
+    }
 
+    public function initialize()
+    {
+        $this->belongsTo('usersId', 'Vokuro\Models\Users', 'id', array(
+            'alias' => 'user'
+        ));
+    }
 }

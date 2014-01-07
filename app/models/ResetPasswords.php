@@ -1,92 +1,93 @@
 <?php
-
 namespace Vokuro\Models;
 
 use Phalcon\Mvc\Model;
 
 /**
  * ResetPasswords
- *
  * Stores the reset password codes and their evolution
  */
 class ResetPasswords extends Model
 {
-	/**
-	 * @var integer
-	 */
-	public $id;
 
-	/**
-	 * @var integer
-	 */
-	public $usersId;
+    /**
+     *
+     * @var integer
+     */
+    public $id;
 
-	/**
-	 * @var string
-	 */
-	public $code;
+    /**
+     *
+     * @var integer
+     */
+    public $usersId;
 
-	/**
-	 * @var integer
-	 */
-	public $createdAt;
+    /**
+     *
+     * @var string
+     */
+    public $code;
 
-	/**
-	 * @var integer
-	 */
-	public $modifiedAt;
+    /**
+     *
+     * @var integer
+     */
+    public $createdAt;
 
-	/**
-	 * @var string
-	 */
-	public $reset;
+    /**
+     *
+     * @var integer
+     */
+    public $modifiedAt;
 
-	/**
-	 * Before create the user assign a password
-	 */
-	public function beforeValidationOnCreate()
-	{
-		//Timestamp the confirmaton
-		$this->createdAt = time();
+    /**
+     *
+     * @var string
+     */
+    public $reset;
 
-		//Generate a random confirmation code
-		$this->code = preg_replace('/[^a-zA-Z0-9]/', '', base64_encode(openssl_random_pseudo_bytes(24)));
+    /**
+     * Before create the user assign a password
+     */
+    public function beforeValidationOnCreate()
+    {
+        // Timestamp the confirmaton
+        $this->createdAt = time();
 
-		//Set status to non-confirmed
-		$this->reset = 'N';
-	}
+        // Generate a random confirmation code
+        $this->code = preg_replace('/[^a-zA-Z0-9]/', '', base64_encode(openssl_random_pseudo_bytes(24)));
 
-	/**
-	 * Sets the timestamp before update the confirmation
-	 */
-	public function beforeValidationOnUpdate()
-	{
-		//Timestamp the confirmaton
-		$this->modifiedAt = time();
-	}
+        // Set status to non-confirmed
+        $this->reset = 'N';
+    }
 
-	/**
-	 * Send an e-mail to users allowing him/her to reset his/her password
-	 */
-	public function afterCreate()
-	{
-		$this->getDI()->getMail()->send(
-			array(
-				$this->user->email => $this->user->name
-			),
-			"Reset your password",
-			'reset',
-			array(
-				'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email
-			)
-		);
-	}
+    /**
+     * Sets the timestamp before update the confirmation
+     */
+    public function beforeValidationOnUpdate()
+    {
+        // Timestamp the confirmaton
+        $this->modifiedAt = time();
+    }
 
-	public function initialize()
-	{
-		$this->belongsTo('usersId', 'Vokuro\Models\Users', 'id', array(
-			'alias' => 'user'
-		));
-	}
+    /**
+     * Send an e-mail to users allowing him/her to reset his/her password
+     */
+    public function afterCreate()
+    {
+        $this->getDI()
+            ->getMail()
+            ->send(array(
+            $this->user->email => $this->user->name
+        ), "Reset your password", 'reset', array(
+            'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email
+        ));
+    }
 
+    public function initialize()
+    {
+        $this->belongsTo('usersId', 'Vokuro\Models\Users', 'id', array(
+            'alias' => 'user'
+        ));
+    }
 }

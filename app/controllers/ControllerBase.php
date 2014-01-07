@@ -1,60 +1,58 @@
 <?php
-
 namespace Vokuro\Controllers;
 
-use Phalcon\Mvc\Controller,
-	Phalcon\Mvc\Dispatcher;
+use Phalcon\Mvc\Controller;
+use Phalcon\Mvc\Dispatcher;
 
 /**
  * ControllerBase
- *
  * This is the base controller for all controllers in the application
  */
 class ControllerBase extends Controller
 {
-	public function beforeExecuteRoute(Dispatcher $dispatcher)
-	{
-		$controllerName = $dispatcher->getControllerName();
 
-		//Only check permissions on private controllers
-		if ($this->acl->isPrivate($controllerName)) {
+    public function beforeExecuteRoute(Dispatcher $dispatcher)
+    {
+        $controllerName = $dispatcher->getControllerName();
 
-			//Get the current identity
-			$identity = $this->auth->getIdentity();
+        // Only check permissions on private controllers
+        if ($this->acl->isPrivate($controllerName)) {
 
-			//If there is no identity available the user is redirected to index/index
-			if (!is_array($identity)) {
+            // Get the current identity
+            $identity = $this->auth->getIdentity();
 
-				$this->flash->notice('You don\'t have access to this module: private');
+            // If there is no identity available the user is redirected to index/index
+            if (!is_array($identity)) {
 
-				$dispatcher->forward(array(
-					'controller' => 'index',
-					'action' => 'index'
-				));
-				return false;
-			}
+                $this->flash->notice('You don\'t have access to this module: private');
 
-			//Check if the user have permission to the current option
-			$actionName = $dispatcher->getActionName();
-			if (!$this->acl->isAllowed($identity['profile'], $controllerName, $actionName)) {
+                $dispatcher->forward(array(
+                    'controller' => 'index',
+                    'action' => 'index'
+                ));
+                return false;
+            }
 
-				$this->flash->notice('You don\'t have access to this module: ' . $controllerName . ':' . $actionName);
+            // Check if the user have permission to the current option
+            $actionName = $dispatcher->getActionName();
+            if (!$this->acl->isAllowed($identity['profile'], $controllerName, $actionName)) {
 
-				if ($this->acl->isAllowed($identity['profile'], $controllerName, 'index')) {
-					$dispatcher->forward(array(
-						'controller' => $controllerName,
-						'action' => 'index'
-					));
-				} else {
-					$dispatcher->forward(array(
-						'controller' => 'user_control',
-						'action' => 'index'
-					));
-				}
+                $this->flash->notice('You don\'t have access to this module: ' . $controllerName . ':' . $actionName);
 
-				return false;
-			}
+                if ($this->acl->isAllowed($identity['profile'], $controllerName, 'index')) {
+                    $dispatcher->forward(array(
+                        'controller' => $controllerName,
+                        'action' => 'index'
+                    ));
+                } else {
+                    $dispatcher->forward(array(
+                        'controller' => 'user_control',
+                        'action' => 'index'
+                    ));
+                }
 
-		}
-	}
+                return false;
+            }
+        }
+    }
 }
