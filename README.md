@@ -1,12 +1,9 @@
 Vökuró
 ======
 
-Phalcon PHP is a web framework delivered as a C extension providing high
-performance and lower resource consumption.
+Phalcon PHP is a web framework delivered as a C extension providing high performance and lower resource consumption.
 
-This is a sample application for the Phalcon PHP Framework. We expect to
-implement as many features as possible to showcase the framework and its
-potential.
+This is a sample application for the Phalcon PHP Framework. We expect to implement as many features as possible to showcase the framework and its potential.
 
 Please write us if you have any feedback.
 
@@ -14,9 +11,7 @@ Thanks.
 
 NOTE
 ----
-The master branch will always contain the latest stable version. If you wish
-to check older versions or newer ones currently under development, please
-switch to the relevant branch.
+The master branch will always contain the latest stable version. If you wish to check older versions or newer ones currently under development, please switch to the relevant branch.
 
 Required version: >= 1.1.0 B3
 
@@ -28,7 +23,7 @@ Get Started
 To run this application on your machine, you need at least:
 
 * >= PHP 5.3.9
-* Apache Web Server with mod rewrite enabled
+* Apache Web Server with mod rewrite enabled, and AllowOverride Options (or All) in your httpd.conf
 * Latest Phalcon Framework extension installed/enabled
 
 Then you'll need to create the database and initialize schema:
