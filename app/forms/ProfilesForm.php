@@ -1,42 +1,56 @@
 <?php
-
 namespace Vokuro\Forms;
 
-use Phalcon\Forms\Form,
-	Phalcon\Forms\Element\Text,
-	Phalcon\Forms\Element\Hidden,
-	Phalcon\Forms\Element\Password,
-	Phalcon\Forms\Element\Submit,
-	Phalcon\Forms\Element\Select,
-	Phalcon\Forms\Element\Check,
-	Phalcon\Validation\Validator\PresenceOf,
-	Phalcon\Validation\Validator\Email;
-
-use Vokuro\Models\Profiles;
+use Phalcon\Forms\Form;
+use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Element\Hidden;
+use Phalcon\Forms\Element\Select;
+use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\Email;
 
 class ProfilesForm extends Form
 {
 
-	public function initialize($entity=null, $options=null)
-	{
+    public function initialize($entity = null, $options = null)
+    {
+        if (isset($options['edit']) && $options['edit']) {
+            $id = new Hidden('id');
+        } else {
+            $id = new Text('id');
+        }
 
-		if (isset($options['edit']) && $options['edit']) {
-			$id = new Hidden('id');
-		} else {
-			$id = new Text('id');
-		}
+        $this->add($id);
 
-		$this->add($id);
+        $name = new Text('name', array(
+            'placeholder' => 'Name'
+        ));
 
-		$this->add(new Text('name'));
+        $name->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'The name is required'
+            ))
+        ));
 
-		$this->add(new Text('email'));
+        $this->add($name);
 
-		$this->add(new Select('active', array(
-			'Y' => 'Yes',
-			'N' => 'No'
-		)));
+        $email = new Text('email', array(
+            'placeholder' => 'Email'
+        ));
 
-	}
+        $email->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'The e-mail is required'
+            )),
+            new Email(array(
+                'message' => 'The e-mail is not valid'
+            ))
+        ));
 
+        $this->add($email);
+
+        $this->add(new Select('active', array(
+            'Y' => 'Yes',
+            'N' => 'No'
+        )));
+    }
 }

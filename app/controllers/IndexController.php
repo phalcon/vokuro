@@ -1,5 +1,4 @@
 <?php
-
 namespace Vokuro\Controllers;
 
 class IndexController extends ControllerBase
@@ -7,8 +6,6 @@ class IndexController extends ControllerBase
 
     public function indexAction()
     {
-    	$this->view->setTemplateBefore('public');
+        $this->view->setTemplateBefore('public');
     }
-
 }
-
