@@ -35,3 +35,18 @@ Then you'll need to create the database and initialize schema:
 
     echo 'CREATE DATABASE vokuro' | mysql -u root
     cat schemas/vokuro.sql | mysql -u root vokuro
+
+Installing Dependancies via Composer
+------------------------------------
+Install composer in a common location or in your project:
+
+```bash
+curl -s http://getcomposer.org/installer | php
+```
+
+Run the composer installer:
+
+```bash
+cd vokuro
+php composer.phar install
+```
