@@ -192,7 +192,7 @@ class Acl extends Component
             }
         } else {
             $this->flash->error(
-                'The user does not have write permissions to create the ACL lsit at ' . __DIR__ . $this->filePath
+                'The user does not have write permissions to create the ACL list at ' . __DIR__ . $this->filePath
             );
         }
 
