@@ -182,7 +182,7 @@ class Acl extends Component
             $acl->allow($profile->name, 'users', 'changePassword');
         }
 
-        if (is_writable(__DIR__ . $this->filePath)) {
+        if (touch(__DIR__ . $this->filePath) && is_writable(__DIR__ . $this->filePath)) {
 
             file_put_contents(__DIR__ . $this->filePath, serialize($acl));
 
@@ -191,7 +191,9 @@ class Acl extends Component
                 apc_store('vokuro-acl', $acl);
             }
         } else {
-            $this->flash->error('The user does not have write permissions');
+            $this->flash->error(
+                'The user does not have write permissions to create the ACL lsit at ' . __DIR__ . $this->filePath
+            );
         }
 
         return $acl;
