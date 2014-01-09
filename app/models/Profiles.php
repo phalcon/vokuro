@@ -5,23 +5,26 @@ use Phalcon\Mvc\Model;
 
 /**
  * Vokuro\Models\Profiles
- * All the users registered in the application
+ * All the profile levels in the application. Used in conjenction with ACL lists
  */
 class Profiles extends Model
 {
 
     /**
-     *
+     * ID
      * @var integer
      */
     public $id;
 
     /**
-     *
+     * Name
      * @var string
      */
     public $name;
 
+    /**
+     * Define relationships to Users and Permissions
+     */
     public function initialize()
     {
         $this->hasMany('id', 'Vokuro\Models\Users', 'profilesId', array(

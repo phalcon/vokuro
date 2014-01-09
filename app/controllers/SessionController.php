@@ -8,9 +8,15 @@ use Vokuro\Auth\Exception as AuthException;
 use Vokuro\Models\Users;
 use Vokuro\Models\ResetPasswords;
 
+/**
+ * Controller used handle non-authenticated session actions like login/logout, user signup, and forgotten passwords
+ */
 class SessionController extends ControllerBase
 {
 
+    /**
+     * Default action. Set the public layout (layouts/public.volt)
+     */
     public function initialize()
     {
         $this->view->setTemplateBefore('public');
@@ -21,6 +27,9 @@ class SessionController extends ControllerBase
 
     }
 
+    /**
+     * Allow a user to signup to the system
+     */
     public function signupAction()
     {
         $form = new SignUpForm();

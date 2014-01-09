@@ -14,6 +14,9 @@ use Vokuro\Models\Profiles;
 class ProfilesController extends ControllerBase
 {
 
+    /**
+     * Default action. Set the private (authenticated) layout (layouts/private.volt)
+     */
     public function initialize()
     {
         $this->view->setTemplateBefore('private');

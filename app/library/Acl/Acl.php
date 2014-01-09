@@ -13,10 +13,25 @@ use Vokuro\Models\Profiles;
 class Acl extends Component
 {
 
+    /**
+     * The ACL Object
+     *
+     * @var \Phalcon\Acl\Adapter\Memory
+     */
     private $acl;
 
-    private $filePath = '/../../cache/acl/data.txt';
+    /**
+     * The filepath of the ACL cache file from APP_DIR
+     *
+     * @var string
+     */
+    private $filePath = '/cache/acl/data.txt';
 
+    /**
+     * Define the resources that are considered "private". These controller => actions require authentication.
+     *
+     * @var array
+     */
     private $privateResources = array(
         'users' => array(
             'index',
@@ -38,6 +53,11 @@ class Acl extends Component
         )
     );
 
+    /**
+     * Human-readable descriptions of the actions used in {@see $privateResources}
+     *
+     * @var array
+     */
     private $actionDescriptions = array(
         'index' => 'Access',
         'search' => 'Search',
@@ -93,13 +113,13 @@ class Acl extends Component
         }
 
         // Check if the ACL is already generated
-        if (!file_exists(__DIR__ . $this->filePath)) {
+        if (!file_exists(APP_DIR . $this->filePath)) {
             $this->acl = $this->rebuild();
             return $this->acl;
         }
 
         // Get the ACL from the data file
-        $data = file_get_contents(__DIR__ . $this->filePath);
+        $data = file_get_contents(APP_DIR . $this->filePath);
         $this->acl = unserialize($data);
 
         // Store the ACL in APC
@@ -152,6 +172,8 @@ class Acl extends Component
 
     /**
      * Rebuilds the access list into a file
+     *
+     * @return \Phalcon\Acl\Adapter\Memory
      */
     public function rebuild()
     {
@@ -182,16 +204,18 @@ class Acl extends Component
             $acl->allow($profile->name, 'users', 'changePassword');
         }
 
-        if (is_writable(__DIR__ . $this->filePath)) {
+        if (touch(APP_DIR . $this->filePath) && is_writable(APP_DIR . $this->filePath)) {
 
-            file_put_contents(__DIR__ . $this->filePath, serialize($acl));
+            file_put_contents(APP_DIR . $this->filePath, serialize($acl));
 
             // Store the ACL in APC
             if (function_exists('apc_store')) {
                 apc_store('vokuro-acl', $acl);
             }
         } else {
-            $this->flash->error('The user does not have write permissions');
+            $this->flash->error(
+                'The user does not have write permissions to create the ACL list at ' . APP_DIR . $this->filePath
+            );
         }
 
         return $acl;

@@ -4,9 +4,15 @@ namespace Vokuro\Controllers;
 use Vokuro\Models\Profiles;
 use Vokuro\Models\Permissions;
 
+/**
+ * View and define permissions for the various profile levels.
+ */
 class PermissionsController extends ControllerBase
 {
 
+    /**
+     * View the permissions for a profile level, and change them if we have a POST.
+     */
     public function indexAction()
     {
         $this->view->setTemplateBefore('private');
