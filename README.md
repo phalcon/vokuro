@@ -31,7 +31,7 @@ Then you'll need to create the database and initialize schema:
     echo 'CREATE DATABASE vokuro' | mysql -u root
     cat schemas/vokuro.sql | mysql -u root vokuro
 
-Installing Dependancies via Composer
+Installing Dependencies via Composer
 ------------------------------------
 Install composer in a common location or in your project:
 
