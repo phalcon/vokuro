@@ -27,10 +27,10 @@ class Mail extends Component
     private function amazonSESSend($raw)
     {
         if ($this->amazonSes == null) {
-            $this->amazonSes = new \AmazonSES(
+            $this->amazonSes = new \AmazonSES(array(
                 $this->config->amazon->AWSAccessKeyId,
                 $this->config->amazon->AWSSecretKey
-            );
+            ));
             $this->amazonSes->disable_ssl_verification();
         }
 
