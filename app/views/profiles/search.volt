@@ -24,7 +24,7 @@
         <tr>
             <td>{{ profile.id }}</td>
             <td>{{ profile.name }}</td>
-            <td>{{ profile.active == 'Y' ? 'Yes' : 'No' }}</td>
+            <td>{{ profile.active ? 'Yes' : 'No' }}</td>
             <td width="12%">{{ link_to("profiles/edit/" ~ profile.id, '<i class="icon-pencil"></i> Edit', "class": "btn") }}</td>
             <td width="12%">{{ link_to("profiles/delete/" ~ profile.id, '<i class="icon-remove"></i> Delete', "class": "btn") }}</td>
         </tr>

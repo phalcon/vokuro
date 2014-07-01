@@ -76,7 +76,7 @@ class UsersController extends ControllerBase
 
             $user->assign(array(
                 'name' => $this->request->getPost('name', 'striptags'),
-                'profilesId' => $this->request->getPost('profilesId', 'int'),
+                'profiles_id' => $this->request->getPost('profiles_id', 'int'),
                 'email' => $this->request->getPost('email', 'email')
             ));
 
@@ -110,7 +110,7 @@ class UsersController extends ControllerBase
 
             $user->assign(array(
                 'name' => $this->request->getPost('name', 'striptags'),
-                'profilesId' => $this->request->getPost('profilesId', 'int'),
+                'profiles_id' => $this->request->getPost('profiles_id', 'int'),
                 'email' => $this->request->getPost('email', 'email'),
                 'banned' => $this->request->getPost('banned'),
                 'suspended' => $this->request->getPost('suspended'),
@@ -179,12 +179,12 @@ class UsersController extends ControllerBase
                 $user = $this->auth->getUser();
 
                 $user->password = $this->security->hash($this->request->getPost('password'));
-                $user->mustChangePassword = 'N';
+                $user->must_change_password = 0;
 
                 $passwordChange = new PasswordChanges();
                 $passwordChange->user = $user;
-                $passwordChange->ipAddress = $this->request->getClientAddress();
-                $passwordChange->userAgent = $this->request->getUserAgent();
+                $passwordChange->ip_address = $this->request->getClientAddress();
+                $passwordChange->user_agent = $this->request->getUserAgent();
 
                 if (!$passwordChange->save()) {
                     $this->flash->error($passwordChange->getMessages());

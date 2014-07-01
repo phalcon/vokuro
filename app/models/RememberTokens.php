@@ -20,7 +20,7 @@ class RememberTokens extends Model
      *
      * @var integer
      */
-    public $usersId;
+    public $user_id;
 
     /**
      *
@@ -32,13 +32,13 @@ class RememberTokens extends Model
      *
      * @var string
      */
-    public $userAgent;
+    public $user_agent;
 
     /**
      *
      * @var integer
      */
-    public $createdAt;
+    public $created_at;
 
     /**
      * Before create the user assign a password
@@ -46,12 +46,12 @@ class RememberTokens extends Model
     public function beforeValidationOnCreate()
     {
         // Timestamp the confirmaton
-        $this->createdAt = time();
+        $this->created_at = time();
     }
 
     public function initialize()
     {
-        $this->belongsTo('usersId', 'Vokuro\Models\Users', 'id', array(
+        $this->belongsTo('user_id', 'Vokuro\Models\Users', 'id', array(
             'alias' => 'user'
         ));
     }

@@ -20,7 +20,7 @@ class ResetPasswords extends Model
      *
      * @var integer
      */
-    public $usersId;
+    public $user_id;
 
     /**
      *
@@ -32,13 +32,13 @@ class ResetPasswords extends Model
      *
      * @var integer
      */
-    public $createdAt;
+    public $created_at;
 
     /**
      *
      * @var integer
      */
-    public $modifiedAt;
+    public $modified_at;
 
     /**
      *
@@ -52,13 +52,13 @@ class ResetPasswords extends Model
     public function beforeValidationOnCreate()
     {
         // Timestamp the confirmaton
-        $this->createdAt = time();
+        $this->created_at = time();
 
         // Generate a random confirmation code
         $this->code = preg_replace('/[^a-zA-Z0-9]/', '', base64_encode(openssl_random_pseudo_bytes(24)));
 
         // Set status to non-confirmed
-        $this->reset = 'N';
+        $this->reset = 0;
     }
 
     /**
@@ -67,7 +67,7 @@ class ResetPasswords extends Model
     public function beforeValidationOnUpdate()
     {
         // Timestamp the confirmaton
-        $this->modifiedAt = time();
+        $this->modified_at = time();
     }
 
     /**
@@ -86,7 +86,7 @@ class ResetPasswords extends Model
 
     public function initialize()
     {
-        $this->belongsTo('usersId', 'Vokuro\Models\Users', 'id', array(
+        $this->belongsTo('user_id', 'Vokuro\Models\Users', 'id', array(
             'alias' => 'user'
         ));
     }

@@ -20,13 +20,13 @@ class FailedLogins extends Model
      *
      * @var integer
      */
-    public $usersId;
+    public $user_id;
 
     /**
      *
      * @var string
      */
-    public $ipAddress;
+    public $ip_address;
 
     /**
      *
@@ -36,7 +36,7 @@ class FailedLogins extends Model
 
     public function initialize()
     {
-        $this->belongsTo('usersId', 'Vokuro\Models\Users', 'id', array(
+        $this->belongsTo('user_id', 'Vokuro\Models\Users', 'id', array(
             'alias' => 'user'
         ));
     }

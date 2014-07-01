@@ -44,7 +44,7 @@ class SessionController extends ControllerBase
                     'name' => $this->request->getPost('name', 'striptags'),
                     'email' => $this->request->getPost('email'),
                     'password' => $this->security->hash($this->request->getPost('password')),
-                    'profilesId' => 2
+                    'profiles_id' => 2
                 ));
 
                 if ($user->save()) {
@@ -120,7 +120,7 @@ class SessionController extends ControllerBase
                 } else {
 
                     $resetPassword = new ResetPasswords();
-                    $resetPassword->usersId = $user->id;
+                    $resetPassword->user_id = $user->id;
                     if ($resetPassword->save()) {
                         $this->flash->success('Success! Please check your messages for an email reset password');
                     } else {

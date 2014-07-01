@@ -56,9 +56,9 @@
                             <tr>
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.name }}</td>
-                                <td>{{ user.banned == 'Y' ? 'Yes' : 'No' }}</td>
-                                <td>{{ user.suspended == 'Y' ? 'Yes' : 'No' }}</td>
-                                <td>{{ user.active == 'Y' ? 'Yes' : 'No' }}</td>
+                                <td>{{ user.banned ? 'Yes' : 'No' }}</td>
+                                <td>{{ user.suspended ? 'Yes' : 'No' }}</td>
+                                <td>{{ user.active ? 'Yes' : 'No' }}</td>
                                 <td width="12%">{{ link_to("users/edit/" ~ user.id, '<i class="icon-pencil"></i> Edit', "class": "btn") }}</td>
                                 <td width="12%">{{ link_to("users/delete/" ~ user.id, '<i class="icon-remove"></i> Delete', "class": "btn") }}</td>
                             </tr>

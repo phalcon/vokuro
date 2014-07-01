@@ -51,7 +51,7 @@ class UsersForm extends Form
 
         $this->add($email);
 
-        $this->add(new Select('profilesId', Profiles::find('active = "Y"'), array(
+        $this->add(new Select('profiles_id', Profiles::find('active = 1'), array(
             'using' => array(
                 'id',
                 'name'
@@ -62,18 +62,18 @@ class UsersForm extends Form
         )));
 
         $this->add(new Select('banned', array(
-            'Y' => 'Yes',
-            'N' => 'No'
+            1 => 'Yes',
+            0 => 'No'
         )));
 
         $this->add(new Select('suspended', array(
-            'Y' => 'Yes',
-            'N' => 'No'
+            1 => 'Yes',
+            0 => 'No'
         )));
 
         $this->add(new Select('active', array(
-            'Y' => 'Yes',
-            'N' => 'No'
+            1 => 'Yes',
+            0 => 'No'
         )));
     }
 }
