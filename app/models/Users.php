@@ -39,13 +39,13 @@ class Users extends Model
      *
      * @var string
      */
-    public $mustChangePassword;
+    public $must_change_password;
 
     /**
      *
      * @var string
      */
-    public $profilesId;
+    public $profiles_id;
 
     /**
      *
@@ -76,7 +76,7 @@ class Users extends Model
             $tempPassword = preg_replace('/[^a-zA-Z0-9]/', '', base64_encode(openssl_random_pseudo_bytes(12)));
 
             // The user must change its password in first login
-            $this->mustChangePassword = 'Y';
+            $this->must_change_password = 1;
 
             // Use this password as default
             $this->password = $this->getDI()
@@ -84,17 +84,17 @@ class Users extends Model
                 ->hash($tempPassword);
         } else {
             // The user must not change its password in first login
-            $this->mustChangePassword = 'N';
+            $this->must_change_password = 0;
         }
 
         // The account must be confirmed via e-mail
-        $this->active = 'N';
+        $this->active = 0;
 
         // The account is not suspended by default
-        $this->suspended = 'N';
+        $this->suspended = 0;
 
         // The account is not banned by default
-        $this->banned = 'N';
+        $this->banned = 0;
     }
 
     /**
@@ -102,11 +102,11 @@ class Users extends Model
      */
     public function afterSave()
     {
-        if ($this->active == 'N') {
+        if (! $this->active) {
 
             $emailConfirmation = new EmailConfirmations();
 
-            $emailConfirmation->usersId = $this->id;
+            $emailConfirmation->user_id = $this->id;
 
             if ($emailConfirmation->save()) {
                 $this->getDI()
@@ -131,26 +131,26 @@ class Users extends Model
 
     public function initialize()
     {
-        $this->belongsTo('profilesId', 'Vokuro\Models\Profiles', 'id', array(
+        $this->belongsTo('profiles_id', 'Vokuro\Models\Profiles', 'id', array(
             'alias' => 'profile',
             'reusable' => true
         ));
 
-        $this->hasMany('id', 'Vokuro\Models\SuccessLogins', 'usersId', array(
+        $this->hasMany('id', 'Vokuro\Models\SuccessLogins', 'user_id', array(
             'alias' => 'successLogins',
             'foreignKey' => array(
                 'message' => 'User cannot be deleted because he/she has activity in the system'
             )
         ));
 
-        $this->hasMany('id', 'Vokuro\Models\PasswordChanges', 'usersId', array(
+        $this->hasMany('id', 'Vokuro\Models\PasswordChanges', 'user_id', array(
             'alias' => 'passwordChanges',
             'foreignKey' => array(
                 'message' => 'User cannot be deleted because he/she has activity in the system'
             )
         ));
 
-        $this->hasMany('id', 'Vokuro\Models\ResetPasswords', 'usersId', array(
+        $this->hasMany('id', 'Vokuro\Models\ResetPasswords', 'user_id', array(
             'alias' => 'resetPasswords',
             'foreignKey' => array(
                 'message' => 'User cannot be deleted because he/she has activity in the system'

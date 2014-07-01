@@ -20,13 +20,13 @@
 DROP TABLE IF EXISTS `email_confirmations`;
 CREATE TABLE IF NOT EXISTS `email_confirmations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `usersId` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
   `code` char(32) NOT NULL,
-  `createdAt` int(10) unsigned NOT NULL,
-  `modifiedAt` int(10) unsigned DEFAULT NULL,
-  `confirmed` char(1) DEFAULT 'N',
+  `created_at` int(10) unsigned NOT NULL,
+  `modified_at` int(10) unsigned DEFAULT NULL,
+  `confirmed` tinyint(1) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -37,12 +37,12 @@ CREATE TABLE IF NOT EXISTS `email_confirmations` (
 DROP TABLE IF EXISTS `failed_logins`;
 CREATE TABLE IF NOT EXISTS `failed_logins` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `usersId` int(10) unsigned DEFAULT NULL,
-  `ipAddress` char(15) NOT NULL,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  `ip_address` char(15) NOT NULL,
   `attempted` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `usersId` (`usersId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -53,13 +53,13 @@ CREATE TABLE IF NOT EXISTS `failed_logins` (
 DROP TABLE IF EXISTS `password_changes`;
 CREATE TABLE IF NOT EXISTS `password_changes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `usersId` int(10) unsigned NOT NULL,
-  `ipAddress` char(15) NOT NULL,
-  `userAgent` varchar(48) NOT NULL,
-  `createdAt` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `ip_address` char(15) NOT NULL,
+  `user_agent` varchar(48) NOT NULL,
+  `created_at` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `usersId` (`usersId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -70,18 +70,18 @@ CREATE TABLE IF NOT EXISTS `password_changes` (
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE IF NOT EXISTS `permissions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `profilesId` int(10) unsigned NOT NULL,
+  `profiles_id` int(10) unsigned NOT NULL,
   `resource` varchar(16) NOT NULL,
   `action` varchar(16) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `profilesId` (`profilesId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+  KEY `profiles_id` (`profiles_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `permissions`
 --
 
-INSERT INTO `permissions` (`id`, `profilesId`, `resource`, `action`) VALUES
+INSERT INTO `permissions` (`id`, `profiles_id`, `resource`, `action`) VALUES
 (1, 3, 'users', 'index'),
 (2, 3, 'users', 'search'),
 (3, 3, 'profiles', 'index'),
@@ -115,19 +115,19 @@ DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE IF NOT EXISTS `profiles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
-  `active` char(1) NOT NULL,
+  `active` tinyint(1) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `active` (`active`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `profiles`
 --
 
 INSERT INTO `profiles` (`id`, `name`, `active`) VALUES
-(1, 'Administrators', 'Y'),
-(2, 'Users', 'Y'),
-(3, 'Read-Only', 'Y');
+(1, 'Administrators', 1),
+(2, 'Users', 1),
+(3, 'Read-Only', 1);
 
 -- --------------------------------------------------------
 
@@ -138,13 +138,13 @@ INSERT INTO `profiles` (`id`, `name`, `active`) VALUES
 DROP TABLE IF EXISTS `remember_tokens`;
 CREATE TABLE IF NOT EXISTS `remember_tokens` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `usersId` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
   `token` char(32) NOT NULL,
-  `userAgent` varchar(120) NOT NULL,
-  `createdAt` int(10) unsigned NOT NULL,
+  `user_agent` varchar(120) NOT NULL,
+  `created_at` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `token` (`token`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -155,14 +155,14 @@ CREATE TABLE IF NOT EXISTS `remember_tokens` (
 DROP TABLE IF EXISTS `reset_passwords`;
 CREATE TABLE IF NOT EXISTS `reset_passwords` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `usersId` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
   `code` varchar(48) NOT NULL,
-  `createdAt` int(10) unsigned NOT NULL,
-  `modifiedAt` int(10) unsigned DEFAULT NULL,
-  `reset` char(1) NOT NULL,
+  `created_at` int(10) unsigned NOT NULL,
+  `modified_at` int(10) unsigned DEFAULT NULL,
+  `reset` tinyint(1) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  KEY `usersId` (`usersId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -173,12 +173,12 @@ CREATE TABLE IF NOT EXISTS `reset_passwords` (
 DROP TABLE IF EXISTS `success_logins`;
 CREATE TABLE IF NOT EXISTS `success_logins` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `usersId` int(10) unsigned NOT NULL,
-  `ipAddress` char(15) NOT NULL,
-  `userAgent` varchar(120) NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `ip_address` char(15) NOT NULL,
+  `user_agent` varchar(120) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `usersId` (`usersId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -192,21 +192,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` char(60) NOT NULL,
-  `mustChangePassword` char(1) DEFAULT NULL,
-  `profilesId` int(10) unsigned NOT NULL,
-  `banned` char(1) NOT NULL,
-  `suspended` char(1) NOT NULL,
-  `active` char(1) DEFAULT NULL,
+  `must_change_password` tinyint(1) unsigned DEFAULT 0,
+  `profiles_id` int(10) unsigned NOT NULL,
+  `banned` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `suspended` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `active` tinyint(1) unsigned DEFAULT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  KEY `profilesId` (`profilesId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+  KEY `profiles_id` (`profiles_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `mustChangePassword`, `profilesId`, `banned`, `suspended`, `active`) VALUES
-(1, 'Bob Burnquist', 'bob@phalconphp.com', '$2a$08$Lx1577KNhPa9lzFYKssadetmbhaveRtCoVaOnoXXxUIhrqlCJYWCW', 'N', 1, 'N', 'N', 'Y'),
-(2, 'Erik', 'erik@phalconphp.com', '$2a$08$f4llgFQQnhPKzpGmY1sOuuu23nYfXYM/EVOpnjjvAmbxxDxG3pbX.', 'N', 1, 'Y', 'Y', 'Y'),
-(3, 'Veronica', 'veronica@phalconphp.com', '$2a$08$NQjrh9fKdMHSdpzhMj0xcOSwJQwMfpuDMzgtRyA89ADKUbsFZ94C2', 'N', 1, 'N', 'N', 'Y'),
-(4, 'Yukimi Nagano', 'yukimi@phalconphp.com', '$2a$08$cxxpy4Jvt6Q3xGKgMWIILuf75RQDSroenvoB7L..GlXoGkVEMoSr.', 'N', 2, 'N', 'N', 'Y');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `must_change_password`, `profiles_id`, `banned`, `suspended`, `active`) VALUES
+(1, 'Bob Burnquist', 'bob@phalconphp.com', '$2a$08$Lx1577KNhPa9lzFYKssadetmbhaveRtCoVaOnoXXxUIhrqlCJYWCW', 0, 1, 0, 0, 1),
+(2, 'Erik', 'erik@phalconphp.com', '$2a$08$f4llgFQQnhPKzpGmY1sOuuu23nYfXYM/EVOpnjjvAmbxxDxG3pbX.', 0, 1, 1, 1, 1),
+(3, 'Veronica', 'veronica@phalconphp.com', '$2a$08$NQjrh9fKdMHSdpzhMj0xcOSwJQwMfpuDMzgtRyA89ADKUbsFZ94C2', 0, 1, 0, 0, 1),
+(4, 'Yukimi Nagano', 'yukimi@phalconphp.com', '$2a$08$cxxpy4Jvt6Q3xGKgMWIILuf75RQDSroenvoB7L..GlXoGkVEMoSr.', 0, 2, 0, 0, 1);

@@ -20,7 +20,7 @@ class EmailConfirmations extends Model
      *
      * @var integer
      */
-    public $usersId;
+    public $user_id;
 
     public $code;
 
@@ -28,13 +28,13 @@ class EmailConfirmations extends Model
      *
      * @var integer
      */
-    public $createdAt;
+    public $created_at;
 
     /**
      *
      * @var integer
      */
-    public $modifiedAt;
+    public $modified_at;
 
     public $confirmed;
 
@@ -44,13 +44,13 @@ class EmailConfirmations extends Model
     public function beforeValidationOnCreate()
     {
         // Timestamp the confirmaton
-        $this->createdAt = time();
+        $this->created_at = time();
 
         // Generate a random confirmation code
         $this->code = preg_replace('/[^a-zA-Z0-9]/', '', base64_encode(openssl_random_pseudo_bytes(24)));
 
         // Set status to non-confirmed
-        $this->confirmed = 'N';
+        $this->confirmed = 0;
     }
 
     /**
@@ -59,7 +59,7 @@ class EmailConfirmations extends Model
     public function beforeValidationOnUpdate()
     {
         // Timestamp the confirmaton
-        $this->modifiedAt = time();
+        $this->modified_at = time();
     }
 
     /**
@@ -78,7 +78,7 @@ class EmailConfirmations extends Model
 
     public function initialize()
     {
-        $this->belongsTo('usersId', 'Vokuro\Models\Users', 'id', array(
+        $this->belongsTo('user_id', 'Vokuro\Models\Users', 'id', array(
             'alias' => 'user'
         ));
     }

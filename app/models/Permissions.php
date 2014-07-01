@@ -20,7 +20,7 @@ class Permissions extends Model
      *
      * @var integer
      */
-    public $profilesId;
+    public $profiles_id;
 
     /**
      *
@@ -36,7 +36,7 @@ class Permissions extends Model
 
     public function initialize()
     {
-        $this->belongsTo('profilesId', 'Vokuro\Models\Profiles', 'id', array(
+        $this->belongsTo('profiles_id', 'Vokuro\Models\Profiles', 'id', array(
             'alias' => 'profile'
         ));
     }

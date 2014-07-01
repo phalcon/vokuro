@@ -26,8 +26,8 @@
     </div>
 
     <div class="clearfix">
-        <label for="profilesId">Profile</label>
-        {{ form.render("profilesId") }}
+        <label for="profiles_id">Profile</label>
+        {{ form.render("profiles_id") }}
     </div>
 
 </div>

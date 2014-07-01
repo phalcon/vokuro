@@ -35,7 +35,7 @@ class PermissionsController extends ControllerBase
                         $parts = explode('.', $permission);
 
                         $permission = new Permissions();
-                        $permission->profilesId = $profile->id;
+                        $permission->profiles_id = $profile->id;
                         $permission->resource = $parts[0];
                         $permission->action = $parts[1];
 
@@ -56,6 +56,6 @@ class PermissionsController extends ControllerBase
         }
 
         // Pass all the active profiles
-        $this->view->profiles = Profiles::find('active = "Y"');
+        $this->view->profiles = Profiles::find('active = 1');
     }
 }

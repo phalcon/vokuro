@@ -36,8 +36,8 @@
                 </div>
 
                 <div class="clearfix">
-                    <label for="profilesId">Profile</label>
-                    {{ form.render("profilesId") }}
+                    <label for="profiles_id">Profile</label>
+                    {{ form.render("profiles_id") }}
                 </div>
 
                 <div class="clearfix">
@@ -81,8 +81,8 @@
                     {% for login in user.successLogins %}
                         <tr>
                             <td>{{ login.id }}</td>
-                            <td>{{ login.ipAddress }}</td>
-                            <td>{{ login.userAgent }}</td>
+                            <td>{{ login.ip_address }}</td>
+                            <td>{{ login.user_agent }}</td>
                         </tr>
                     {% else %}
                         <tr><td colspan="3" align="center">User does not have successfull logins</td></tr>
@@ -107,9 +107,9 @@
                     {% for change in user.passwordChanges %}
                         <tr>
                             <td>{{ change.id }}</td>
-                            <td>{{ change.ipAddress }}</td>
-                            <td>{{ change.userAgent }}</td>
-                            <td>{{ date("Y-m-d H:i:s", change.createdAt) }}</td>
+                            <td>{{ change.ip_address }}</td>
+                            <td>{{ change.user_agent }}</td>
+                            <td>{{ date("Y-m-d H:i:s", change.created_at) }}</td>
                         </tr>
                     {% else %}
                         <tr><td colspan="3" align="center">User has not changed his/her password</td></tr>
@@ -133,8 +133,8 @@
                     {% for reset in user.resetPasswords %}
                         <tr>
                             <th>{{ reset.id }}</th>
-                            <th>{{ date("Y-m-d H:i:s", reset.createdAt) }}
-                            <th>{{ reset.reset == 'Y' ? 'Yes' : 'No' }}
+                            <th>{{ date("Y-m-d H:i:s", reset.created_at) }}
+                            <th>{{ reset.reset ? 'Yes' : 'No' }}
                         </tr>
                     {% else %}
                         <tr><td colspan="3" align="center">User has not requested reset his/her password</td></tr>

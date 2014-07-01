@@ -49,8 +49,8 @@ class ProfilesForm extends Form
         $this->add($email);
 
         $this->add(new Select('active', array(
-            'Y' => 'Yes',
-            'N' => 'No'
+            1 => 'Yes',
+            0 => 'No'
         )));
     }
 }

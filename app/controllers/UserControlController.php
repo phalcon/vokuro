@@ -39,16 +39,16 @@ class UserControlController extends ControllerBase
             ));
         }
 
-        if ($confirmation->confirmed != 'N') {
+        if ($confirmation->confirmed) {
             return $this->dispatcher->forward(array(
                 'controller' => 'session',
                 'action' => 'login'
             ));
         }
 
-        $confirmation->confirmed = 'Y';
+        $confirmation->confirmed = 1;
 
-        $confirmation->user->active = 'Y';
+        $confirmation->user->active = 1;
 
         /**
          * Change the confirmation to 'confirmed' and update the user to 'active'
@@ -73,7 +73,7 @@ class UserControlController extends ControllerBase
         /**
          * Check if the user must change his/her password
          */
-        if ($confirmation->user->mustChangePassword == 'Y') {
+        if ($confirmation->user->must_change_password) {
 
             $this->flash->success('The email was successfully confirmed. Now you must change your password');
 
@@ -104,14 +104,14 @@ class UserControlController extends ControllerBase
             ));
         }
 
-        if ($resetPassword->reset != 'N') {
+        if ($resetPassword->reset) {
             return $this->dispatcher->forward(array(
                 'controller' => 'session',
                 'action' => 'login'
             ));
         }
 
-        $resetPassword->reset = 'Y';
+        $resetPassword->reset = 1;
 
         /**
          * Change the confirmation to 'reset'
@@ -131,7 +131,7 @@ class UserControlController extends ControllerBase
         /**
          * Identify the user in the application
          */
-        $this->auth->authUserById($resetPassword->usersId);
+        $this->auth->authUserById($resetPassword->user_id);
 
         $this->flash->success('Please reset your password');
 

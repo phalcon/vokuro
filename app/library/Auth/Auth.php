@@ -62,9 +62,9 @@ class Auth extends Component
     public function saveSuccessLogin($user)
     {
         $successLogin = new SuccessLogins();
-        $successLogin->usersId = $user->id;
-        $successLogin->ipAddress = $this->request->getClientAddress();
-        $successLogin->userAgent = $this->request->getUserAgent();
+        $successLogin->user_id = $user->id;
+        $successLogin->ip_address = $this->request->getClientAddress();
+        $successLogin->user_agent = $this->request->getUserAgent();
         if (!$successLogin->save()) {
             $messages = $successLogin->getMessages();
             throw new Exception($messages[0]);
@@ -80,13 +80,13 @@ class Auth extends Component
     public function registerUserThrottling($userId)
     {
         $failedLogin = new FailedLogins();
-        $failedLogin->usersId = $userId;
-        $failedLogin->ipAddress = $this->request->getClientAddress();
+        $failedLogin->user_id = $userId;
+        $failedLogin->ip_address = $this->request->getClientAddress();
         $failedLogin->attempted = time();
         $failedLogin->save();
 
         $attempts = FailedLogins::count(array(
-            'ipAddress = ?0 AND attempted >= ?1',
+            'ip_address = ?0 AND attempted >= ?1',
             'bind' => array(
                 $this->request->getClientAddress(),
                 time() - 3600 * 6
@@ -115,13 +115,13 @@ class Auth extends Component
      */
     public function createRememberEnviroment(Users $user)
     {
-        $userAgent = $this->request->getUserAgent();
-        $token = md5($user->email . $user->password . $userAgent);
+        $user_agent = $this->request->getUserAgent();
+        $token = md5($user->email . $user->password . $user_agent);
 
         $remember = new RememberTokens();
-        $remember->usersId = $user->id;
+        $remember->user_id = $user->id;
         $remember->token = $token;
-        $remember->userAgent = $userAgent;
+        $remember->user_agent = $user_agent;
 
         if ($remember->save() != false) {
             $expire = time() + 86400 * 8;
@@ -153,13 +153,13 @@ class Auth extends Component
         $user = Users::findFirstById($userId);
         if ($user) {
 
-            $userAgent = $this->request->getUserAgent();
-            $token = md5($user->email . $user->password . $userAgent);
+            $user_agent = $this->request->getUserAgent();
+            $token = md5($user->email . $user->password . $user_agent);
 
             if ($cookieToken == $token) {
 
                 $remember = RememberTokens::findFirst(array(
-                    'usersId = ?0 AND token = ?1',
+                    'user_id = ?0 AND token = ?1',
                     'bind' => array(
                         $user->id,
                         $token
@@ -168,7 +168,7 @@ class Auth extends Component
                 if ($remember) {
 
                     // Check if the cookie has not expired
-                    if ((time() - (86400 * 8)) < $remember->createdAt) {
+                    if ((time() - (86400 * 8)) < $remember->created_at) {
 
                         // Check if the user was flagged
                         $this->checkUserFlags($user);
@@ -202,15 +202,15 @@ class Auth extends Component
      */
     public function checkUserFlags(Users $user)
     {
-        if ($user->active != 'Y') {
+        if (! $user->active) {
             throw new Exception('The user is inactive');
         }
 
-        if ($user->banned != 'N') {
+        if ($user->banned) {
             throw new Exception('The user is banned');
         }
 
-        if ($user->suspended != 'N') {
+        if ($user->suspended) {
             throw new Exception('The user is suspended');
         }
     }
