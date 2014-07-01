@@ -83,6 +83,8 @@ class Mail extends Component
         // Settings
         $mailSettings = $this->config->mail;
 
+        $this->directSmtp = (empty($this->config->AWSAccessKeyId)) || (empty($this->config->AWSSecretKey));
+
         $template = $this->getTemplate($name, $params);
 
         // Create the message
