@@ -1,9 +1,9 @@
 Vökuró
 ======
 
-Phalcon PHP is a web framework delivered as a C extension providing high performance and lower resource consumption.
+Phalcon is a web framework delivered as a C extension providing high performance and lower resource consumption.
 
-This is a sample application for the Phalcon PHP Framework. We expect to implement as many features as possible to showcase the framework and its potential.
+This is a sample application for the Phalcon Framework. We expect to implement as many features as possible to showcase the framework and its potential.
 
 Please write us if you have any feedback.
 
@@ -33,7 +33,7 @@ Then you'll need to create the database and initialize schema:
 
 Installing Dependencies via Composer
 ------------------------------------
-Install composer in a common location or in your project:
+Vökuró's dependencies must be installed using Composer. Install composer in a common location or in your project:
 
 ```bash
 curl -s http://getcomposer.org/installer | php
@@ -45,3 +45,11 @@ Run the composer installer:
 cd vokuro
 php composer.phar install
 ```
+
+Improving this Sample
+---------------------
+Phalcon is an open source project and a volunteer effort. Vökuró does not have human resources fully dedicated to the mainteniance of this software. If you want something to be improved or you want a new feature please submit a Pull Request.
+
+License
+-------
+Vökuró is open-sourced software licensed under the New BSD License.
