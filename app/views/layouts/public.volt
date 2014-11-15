@@ -26,7 +26,12 @@
           </ul>
 
           <ul class="nav pull-right">
+            {%- if logged_in %}
+            <li>{{ link_to('users', 'Users Panel') }}</li>
+            <li>{{ link_to('session/logout', 'Logout') }}</li>
+            {% else %}
             <li>{{ link_to('session/login', 'Login') }}</li>
+            {% endif %}
           </ul>
         </div><!-- /.nav-collapse -->
       </div>
