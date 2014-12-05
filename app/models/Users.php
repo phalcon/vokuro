@@ -131,26 +131,26 @@ class Users extends Model
 
     public function initialize()
     {
-        $this->belongsTo('profilesId', 'Vokuro\Models\Profiles', 'id', array(
+        $this->belongsTo('profilesId', __NAMESPACE__ . '\Profiles', 'id', array(
             'alias' => 'profile',
             'reusable' => true
         ));
 
-        $this->hasMany('id', 'Vokuro\Models\SuccessLogins', 'usersId', array(
+        $this->hasMany('id', __NAMESPACE__ . '\SuccessLogins', 'usersId', array(
             'alias' => 'successLogins',
             'foreignKey' => array(
                 'message' => 'User cannot be deleted because he/she has activity in the system'
             )
         ));
 
-        $this->hasMany('id', 'Vokuro\Models\PasswordChanges', 'usersId', array(
+        $this->hasMany('id', __NAMESPACE__ . '\PasswordChanges', 'usersId', array(
             'alias' => 'passwordChanges',
             'foreignKey' => array(
                 'message' => 'User cannot be deleted because he/she has activity in the system'
             )
         ));
 
-        $this->hasMany('id', 'Vokuro\Models\ResetPasswords', 'usersId', array(
+        $this->hasMany('id', __NAMESPACE__ . '\ResetPasswords', 'usersId', array(
             'alias' => 'resetPasswords',
             'foreignKey' => array(
                 'message' => 'User cannot be deleted because he/she has activity in the system'
