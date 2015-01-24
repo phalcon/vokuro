@@ -26,7 +26,7 @@
           </ul>
 
           <ul class="nav pull-right">
-            {%- if logged_in %}
+            {%- if not(logged_in is empty) %}
             <li>{{ link_to('users', 'Users Panel') }}</li>
             <li>{{ link_to('session/logout', 'Logout') }}</li>
             {% else %}
