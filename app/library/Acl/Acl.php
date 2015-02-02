@@ -94,7 +94,7 @@ class Acl extends Component
     /**
      * Returns the ACL list
      *
-     * @return Phalcon\Acl\Adapter\Memory
+     * @return \Phalcon\Acl\Adapter\Memory
      */
     public function getAcl()
     {
