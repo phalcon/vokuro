@@ -48,5 +48,5 @@ Made with love by the Phalcon Team
     {{ link_to("privacy", "Privacy Policy") }}
     {{ link_to("terms", "Terms") }}
 
-© 2013 Phalcon Team.
+© {{ date("Y") }} Phalcon Team.
 </footer>
