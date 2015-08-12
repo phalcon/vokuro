@@ -75,6 +75,7 @@ class Acl extends Component
      */
     public function isPrivate($controllerName)
     {
+        $controllerName = strtolower($controllerName);
         return isset($this->privateResources[$controllerName]);
     }
 
