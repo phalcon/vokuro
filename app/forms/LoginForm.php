@@ -41,6 +41,8 @@ class LoginForm extends Form
             'message' => 'The password is required'
         )));
 
+        $password->clear();
+
         $this->add($password);
 
         // Remember
@@ -59,6 +61,8 @@ class LoginForm extends Form
             'value' => $this->security->getSessionToken(),
             'message' => 'CSRF validation failed'
         )));
+
+        $csrf->clear();
 
         $this->add($csrf);
 
