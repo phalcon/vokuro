@@ -25,7 +25,7 @@ class Acl extends Component
      *
      * @var string
      */
-    private $filePath = '/cache/acl/data.txt';
+    private $filePath = '/../storage/cache/acl/data.txt';
 
     /**
      * Define the resources that are considered "private". These controller => actions require authentication.
