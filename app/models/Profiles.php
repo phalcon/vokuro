@@ -27,14 +27,14 @@ class Profiles extends Model
      */
     public function initialize()
     {
-        $this->hasMany('id', 'Vokuro\Models\Users', 'profilesId', array(
+        $this->hasMany('id', __NAMESPACE__ . '\Users', 'profilesId', array(
             'alias' => 'users',
             'foreignKey' => array(
                 'message' => 'Profile cannot be deleted because it\'s used on Users'
             )
         ));
 
-        $this->hasMany('id', 'Vokuro\Models\Permissions', 'profilesId', array(
+        $this->hasMany('id', __NAMESPACE__ . '\Permissions', 'profilesId', array(
             'alias' => 'permissions'
         ));
     }
