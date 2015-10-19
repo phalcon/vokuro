@@ -8,10 +8,10 @@ use Phalcon\Logger\Adapter\File as Logger;
 use Phalcon\Paginator\Adapter\QueryBuilder as PaginatorQueryBuilder;
 
 /**
- * Class ControllerBase
+ * Class BaseController
  * This is the base controller for all controllers in the application
  */
-class ControllerBase extends Controller
+class BaseController extends Controller
 {
     /**
      * Display item in a page
@@ -21,6 +21,17 @@ class ControllerBase extends Controller
      * @var string
      */
     public $currentOrder = null;
+
+    /**
+     *  Initializes the BaseController, which is the Base of all Controllers in InvoBegins
+     *
+     * @todo Get Title from the Settings table and prepend that title
+     */
+    protected function initialize()
+    {
+        //$this->tag->prependTitle('INVO MultiModule | ');
+        //$this->view->setTemplateBefore('private.volt');
+    }
 
 
     /**
@@ -51,10 +62,19 @@ class ControllerBase extends Controller
                 ));
                 return false;
             }
-// Check if the user has permission to the current option
+
+            // Check if the user has permission to the current option
             $actionName = $dispatcher->getActionName();
             if (!$this->acl->isAllowed($identity['profile'], $controllerName, $actionName)) {
 
+                /*
+                 *  Array
+                    (
+                        [id] => 1
+                        [name] => Bob Burnquist
+                        [profile] => Administrators
+                    )
+                 **/
                 $this->flash->notice('You don\'t have access to this module: ' . $controllerName . ':' . $actionName);
 
                 if ($this->acl->isAllowed($identity['profile'], $controllerName, 'index')) {
@@ -146,7 +166,6 @@ class ControllerBase extends Controller
         if (is_string($e)) {
             $logger->error($e);
         }
-
         return $this->indexRedirect();
     }
 }

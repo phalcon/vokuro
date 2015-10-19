@@ -11,7 +11,7 @@ use Vokuro\Models\ResetPasswords;
 /**
  * Controller used handle non-authenticated session actions like login/logout, user signup, and forgotten passwords
  */
-class SessionController extends ControllerBase
+class SessionController extends BaseController
 {
 
     /**

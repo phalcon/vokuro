@@ -1,7 +1,9 @@
+<!-- /app/views/index.volt(!) -->
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Welcome to Vökuró</title>
+    {{ get_title() }}
     <link href="//netdna.bootstrapcdn.com/bootswatch/2.3.1/united/bootstrap.min.css" rel="stylesheet">
     {{ stylesheet_link('css/style.css') }}
 </head>

@@ -7,7 +7,7 @@ use Vokuro\Models\Permissions;
 /**
  * View and define permissions for the various profile levels.
  */
-class PermissionsController extends ControllerBase
+class PermissionsController extends BaseController
 {
 
     /**
@@ -15,7 +15,7 @@ class PermissionsController extends ControllerBase
      */
     public function indexAction()
     {
-        $this->view->setTemplateBefore('private');
+        //$this->view->setTemplateBefore('private');
 
         if ($this->request->isPost()) {
 

@@ -13,12 +13,12 @@ use Vokuro\Models\PasswordChanges;
  * Vokuro\Controllers\UsersController
  * CRUD to manage users
  */
-class UsersController extends ControllerBase
+class UsersController extends BaseController
 {
 
     public function initialize()
     {
-        $this->view->setTemplateBefore('private');
+        //$this->view->setTemplateBefore('private');
     }
 
     /**

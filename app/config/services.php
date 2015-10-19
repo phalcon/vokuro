@@ -8,6 +8,7 @@ use Phalcon\Mvc\Router;
 use Phalcon\Flash\Session;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Http\Response\Cookies;
+use Phalcon\Logger\Adapter\File as Logger;
 use Phalcon\Mvc\Collection\Manager;
 use Phalcon\Cache\Frontend\Data;
 use Phalcon\Db\Adapter\Pdo\Mysql;
@@ -23,6 +24,10 @@ use Phalcon\Mvc\Model\Metadata\Files as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\View\Engine\Volt;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
+
+
 use Phalcon\Flash\Direct as Flash;
 
 use Vokuro\Plugins\Security as SecurityPlugin;
@@ -33,7 +38,7 @@ use Vokuro\Acl\Acl;
 use Vokuro\Mail\Mail;
 
 /**
- * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
+ * The FactoryDefault Dependency Injector automatically registers the right services providing a full stack framework
  */
 $di = new FactoryDefault();
 
@@ -62,8 +67,8 @@ date_default_timezone_set($di->get('config')->application->timezone ?: 'UTC');
 $di->set(
     'router',
     function () {
-    return require __DIR__ . '/routes.php';
-}, true);
+        return require __DIR__ . '/routes.php';
+    }, true);
 
 
 /**
@@ -90,10 +95,10 @@ $di->set(
 $di->set(
     'session',
     function () {
-    $session = new SessionAdapter();
-    $session->start();
-    return $session;
-});
+        $session = new SessionAdapter();
+        $session->start();
+        return $session;
+    });
 
 
 /**
@@ -120,6 +125,7 @@ $di->set(
 /*
  *  Set the views cache service
  **/
+/*
 $di->set(
     'viewCache',
     function () use ($di) {
@@ -144,44 +150,53 @@ $di->set(
         }
     }
 );
-
+*/
 
 /**
  * Setting up the view component
  */
+
 $di->set(
     'view',
     function () use ($config) {
 
-    $view = new View();
+        $view = new View();
 
-    $view->setViewsDir($config->application->viewsDir);
+        $view->setViewsDir($config->application->viewsDir);
+        $view->setLayoutsDir($config->application->layoutsDir);
+        $view->registerEngines(array(
+            '.phtml' => 'Phalcon\Mvc\View\Engine\Php',
+            '.php' => 'Phalcon\Mvc\View\Engine\Php',
+            '.volt' => function ($view, $di) use ($config) {
 
-    $view->registerEngines(array(
-        '.volt' => function ($view, $di) use ($config) {
+                $volt = new VoltEngine($view, $di);
 
-            $volt = new VoltEngine($view, $di);
+                $volt->setOptions(array(
+                    'compiledPath' => $config->application->cacheDir . 'volt/',
+                    'compiledSeparator' => '_'
+                ));
 
-            $volt->setOptions(array(
-                'compiledPath' => $config->application->cacheDir . 'volt/',
-                'compiledSeparator' => '_'
-            ));
+                $compiler = $volt->getCompiler();
+                $compiler->addFunction('is_a', 'is_a');
+                $compiler->addFunction('sprintf', 'sprintf');
+                $compiler->addFunction('strtotime', 'strtotime');
 
-            return $volt;
-        }
-    ));
+                return $volt;
+            }
+        ));
 
-    return $view;
-}, true);
+        return $view;
+    }, true);
+
 
 /**
  * Database connection is created based in the parameters defined in the configuration file
  */
 $di->set(
     'db',
-    function () use ($di) {
+    function () use ($di, $config) {
         //  @todo use $di->get('config')->database->adapter
-        return new DbAdapter([
+        $connection = new DbAdapter([
             'host' => $di->get('config')->database->host,
             'username' => $di->get('config')->database->username,
             'password' => $di->get('config')->database->password,
@@ -190,6 +205,22 @@ $di->set(
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $di->get('config')->database->charset
             )
         ]);
+        /*
+        if (APPLICATION_ENV == 'development') {
+            $eventsManager = new Phalcon\Events\Manager();
+            $logger = new Logger($config->application->logDir . "sql_debug.log");
+            //Listen all the database events
+            $eventsManager->attach('db', function ($event, $connection) use ($logger) {
+                if ($event->getType() == 'beforeQuery') {
+                    //\Phalcon\Logger::ER::
+                    $logger->log($connection->getSQLStatement(), \Phalcon\Logger::INFO);
+                }
+            });
+            //Assign the eventsManager to the db adapter instance
+            $connection->setEventsManager($eventsManager);
+        }
+        */
+        return $connection;
     }, true);
 
 /**
@@ -198,10 +229,10 @@ $di->set(
 $di->set(
     'modelsMetadata',
     function () use ($config) {
-    return new MetaDataAdapter(array(
-        'metaDataDir' => $config->application->cacheDir . 'metaData/'
-    ));
-});
+        return new MetaDataAdapter(array(
+            'metaDataDir' => $config->application->cacheDir . 'metaData/'
+        ));
+    });
 
 /*
  *  Cookies
@@ -272,14 +303,28 @@ $di->set(
 
 
 /**
+ * The Logger File
+ */
+$di->set(
+    'loggerFile',
+    function () use ($config) {
+        if (!file_exists($config->application->logDir . date('Y-m-d'))) {
+            mkdir($config->application->logDir . date('Y-m-d'));
+        }
+
+        return new LoggerFile($config->application->logDir . date('Y-m-d') . '/application.log');
+    }); /* End the Logger File */
+
+
+/**
  * Dispatcher use a default namespace
  */
 $di->set(
     'dispatcher',
     function () use ($di) {
         $eventsManager = new EventsManager;
-        $eventsManager->attach('dispatch:beforeDispatch', new SecurityPlugin);
-        $eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);
+        //$eventsManager->attach('dispatch:beforeDispatch', new SecurityPlugin);
+        //$eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);
         $dispatcher = new Dispatcher;
         $dispatcher->setDefaultNamespace('Vokuro\Controllers');
         $dispatcher->setEventsManager($eventsManager);
@@ -295,13 +340,13 @@ $di->set(
 $di->set(
     'flash',
     function () {
-    return new Flash(array(
-        'error' => 'alert alert-danger',
-        'success' => 'alert alert-success',
-        'notice' => 'alert alert-info',
-        'warning' => 'alert alert-warning'
-    ));
-});
+        return new Flash(array(
+            'error' => 'alert alert-danger',
+            'success' => 'alert alert-success',
+            'notice' => 'alert alert-info',
+            'warning' => 'alert alert-warning'
+        ));
+    });
 
 /**
  * Custom authentication component
@@ -309,8 +354,8 @@ $di->set(
 $di->set(
     'auth',
     function () {
-    return new Auth();
-});
+        return new Auth();
+    });
 
 /**
  * Mail service uses AmazonSES
@@ -318,8 +363,8 @@ $di->set(
 $di->set(
     'mail',
     function () {
-    return new Mail();
-});
+        return new Mail();
+    });
 
 /**
  * Access Control List
@@ -327,8 +372,8 @@ $di->set(
 $di->set(
     'acl',
     function () {
-    return new Acl();
-});
+        return new Acl();
+    });
 
 
 /*
@@ -357,18 +402,21 @@ $di->set(
  *
  * @return mixed
  */
+/*
 function t($string)
 {
     $translation = DI::getDefault()->get('translation');
     return $translation->_($string);
 }
+*/
+
+
+$whoops = new Whoops\Provider\Phalcon\WhoopsServiceProvider($di);
 
 /*
  *  Phalcon Debugger
  **/
 if ($config->application->debug) {
-    (new \Phalcon\Debug)->listen();
-
     function dpm($object, $kill = true)
     {
         echo '<pre style="text-aling:left">';

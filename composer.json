@@ -5,7 +5,8 @@
   "require" : {
     "php" : ">=5.4",
     "ext-phalcon" : ">=1.2.4",
-    "swiftmailer/swiftmailer" : "5.0.*"
+    "swiftmailer/swiftmailer" : "5.0.*",
+    "filp/whoops": "1.*"
   },
   "authors" : [ {
     "name" : "Andres Gutierrez",

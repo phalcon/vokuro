@@ -1,15 +1,4 @@
 <?php
-/**
- * Phanbook : Delightfully simple forum software
- *
- * Licensed under The GNU License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @link    http://phanbook.com Phanbook Project
- * @since   1.0.0
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
- */
 namespace Vokuro\Plugins;
 
 use Phalcon\Events\Event;
@@ -28,8 +17,8 @@ class NotFound extends Plugin
     /**
      * This action is executed before execute any action in the application
      *
-     * @param Event               $event
-     * @param Dispatcher          $dispatcher
+     * @param Event $event
+     * @param Dispatcher $dispatcher
      * @param DispatcherException $exception
      */
     public function beforeException(Event $event, MvcDispatcher $dispatcher, $exception)

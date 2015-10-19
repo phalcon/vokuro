@@ -43,6 +43,14 @@ class Acl extends Component
             'delete',
             'changePassword'
         ),
+        'companies' => array(
+            'index',
+            'browse',
+            'search',
+            'edit',
+            'create',
+            'delete'
+        ),
         'profiles' => array(
             'index',
             'search',
@@ -62,6 +70,7 @@ class Acl extends Component
      */
     private $actionDescriptions = array(
         'index' => 'Access',
+        'browse' => 'Access',
         'search' => 'Search',
         'create' => 'Create',
         'edit' => 'Edit',
@@ -77,8 +86,8 @@ class Acl extends Component
      */
     public function isPrivate($controllerName)
     {
-		$controllerName = strtolower($controllerName);
-		return isset($this->privateResources[$controllerName]);
+        $controllerName = strtolower($controllerName);
+        return isset($this->privateResources[$controllerName]);
     }
 
     /**
@@ -126,6 +135,8 @@ class Acl extends Component
         $data = file_get_contents(APP_DIR . $this->filePath);
         $this->acl = unserialize($data);
 
+        //dpm($this->acl);
+
         // Store the ACL in APC
         if (function_exists('apc_store')) {
             apc_store('vokuro-acl', $this->acl);
@@ -144,6 +155,9 @@ class Acl extends Component
     {
         $permissions = array();
         foreach ($profile->getPermissions() as $permission) {
+
+            //dpm($permission);
+
             $permissions[$permission->resource . '.' . $permission->action] = true;
         }
         return $permissions;

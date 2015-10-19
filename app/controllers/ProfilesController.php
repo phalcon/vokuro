@@ -11,7 +11,7 @@ use Vokuro\Models\Profiles;
  * Vokuro\Controllers\ProfilesController
  * CRUD to manage profiles
  */
-class ProfilesController extends ControllerBase
+class ProfilesController extends BaseController
 {
 
     /**
@@ -19,7 +19,7 @@ class ProfilesController extends ControllerBase
      */
     public function initialize()
     {
-        $this->view->setTemplateBefore('private');
+        //$this->view->setTemplateBefore('private');
     }
 
     /**

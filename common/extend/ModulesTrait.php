@@ -18,7 +18,6 @@ use Phalcon\Loader,
  */
 trait ModulesTrait
 {
-
   protected $default_controller_namespace = 'Vokuro\\Controllers';
   protected $default_module_full_path = APP_DIR;
 
@@ -53,7 +52,6 @@ trait ModulesTrait
 
     $config = include APP_DIR . '/config/config.php';
 
-
     /*
      *  Registering the view component
      *  Figure out which ModuleType we are in and then set up the Layout path according to that viewType
@@ -68,13 +66,14 @@ trait ModulesTrait
        **/
       if (strstr($module_full_path, 'modules')) {
         $ModuleType = 'module';
+        $view->setViewsDir($module_full_path . '/views/');
         $view->setLayoutsDir("../../../app/views/layouts/");
       } else {
         $ModuleType = 'core';
         $view->setLayoutsDir("layouts/");
       }
 
-      $view->setViewsDir($module_full_path . '/views/');
+
 
       $this->default_module_full_path = str_replace('\\', '/', $this->default_module_full_path);
       /*
@@ -115,8 +114,6 @@ trait ModulesTrait
       return $view;
     }); /* End View Service */
 
-
-    //
     /*
      *  Registering a dispatcher
      *  This should also take care of the non-found views and some exceptions
@@ -130,7 +127,7 @@ trait ModulesTrait
       /*
        *  Adding the notfound plugin
        **/
-      $eventsManager->attach('dispatch:beforeException', new \Plugins\ExceptionsPlugin);
+      $eventsManager->attach('dispatch:beforeException', new \Vokuro\Plugins\ExceptionsPlugin);
 
       $dispatcher->setEventsManager($eventsManager);
       $dispatcher->setDefaultNamespace($default_namespace);

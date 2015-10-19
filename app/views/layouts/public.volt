@@ -1,3 +1,4 @@
+<!-- /app/views/layouts/public.volt -->
 <div class="navbar">
     <div class="navbar-inner">
         <div class="container" style="width: auto;">
@@ -27,7 +28,7 @@
 
                 <ul class="nav pull-right">
                     {%- if not(logged_in is empty) %}
-                        <li>{{ link_to('users', 'Users Panel') }}</li>
+                        <li>{{ link_to('users', 'Control Panel') }}</li>
                         <li>{{ link_to('session/logout', 'Logout') }}</li>
                     {% else %}
                         <li>{{ link_to('session/login', 'Login') }}</li>

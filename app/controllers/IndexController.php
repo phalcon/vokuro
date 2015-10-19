@@ -4,7 +4,7 @@ namespace Vokuro\Controllers;
 /**
  * Display the default index page.
  */
-class IndexController extends ControllerBase
+class IndexController extends BaseController
 {
 
     /**

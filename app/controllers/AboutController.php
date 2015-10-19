@@ -4,7 +4,7 @@ namespace Vokuro\Controllers;
 /**
  * Display the "About" page.
  */
-class AboutController extends ControllerBase
+class AboutController extends BaseController
 {
 
     /**
