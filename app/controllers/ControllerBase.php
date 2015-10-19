@@ -77,15 +77,15 @@ class ControllerBase extends Controller
     /**
      * Create a QueryBuilder paginator, show 15 rows by page starting from $page
      *
-     * @param array $model The model need to retrieve and someoption {code} $mode = [ 'name'      => 'Phanbook\Models\Users' 'orderBy'   => 'username' 'currentOrder'=> 'users'// mean adding class for menu ] {/code}
-     * {code}
+     * @param array $model The model needs to retrieve and some options
+     * <code>
      *      $mode = [
-     *          'name'      => 'Phanbook\Models\Users'
+     *          'name'      => 'Vokuro\Models\Users'
      *          'orderBy'   => 'username'
      *          'currentOrder'=> 'users'// mean adding class for menu
      *      ]
-     * {/code}
-     * @param int   $page  Current page to show
+     * </code>
+     * @param int $page Current page to show
      *
      * @return array the conatainer object...
      */
@@ -95,20 +95,20 @@ class ControllerBase extends Controller
             ->from($model['name'])
             ->orderBy($model['orderBy']);
         //Create a Model paginator, show 15 rows by page starting from $page
-        $paginator   = (new PaginatorQueryBuilder(
+        $paginator = (new PaginatorQueryBuilder(
             [
-                'builder'  => $builder,
-                'limit'     => self::ITEM_IN_PAGE,
-                'page'      => $page
+                'builder' => $builder,
+                'limit' => self::ITEM_IN_PAGE,
+                'page' => $page
             ]
         ))->getPaginate();
         $this->view->setVars(
             [
-            'currentOrder'  => $model['currentOrder'],
-            'object'        => $paginator->items,
-            'canonical'     => '',
-            'totalPages'    => $paginator->total_pages,
-            'currentPage'   => $page,
+                'currentOrder' => $model['currentOrder'],
+                'object' => $paginator->items,
+                'canonical' => '',
+                'totalPages' => $paginator->total_pages,
+                'currentPage' => $page,
             ]
         );
     }
@@ -133,10 +133,9 @@ class ControllerBase extends Controller
      */
     public function saveLogger($e)
     {
-        //error_log($e);
-        $logger = new Logger(ROOT_DIR . 'apps/logs/error.log');
+        $logDir = $this->_dependencyInjector->getShared('config')->application->logDir;
+        $logger = new Logger($logDir . '/error.log');
         if (is_object($e)) {
-            //d($e);
             $logger->error($e[0]->getMessage());
         }
         if (is_array($e)) {

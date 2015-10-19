@@ -34,7 +34,5 @@ class NotFound extends Plugin
      */
     public function beforeException(Event $event, MvcDispatcher $dispatcher, $exception)
     {
-        //controller or action doesn't exist
-        //d('Eception todo later');
     }
 }

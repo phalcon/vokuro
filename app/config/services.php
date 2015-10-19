@@ -40,10 +40,10 @@ $di = new FactoryDefault();
 /**
  * Registers the configuration itself as a service
  */
-$config = include __DIR__ . '/config.php';
+$config = include ROOT_DIR . '/app/config/config.php';
 
-if (file_exists(__DIR__ . '/config.' . APPLICATION_ENV . '.php')) {
-    $overrideConfig = include __DIR__ . '/config.' . APPLICATION_ENV . '.php';
+if (file_exists(ROOT_DIR . 'app/config/config.' . APPLICATION_ENV . '.php')) {
+    $overrideConfig = include ROOT_DIR . 'app/config/config.' . APPLICATION_ENV . '.php';
     $config->merge($overrideConfig);
 }
 
@@ -59,7 +59,9 @@ date_default_timezone_set($di->get('config')->application->timezone ?: 'UTC');
 /**
  * Loading routes from the routes.php file
  */
-$di->set('router', function () {
+$di->set(
+    'router',
+    function () {
     return require __DIR__ . '/routes.php';
 }, true);
 
@@ -85,7 +87,9 @@ $di->set(
 /**
  * Start the session the first time some component request the session service
  */
-$di->set('session', function () {
+$di->set(
+    'session',
+    function () {
     $session = new SessionAdapter();
     $session->start();
     return $session;
@@ -145,7 +149,9 @@ $di->set(
 /**
  * Setting up the view component
  */
-$di->set('view', function () use ($config) {
+$di->set(
+    'view',
+    function () use ($config) {
 
     $view = new View();
 
@@ -168,42 +174,30 @@ $di->set('view', function () use ($config) {
     return $view;
 }, true);
 
-
-/**
- * Flash service with custom CSS classes
- */
-$di->set('flash', function () {
-    $flash = new Session(
-        array(
-            'error' => 'alert alert-danger',
-            'success' => 'alert alert-success',
-            'notice' => 'alert alert-info',
-            'warning' => 'alert alert-warning'
-        ));
-
-    return $flash;
-});
-
-
 /**
  * Database connection is created based in the parameters defined in the configuration file
  */
-$di->set('db', function () use ($di) {
-    return new DbAdapter([
-        'host' => $di->get('config')->database->mysql->host,
-        'username' => $di->get('config')->database->mysql->username,
-        'password' => $di->get('config')->database->mysql->password,
-        'dbname' => $di->get('config')->database->mysql->dbname,
-        'options' => array(
-            \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $di->get('config')->database->mysql->charset
-        )
-    ]);
-}, true);
+$di->set(
+    'db',
+    function () use ($di) {
+        //  @todo use $di->get('config')->database->adapter
+        return new DbAdapter([
+            'host' => $di->get('config')->database->host,
+            'username' => $di->get('config')->database->username,
+            'password' => $di->get('config')->database->password,
+            'dbname' => $di->get('config')->database->dbname,
+            'options' => array(
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $di->get('config')->database->charset
+            )
+        ]);
+    }, true);
 
 /**
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
  */
-$di->set('modelsMetadata', function () use ($config) {
+$di->set(
+    'modelsMetadata',
+    function () use ($config) {
     return new MetaDataAdapter(array(
         'metaDataDir' => $config->application->cacheDir . 'metaData/'
     ));
@@ -241,11 +235,9 @@ $di->set(
 $di->set(
     'security',
     function () {
-
         $security = new Security();
         //Set the password hashing factor to 12 rounds
         $security->setWorkFactor(12);
-
         return $security;
     },
     true
@@ -300,7 +292,9 @@ $di->set(
 /**
  * Flash service with custom CSS classes
  */
-$di->set('flash', function () {
+$di->set(
+    'flash',
+    function () {
     return new Flash(array(
         'error' => 'alert alert-danger',
         'success' => 'alert alert-success',
@@ -312,21 +306,27 @@ $di->set('flash', function () {
 /**
  * Custom authentication component
  */
-$di->set('auth', function () {
+$di->set(
+    'auth',
+    function () {
     return new Auth();
 });
 
 /**
  * Mail service uses AmazonSES
  */
-$di->set('mail', function () {
+$di->set(
+    'mail',
+    function () {
     return new Mail();
 });
 
 /**
  * Access Control List
  */
-$di->set('acl', function () {
+$di->set(
+    'acl',
+    function () {
     return new Acl();
 });
 

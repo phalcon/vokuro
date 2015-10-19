@@ -1,15 +1,4 @@
 <?php
-/**
- * Phanbook : Delightfully simple forum software
- *
- * Licensed under The GNU License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @link    http://phanbook.com Phanbook Project
- * @since   1.0.0
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
- */
 namespace Vokuro\Tools;
 
 /**
@@ -33,13 +22,13 @@ class VoltFunctions
 
         switch ($name) {
             case 'getUrlAvatar':
-                return '\Phanbook\Tools\ZFunction::getUrlAvatar('. $arguments .')';
+                return '\Vokuro\Tools\ZFunction::getUrlAvatar('. $arguments .')';
                 break;
             case 'getHumanDate':
-                return '\Phanbook\Tools\ZFunction::getHumanDate('. $arguments .')';
+                return '\Vokuro\Tools\ZFunction::getHumanDate('. $arguments .')';
                 break;
             case 'getImageSrc':
-                return '\Phanbook\Tools\ZFunction::getImageSrc('. $arguments .')';
+                return '\Vokuro\Tools\ZFunction::getImageSrc('. $arguments .')';
                 break;
             default:
                 // code...
@@ -67,10 +56,10 @@ class VoltFunctions
             return 'long2ip(' . $arguments . ')';
         }
         if ($name == 'truncate') {
-            return '\Phanbook\Tools\ZFunction::truncate(' . $arguments . ')';
+            return '\Vokuro\Tools\ZFunction::truncate(' . $arguments . ')';
         }
         if ($name == 'strlen') {
-            return '\Phanbook\Tools\ZFunction::strlen(' . $arguments . ')';
+            return '\Vokuro\Tools\ZFunction::strlen(' . $arguments . ')';
         }
     }
 }

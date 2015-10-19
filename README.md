@@ -22,7 +22,9 @@ Get Started
 
 To run this application on your machine, you need at least:
 
-* >= PHP 5.3.9
+* >= PHP 5.4
+* In next versions we will be making use of 'traits', which is something new in PHP 5.4
+* therefore right now the required version is PHP 5.4
 * Apache Web Server with mod rewrite enabled, and AllowOverride Options (or All) in your httpd.conf
 * Latest Phalcon Framework extension installed/enabled
 

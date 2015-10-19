@@ -1,15 +1,4 @@
 <?php
-/**
- * Phanbook : Delightfully simple forum software
- *
- * Licensed under The GNU License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @link    http://phanbook.com Phanbook Project
- * @since   1.0.0
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
- */
 namespace Vokuro\Plugins;
 
 use Phalcon\Acl;
@@ -36,17 +25,8 @@ class Security extends Plugin
         //@todo later
         if ($this->request->isPost()) {
             $tokenKey = $this->session->get('$PHALCON/CSRF/KEY$');
-            //$tokenValue = $this->request->getPost('csrf', null, 'Shit!!');
             $tokenValue = $this->security->getSessionToken();
-            /*var_dump($tokenKey);
-            var_dump($tokenValue);
-            var_dump($this->security->checkToken());
-            var_dump($this->security->checkToken($tokenKey, $tokenValue));
-            d($_SESSION, false);
-            d($tokenValue);*/
             if (!$this->security->checkToken($tokenKey, $tokenValue)) {
-                //throw new \Exception('Token error!');
-                //return false;
             }
         }
     }

@@ -26,7 +26,6 @@ class Mail extends Component
      */
     private function amazonSESSend($raw)
     {
-      /*
         if ($this->amazonSes == null) {
             $this->amazonSes = new \AmazonSES(
                 $this->config->amazon->AWSAccessKeyId,
@@ -47,7 +46,6 @@ class Mail extends Component
         if (!$response->isOK()) {
             throw new Exception('Error sending email from AWS SES: ' . $response->body->asXML());
         }
-      */
 
         return true;
     }

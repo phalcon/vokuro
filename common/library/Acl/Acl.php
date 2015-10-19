@@ -22,7 +22,9 @@ class Acl extends Component
 
     /**
      * The filepath of the ACL cache file from APP_DIR
-     *
+     *  You cannot use constants here, apparently, so relative path needed.
+     *  Proper path would have been : ROOT_DIR . '/storage/cache/acl/'; etc
+     *  or even $config->application->cacheDir
      * @var string
      */
     private $filePath = '/../storage/cache/acl/data.txt';
@@ -114,6 +116,7 @@ class Acl extends Component
         }
 
         // Check if the ACL is already generated
+        // @todo make proper check on the cacheDir variable in the config file
         if (!file_exists(APP_DIR . $this->filePath)) {
             $this->acl = $this->rebuild();
             return $this->acl;
