@@ -33,21 +33,6 @@ class ProfilesForm extends Form
 
         $this->add($name);
 
-        $email = new Text('email', array(
-            'placeholder' => 'Email'
-        ));
-
-        $email->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'The e-mail is required'
-            )),
-            new Email(array(
-                'message' => 'The e-mail is not valid'
-            ))
-        ));
-
-        $this->add($email);
-
         $this->add(new Select('active', array(
             'Y' => 'Yes',
             'N' => 'No'
