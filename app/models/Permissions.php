@@ -36,7 +36,7 @@ class Permissions extends Model
 
     public function initialize()
     {
-        $this->belongsTo('profilesId', 'Vokuro\Models\Profiles', 'id', array(
+        $this->belongsTo('profilesId', __NAMESPACE__ . '\Profiles', 'id', array(
             'alias' => 'profile'
         ));
     }
