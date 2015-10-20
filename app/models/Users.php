@@ -65,6 +65,55 @@ class Users extends Model
      */
     public $active;
 
+    public function initialize()
+    {
+        $this->belongsTo('profilesId', __NAMESPACE__ . '\Profiles', 'id', array(
+            'alias' => 'profile',
+            'reusable' => true
+        ));
+
+        $this->hasMany('id', __NAMESPACE__ . '\SuccessLogins', 'usersId', array(
+            'alias' => 'successLogins',
+            'foreignKey' => array(
+                'message' => 'User cannot be deleted because he/she has activity in the system'
+            )
+        ));
+
+        $this->hasMany('id', __NAMESPACE__ . '\PasswordChanges', 'usersId', array(
+            'alias' => 'passwordChanges',
+            'foreignKey' => array(
+                'message' => 'User cannot be deleted because he/she has activity in the system'
+            )
+        ));
+
+        $this->hasMany('id', __NAMESPACE__ . '\ResetPasswords', 'usersId', array(
+            'alias' => 'resetPasswords',
+            'foreignKey' => array(
+                'message' => 'User cannot be deleted because he/she has activity in the system'
+            )
+        ));
+    }
+
+
+
+
+
+
+
+    /**
+     * Validate that emails are unique across users
+     */
+    public function validation()
+    {
+        $this->validate(new Uniqueness(array(
+            "field" => "email",
+            "message" => "The email is already registered"
+        )));
+
+        return $this->validationHasFailed() != true;
+    }
+
+
     /**
      * Before create the user assign a password
      */
@@ -114,47 +163,5 @@ class Users extends Model
                     ->notice('A confirmation mail has been sent to ' . $this->email);
             }
         }
-    }
-
-    /**
-     * Validate that emails are unique across users
-     */
-    public function validation()
-    {
-        $this->validate(new Uniqueness(array(
-            "field" => "email",
-            "message" => "The email is already registered"
-        )));
-
-        return $this->validationHasFailed() != true;
-    }
-
-    public function initialize()
-    {
-        $this->belongsTo('profilesId', 'Vokuro\Models\Profiles', 'id', array(
-            'alias' => 'profile',
-            'reusable' => true
-        ));
-
-        $this->hasMany('id', 'Vokuro\Models\SuccessLogins', 'usersId', array(
-            'alias' => 'successLogins',
-            'foreignKey' => array(
-                'message' => 'User cannot be deleted because he/she has activity in the system'
-            )
-        ));
-
-        $this->hasMany('id', 'Vokuro\Models\PasswordChanges', 'usersId', array(
-            'alias' => 'passwordChanges',
-            'foreignKey' => array(
-                'message' => 'User cannot be deleted because he/she has activity in the system'
-            )
-        ));
-
-        $this->hasMany('id', 'Vokuro\Models\ResetPasswords', 'usersId', array(
-            'alias' => 'resetPasswords',
-            'foreignKey' => array(
-                'message' => 'User cannot be deleted because he/she has activity in the system'
-            )
-        ));
     }
 }

@@ -8,13 +8,13 @@ use Vokuro\Models\ResetPasswords;
  * UserControlController
  * Provides help to users to confirm their passwords or reset them
  */
-class UserControlController extends ControllerBase
+class UserControlControlle extends BaseController
 {
 
     public function initialize()
     {
         if ($this->session->has('auth-identity')) {
-            $this->view->setTemplateBefore('private');
+            //$this->view->setTemplateBefore('private');
         }
     }
 

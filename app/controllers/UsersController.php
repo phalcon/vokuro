@@ -13,18 +13,18 @@ use Vokuro\Models\PasswordChanges;
  * Vokuro\Controllers\UsersController
  * CRUD to manage users
  */
-class UsersController extends ControllerBase
+class UsersController extends BaseController
 {
 
     public function initialize()
     {
-        $this->view->setTemplateBefore('private');
+        //$this->view->setTemplateBefore('private');
     }
 
     /**
      * Default action, shows the search form
      */
-    public function indexAction()
+    public function oldindexAction()
     {
         $this->persistent->conditions = null;
         $this->view->form = new UsersForm();
@@ -33,15 +33,18 @@ class UsersController extends ControllerBase
     /**
      * Searches for users
      */
-    public function searchAction()
+    public function indexAction()
     {
         $numberPage = 1;
+        /*
         if ($this->request->isPost()) {
             $query = Criteria::fromInput($this->di, 'Vokuro\Models\Users', $this->request->getPost());
             $this->persistent->searchParams = $query->getParams();
         } else {
-            $numberPage = $this->request->getQuery("page", "int");
         }
+        */
+
+        $numberPage = $this->request->getQuery("page", "int");
 
         $parameters = array();
         if ($this->persistent->searchParams) {

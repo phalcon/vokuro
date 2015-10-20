@@ -3,10 +3,10 @@
   "description" : "This is a sample application for the Phalcon PHP Framework",
   "version" : "1.1.0",
   "require" : {
-    "php" : ">=5.3.9",
+    "php" : ">=5.4",
     "ext-phalcon" : ">=1.2.4",
     "swiftmailer/swiftmailer" : "5.0.*",
-    "amazonwebservices/aws-sdk-for-php" : "~1.0"
+    "filp/whoops": "1.*"
   },
   "authors" : [ {
     "name" : "Andres Gutierrez",

@@ -11,7 +11,7 @@ use Vokuro\Models\Profiles;
  * Vokuro\Controllers\ProfilesController
  * CRUD to manage profiles
  */
-class ProfilesController extends ControllerBase
+class ProfilesController extends BaseController
 {
 
     /**
@@ -19,13 +19,13 @@ class ProfilesController extends ControllerBase
      */
     public function initialize()
     {
-        $this->view->setTemplateBefore('private');
+        //$this->view->setTemplateBefore('private');
     }
 
     /**
      * Default action, shows the search form
      */
-    public function indexAction()
+    public function oldindexAction()
     {
         $this->persistent->conditions = null;
         $this->view->form = new ProfilesForm();
@@ -34,15 +34,17 @@ class ProfilesController extends ControllerBase
     /**
      * Searches for profiles
      */
-    public function searchAction()
+    public function indexAction()
     {
         $numberPage = 1;
+        /*
         if ($this->request->isPost()) {
             $query = Criteria::fromInput($this->di, 'Vokuro\Models\Profiles', $this->request->getPost());
             $this->persistent->searchParams = $query->getParams();
         } else {
-            $numberPage = $this->request->getQuery("page", "int");
         }
+        */
+        $numberPage = $this->request->getQuery("page", "int");
 
         $parameters = array();
         if ($this->persistent->searchParams) {

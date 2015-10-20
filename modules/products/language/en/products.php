@@ -1,0 +1,5 @@
+<?php
+
+$messages = [
+  'products'      => 'Products',
+];

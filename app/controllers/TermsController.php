@@ -4,7 +4,7 @@ namespace Vokuro\Controllers;
 /**
  * Display the terms and conditions page.
  */
-class TermsController extends ControllerBase
+class TermsController extends BaseController
 {
 
     /**

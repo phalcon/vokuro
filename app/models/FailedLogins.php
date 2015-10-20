@@ -36,7 +36,7 @@ class FailedLogins extends Model
 
     public function initialize()
     {
-        $this->belongsTo('usersId', 'Vokuro\Models\Users', 'id', array(
+        $this->belongsTo('usersId', __NAMESPACE__ . '\Users', 'id', array(
             'alias' => 'user'
         ));
     }

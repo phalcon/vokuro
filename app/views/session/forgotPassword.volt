@@ -2,17 +2,17 @@
 
 <div align="center" class="well">
 
-	{{ form('class': 'form-search') }}
+    {{ form('class': 'form-search') }}
 
-	<div align="left">
-		<h2>Forgot Password?</h2>
-	</div>
+    <div align="left">
+        <h2>Forgot Password?</h2>
+    </div>
 
-		{{ form.render('email') }}
-		{{ form.render('Send') }}
+    {{ form.render('email') }}
+    {{ form.render('Send') }}
 
-		<hr>
+    <hr>
 
-	</form>
+    </form>
 
 </div>

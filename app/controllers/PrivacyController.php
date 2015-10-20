@@ -4,7 +4,7 @@ namespace Vokuro\Controllers;
 /**
  * Display the privacy page.
  */
-class PrivacyController extends ControllerBase
+class PrivacyController extends BaseController
 {
 
     /**
