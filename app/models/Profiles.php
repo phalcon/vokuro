@@ -2,6 +2,7 @@
 namespace Vokuro\Models;
 
 use Phalcon\Mvc\Model;
+use Phalcon\Mvc\Model\Relation;
 
 /**
  * Vokuro\Models\Profiles
@@ -35,7 +36,10 @@ class Profiles extends Model
         ));
 
         $this->hasMany('id', 'Vokuro\Models\Permissions', 'profilesId', array(
-            'alias' => 'permissions'
+            'alias' => 'permissions',
+            'foreignKey' => array(
+                'action' => Relation::ACTION_CASCADE
+            )
         ));
     }
 }
