@@ -192,7 +192,8 @@ class UsersController extends ControllerBase
 
                     $this->flash->success('Your password was successfully changed');
 
-                    Tag::resetInput();
+                    Tag::setDefault('password', '');
+                    Tag::setDefault('confirmPassword', '');
                 }
             }
         }
