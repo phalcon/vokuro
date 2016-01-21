@@ -1,6 +1,7 @@
 <?php
 
 use Phalcon\Config;
+use Phalcon\Logger;
 
 return new Config([
     'database' => [
@@ -36,5 +37,12 @@ return new Config([
     'amazon' => [
         'AWSAccessKeyId' => '',
         'AWSSecretKey' => ''
+    ],
+    'logger' => [
+        'path'     => APP_DIR . '/logs/',
+        'format'   => '%date% [%type%] %message%',
+        'date'     => 'D j H:i:s',
+        'logLevel' => Logger::DEBUG,
+        'filename' => 'application.log',
     ]
 ]);

@@ -9,7 +9,8 @@ use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Files as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
-
+use Phalcon\Logger\Adapter\File as FileLogger;
+use Phalcon\Logger\Formatter\Line as FormatterLine;
 use Vokuro\Auth\Auth;
 use Vokuro\Acl\Acl;
 use Vokuro\Mail\Mail;
@@ -145,4 +146,21 @@ $di->set('mail', function () {
  */
 $di->set('acl', function () {
     return new Acl();
+});
+
+/**
+ * Logger service
+ */
+$di->set('logger', function ($filename = null, $format = null) use ($config) {
+    $format   = $format ?: $config->get('logger')->format;
+    $filename = trim($filename ?: $config->get('logger')->filename, '\\/');
+    $path     = rtrim($config->get('logger')->path, '\\/') . DIRECTORY_SEPARATOR;
+
+    $formatter = new FormatterLine($format, $config->get('logger')->date);
+    $logger    = new FileLogger($path . $filename);
+
+    $logger->setFormatter($formatter);
+    $logger->setLogLevel($config->get('logger')->logLevel);
+
+    return $logger;
 });
