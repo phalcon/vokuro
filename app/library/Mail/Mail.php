@@ -12,7 +12,6 @@ use Phalcon\Mvc\View;
  */
 class Mail extends Component
 {
-
     protected $transport;
 
     protected $amazonSes;
@@ -23,28 +22,34 @@ class Mail extends Component
      * Send a raw e-mail via AmazonSES
      *
      * @param string $raw
+     * @return bool
      */
     private function amazonSESSend($raw)
     {
         if ($this->amazonSes == null) {
             $this->amazonSes = new \AmazonSES(
-                $this->config->amazon->AWSAccessKeyId,
-                $this->config->amazon->AWSSecretKey
+                [
+                    'key'    => $this->config->amazon->AWSAccessKeyId,
+                    'secret' => $this->config->amazon->AWSSecretKey
+                ]
             );
-            $this->amazonSes->disable_ssl_verification();
+            @$this->amazonSes->disable_ssl_verification();
         }
 
-        $response = $this->amazonSes->send_raw_email(array(
-            'Data' => base64_encode($raw)
-        ), array(
-            'curlopts' => array(
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0
-            )
-        ));
+        $response = $this->amazonSes->send_raw_email(
+            [
+                'Data' => base64_encode($raw)
+            ],
+            [
+                'curlopts' => [
+                    CURLOPT_SSL_VERIFYHOST => 0,
+                    CURLOPT_SSL_VERIFYPEER => 0
+                ]
+            ]
+        );
 
         if (!$response->isOK()) {
-            throw new Exception('Error sending email from AWS SES: ' . $response->body->asXML());
+            $this->logger->error('Error sending email from AWS SES: ' . $response->body->asXML());
         }
 
         return true;
@@ -55,6 +60,7 @@ class Mail extends Component
      *
      * @param string $name
      * @param array $params
+     * @return string
      */
     public function getTemplate($name, $params)
     {
@@ -76,10 +82,11 @@ class Mail extends Component
      * @param string $subject
      * @param string $name
      * @param array $params
+     * @return bool|int
+     * @throws Exception
      */
     public function send($to, $subject, $name, $params)
     {
-
         // Settings
         $mailSettings = $this->config->mail;
 
