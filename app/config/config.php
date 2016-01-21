@@ -1,13 +1,16 @@
 <?php
-return new \Phalcon\Config(array(
-    'database' => array(
+
+use Phalcon\Config;
+
+return new Config([
+    'database' => [
         'adapter' => 'Mysql',
         'host' => '127.0.0.1',
         'username' => 'root',
         'password' => '',
         'dbname' => 'vokuro'
-    ),
-    'application' => array(
+    ],
+    'application' => [
         'controllersDir' => APP_DIR . '/controllers/',
         'modelsDir' => APP_DIR . '/models/',
         'formsDir' => APP_DIR . '/forms/',
@@ -18,20 +21,20 @@ return new \Phalcon\Config(array(
         'baseUri' => '/',
         'publicUrl' => 'vokuro.phalconphp.com',
         'cryptSalt' => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
-    ),
-    'mail' => array(
+    ],
+    'mail' => [
         'fromName' => 'Vokuro',
         'fromEmail' => 'phosphorum@phalconphp.com',
-        'smtp' => array(
+        'smtp' => [
             'server' => 'smtp.gmail.com',
             'port' => 587,
             'security' => 'tls',
             'username' => '',
             'password' => ''
-        )
-    ),
-    'amazon' => array(
+        ]
+    ],
+    'amazon' => [
         'AWSAccessKeyId' => '',
         'AWSSecretKey' => ''
-    )
-));
+    ]
+]);

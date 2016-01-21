@@ -58,7 +58,6 @@ local.properties
 *.tlb
 *.tli
 *.tlh
-*.tmp
 *.vspscc
 .builds
 *.dotCover
@@ -165,6 +164,6 @@ pip-log.txt
 composer.lock
 app/config/config.php
 app/cache/volt/*.php
-vendor
+/vendor
 app/cache/metaData/*.php
 data.txt

@@ -13,8 +13,6 @@ NOTE
 ----
 The master branch will always contain the latest stable version. If you wish to check older versions or newer ones currently under development, please switch to the relevant branch.
 
-Required version: >= 1.1.0 B3
-
 Get Started
 -----------
 
@@ -22,9 +20,10 @@ Get Started
 
 To run this application on your machine, you need at least:
 
-* >= PHP 5.3.9
-* Apache Web Server with mod rewrite enabled, and AllowOverride Options (or All) in your httpd.conf
+* >= PHP 5.4
+* Apache Web Server with `mod_rewrite enabled`, and `AllowOverride Options` (or `All`) in your `httpd.conf` or or Nginx Web Server
 * Latest Phalcon Framework extension installed/enabled
+* MySQL >= 5.1.5
 
 Then you'll need to create the database and initialize schema:
 
