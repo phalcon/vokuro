@@ -43,7 +43,7 @@ class EmailConfirmations extends Model
      */
     public function beforeValidationOnCreate()
     {
-        // Timestamp the confirmaton
+        // Timestamp the confirmation
         $this->createdAt = time();
 
         // Generate a random confirmation code
@@ -58,7 +58,7 @@ class EmailConfirmations extends Model
      */
     public function beforeValidationOnUpdate()
     {
-        // Timestamp the confirmaton
+        // Timestamp the confirmation
         $this->modifiedAt = time();
     }
 

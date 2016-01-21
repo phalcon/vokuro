@@ -21,7 +21,7 @@ class Acl extends Component
     private $acl;
 
     /**
-     * The filepath of the ACL cache file from APP_DIR
+     * The file path of the ACL cache file from APP_DIR
      *
      * @var string
      */
@@ -95,7 +95,7 @@ class Acl extends Component
     /**
      * Returns the ACL list
      *
-     * @return Phalcon\Acl\Adapter\Memory
+     * @return \Phalcon\Acl\Adapter\Memory
      */
     public function getAcl()
     {
@@ -147,7 +147,7 @@ class Acl extends Component
     }
 
     /**
-     * Returns all the resoruces and their actions available in the application
+     * Returns all the resources and their actions available in the application
      *
      * @return array
      */
@@ -160,7 +160,7 @@ class Acl extends Component
      * Returns the action description according to its simplified name
      *
      * @param string $action
-     * @return $action
+     * @return string
      */
     public function getActionDescription($action)
     {
@@ -193,7 +193,7 @@ class Acl extends Component
             $acl->addResource(new AclResource($resource), $actions);
         }
 
-        // Grant acess to private area to role Users
+        // Grant access to private area to role Users
         foreach ($profiles as $profile) {
 
             // Grant permissions in "permissions" model

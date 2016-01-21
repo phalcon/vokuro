@@ -13,12 +13,12 @@ use Vokuro\Models\FailedLogins;
  */
 class Auth extends Component
 {
-
     /**
      * Checks the user credentials
      *
      * @param array $credentials
-     * @return boolan
+     * @return boolean
+     * @throws Exception
      */
     public function check($credentials)
     {
@@ -44,7 +44,7 @@ class Auth extends Component
 
         // Check if the remember me was selected
         if (isset($credentials['remember'])) {
-            $this->createRememberEnviroment($user);
+            $this->createRememberEnvironment($user);
         }
 
         $this->session->set('auth-identity', array(
@@ -57,7 +57,8 @@ class Auth extends Component
     /**
      * Creates the remember me environment settings the related cookies and generating tokens
      *
-     * @param Vokuro\Models\Users $user
+     * @param \Vokuro\Models\Users $user
+     * @throws Exception
      */
     public function saveSuccessLogin($user)
     {
@@ -73,7 +74,7 @@ class Auth extends Component
 
     /**
      * Implements login throttling
-     * Reduces the efectiveness of brute force attacks
+     * Reduces the effectiveness of brute force attacks
      *
      * @param int $userId
      */
@@ -111,9 +112,9 @@ class Auth extends Component
     /**
      * Creates the remember me environment settings the related cookies and generating tokens
      *
-     * @param Vokuro\Models\Users $user
+     * @param \Vokuro\Models\Users $user
      */
-    public function createRememberEnviroment(Users $user)
+    public function createRememberEnvironment(Users $user)
     {
         $userAgent = $this->request->getUserAgent();
         $token = md5($user->email . $user->password . $userAgent);
@@ -141,9 +142,9 @@ class Auth extends Component
     }
 
     /**
-     * Logs on using the information in the coookies
+     * Logs on using the information in the cookies
      *
-     * @return Phalcon\Http\Response
+     * @return \Phalcon\Http\Response
      */
     public function loginWithRememberMe()
     {
@@ -198,7 +199,8 @@ class Auth extends Component
     /**
      * Checks if the user is banned/inactive/suspended
      *
-     * @param Vokuro\Models\Users $user
+     * @param \Vokuro\Models\Users $user
+     * @throws Exception
      */
     public function checkUserFlags(Users $user)
     {
@@ -255,6 +257,7 @@ class Auth extends Component
      * Auths the user by his/her id
      *
      * @param int $id
+     * @throws Exception
      */
     public function authUserById($id)
     {
@@ -276,6 +279,7 @@ class Auth extends Component
      * Get the entity related to user in the active identity
      *
      * @return \Vokuro\Models\Users
+     * @throws Exception
      */
     public function getUser()
     {
