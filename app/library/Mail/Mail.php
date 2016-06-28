@@ -16,8 +16,6 @@ class Mail extends Component
 
     protected $amazonSes;
 
-    protected $directSmtp = false;
-
     /**
      * Send a raw e-mail via AmazonSES
      *
@@ -101,7 +99,7 @@ class Mail extends Component
             ))
             ->setBody($template, 'text/html');
 
-        if ($this->directSmtp) {
+        if (isset($mailSettings) && isset($mailSettings->smtp)) {
 
             if (!$this->transport) {
                 $this->transport = Smtp::newInstance(
