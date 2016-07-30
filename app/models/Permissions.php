@@ -36,8 +36,8 @@ class Permissions extends Model
 
     public function initialize()
     {
-        $this->belongsTo('profilesId', __NAMESPACE__ . '\Profiles', 'id', array(
+        $this->belongsTo('profilesId', __NAMESPACE__ . '\Profiles', 'id', [
             'alias' => 'profile'
-        ));
+        ]);
     }
 }

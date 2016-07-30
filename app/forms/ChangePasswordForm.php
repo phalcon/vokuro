@@ -15,30 +15,30 @@ class ChangePasswordForm extends Form
         // Password
         $password = new Password('password');
 
-        $password->addValidators(array(
-            new PresenceOf(array(
+        $password->addValidators([
+            new PresenceOf([
                 'message' => 'Password is required'
-            )),
-            new StringLength(array(
+            ]),
+            new StringLength([
                 'min' => 8,
                 'messageMinimum' => 'Password is too short. Minimum 8 characters'
-            )),
-            new Confirmation(array(
+            ]),
+            new Confirmation([
                 'message' => 'Password doesn\'t match confirmation',
                 'with' => 'confirmPassword'
-            ))
-        ));
+            ])
+        ]);
 
         $this->add($password);
 
         // Confirm Password
         $confirmPassword = new Password('confirmPassword');
 
-        $confirmPassword->addValidators(array(
-            new PresenceOf(array(
+        $confirmPassword->addValidators([
+            new PresenceOf([
                 'message' => 'The confirmation password is required'
-            ))
-        ));
+            ])
+        ]);
 
         $this->add($confirmPassword);
     }

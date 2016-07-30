@@ -40,18 +40,18 @@ class SessionController extends ControllerBase
 
                 $user = new Users();
 
-                $user->assign(array(
+                $user->assign([
                     'name' => $this->request->getPost('name', 'striptags'),
                     'email' => $this->request->getPost('email'),
                     'password' => $this->security->hash($this->request->getPost('password')),
                     'profilesId' => 2
-                ));
+                ]);
 
                 if ($user->save()) {
-                    return $this->dispatcher->forward(array(
+                    return $this->dispatcher->forward([
                         'controller' => 'index',
                         'action' => 'index'
-                    ));
+                    ]);
                 }
 
                 $this->flash->error($user->getMessages());
@@ -83,11 +83,11 @@ class SessionController extends ControllerBase
                     }
                 } else {
 
-                    $this->auth->check(array(
+                    $this->auth->check([
                         'email' => $this->request->getPost('email'),
                         'password' => $this->request->getPost('password'),
                         'remember' => $this->request->getPost('remember')
-                    ));
+                    ]);
 
                     return $this->response->redirect('users');
                 }

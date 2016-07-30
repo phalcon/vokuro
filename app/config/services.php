@@ -43,19 +43,19 @@ $di->set('view', function () use ($config) {
 
     $view->setViewsDir($config->application->viewsDir);
 
-    $view->registerEngines(array(
+    $view->registerEngines([
         '.volt' => function ($view, $di) use ($config) {
 
             $volt = new VoltEngine($view, $di);
 
-            $volt->setOptions(array(
+            $volt->setOptions([
                 'compiledPath' => $config->application->cacheDir . 'volt/',
                 'compiledSeparator' => '_'
-            ));
+            ]);
 
             return $volt;
         }
-    ));
+    ]);
 
     return $view;
 }, true);
@@ -64,21 +64,21 @@ $di->set('view', function () use ($config) {
  * Database connection is created based in the parameters defined in the configuration file
  */
 $di->set('db', function () use ($config) {
-    return new DbAdapter(array(
+    return new DbAdapter([
         'host' => $config->database->host,
         'username' => $config->database->username,
         'password' => $config->database->password,
         'dbname' => $config->database->dbname
-    ));
+    ]);
 });
 
 /**
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
  */
 $di->set('modelsMetadata', function () use ($config) {
-    return new MetaDataAdapter(array(
+    return new MetaDataAdapter([
         'metaDataDir' => $config->application->cacheDir . 'metaData/'
-    ));
+    ]);
 });
 
 /**
@@ -119,12 +119,12 @@ $di->set('router', function () {
  * Flash service with custom CSS classes
  */
 $di->set('flash', function () {
-    return new Flash(array(
+    return new Flash([
         'error' => 'alert alert-danger',
         'success' => 'alert alert-success',
         'notice' => 'alert alert-info',
         'warning' => 'alert alert-warning'
-    ));
+    ]);
 });
 
 /**

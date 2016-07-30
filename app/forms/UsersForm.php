@@ -24,56 +24,56 @@ class UsersForm extends Form
 
         $this->add($id);
 
-        $name = new Text('name', array(
+        $name = new Text('name', [
             'placeholder' => 'Name'
-        ));
+        ]);
 
-        $name->addValidators(array(
-            new PresenceOf(array(
+        $name->addValidators([
+            new PresenceOf([
                 'message' => 'The name is required'
-            ))
-        ));
+            ])
+        ]);
 
         $this->add($name);
 
-        $email = new Text('email', array(
+        $email = new Text('email', [
             'placeholder' => 'Email'
-        ));
+        ]);
 
-        $email->addValidators(array(
-            new PresenceOf(array(
+        $email->addValidators([
+            new PresenceOf([
                 'message' => 'The e-mail is required'
-            )),
-            new Email(array(
+            ]),
+            new Email([
                 'message' => 'The e-mail is not valid'
-            ))
-        ));
+            ])
+        ]);
 
         $this->add($email);
 
-        $this->add(new Select('profilesId', Profiles::find('active = "Y"'), array(
-            'using' => array(
+        $this->add(new Select('profilesId', Profiles::find('active = "Y"'), [
+            'using' => [
                 'id',
                 'name'
-            ),
+            ],
             'useEmpty' => true,
             'emptyText' => '...',
             'emptyValue' => ''
-        )));
+        ]));
 
-        $this->add(new Select('banned', array(
+        $this->add(new Select('banned', [
             'Y' => 'Yes',
             'N' => 'No'
-        )));
+        ]));
 
-        $this->add(new Select('suspended', array(
+        $this->add(new Select('suspended', [
             'Y' => 'Yes',
             'N' => 'No'
-        )));
+        ]));
 
-        $this->add(new Select('active', array(
+        $this->add(new Select('active', [
             'Y' => 'Yes',
             'N' => 'No'
-        )));
+        ]));
     }
 }

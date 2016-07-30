@@ -17,38 +17,38 @@ class LoginForm extends Form
     public function initialize()
     {
         // Email
-        $email = new Text('email', array(
+        $email = new Text('email', [
             'placeholder' => 'Email'
-        ));
+        ]);
 
-        $email->addValidators(array(
-            new PresenceOf(array(
+        $email->addValidators([
+            new PresenceOf([
                 'message' => 'The e-mail is required'
-            )),
-            new Email(array(
+            ]),
+            new Email([
                 'message' => 'The e-mail is not valid'
-            ))
-        ));
+            ])
+        ]);
 
         $this->add($email);
 
         // Password
-        $password = new Password('password', array(
+        $password = new Password('password', [
             'placeholder' => 'Password'
-        ));
+        ]);
 
-        $password->addValidator(new PresenceOf(array(
+        $password->addValidator(new PresenceOf([
             'message' => 'The password is required'
-        )));
+        ]));
 
         $password->clear();
 
         $this->add($password);
 
         // Remember
-        $remember = new Check('remember', array(
+        $remember = new Check('remember', [
             'value' => 'yes'
-        ));
+        ]);
 
         $remember->setLabel('Remember me');
 
@@ -57,17 +57,17 @@ class LoginForm extends Form
         // CSRF
         $csrf = new Hidden('csrf');
 
-        $csrf->addValidator(new Identical(array(
+        $csrf->addValidator(new Identical([
             'value' => $this->security->getSessionToken(),
             'message' => 'CSRF validation failed'
-        )));
+        ]));
 
         $csrf->clear();
 
         $this->add($csrf);
 
-        $this->add(new Submit('go', array(
+        $this->add(new Submit('go', [
             'class' => 'btn btn-success'
-        )));
+        ]));
     }
 }

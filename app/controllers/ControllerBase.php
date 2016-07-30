@@ -32,10 +32,10 @@ class ControllerBase extends Controller
 
                 $this->flash->notice('You don\'t have access to this module: private');
 
-                $dispatcher->forward(array(
+                $dispatcher->forward([
                     'controller' => 'index',
                     'action' => 'index'
-                ));
+                ]);
                 return false;
             }
 
@@ -46,15 +46,15 @@ class ControllerBase extends Controller
                 $this->flash->notice('You don\'t have access to this module: ' . $controllerName . ':' . $actionName);
 
                 if ($this->acl->isAllowed($identity['profile'], $controllerName, 'index')) {
-                    $dispatcher->forward(array(
+                    $dispatcher->forward([
                         'controller' => $controllerName,
                         'action' => 'index'
-                    ));
+                    ]);
                 } else {
-                    $dispatcher->forward(array(
+                    $dispatcher->forward([
                         'controller' => 'user_control',
                         'action' => 'index'
-                    ));
+                    ]);
                 }
 
                 return false;

@@ -43,7 +43,7 @@ class UsersController extends ControllerBase
             $numberPage = $this->request->getQuery("page", "int");
         }
 
-        $parameters = array();
+        $parameters = [];
         if ($this->persistent->searchParams) {
             $parameters = $this->persistent->searchParams;
         }
@@ -51,16 +51,16 @@ class UsersController extends ControllerBase
         $users = Users::find($parameters);
         if (count($users) == 0) {
             $this->flash->notice("The search did not find any users");
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 "action" => "index"
-            ));
+            ]);
         }
 
-        $paginator = new Paginator(array(
+        $paginator = new Paginator([
             "data" => $users,
             "limit" => 10,
             "page" => $numberPage
-        ));
+        ]);
 
         $this->view->page = $paginator->getPaginate();
     }
@@ -74,11 +74,11 @@ class UsersController extends ControllerBase
 
             $user = new Users();
 
-            $user->assign(array(
+            $user->assign([
                 'name' => $this->request->getPost('name', 'striptags'),
                 'profilesId' => $this->request->getPost('profilesId', 'int'),
                 'email' => $this->request->getPost('email', 'email')
-            ));
+            ]);
 
             if (!$user->save()) {
                 $this->flash->error($user->getMessages());
@@ -101,21 +101,21 @@ class UsersController extends ControllerBase
         $user = Users::findFirstById($id);
         if (!$user) {
             $this->flash->error("User was not found");
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'action' => 'index'
-            ));
+            ]);
         }
 
         if ($this->request->isPost()) {
 
-            $user->assign(array(
+            $user->assign([
                 'name' => $this->request->getPost('name', 'striptags'),
                 'profilesId' => $this->request->getPost('profilesId', 'int'),
                 'email' => $this->request->getPost('email', 'email'),
                 'banned' => $this->request->getPost('banned'),
                 'suspended' => $this->request->getPost('suspended'),
                 'active' => $this->request->getPost('active')
-            ));
+            ]);
 
             if (!$user->save()) {
                 $this->flash->error($user->getMessages());
@@ -129,9 +129,9 @@ class UsersController extends ControllerBase
 
         $this->view->user = $user;
 
-        $this->view->form = new UsersForm($user, array(
+        $this->view->form = new UsersForm($user, [
             'edit' => true
-        ));
+        ]);
     }
 
     /**
@@ -144,9 +144,9 @@ class UsersController extends ControllerBase
         $user = Users::findFirstById($id);
         if (!$user) {
             $this->flash->error("User was not found");
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'action' => 'index'
-            ));
+            ]);
         }
 
         if (!$user->delete()) {
@@ -155,9 +155,9 @@ class UsersController extends ControllerBase
             $this->flash->success("User was deleted");
         }
 
-        return $this->dispatcher->forward(array(
+        return $this->dispatcher->forward([
             'action' => 'index'
-        ));
+        ]);
     }
 
     /**

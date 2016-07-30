@@ -47,11 +47,11 @@ class Auth extends Component
             $this->createRememberEnvironment($user);
         }
 
-        $this->session->set('auth-identity', array(
+        $this->session->set('auth-identity', [
             'id' => $user->id,
             'name' => $user->name,
             'profile' => $user->profile->name
-        ));
+        ]);
     }
 
     /**
@@ -86,13 +86,13 @@ class Auth extends Component
         $failedLogin->attempted = time();
         $failedLogin->save();
 
-        $attempts = FailedLogins::count(array(
+        $attempts = FailedLogins::count([
             'ipAddress = ?0 AND attempted >= ?1',
-            'bind' => array(
+            'bind' => [
                 $this->request->getClientAddress(),
                 time() - 3600 * 6
-            )
-        ));
+            ]
+        ]);
 
         switch ($attempts) {
             case 1:
@@ -159,13 +159,13 @@ class Auth extends Component
 
             if ($cookieToken == $token) {
 
-                $remember = RememberTokens::findFirst(array(
+                $remember = RememberTokens::findFirst([
                     'usersId = ?0 AND token = ?1',
-                    'bind' => array(
+                    'bind' => [
                         $user->id,
                         $token
-                    )
-                ));
+                    ]
+                ]);
                 if ($remember) {
 
                     // Check if the cookie has not expired
@@ -175,11 +175,11 @@ class Auth extends Component
                         $this->checkUserFlags($user);
 
                         // Register identity
-                        $this->session->set('auth-identity', array(
+                        $this->session->set('auth-identity', [
                             'id' => $user->id,
                             'name' => $user->name,
                             'profile' => $user->profile->name
-                        ));
+                        ]);
 
                         // Register the successful login
                         $this->saveSuccessLogin($user);
@@ -268,11 +268,11 @@ class Auth extends Component
 
         $this->checkUserFlags($user);
 
-        $this->session->set('auth-identity', array(
+        $this->session->set('auth-identity', [
             'id' => $user->id,
             'name' => $user->name,
             'profile' => $user->profile->name
-        ));
+        ]);
     }
 
     /**

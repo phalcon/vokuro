@@ -27,15 +27,15 @@ class Profiles extends Model
      */
     public function initialize()
     {
-        $this->hasMany('id', __NAMESPACE__ . '\Users', 'profilesId', array(
+        $this->hasMany('id', __NAMESPACE__ . '\Users', 'profilesId', [
             'alias' => 'users',
-            'foreignKey' => array(
+            'foreignKey' => [
                 'message' => 'Profile cannot be deleted because it\'s used on Users'
-            )
-        ));
+            ]
+        ]);
 
-        $this->hasMany('id', __NAMESPACE__ . '\Permissions', 'profilesId', array(
+        $this->hasMany('id', __NAMESPACE__ . '\Permissions', 'profilesId', [
             'alias' => 'permissions'
-        ));
+        ]);
     }
 }

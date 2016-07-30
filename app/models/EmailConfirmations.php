@@ -69,17 +69,17 @@ class EmailConfirmations extends Model
     {
         $this->getDI()
             ->getMail()
-            ->send(array(
-            $this->user->email => $this->user->name
-        ), "Please confirm your email", 'confirmation', array(
-            'confirmUrl' => '/confirm/' . $this->code . '/' . $this->user->email
-        ));
+            ->send([
+                $this->user->email => $this->user->name
+            ], "Please confirm your email", 'confirmation', [
+                'confirmUrl' => '/confirm/' . $this->code . '/' . $this->user->email
+            ]);
     }
 
     public function initialize()
     {
-        $this->belongsTo('usersId', __NAMESPACE__ . '\Users', 'id', array(
+        $this->belongsTo('usersId', __NAMESPACE__ . '\Users', 'id', [
             'alias' => 'user'
-        ));
+        ]);
     }
 }
