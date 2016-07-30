@@ -102,6 +102,8 @@ class SignUpForm extends Form
             'message' => 'CSRF validation failed'
         )));
 
+        $csrf->clear();
+
         $this->add($csrf);
 
         // Sign Up

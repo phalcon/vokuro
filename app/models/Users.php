@@ -2,7 +2,8 @@
 namespace Vokuro\Models;
 
 use Phalcon\Mvc\Model;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
 
 /**
  * Vokuro\Models\Users
@@ -121,12 +122,13 @@ class Users extends Model
      */
     public function validation()
     {
-        $this->validate(new Uniqueness(array(
-            "field" => "email",
-            "message" => "The email is already registered"
-        )));
+        $validator = new Validation();
 
-        return $this->validationHasFailed() != true;
+        $validator->add('email', new Uniqueness([
+            "message" => "The email is already registered"
+        ]));
+
+        return $this->validate($validator);
     }
 
     public function initialize()
