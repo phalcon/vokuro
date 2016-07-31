@@ -51,7 +51,14 @@ class UsersForm extends Form
 
         $this->add($email);
 
-        $this->add(new Select('profilesId', Profiles::find('active = "Y"'), [
+        $profiles = Profiles::find([
+            'active = :active:',
+            'bind' => [
+                'active' => 'Y'
+            ]
+        ]);
+
+        $this->add(new Select('profilesId', $profiles, [
             'using' => [
                 'id',
                 'name'

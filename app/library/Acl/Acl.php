@@ -183,8 +183,13 @@ class Acl extends Component
         $acl->setDefaultAction(\Phalcon\Acl::DENY);
 
         // Register roles
-        $profiles = Profiles::find('active = "Y"');
 
+        $profiles = Profiles::find([
+            'active = :active:',
+            'bind' => [
+                'active' => 'Y'
+            ]
+        ]);
         foreach ($profiles as $profile) {
             $acl->addRole(new AclRole($profile->name));
         }

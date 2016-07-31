@@ -56,6 +56,11 @@ class PermissionsController extends ControllerBase
         }
 
         // Pass all the active profiles
-        $this->view->profiles = Profiles::find('active = "Y"');
+        $this->view->profiles = Profiles::find([
+            'active = :active:',
+            'bind' => [
+                'active' => 'Y'
+            ]
+        ]);
     }
 }
