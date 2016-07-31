@@ -75,9 +75,7 @@ class ProfilesController extends ControllerBase
     {
         if ($this->request->isPost()) {
 
-            $profile = new Profiles();
-
-            $profile->assign([
+            $profile = new Profiles([
                 'name' => $this->request->getPost('name', 'striptags'),
                 'active' => $this->request->getPost('active')
             ]);
