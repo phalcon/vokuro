@@ -33,17 +33,17 @@ class UserControlController extends ControllerBase
         $confirmation = EmailConfirmations::findFirstByCode($code);
 
         if (!$confirmation) {
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'controller' => 'index',
                 'action' => 'index'
-            ));
+            ]);
         }
 
         if ($confirmation->confirmed != 'N') {
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'controller' => 'session',
                 'action' => 'login'
-            ));
+            ]);
         }
 
         $confirmation->confirmed = 'Y';
@@ -59,10 +59,10 @@ class UserControlController extends ControllerBase
                 $this->flash->error($message);
             }
 
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'controller' => 'index',
                 'action' => 'index'
-            ));
+            ]);
         }
 
         /**
@@ -77,18 +77,18 @@ class UserControlController extends ControllerBase
 
             $this->flash->success('The email was successfully confirmed. Now you must change your password');
 
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'controller' => 'users',
                 'action' => 'changePassword'
-            ));
+            ]);
         }
 
         $this->flash->success('The email was successfully confirmed');
 
-        return $this->dispatcher->forward(array(
+        return $this->dispatcher->forward([
             'controller' => 'users',
             'action' => 'index'
-        ));
+        ]);
     }
 
     public function resetPasswordAction()
@@ -98,17 +98,17 @@ class UserControlController extends ControllerBase
         $resetPassword = ResetPasswords::findFirstByCode($code);
 
         if (!$resetPassword) {
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'controller' => 'index',
                 'action' => 'index'
-            ));
+            ]);
         }
 
         if ($resetPassword->reset != 'N') {
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'controller' => 'session',
                 'action' => 'login'
-            ));
+            ]);
         }
 
         $resetPassword->reset = 'Y';
@@ -122,10 +122,10 @@ class UserControlController extends ControllerBase
                 $this->flash->error($message);
             }
 
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'controller' => 'index',
                 'action' => 'index'
-            ));
+            ]);
         }
 
         /**
@@ -135,9 +135,9 @@ class UserControlController extends ControllerBase
 
         $this->flash->success('Please reset your password');
 
-        return $this->dispatcher->forward(array(
+        return $this->dispatcher->forward([
             'controller' => 'users',
             'action' => 'changePassword'
-        ));
+        ]);
     }
 }

@@ -133,30 +133,30 @@ class Users extends Model
 
     public function initialize()
     {
-        $this->belongsTo('profilesId', __NAMESPACE__ . '\Profiles', 'id', array(
+        $this->belongsTo('profilesId', __NAMESPACE__ . '\Profiles', 'id', [
             'alias' => 'profile',
             'reusable' => true
-        ));
+        ]);
 
-        $this->hasMany('id', __NAMESPACE__ . '\SuccessLogins', 'usersId', array(
+        $this->hasMany('id', __NAMESPACE__ . '\SuccessLogins', 'usersId', [
             'alias' => 'successLogins',
-            'foreignKey' => array(
+            'foreignKey' => [
                 'message' => 'User cannot be deleted because he/she has activity in the system'
-            )
-        ));
+            ]
+        ]);
 
-        $this->hasMany('id', __NAMESPACE__ . '\PasswordChanges', 'usersId', array(
+        $this->hasMany('id', __NAMESPACE__ . '\PasswordChanges', 'usersId', [
             'alias' => 'passwordChanges',
-            'foreignKey' => array(
+            'foreignKey' => [
                 'message' => 'User cannot be deleted because he/she has activity in the system'
-            )
-        ));
+            ]
+        ]);
 
-        $this->hasMany('id', __NAMESPACE__ . '\ResetPasswords', 'usersId', array(
+        $this->hasMany('id', __NAMESPACE__ . '\ResetPasswords', 'usersId', [
             'alias' => 'resetPasswords',
-            'foreignKey' => array(
+            'foreignKey' => [
                 'message' => 'User cannot be deleted because he/she has activity in the system'
-            )
-        ));
+            ]
+        ]);
     }
 }

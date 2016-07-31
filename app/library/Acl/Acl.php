@@ -32,40 +32,40 @@ class Acl extends Component
      *
      * @var array
      */
-    private $privateResources = array(
-        'users' => array(
+    private $privateResources = [
+        'users' => [
             'index',
             'search',
             'edit',
             'create',
             'delete',
             'changePassword'
-        ),
-        'profiles' => array(
+        ],
+        'profiles' => [
             'index',
             'search',
             'edit',
             'create',
             'delete'
-        ),
-        'permissions' => array(
+        ],
+        'permissions' => [
             'index'
-        )
-    );
+        ]
+    ];
 
     /**
      * Human-readable descriptions of the actions used in {@see $privateResources}
      *
      * @var array
      */
-    private $actionDescriptions = array(
+    private $actionDescriptions = [
         'index' => 'Access',
         'search' => 'Search',
         'create' => 'Create',
         'edit' => 'Edit',
         'delete' => 'Delete',
         'changePassword' => 'Change password'
-    );
+    ];
 
     /**
      * Checks if a controller is private or not
@@ -139,7 +139,7 @@ class Acl extends Component
      */
     public function getPermissions(Profiles $profile)
     {
-        $permissions = array();
+        $permissions = [];
         foreach ($profile->getPermissions() as $permission) {
             $permissions[$permission->resource . '.' . $permission->action] = true;
         }

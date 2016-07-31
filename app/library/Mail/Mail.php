@@ -62,9 +62,9 @@ class Mail extends Component
      */
     public function getTemplate($name, $params)
     {
-        $parameters = array_merge(array(
+        $parameters = array_merge([
             'publicUrl' => $this->config->application->publicUrl
-        ), $params);
+        ], $params);
 
         return $this->view->getRender('emailTemplates', $name, $parameters, function ($view) {
             $view->setRenderLevel(View::LEVEL_LAYOUT);
@@ -94,9 +94,9 @@ class Mail extends Component
         $message = Message::newInstance()
             ->setSubject($subject)
             ->setTo($to)
-            ->setFrom(array(
+            ->setFrom([
                 $mailSettings->fromEmail => $mailSettings->fromName
-            ))
+            ])
             ->setBody($template, 'text/html');
 
         if (isset($mailSettings) && isset($mailSettings->smtp)) {

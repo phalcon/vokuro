@@ -12,23 +12,23 @@ class ForgotPasswordForm extends Form
 
     public function initialize()
     {
-        $email = new Text('email', array(
+        $email = new Text('email', [
             'placeholder' => 'Email'
-        ));
+        ]);
 
-        $email->addValidators(array(
-            new PresenceOf(array(
+        $email->addValidators([
+            new PresenceOf([
                 'message' => 'The e-mail is required'
-            )),
-            new Email(array(
+            ]),
+            new Email([
                 'message' => 'The e-mail is not valid'
-            ))
-        ));
+            ])
+        ]);
 
         $this->add($email);
 
-        $this->add(new Submit('Send', array(
+        $this->add(new Submit('Send', [
             'class' => 'btn btn-primary'
-        )));
+        ]));
     }
 }

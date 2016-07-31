@@ -21,21 +21,21 @@ class ProfilesForm extends Form
 
         $this->add($id);
 
-        $name = new Text('name', array(
+        $name = new Text('name', [
             'placeholder' => 'Name'
-        ));
+        ]);
 
-        $name->addValidators(array(
-            new PresenceOf(array(
+        $name->addValidators([
+            new PresenceOf([
                 'message' => 'The name is required'
-            ))
-        ));
+            ])
+        ]);
 
         $this->add($name);
 
-        $this->add(new Select('active', array(
+        $this->add(new Select('active', [
             'Y' => 'Yes',
             'N' => 'No'
-        )));
+        ]));
     }
 }
