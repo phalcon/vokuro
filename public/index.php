@@ -1,36 +1,40 @@
 <?php
 
+use Phalcon\DI\FactoryDefault;
+use Phalcon\Mvc\Application;
+
 error_reporting(E_ALL);
+
+/**
+ * Define some useful constants
+ */
+define('BASE_PATH', dirname(__DIR__));
+define('APP_PATH', BASE_PATH . '/app');
 
 try {
 
     /**
-     * Define some useful constants
+     * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
      */
-    define('BASE_DIR', dirname(__DIR__));
-    define('APP_DIR', BASE_DIR . '/app');
+    $di = new FactoryDefault();
 
-	/**
-	 * Read the configuration
-	 */
-	$config = include APP_DIR . '/config/config.php';
+    /**
+     * Read services
+     */
+    include APP_PATH . "/config/services.php";
 
-	/**
-	 * Read auto-loader
-	 */
-	include APP_DIR . '/config/loader.php';
-
-	/**
-	 * Read services
-	 */
-	include APP_DIR . '/config/services.php';
+    /**
+     * Call the autoloader service.  We don't need to keep the results.
+     */
+    $di->getLoader();
 
 	/**
 	 * Handle the request
 	 */
-	$application = new \Phalcon\Mvc\Application($di);
+	$application = new Application($di);
 
-	echo $application->handle()->getContent();
+	echo $application->handle()
+        ->getContent();
 
 } catch (Exception $e) {
 	echo $e->getMessage(), '<br>';

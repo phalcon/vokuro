@@ -21,7 +21,7 @@ class Acl extends Component
     private $acl;
 
     /**
-     * The file path of the ACL cache file from APP_DIR
+     * The file path of the ACL cache file from APP_PATH
      *
      * @var string
      */
@@ -114,13 +114,13 @@ class Acl extends Component
         }
 
         // Check if the ACL is already generated
-        if (!file_exists(APP_DIR . $this->filePath)) {
+        if (!file_exists(APP_PATH . $this->filePath)) {
             $this->acl = $this->rebuild();
             return $this->acl;
         }
 
         // Get the ACL from the data file
-        $data = file_get_contents(APP_DIR . $this->filePath);
+        $data = file_get_contents(APP_PATH . $this->filePath);
         $this->acl = unserialize($data);
 
         // Store the ACL in APC
@@ -210,9 +210,9 @@ class Acl extends Component
             $acl->allow($profile->name, 'users', 'changePassword');
         }
 
-        if (touch(APP_DIR . $this->filePath) && is_writable(APP_DIR . $this->filePath)) {
+        if (touch(APP_PATH . $this->filePath) && is_writable(APP_PATH . $this->filePath)) {
 
-            file_put_contents(APP_DIR . $this->filePath, serialize($acl));
+            file_put_contents(APP_PATH . $this->filePath, serialize($acl));
 
             // Store the ACL in APC
             if (function_exists('apc_store')) {
@@ -220,7 +220,7 @@ class Acl extends Component
             }
         } else {
             $this->flash->error(
-                'The user does not have write permissions to create the ACL list at ' . APP_DIR . $this->filePath
+                'The user does not have write permissions to create the ACL list at ' . APP_PATH . $this->filePath
             );
         }
 
