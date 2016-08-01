@@ -76,7 +76,7 @@ class UsersController extends ControllerBase
                 'name' => $this->request->getPost('name', 'striptags'),
                 'profilesId' => $this->request->getPost('profilesId', 'int'),
                 'email' => $this->request->getPost('email', 'email')
-            ])
+            ]);
 
             if (!$user->save()) {
                 $this->flash->error($user->getMessages());
