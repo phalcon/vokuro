@@ -24,9 +24,14 @@ try {
     include APP_PATH . "/config/services.php";
 
     /**
-     * Call the autoloader service.  We don't need to keep the results.
+     * Get config service for use in inline setup below
      */
-    $di->getLoader();
+    $config = $di->getConfig();
+
+    /**
+     * Include Autoloader
+     */
+    include APP_PATH . '/config/loader.php';
 
     /**
     * Handle the request
