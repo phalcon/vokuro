@@ -163,7 +163,7 @@ pip-log.txt
 
 composer.lock
 app/config/config.php
-app/cache/volt/*.php
+cache/volt/*.php
 /vendor
-app/cache/metaData/*.php
+cache/metaData/*.php
 data.txt

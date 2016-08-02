@@ -21,11 +21,11 @@ class Acl extends Component
     private $acl;
 
     /**
-     * The file path of the ACL cache file from APP_PATH
+     * The file path of the ACL cache file.
      *
      * @var string
      */
-    private $filePath = '/cache/acl/data.txt';
+    private $filePath;
 
     /**
      * Define the resources that are considered "private". These controller => actions require authentication.
@@ -113,14 +113,16 @@ class Acl extends Component
             }
         }
 
+        $filePath = $this->getFilePath();
+
         // Check if the ACL is already generated
-        if (!file_exists(APP_PATH . $this->filePath)) {
+        if (!file_exists($filePath)) {
             $this->acl = $this->rebuild();
             return $this->acl;
         }
 
         // Get the ACL from the data file
-        $data = file_get_contents(APP_PATH . $this->filePath);
+        $data = file_get_contents($filePath);
         $this->acl = unserialize($data);
 
         // Store the ACL in APC
@@ -210,9 +212,11 @@ class Acl extends Component
             $acl->allow($profile->name, 'users', 'changePassword');
         }
 
-        if (touch(APP_PATH . $this->filePath) && is_writable(APP_PATH . $this->filePath)) {
+        $filePath = $this->getFilePath();
 
-            file_put_contents(APP_PATH . $this->filePath, serialize($acl));
+        if (touch($filePath) && is_writable($filePath)) {
+
+            file_put_contents($filePath, serialize($acl));
 
             // Store the ACL in APC
             if (function_exists('apc_store')) {
@@ -220,10 +224,26 @@ class Acl extends Component
             }
         } else {
             $this->flash->error(
-                'The user does not have write permissions to create the ACL list at ' . APP_PATH . $this->filePath
+                'The user does not have write permissions to create the ACL list at ' . $filePath
             );
         }
 
         return $acl;
     }
+
+
+    /**
+     * Set the acl cache file path
+     *
+     * @return string
+     */
+    protected function getFilePath()
+    {
+        if (!isset($this->filePath)) {
+            $this->filePath = $this->config->application->cacheDir . '/acl/data.txt';
+        }
+
+        return $this->filePath;
+    }
+
 }
