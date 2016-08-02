@@ -8,20 +8,20 @@ return new Config([
         'adapter' => 'Mysql',
         'host' => '127.0.0.1',
         'username' => 'root',
-        'password' => 'root',
+        'password' => '',
         'dbname' => 'vokuro'
     ],
     'application' => [
         'controllersDir' => APP_PATH . '/controllers/',
-        'modelsDir' => APP_PATH . '/models/',
-        'formsDir' => APP_PATH . '/forms/',
-        'viewsDir' => APP_PATH . '/views/',
-        'libraryDir' => APP_PATH . '/library/',
-        'pluginsDir' => APP_PATH . '/plugins/',
-        'cacheDir' => APP_PATH . '/cache/',
-        'baseUri' => '/',
-        'publicUrl' => 'vokuro.phalconphp.com',
-        'cryptSalt' => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
+        'modelsDir'      => APP_PATH . '/models/',
+        'formsDir'       => APP_PATH . '/forms/',
+        'viewsDir'       => APP_PATH . '/views/',
+        'libraryDir'     => APP_PATH . '/library/',
+        'pluginsDir'     => APP_PATH . '/plugins/',
+        'cacheDir'       => BASE_PATH . '/cache/',
+        'baseUri'        => '/',
+        'publicUrl'      => 'vokuro.phalconphp.com',
+        'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
     ],
     'mail' => [
         'fromName' => 'Vokuro',
@@ -39,7 +39,7 @@ return new Config([
         'AWSSecretKey' => ''
     ],
     'logger' => [
-        'path'     => APP_PATH . '/logs/',
+        'path'     => BASE_PATH . '/logs/',
         'format'   => '%date% [%type%] %message%',
         'date'     => 'D j H:i:s',
         'logLevel' => Logger::DEBUG,
