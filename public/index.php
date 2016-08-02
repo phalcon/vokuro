@@ -28,12 +28,12 @@ try {
      */
     $di->getLoader();
 
-	/**
-	 * Handle the request
-	 */
-	$application = new Application($di);
+    /**
+    * Handle the request
+    */
+    $application = new Application($di);
 
-	echo $application->handle()
+    echo $application->handle()
         ->getContent();
 
 } catch (Exception $e) {
