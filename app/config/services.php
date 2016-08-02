@@ -130,7 +130,7 @@ $di->set('dispatcher', function () {
  * Loading routes from the routes.php file
  */
 $di->set('router', function () {
-    return require __DIR__ . '/routes.php';
+    return require APP_PATH . '/config/routes.php';
 });
 
 /**
