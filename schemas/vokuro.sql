@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `failed_logins` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `usersId` int(10) unsigned DEFAULT NULL,
   `ipAddress` char(15) NOT NULL,
-  `attempted` smallint(5) unsigned NOT NULL,
+  `attempted` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `usersId` (`usersId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
