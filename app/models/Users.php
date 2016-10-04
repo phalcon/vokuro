@@ -89,8 +89,13 @@ class Users extends Model
         }
 
         // The account must be confirmed via e-mail
-        $this->active = 'N';
-
+        // Only require this if emails are turned on in the config, otherwise account is automatically active
+        if ($this->getDI()->get('config')->useMail) {
+            $this->active = 'N';
+        } else {
+            $this->active = 'Y';
+        }
+        
         // The account is not suspended by default
         $this->suspended = 'N';
 
@@ -103,16 +108,20 @@ class Users extends Model
      */
     public function afterSave()
     {
-        if ($this->active == 'N') {
+        // Only send the confirmation email if emails are turned on in the config
+        if ($this->getDI()->get('config')->useMail) {
 
-            $emailConfirmation = new EmailConfirmations();
+            if ($this->active == 'N') {
 
-            $emailConfirmation->usersId = $this->id;
+                $emailConfirmation = new EmailConfirmations();
 
-            if ($emailConfirmation->save()) {
-                $this->getDI()
-                    ->getFlash()
-                    ->notice('A confirmation mail has been sent to ' . $this->email);
+                $emailConfirmation->usersId = $this->id;
+
+                if ($emailConfirmation->save()) {
+                    $this->getDI()
+                        ->getFlash()
+                        ->notice('A confirmation mail has been sent to ' . $this->email);
+                }
             }
         }
     }

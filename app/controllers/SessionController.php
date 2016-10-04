@@ -105,28 +105,34 @@ class SessionController extends ControllerBase
         $form = new ForgotPasswordForm();
 
         if ($this->request->isPost()) {
+            
+            // Send emails only is config value is set to true
+            if ($this->getDI()->get('config')->useMail) {
 
-            if ($form->isValid($this->request->getPost()) == false) {
-                foreach ($form->getMessages() as $message) {
-                    $this->flash->error($message);
-                }
-            } else {
-
-                $user = Users::findFirstByEmail($this->request->getPost('email'));
-                if (!$user) {
-                    $this->flash->success('There is no account associated to this email');
+                if ($form->isValid($this->request->getPost()) == false) {
+                    foreach ($form->getMessages() as $message) {
+                        $this->flash->error($message);
+                    }
                 } else {
 
-                    $resetPassword = new ResetPasswords();
-                    $resetPassword->usersId = $user->id;
-                    if ($resetPassword->save()) {
-                        $this->flash->success('Success! Please check your messages for an email reset password');
+                    $user = Users::findFirstByEmail($this->request->getPost('email'));
+                    if (!$user) {
+                        $this->flash->success('There is no account associated to this email');
                     } else {
-                        foreach ($resetPassword->getMessages() as $message) {
-                            $this->flash->error($message);
+
+                        $resetPassword = new ResetPasswords();
+                        $resetPassword->usersId = $user->id;
+                        if ($resetPassword->save()) {
+                            $this->flash->success('Success! Please check your messages for an email reset password');
+                        } else {
+                            foreach ($resetPassword->getMessages() as $message) {
+                                $this->flash->error($message);
+                            }
                         }
                     }
                 }
+            } else {
+                $this->flash->warning('Emails are currently disabled. Change config key "useMail" to true to enable emails.');
             }
         }
 
