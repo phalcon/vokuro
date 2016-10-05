@@ -44,5 +44,7 @@ return new Config([
         'date'     => 'D j H:i:s',
         'logLevel' => Logger::DEBUG,
         'filename' => 'application.log',
-    ]
+    ],
+    // Set to false to disable sending emails (for use in test environment)
+    'useMail' => true
 ]);
