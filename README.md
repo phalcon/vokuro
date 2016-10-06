@@ -31,6 +31,8 @@ Then you'll need to create the database and initialize schema:
     echo 'CREATE DATABASE vokuro' | mysql -u root
     cat schemas/vokuro.sql | mysql -u root vokuro
 
+Also you can override application config by creating app/config/config.dev.php (already gitignored).
+
 Installing Dependencies via Composer
 ------------------------------------
 Vökuró's dependencies must be installed using Composer. Install composer in a common location or in your project:

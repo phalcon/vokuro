@@ -167,3 +167,4 @@ cache/volt/*.php
 /vendor
 cache/metaData/*.php
 data.txt
+app/config/config.dev.php
