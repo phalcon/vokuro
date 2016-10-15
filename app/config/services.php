@@ -25,6 +25,11 @@ $di->setShared('config', function () {
         $config->merge($override);
     }
     
+    if (is_readable(APP_PATH . '/config/privateResources.php')) {
+        $pr = include APP_PATH . '/config/privateResources.php';
+        $config->merge($pr);
+    }
+    
     return $config;
 });
 
@@ -154,9 +159,14 @@ $di->set('mail', function () {
 
 /**
  * Access Control List
+ * Reads privateResource as an array from the config object.
  */
 $di->set('acl', function () {
-    return new Acl();
+    $acl = new Acl();
+    $config = $this->getConfig();
+    $pr=$config->privateResources->toArray();
+    $acl->addPrivateResources($pr);
+    return $acl;
 });
 
 /**
