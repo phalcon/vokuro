@@ -232,7 +232,7 @@ class Acl extends Component
      * 
      * @param array $resources
      */
-    public function addPrivateResources($resources) {
+    public function addPrivateResources(array $resources) {
         if (count($resources) > 0) {
             $this->privateResources = array_merge($this->privateResources, $resources);
             if (is_object($this->acl)) {

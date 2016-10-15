@@ -25,11 +25,6 @@ $di->setShared('config', function () {
         $config->merge($override);
     }
     
-    if (is_readable(APP_PATH . '/config/privateResources.php')) {
-        $pr = include APP_PATH . '/config/privateResources.php';
-        $config->merge($pr);
-    }
-    
     return $config;
 });
 
@@ -158,13 +153,23 @@ $di->set('mail', function () {
 });
 
 /**
+ * Setup the private resources, if any, for performance optimization of the ACL.  
+ */
+$di->setShared('PrivateResources', function() {
+    $pr = [];
+    if (is_readable(APP_PATH . '/config/privateResources.php')) {
+        $pr = include APP_PATH . '/config/privateResources.php';
+    }
+    return $pr;
+});
+
+/**
  * Access Control List
  * Reads privateResource as an array from the config object.
  */
 $di->set('acl', function () {
     $acl = new Acl();
-    $config = $this->getConfig();
-    $pr=$config->privateResources->toArray();
+    $pr = $this->getShared('PrivateResources')->privateResources->toArray();
     $acl->addPrivateResources($pr);
     return $acl;
 });
