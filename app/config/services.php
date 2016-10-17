@@ -155,7 +155,7 @@ $di->set('mail', function () {
 /**
  * Setup the private resources, if any, for performance optimization of the ACL.  
  */
-$di->setShared('PrivateResources', function() {
+$di->setShared('AclResources', function() {
     $pr = [];
     if (is_readable(APP_PATH . '/config/privateResources.php')) {
         $pr = include APP_PATH . '/config/privateResources.php';
@@ -169,7 +169,7 @@ $di->setShared('PrivateResources', function() {
  */
 $di->set('acl', function () {
     $acl = new Acl();
-    $pr = $this->getShared('PrivateResources')->privateResources->toArray();
+    $pr = $this->getShared('AclResources')->privateResources->toArray();
     $acl->addPrivateResources($pr);
     return $acl;
 });
