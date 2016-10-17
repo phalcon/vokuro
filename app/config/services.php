@@ -153,10 +153,25 @@ $di->set('mail', function () {
 });
 
 /**
+ * Setup the private resources, if any, for performance optimization of the ACL.  
+ */
+$di->setShared('AclResources', function() {
+    $pr = [];
+    if (is_readable(APP_PATH . '/config/privateResources.php')) {
+        $pr = include APP_PATH . '/config/privateResources.php';
+    }
+    return $pr;
+});
+
+/**
  * Access Control List
+ * Reads privateResource as an array from the config object.
  */
 $di->set('acl', function () {
-    return new Acl();
+    $acl = new Acl();
+    $pr = $this->getShared('AclResources')->privateResources->toArray();
+    $acl->addPrivateResources($pr);
+    return $acl;
 });
 
 /**

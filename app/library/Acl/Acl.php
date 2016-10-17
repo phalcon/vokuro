@@ -32,26 +32,7 @@ class Acl extends Component
      *
      * @var array
      */
-    private $privateResources = [
-        'users' => [
-            'index',
-            'search',
-            'edit',
-            'create',
-            'delete',
-            'changePassword'
-        ],
-        'profiles' => [
-            'index',
-            'search',
-            'edit',
-            'create',
-            'delete'
-        ],
-        'permissions' => [
-            'index'
-        ]
-    ];
+    private $privateResources = array();
 
     /**
      * Human-readable descriptions of the actions used in {@see $privateResources}
@@ -246,4 +227,17 @@ class Acl extends Component
         return $this->filePath;
     }
 
+    /**
+     * Adds an array of private resources to the ACL object.
+     * 
+     * @param array $resources
+     */
+    public function addPrivateResources(array $resources) {
+        if (count($resources) > 0) {
+            $this->privateResources = array_merge($this->privateResources, $resources);
+            if (is_object($this->acl)) {
+                $this->acl = $this->rebuild();
+            }
+        }
+    }
 }
