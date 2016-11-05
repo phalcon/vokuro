@@ -25,6 +25,6 @@
         "php": ">=5.5",
         "ext-phalcon": ">=3.0.0",
         "swiftmailer/swiftmailer": "^5.4",
-        "amazonwebservices/aws-sdk-for-php": "~1.0"
+        "aws/aws-sdk-php": "~3.0"
     }
 }
