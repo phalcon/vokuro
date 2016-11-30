@@ -95,7 +95,7 @@ CREATE TABLE failed_logins (
     id integer NOT NULL,
     "usersId" integer,
     "ipAddress" character(15) NOT NULL,
-    attempted smallint NOT NULL
+    attempted integer NOT NULL
 );
 
 
