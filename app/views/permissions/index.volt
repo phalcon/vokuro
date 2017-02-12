@@ -40,9 +40,9 @@
 		</tbody>
 	</table>
 			
-{{ submit_button('Submit', 'class': 'btn btn-primary', 'name':'submit') }}   			
-
 {% endfor %}
+
+{{ submit_button('Submit', 'class': 'btn btn-primary', 'name':'submit') }}   
 
 {% endif %}
 
