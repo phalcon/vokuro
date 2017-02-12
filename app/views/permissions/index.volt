@@ -11,7 +11,7 @@
 		<tr>
 			<td><label for="profileId">Profile</label></td>
 			<td>{{ select('profileId', profiles, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': '...', 'emptyValue': '') }}</td>
-			<td>{{ submit_button('Search', 'class': 'btn btn-primary') }}</td>
+			<td>{{ submit_button('Search', 'class': 'btn btn-primary', 'name' : 'search') }}</td>
 		</tr>
 	</table>
 
@@ -39,6 +39,8 @@
 			{% endfor %}
 		</tbody>
 	</table>
+			
+{{ submit_button('Submit', 'class': 'btn btn-primary', 'name':'submit') }}   			
 
 {% endfor %}
 
