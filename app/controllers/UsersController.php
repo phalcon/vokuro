@@ -70,25 +70,36 @@ class UsersController extends ControllerBase
      */
     public function createAction()
     {
+        $form = new UsersForm(null);
+
         if ($this->request->isPost()) {
 
-            $user = new Users([
-                'name' => $this->request->getPost('name', 'striptags'),
-                'profilesId' => $this->request->getPost('profilesId', 'int'),
-                'email' => $this->request->getPost('email', 'email')
-            ]);
-
-            if (!$user->save()) {
-                $this->flash->error($user->getMessages());
+            if ($form->isValid($this->request->getPost()) == false) {
+                
+                foreach ($form->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+                
             } else {
 
-                $this->flash->success("User was created successfully");
+                $user = new Users([
+                    'name' => $this->request->getPost('name', 'striptags'),
+                    'profilesId' => $this->request->getPost('profilesId', 'int'),
+                    'email' => $this->request->getPost('email', 'email')
+                ]);
 
-                Tag::resetInput();
+                if (!$user->save()) {
+                    $this->flash->error($user->getMessages());
+                } else {
+
+                    $this->flash->success("User was created successfully");
+
+                    Tag::resetInput();
+                }
             }
         }
 
-        $this->view->form = new UsersForm(null);
+        $this->view->form = $form;
     }
 
     /**
@@ -97,10 +108,11 @@ class UsersController extends ControllerBase
     public function editAction($id)
     {
         $user = Users::findFirstById($id);
+        
         if (!$user) {
             $this->flash->error("User was not found");
             return $this->dispatcher->forward([
-                'action' => 'index'
+                        'action' => 'index'
             ]);
         }
 
@@ -115,13 +127,26 @@ class UsersController extends ControllerBase
                 'active' => $this->request->getPost('active')
             ]);
 
-            if (!$user->save()) {
-                $this->flash->error($user->getMessages());
+            $form = new UsersForm($user, [
+                'edit' => true
+            ]);
+
+            if ($form->isValid($this->request->getPost()) == false) {
+                
+                foreach ($form->getMessages() as $message) {
+                    $this->flash->error($message);
+                }
+                
             } else {
 
-                $this->flash->success("User was updated successfully");
+                if (!$user->save()) {
+                    $this->flash->error($user->getMessages());
+                } else {
 
-                Tag::resetInput();
+                    $this->flash->success("User was updated successfully");
+
+                    Tag::resetInput();
+                }
             }
         }
 
