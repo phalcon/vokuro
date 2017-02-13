@@ -24,7 +24,7 @@ class PermissionsController extends ControllerBase
 
             if ($profile) {
 
-                if ($this->request->hasPost('permissions')) {
+                if ($this->request->hasPost('permissions') && $this->request->hasPost('submit')) {
 
                     // Deletes the current permissions
                     $profile->getPermissions()->delete();
