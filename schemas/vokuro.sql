@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `password_changes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `usersId` int(10) unsigned NOT NULL,
   `ipAddress` char(15) NOT NULL,
-  `userAgent` varchar(48) NOT NULL,
+  `userAgent` varchar(255) NOT NULL,
   `createdAt` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `usersId` (`usersId`)
