@@ -7,6 +7,8 @@ use Phalcon\Mvc\Dispatcher;
 /**
  * ControllerBase
  * This is the base controller for all controllers in the application
+ *
+ * @property \Vokuro\Auth\Auth auth
  */
 class ControllerBase extends Controller
 {
