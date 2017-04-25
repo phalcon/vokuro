@@ -1,4 +1,5 @@
 <?php
+
 namespace Vokuro\Controllers;
 
 use Vokuro\Forms\LoginForm;
@@ -24,7 +25,6 @@ class SessionController extends ControllerBase
 
     public function indexAction()
     {
-
     }
 
     /**
@@ -67,9 +67,7 @@ class SessionController extends ControllerBase
         $form = new LoginForm();
 
         try {
-
             if (!$this->request->isPost()) {
-
                 if ($this->auth->hasRememberMe()) {
                     return $this->auth->loginWithRememberMe();
                 }
@@ -105,7 +103,7 @@ class SessionController extends ControllerBase
         $form = new ForgotPasswordForm();
 
         if ($this->request->isPost()) {
-            
+
             // Send emails only is config value is set to true
             if ($this->getDI()->get('config')->useMail) {
 

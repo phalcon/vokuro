@@ -10,7 +10,7 @@
     ],
     "type": "library",
     "license": "BSD-3",
-    "homepage": "http://www.phalconphp.com",
+    "homepage": "https://www.phalconphp.com",
     "authors" : [
         {
             "name" : "Andres Gutierrez",
@@ -23,8 +23,11 @@
     ],
     "require": {
         "php": ">=5.5",
-        "ext-phalcon": ">=3.0.0",
+        "ext-phalcon": "~3.0",
         "swiftmailer/swiftmailer": "^5.4",
         "aws/aws-sdk-php": "~3.0"
+    },
+    "require-dev": {
+        "phalcongelist/dd": "~1.0"
     }
 }
