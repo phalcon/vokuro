@@ -1,0 +1,6 @@
+*
+!.gitignore
+!acl/
+!metaData/
+!swift/
+!volt/
