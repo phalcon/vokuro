@@ -9,7 +9,8 @@ return new Config([
         'host' => '127.0.0.1',
         'username' => 'root',
         'password' => '',
-        'dbname' => 'vokuro'
+        'dbname' => 'vokuro',
+        'charset' => 'utf8'
     ],
     'application' => [
         'controllersDir' => APP_PATH . '/controllers/',
