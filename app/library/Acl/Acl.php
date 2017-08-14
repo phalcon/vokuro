@@ -221,7 +221,7 @@ class Acl extends Component
     protected function getFilePath()
     {
         if (!isset($this->filePath)) {
-            $this->filePath = rtrim($this->config->application->cacheDir, '\\/') . '/acl/data.txt';
+            $this->filePath = ltrim($this->config->application->cacheDir, '\\/') . '/acl/data.txt';
         }
 
         return $this->filePath;
