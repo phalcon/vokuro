@@ -48,6 +48,11 @@ cd vokuro
 php composer.phar install
 ```
 
+### Folders which should be writable
+```
+cache/
+```
+
 ## Improving this Sample
 
 Phalcon is an open source project and a volunteer effort.
