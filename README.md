@@ -48,6 +48,9 @@ cd vokuro
 php composer.phar install
 ```
 
+**NOTE** After the installation, please ensure that the following folders have write permissions set:
+- `cache`
+
 ## Improving this Sample
 
 Phalcon is an open source project and a volunteer effort.
