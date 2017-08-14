@@ -221,7 +221,7 @@ class Acl extends Component
     protected function getFilePath()
     {
         if (!isset($this->filePath)) {
-            $this->filePath = $this->config->application->cacheDir . '/acl/data.txt';
+            $this->filePath = $this->config->application->cacheDir . 'acl/data.txt';
         }
 
         return $this->filePath;
@@ -229,7 +229,7 @@ class Acl extends Component
 
     /**
      * Adds an array of private resources to the ACL object.
-     * 
+     *
      * @param array $resources
      */
     public function addPrivateResources(array $resources) {
