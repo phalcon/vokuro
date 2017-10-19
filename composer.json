@@ -28,6 +28,6 @@
         "aws/aws-sdk-php": "~3.0"
     },
     "require-dev": {
-        "phalcongelist/dd": "~1.0"
+        "phalcon/dd": "~1.1.0"
     }
 }
