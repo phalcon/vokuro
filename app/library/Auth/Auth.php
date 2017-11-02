@@ -249,7 +249,7 @@ class Auth extends Component
         if ($this->cookies->has('RMT')) {
             
             $token = $this->cookies->get('RMT')->getValue();
-            UserRememberTokens::findFirstByToken($token)->delete();
+            $this->findFirstByToken($token)->delete();
             
             $this->cookies->get('RMT')->delete();
         }
@@ -299,5 +299,35 @@ class Auth extends Component
         }
 
         return false;
+    }
+    
+    /**
+     * Returns the current token user
+     *
+     * @param [type] $token
+     * @return void
+     */
+    public function findFirstByToken($token)
+    {
+        $this->id = RememberTokens::findFirst("token = '$token'")->id;
+        return $this;
+    }
+
+    /**
+     * Delete the current user token in session
+     *
+     * @return void
+     */
+    public function delete() {
+        $user = RememberTokens::findFirst($this->id);
+        if ($user == false) {
+            throw new Exception("The user does not exist");
+        }
+
+        if (!$user->delete()) {
+            throw new Exception("Sorry, we can't delete the token");
+        }
+
+        return true;
     }
 }
