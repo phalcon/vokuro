@@ -309,7 +309,7 @@ class Auth extends Component
      */
     public function findFirstByToken($token)
     {
-        $this->id = RememberTokens::findFirst("token = '$token'")->id;
+        $this->user_id = RememberTokens::findFirst("token = '$token'")->user_id;
         return $this;
     }
 
