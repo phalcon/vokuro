@@ -319,15 +319,15 @@ class Auth extends Component
             ],
         ]);
         
-        $this->user_id = ($userToken) ? $userToken->usersId : false; 
-
-        return $this->user_id;
+        $user_id = ($userToken) ? $userToken->usersId : false; 
+        return $user_id;
     }
 
     /**
      * Delete the current user token in session
      */
-    public function deleteToken($userId) {
+    public function deleteToken($userId) 
+    {
         $user = RememberTokens::find([
             'conditions' => 'usersId = :userId:',
             'bind'       => [
