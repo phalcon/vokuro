@@ -249,7 +249,10 @@ class Auth extends Component
         if ($this->cookies->has('RMT')) {
             
             $token = $this->cookies->get('RMT')->getValue();
-            $this->findFirstByToken($token)->delete();
+            $userId = $this->findFirstByToken($token);
+            if ($userId) {
+                $this->deleteToken($userId);
+            }
             
             $this->cookies->get('RMT')->delete();
         }
@@ -304,30 +307,36 @@ class Auth extends Component
     /**
      * Returns the current token user
      *
-     * @param [type] $token
-     * @return void
+     * @param string $token
+     * @return boolean
      */
     public function findFirstByToken($token)
     {
-        $this->user_id = RememberTokens::findFirst("token = '$token'")->user_id;
-        return $this;
+        $userToken = RememberTokens::findFirst([
+            'conditions' => 'token = :token:',
+            'bind'       => [
+                'token' => $token,
+            ],
+        ]);
+        
+        $this->user_id = ($userToken) ? $userToken->usersId : false; 
+
+        return $this->user_id;
     }
 
     /**
      * Delete the current user token in session
-     *
-     * @return void
      */
-    public function delete() {
-        $user = RememberTokens::findFirst($this->id);
-        if ($user == false) {
-            throw new Exception("The user does not exist");
-        }
+    public function deleteToken($userId) {
+        $user = RememberTokens::find([
+            'conditions' => 'usersId = :userId:',
+            'bind'       => [
+                'userId' => $userId
+            ]
+        ]);
 
-        if (!$user->delete()) {
-            throw new Exception("Sorry, we can't delete the token");
+        if ($user) {
+            $user->delete();
         }
-
-        return true;
     }
 }
