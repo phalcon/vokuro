@@ -23,8 +23,8 @@
             <th>Confirmed?</th>
         </tr>
     </thead>
-{% endif %}
     <tbody>
+{% endif %}
         <tr>
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
@@ -36,9 +36,9 @@
             <td width="12%">{{ link_to("users/edit/" ~ user.id, '<i class="icon-pencil"></i> Edit', "class": "btn") }}</td>
             <td width="12%">{{ link_to("users/delete/" ~ user.id, '<i class="icon-remove"></i> Delete', "class": "btn") }}</td>
         </tr>
-    </tbody>
 {% if loop.last %}
-    <tbody>
+    </tbody>
+    <tfoot>
         <tr>
             <td colspan="10" align="right">
                 <div class="btn-group">
@@ -50,7 +50,7 @@
                 </div>
             </td>
         </tr>
-    <tbody>
+    </tfoot>
 </table>
 {% endif %}
 {% else %}
