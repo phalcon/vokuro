@@ -249,7 +249,7 @@ class Auth extends Component
         if ($this->cookies->has('RMT')) {
             
             $token = $this->cookies->get('RMT')->getValue();
-            UserRememberTokens::findFirstByToken($token)->delete();
+            RememberTokens::findFirstByToken($token)->delete();
             
             $this->cookies->get('RMT')->delete();
         }
