@@ -199,8 +199,6 @@ class RobotsController extends ControllerBase
         $partsToAdd = [];
         $partsToDelete = [];
 
-        $idx = 0;
-
         do {
             if ($newPartsIterator->current() === $oldPartsIterator->current()) {
                 // part already exists
@@ -218,16 +216,9 @@ class RobotsController extends ControllerBase
                 $oldPartsIterator->next();
             }
 
-            if ($idx > 50) {
-                $this->flash->error("The loop was broken.");
-                break;
-            }
-
             if (! $newPartsIterator->current() && ! $oldPartsIterator->current()) {
                 break;
             }
-
-            $idx++;
         } while ($newPartsIterator->valid());
 
         // process old parts if some were not processed
