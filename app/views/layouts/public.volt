@@ -12,7 +12,8 @@
 
             {%- set menus = [
               'Home': 'index',
-              'About': 'about'
+              'About': 'about',
+              'Robots': 'robots'
             ] -%}
 
             {%- for key, value in menus %}

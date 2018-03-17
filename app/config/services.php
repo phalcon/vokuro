@@ -3,7 +3,7 @@ use Phalcon\Mvc\View;
 use Phalcon\Crypt;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\Url as UrlResolver;
-use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+use Phalcon\Db\Adapter\Pdo\Postgresql as DbAdapter;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Files as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;

@@ -5,10 +5,10 @@ use Phalcon\Logger;
 
 return new Config([
     'database' => [
-        'adapter' => 'Mysql',
-        'host' => '127.0.0.1',
-        'username' => 'root',
-        'password' => '',
+        'adapter' => 'Pgsql',
+        'host' => 'localhost',
+        'username' => 'vokuro',
+        'password' => 'vokuro',
         'dbname' => 'vokuro'
     ],
     'application' => [
@@ -20,8 +20,8 @@ return new Config([
         'pluginsDir'     => APP_PATH . '/plugins/',
         'cacheDir'       => BASE_PATH . '/cache/',
         'baseUri'        => '/',
-        'publicUrl'      => 'vokuro.phalconphp.com',
-        'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
+        'publicUrl'      => 'vokuro.test',
+        'cryptSalt'      => 'eEA&!A&+7fR|_1w1!DyaIPMG&f,+v<@[N@U]:jFr!s|:+.u>/6m,$9~8_4L_2MyD'
     ],
     'mail' => [
         'fromName' => 'Vokuro',
@@ -30,8 +30,8 @@ return new Config([
             'server' => 'smtp.gmail.com',
             'port' => 587,
             'security' => 'tls',
-            'username' => '',
-            'password' => ''
+            'username' => 'tomasz.kuter@gmail.com',
+            'password' => 'wsvpmsrsopsdtekq'
         ]
     ],
     'amazon' => [

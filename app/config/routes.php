@@ -14,4 +14,9 @@ $router->add('/reset-password/{code}/{email}', [
     'action' => 'resetPassword'
 ]);
 
+$router->add('/parts/all.json', [
+    'controller' => 'Parts',
+    'action' => 'all'
+]);
+
 return $router;

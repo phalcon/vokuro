@@ -15,7 +15,8 @@
               'Home': null,
               'Users': 'users',
               'Profiles': 'profiles',
-              'Permissions': 'permissions'
+              'Permissions': 'permissions',
+              'Robots': 'robots'
             ] -%}
 
             {%- for key, value in menus %}

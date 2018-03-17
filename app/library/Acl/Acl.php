@@ -13,6 +13,8 @@ use Vokuro\Models\Profiles;
 class Acl extends Component
 {
 
+    const APC_STORE_KEY = 'vokuro-acl';
+
     /**
      * The ACL Object
      *
@@ -57,6 +59,7 @@ class Acl extends Component
     public function isPrivate($controllerName)
     {
         $controllerName = strtolower($controllerName);
+
         return isset($this->privateResources[$controllerName]);
     }
 
@@ -87,9 +90,10 @@ class Acl extends Component
 
         // Check if the ACL is in APC
         if (function_exists('apc_fetch')) {
-            $acl = apc_fetch('vokuro-acl');
+            $acl = apc_fetch(self::APC_STORE_KEY);
             if (is_object($acl)) {
                 $this->acl = $acl;
+
                 return $acl;
             }
         }
@@ -97,8 +101,9 @@ class Acl extends Component
         $filePath = $this->getFilePath();
 
         // Check if the ACL is already generated
-        if (!file_exists($filePath)) {
+        if (! file_exists($filePath)) {
             $this->acl = $this->rebuild();
+
             return $this->acl;
         }
 
@@ -108,7 +113,7 @@ class Acl extends Component
 
         // Store the ACL in APC
         if (function_exists('apc_store')) {
-            apc_store('vokuro-acl', $this->acl);
+            apc_store(self::APC_STORE_KEY, $this->acl);
         }
 
         return $this->acl;
@@ -123,9 +128,11 @@ class Acl extends Component
     public function getPermissions(Profiles $profile)
     {
         $permissions = [];
+
         foreach ($profile->getPermissions() as $permission) {
             $permissions[$permission->resource . '.' . $permission->action] = true;
         }
+
         return $permissions;
     }
 
