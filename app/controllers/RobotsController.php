@@ -179,19 +179,6 @@ class RobotsController extends ControllerBase
         $this->view->form = new RobotsForm($robot, $options);
     }
 
-    protected function getPartsToInsert1($partList)
-    {
-        $parts = [];
-
-        foreach (explode(',', $partList) as $part) {
-            $parts[] = new Parts([
-                'name' => trim($part)
-            ]);
-        }
-
-        return $parts;
-    }
-
     protected function processRobotParts($robot, $oldPartNames, $newPartNames)
     {
         if ($oldPartNames === $newPartNames) {
