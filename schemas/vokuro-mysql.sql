@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `remember_tokens` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `usersId` int(10) unsigned NOT NULL,
   `token` char(32) NOT NULL,
-  `userAgent` varchar(120) NOT NULL,
+  `userAgent` text NOT NULL,
   `createdAt` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `token` (`token`)
@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `success_logins` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `usersId` int(10) unsigned NOT NULL,
   `ipAddress` char(15) NOT NULL,
-  `userAgent` varchar(120) NOT NULL,
+  `userAgent` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `usersId` (`usersId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
