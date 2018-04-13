@@ -24,7 +24,7 @@ COMMENT ON DATABASE postgres IS 'default administrative connection database';
 
 --
 -- TOC entry 188 (class 3079 OID 11787)
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
@@ -33,7 +33,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 --
 -- TOC entry 2079 (class 0 OID 0)
 -- Dependencies: 188
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -47,7 +47,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 171 (class 1259 OID 16411)
--- Name: email_confirmations; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: email_confirmations; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE email_confirmations (
@@ -88,7 +88,7 @@ ALTER SEQUENCE email_confirmations_id_seq OWNED BY email_confirmations.id;
 
 --
 -- TOC entry 173 (class 1259 OID 16420)
--- Name: failed_logins; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: failed_logins; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE failed_logins (
@@ -127,14 +127,14 @@ ALTER SEQUENCE failed_logins_id_seq OWNED BY failed_logins.id;
 
 --
 -- TOC entry 175 (class 1259 OID 16426)
--- Name: password_changes; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: password_changes; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE password_changes (
     id integer NOT NULL,
     "usersId" integer NOT NULL,
     "ipAddress" character(15) NOT NULL,
-    "userAgent" character varying(48) NOT NULL,
+    "userAgent" text NOT NULL,
     "createdAt" integer NOT NULL
 );
 
@@ -167,7 +167,7 @@ ALTER SEQUENCE password_changes_id_seq OWNED BY password_changes.id;
 
 --
 -- TOC entry 177 (class 1259 OID 16432)
--- Name: permissions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: permissions; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE permissions (
@@ -206,7 +206,7 @@ ALTER SEQUENCE permissions_id_seq OWNED BY permissions.id;
 
 --
 -- TOC entry 179 (class 1259 OID 16438)
--- Name: profiles; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: profiles; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE profiles (
@@ -244,14 +244,14 @@ ALTER SEQUENCE profiles_id_seq OWNED BY profiles.id;
 
 --
 -- TOC entry 181 (class 1259 OID 16444)
--- Name: remember_tokens; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: remember_tokens; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE remember_tokens (
     id integer NOT NULL,
     "usersId" integer NOT NULL,
     token character(32) NOT NULL,
-    "userAgent" character varying(120) NOT NULL,
+    "userAgent" text NOT NULL,
     "createdAt" integer NOT NULL
 );
 
@@ -284,7 +284,7 @@ ALTER SEQUENCE remember_tokens_id_seq OWNED BY remember_tokens.id;
 
 --
 -- TOC entry 183 (class 1259 OID 16450)
--- Name: reset_passwords; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: reset_passwords; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE reset_passwords (
@@ -325,14 +325,14 @@ ALTER SEQUENCE reset_passwords_id_seq OWNED BY reset_passwords.id;
 
 --
 -- TOC entry 185 (class 1259 OID 16456)
--- Name: success_logins; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: success_logins; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE success_logins (
     id integer NOT NULL,
     "usersId" integer NOT NULL,
     "ipAddress" character(15) NOT NULL,
-    "userAgent" character varying(120) NOT NULL
+    "userAgent" text NOT NULL
 );
 
 
@@ -364,7 +364,7 @@ ALTER SEQUENCE success_logins_id_seq OWNED BY success_logins.id;
 
 --
 -- TOC entry 187 (class 1259 OID 16462)
--- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
 --
 
 CREATE TABLE users (
@@ -662,7 +662,7 @@ SELECT pg_catalog.setval('users_id_seq', 1, false);
 
 --
 -- TOC entry 1921 (class 2606 OID 16417)
--- Name: email_confirmations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: email_confirmations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY email_confirmations
@@ -671,7 +671,7 @@ ALTER TABLE ONLY email_confirmations
 
 --
 -- TOC entry 1923 (class 2606 OID 16473)
--- Name: failed_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: failed_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY failed_logins
@@ -680,7 +680,7 @@ ALTER TABLE ONLY failed_logins
 
 --
 -- TOC entry 1925 (class 2606 OID 16475)
--- Name: password_changes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: password_changes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY password_changes
@@ -689,7 +689,7 @@ ALTER TABLE ONLY password_changes
 
 --
 -- TOC entry 1927 (class 2606 OID 16477)
--- Name: permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY permissions
@@ -698,7 +698,7 @@ ALTER TABLE ONLY permissions
 
 --
 -- TOC entry 1929 (class 2606 OID 16479)
--- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY profiles
@@ -707,7 +707,7 @@ ALTER TABLE ONLY profiles
 
 --
 -- TOC entry 1931 (class 2606 OID 16481)
--- Name: remember_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: remember_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY remember_tokens
@@ -716,7 +716,7 @@ ALTER TABLE ONLY remember_tokens
 
 --
 -- TOC entry 1933 (class 2606 OID 16483)
--- Name: reset_passwords_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: reset_passwords_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY reset_passwords
@@ -725,7 +725,7 @@ ALTER TABLE ONLY reset_passwords
 
 --
 -- TOC entry 1935 (class 2606 OID 16485)
--- Name: success_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: success_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY success_logins
@@ -734,7 +734,7 @@ ALTER TABLE ONLY success_logins
 
 --
 -- TOC entry 1937 (class 2606 OID 16487)
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
 --
 
 ALTER TABLE ONLY users
