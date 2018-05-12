@@ -25,8 +25,10 @@ class UsersForm extends Form
         $this->add($id);
 
         $name = new Text('name', [
-            'placeholder' => 'Name'
+           // 'placeholder' => 'Name'
         ]);
+        
+        $name->setLabel('Name');
 
         $name->addValidators([
             new PresenceOf([
@@ -37,9 +39,11 @@ class UsersForm extends Form
         $this->add($name);
 
         $email = new Text('email', [
-            'placeholder' => 'Email'
+            //'placeholder' => 'Email'
         ]);
 
+        $email->setLabel('Email');
+        
         $email->addValidators([
             new PresenceOf([
                 'message' => 'The e-mail is required'
@@ -57,30 +61,44 @@ class UsersForm extends Form
                 'active' => 'Y'
             ]
         ]);
-
-        $this->add(new Select('profilesId', $profiles, [
+        
+        
+        $profilesId = new Select('profilesId', $profiles, [
             'using' => [
                 'id',
                 'name'
             ],
             'useEmpty' => true,
             'emptyText' => '...',
-            'emptyValue' => ''
-        ]));
-
-        $this->add(new Select('banned', [
+            'emptyValue' => '',
+        ]);
+        
+        $profilesId->setLabel('Profile');
+        
+        $this->add($profilesId);
+        
+        
+        $banned = new Select('banned', [
             'Y' => 'Yes',
             'N' => 'No'
-        ]));
+        ]);
+        $banned->setLabel('Banned');
+        $this->add($banned);
 
-        $this->add(new Select('suspended', [
+        
+        $suspended = new Select('suspended', [
             'Y' => 'Yes',
             'N' => 'No'
-        ]));
+        ]);
+        $suspended->setLabel('Suspended');
+        $this->add($suspended);
+        
 
-        $this->add(new Select('active', [
+        $active = new Select('active', [
             'Y' => 'Yes',
             'N' => 'No'
-        ]));
+        ]);
+        $active->setLabel('Active');
+        $this->add($active);
     }
 }

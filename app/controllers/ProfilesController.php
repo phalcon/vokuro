@@ -86,7 +86,7 @@ class ProfilesController extends ControllerBase
                 $this->flash->success("Profile was created successfully");
             }
 
-            Tag::resetInput();
+            // Tag::resetInput();
         }
 
         $this->view->form = new ProfilesForm(null);
@@ -119,8 +119,8 @@ class ProfilesController extends ControllerBase
             } else {
                 $this->flash->success("Profile was updated successfully");
             }
-
-            Tag::resetInput();
+            
+            //Tag::resetInput();
         }
 
         $this->view->form = new ProfilesForm($profile, [
@@ -154,7 +154,7 @@ class ProfilesController extends ControllerBase
         }
 
         return $this->dispatcher->forward([
-            'action' => 'index'
+            'action' => 'search'
         ]);
     }
 }
