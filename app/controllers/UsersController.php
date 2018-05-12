@@ -95,7 +95,6 @@ class UsersController extends ControllerBase
                     $this->flash->success("User was created successfully");
                     
                     $form->clear();
-                  //  Tag::resetInput(); Deprecated
                 }
             }
         }
@@ -147,7 +146,6 @@ class UsersController extends ControllerBase
                     $this->flash->success("User was updated successfully");
                     
                     $form->clear();
-                    //Tag::resetInput(); Deprecated
                 }
             }
         }
@@ -217,7 +215,6 @@ class UsersController extends ControllerBase
 
                     $this->flash->success('Your password was successfully changed');
                     $form->clear();
-                    //    Tag::resetInput(); DEPRECATED
                 }
             }
         }
