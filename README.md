@@ -1,3 +1,15 @@
+# Vökuró with Bootstrap 4.1.1
+
+This is sample application forked from [Phalcon Framework](https://github.com/phalcon/cphalcon) with front end (volt) rewritten for Bootstrap 4.1.1.
+
+Major changes include
+
+* Rewritten frontend for Bootstrap 4.1.1 
+* Open Iconic open-source icon
+* Re-factor and minor fixes of frontend code for more consistency through out.
+* Moved design control, classes to VOLT/VIEWS for better control of design aspect.
+* Other minor frontend backend additions / improvements. 
+
 # Vökuró
 
 This is a sample application for the [Phalcon Framework](https://github.com/phalcon/cphalcon).

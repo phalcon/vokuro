@@ -93,8 +93,8 @@ class UsersController extends ControllerBase
                 } else {
 
                     $this->flash->success("User was created successfully");
-
-                    Tag::resetInput();
+                    
+                    $form->clear();
                 }
             }
         }
@@ -144,8 +144,8 @@ class UsersController extends ControllerBase
                 } else {
 
                     $this->flash->success("User was updated successfully");
-
-                    Tag::resetInput();
+                    
+                    $form->clear();
                 }
             }
         }
@@ -194,8 +194,8 @@ class UsersController extends ControllerBase
 
             if (!$form->isValid($this->request->getPost())) {
 
-                foreach ($form->getMessages() as $message) {
-                    $this->flash->error($message);
+               foreach ($form->getMessages() as $message) {
+                   $this->flash->error($message);
                 }
             } else {
 
@@ -214,8 +214,7 @@ class UsersController extends ControllerBase
                 } else {
 
                     $this->flash->success('Your password was successfully changed');
-
-                    Tag::resetInput();
+                    $form->clear();
                 }
             }
         }

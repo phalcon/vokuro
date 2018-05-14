@@ -1,22 +1,21 @@
 
 {{ content() }}
 
-<form method="post">
+{{ form('role': 'form') }}
+<div class="row d-flex justify-content-center">
+    <div class="col-md-8  mb-4 mt-4">
+        <h2 class="mb-sm-6 pb-sm-2">Manage permissions</h2>  
 
-<h2>Manage Permissions</h2>
-
-<div class="well" align="center">
-
-	<table class="perms">
-		<tr>
-			<td><label for="profileId">Profile</label></td>
-			<td>{{ select('profileId', profiles, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': '...', 'emptyValue': '') }}</td>
-			<td>{{ submit_button('Search', 'class': 'btn btn-primary', 'name' : 'search') }}</td>
-		</tr>
-	</table>
-
-</div>
-
+                   <div class="row mt-4 form-group justify-content-center">
+                        <label class="mr-4 col-form-label text-center" for="profileId">Profile</label>
+                        <div class="mr-4">
+			    {{ select('profileId', profiles, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': '...', 'emptyValue': '', 'class' : 'form-control mb-2 mb-sm-0') }}
+                        </div>
+                        <div class="">
+		            {{ submit_button('Search', 'class': 'btn btn-primary', 'name' : 'search') }}
+                        </div>
+                    </div>
+                      
 {% if request.isPost() and profile %}
 
 {% for resource, actions in acl.getResources() %}

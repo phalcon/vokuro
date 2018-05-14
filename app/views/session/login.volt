@@ -1,30 +1,35 @@
 {{ content() }}
 
-<div align="center" class="well">
 
-	{{ form('class': 'form-search') }}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-4 mb-4 mt-4">
+            <h1 class="mb-sm-4 pb-sm-2">Log In</h1>
 
-	<div align="left">
-		<h2>Log In</h2>
-	</div>
+	{{ form('class': 'form-signin') }}
 
-		{{ form.render('email') }}
-		{{ form.render('password') }}
-		{{ form.render('go') }}
+                {{ form.label('email', ['class' : 'sr-only']) }}
+		{{ form.render('email', ['class' : 'form-control ']) }}
+                {{ form.label('password', ['class' : 'sr-only']) }} 
+		{{ form.render('password',['class' : 'form-control ']) }}
+                		
+		{{ form.render('remember',['class' : 'checkbox']) }}
+		{{ form.label('remember') }}
+                
+		{{ form.render('go', ['class' : 'btn btn-success btn-block']) }}
 
-		<div align="center" class="remember">
-			{{ form.render('remember') }}
-			{{ form.label('remember') }}
-		</div>
 
+		
 		{{ form.render('csrf', ['value': security.getToken()]) }}
 
 		<hr>
 
 		<div class="forgot">
-			{{ link_to("session/forgotPassword", "Forgot my password") }}
+			{{ link_to("session/forgotPassword", "Forgot my password", "class":"muted-text") }}
 		</div>
 
 	</form>
 
+	</div>
+    </div>
 </div>
