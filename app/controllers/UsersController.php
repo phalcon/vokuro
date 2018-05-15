@@ -1,21 +1,37 @@
 <?php
+
+/*
+  +------------------------------------------------------------------------+
+  | Vökuró                                                                 |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2016-present Phalcon Team (https://www.phalconphp.com)   |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Vokuro\Controllers;
 
 use Phalcon\Tag;
-use Phalcon\Mvc\Model\Criteria;
-use Phalcon\Paginator\Adapter\Model as Paginator;
-use Vokuro\Forms\ChangePasswordForm;
-use Vokuro\Forms\UsersForm;
 use Vokuro\Models\Users;
+use Vokuro\Forms\UsersForm;
+use Phalcon\Mvc\Model\Criteria;
 use Vokuro\Models\PasswordChanges;
+use Vokuro\Forms\ChangePasswordForm;
+use Phalcon\Paginator\Adapter\Model as Paginator;
 
 /**
- * Vokuro\Controllers\UsersController
  * CRUD to manage users
+ * Vokuro\Controllers\UsersController
+ * @package Vokuro\Controllers
  */
 class UsersController extends ControllerBase
 {
-
     public function initialize()
     {
         $this->view->setTemplateBefore('private');
@@ -73,15 +89,11 @@ class UsersController extends ControllerBase
         $form = new UsersForm(null);
 
         if ($this->request->isPost()) {
-
             if ($form->isValid($this->request->getPost()) == false) {
-                
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error($message);
                 }
-                
             } else {
-
                 $user = new Users([
                     'name' => $this->request->getPost('name', 'striptags'),
                     'profilesId' => $this->request->getPost('profilesId', 'int'),
@@ -91,7 +103,6 @@ class UsersController extends ControllerBase
                 if (!$user->save()) {
                     $this->flash->error($user->getMessages());
                 } else {
-
                     $this->flash->success("User was created successfully");
 
                     Tag::resetInput();
@@ -108,7 +119,7 @@ class UsersController extends ControllerBase
     public function editAction($id)
     {
         $user = Users::findFirstById($id);
-        
+
         if (!$user) {
             $this->flash->error("User was not found");
             return $this->dispatcher->forward([
@@ -117,7 +128,6 @@ class UsersController extends ControllerBase
         }
 
         if ($this->request->isPost()) {
-
             $user->assign([
                 'name' => $this->request->getPost('name', 'striptags'),
                 'profilesId' => $this->request->getPost('profilesId', 'int'),
@@ -132,17 +142,13 @@ class UsersController extends ControllerBase
             ]);
 
             if ($form->isValid($this->request->getPost()) == false) {
-                
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error($message);
                 }
-                
             } else {
-
                 if (!$user->save()) {
                     $this->flash->error($user->getMessages());
                 } else {
-
                     $this->flash->success("User was updated successfully");
 
                     Tag::resetInput();
@@ -191,14 +197,11 @@ class UsersController extends ControllerBase
         $form = new ChangePasswordForm();
 
         if ($this->request->isPost()) {
-
             if (!$form->isValid($this->request->getPost())) {
-
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error($message);
                 }
             } else {
-
                 $user = $this->auth->getUser();
 
                 $user->password = $this->security->hash($this->request->getPost('password'));
@@ -212,7 +215,6 @@ class UsersController extends ControllerBase
                 if (!$passwordChange->save()) {
                     $this->flash->error($passwordChange->getMessages());
                 } else {
-
                     $this->flash->success('Your password was successfully changed');
 
                     Tag::resetInput();

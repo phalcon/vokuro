@@ -1,16 +1,32 @@
 <?php
+
+/*
+  +------------------------------------------------------------------------+
+  | Vökuró                                                                 |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2016-present Phalcon Team (https://www.phalconphp.com)   |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Vokuro\Controllers;
 
-use Vokuro\Models\EmailConfirmations;
 use Vokuro\Models\ResetPasswords;
+use Vokuro\Models\EmailConfirmations;
 
 /**
- * UserControlController
- * Provides help to users to confirm their passwords or reset them
+ * UserControlController. Provides help to users to confirm their passwords or reset them
+ * Vokuro\Controllers\UserControlController
+ * @package Vokuro\Controllers
  */
 class UserControlController extends ControllerBase
 {
-
     public function initialize()
     {
         if ($this->session->has('auth-identity')) {
@@ -20,7 +36,6 @@ class UserControlController extends ControllerBase
 
     public function indexAction()
     {
-
     }
 
     /**
@@ -54,7 +69,6 @@ class UserControlController extends ControllerBase
          * Change the confirmation to 'confirmed' and update the user to 'active'
          */
         if (!$confirmation->save()) {
-
             foreach ($confirmation->getMessages() as $message) {
                 $this->flash->error($message);
             }
@@ -74,7 +88,6 @@ class UserControlController extends ControllerBase
          * Check if the user must change his/her password
          */
         if ($confirmation->user->mustChangePassword == 'Y') {
-
             $this->flash->success('The email was successfully confirmed. Now you must change your password');
 
             return $this->dispatcher->forward([
@@ -117,7 +130,6 @@ class UserControlController extends ControllerBase
          * Change the confirmation to 'reset'
          */
         if (!$resetPassword->save()) {
-
             foreach ($resetPassword->getMessages() as $message) {
                 $this->flash->error($message);
             }

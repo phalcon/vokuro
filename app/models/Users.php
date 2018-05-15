@@ -1,4 +1,20 @@
 <?php
+
+/*
+  +------------------------------------------------------------------------+
+  | Vökuró                                                                 |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2016-present Phalcon Team (https://www.phalconphp.com)   |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Vokuro\Models;
 
 use Phalcon\Mvc\Model;
@@ -6,64 +22,39 @@ use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 
 /**
- * Vokuro\Models\Users
  * All the users registered in the application
+ * Vokuro\Models\Users
+ * @method static Users findFirstById($id)
+ * @method static Users findFirstByEmail($email)
+ * @package Vokuro\Models
  */
 class Users extends Model
 {
-
-    /**
-     *
-     * @var integer
-     */
+    /** @var integer */
     public $id;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     public $name;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     public $email;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     public $password;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     public $mustChangePassword;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     public $profilesId;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     public $banned;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     public $suspended;
 
-    /**
-     *
-     * @var string
-     */
+    /** @var string */
     public $active;
 
     /**
@@ -72,7 +63,6 @@ class Users extends Model
     public function beforeValidationOnCreate()
     {
         if (empty($this->password)) {
-
             // Generate a plain temporary password
             $tempPassword = preg_replace('/[^a-zA-Z0-9]/', '', base64_encode(openssl_random_pseudo_bytes(12)));
 
@@ -95,7 +85,7 @@ class Users extends Model
         } else {
             $this->active = 'Y';
         }
-        
+
         // The account is not suspended by default
         $this->suspended = 'N';
 
@@ -110,9 +100,7 @@ class Users extends Model
     {
         // Only send the confirmation email if emails are turned on in the config
         if ($this->getDI()->get('config')->useMail) {
-
             if ($this->active == 'N') {
-
                 $emailConfirmation = new EmailConfirmations();
 
                 $emailConfirmation->usersId = $this->id;

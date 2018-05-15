@@ -1,15 +1,33 @@
 <?php
+
+/*
+  +------------------------------------------------------------------------+
+  | Vökuró                                                                 |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2016-present Phalcon Team (https://www.phalconphp.com)   |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Vokuro\Auth;
 
-use Phalcon\Mvc\User\Component;
 use Vokuro\Models\Users;
-use Vokuro\Models\RememberTokens;
-use Vokuro\Models\SuccessLogins;
+use Phalcon\Mvc\User\Component;
 use Vokuro\Models\FailedLogins;
+use Vokuro\Exception\Exception;
+use Vokuro\Models\SuccessLogins;
+use Vokuro\Models\RememberTokens;
 
 /**
- * Vokuro\Auth\Auth
  * Manages Authentication/Identity Management in Vokuro
+ * Vokuro\Auth\Auth
+ * @package Vokuro\Auth
  */
 class Auth extends Component
 {
@@ -22,7 +40,6 @@ class Auth extends Component
      */
     public function check($credentials)
     {
-
         // Check if the user exist
         $user = Users::findFirstByEmail($credentials['email']);
         if ($user == false) {
@@ -153,12 +170,10 @@ class Auth extends Component
 
         $user = Users::findFirstById($userId);
         if ($user) {
-
             $userAgent = $this->request->getUserAgent();
             $token = md5($user->email . $user->password . $userAgent);
 
             if ($cookieToken == $token) {
-
                 $remember = RememberTokens::findFirst([
                     'usersId = ?0 AND token = ?1',
                     'bind' => [
@@ -167,10 +182,8 @@ class Auth extends Component
                     ]
                 ]);
                 if ($remember) {
-
                     // Check if the cookie has not expired
                     if ((time() - (86400 * 8)) < $remember->createdAt) {
-
                         // Check if the user was flagged
                         $this->checkUserFlags($user);
 
@@ -285,7 +298,6 @@ class Auth extends Component
     {
         $identity = $this->session->get('auth-identity');
         if (isset($identity['id'])) {
-
             $user = Users::findFirstById($identity['id']);
             if ($user == false) {
                 throw new Exception('The user does not exist');

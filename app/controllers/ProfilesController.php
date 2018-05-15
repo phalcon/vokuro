@@ -1,19 +1,35 @@
 <?php
+
+/*
+  +------------------------------------------------------------------------+
+  | Vökuró                                                                 |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2016-present Phalcon Team (https://www.phalconphp.com)   |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Vokuro\Controllers;
 
 use Phalcon\Tag;
+use Vokuro\Models\Profiles;
+use Vokuro\Forms\ProfilesForm;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
-use Vokuro\Forms\ProfilesForm;
-use Vokuro\Models\Profiles;
 
 /**
- * Vokuro\Controllers\ProfilesController
  * CRUD to manage profiles
+ * Vokuro\Controllers\ProfilesController
+ * @package Vokuro\Controllers
  */
 class ProfilesController extends ControllerBase
 {
-
     /**
      * Default action. Set the private (authenticated) layout (layouts/private.volt)
      */
@@ -51,7 +67,6 @@ class ProfilesController extends ControllerBase
 
         $profiles = Profiles::find($parameters);
         if (count($profiles) == 0) {
-
             $this->flash->notice("The search did not find any profiles");
 
             return $this->dispatcher->forward([
@@ -74,7 +89,6 @@ class ProfilesController extends ControllerBase
     public function createAction()
     {
         if ($this->request->isPost()) {
-
             $profile = new Profiles([
                 'name' => $this->request->getPost('name', 'striptags'),
                 'active' => $this->request->getPost('active')
@@ -108,7 +122,6 @@ class ProfilesController extends ControllerBase
         }
 
         if ($this->request->isPost()) {
-
             $profile->assign([
                 'name' => $this->request->getPost('name', 'striptags'),
                 'active' => $this->request->getPost('active')
@@ -139,7 +152,6 @@ class ProfilesController extends ControllerBase
     {
         $profile = Profiles::findFirstById($id);
         if (!$profile) {
-
             $this->flash->error("Profile was not found");
 
             return $this->dispatcher->forward([
