@@ -1,16 +1,36 @@
 <?php
+
+/*
+  +------------------------------------------------------------------------+
+  | Vökuró                                                                 |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2016-present Phalcon Team (https://www.phalconphp.com)   |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Vokuro\Forms;
 
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
-use Phalcon\Forms\Element\Password;
-use Phalcon\Forms\Element\Submit;
 use Phalcon\Forms\Element\Check;
+use Phalcon\Forms\Element\Submit;
 use Phalcon\Forms\Element\Hidden;
-use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Forms\Element\Password;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\Identical;
+use Phalcon\Validation\Validator\PresenceOf;
 
+/**
+ * Vokuro\Forms\LoginForm
+ * @package Vokuro\Forms
+ */
 class LoginForm extends Form
 {
 

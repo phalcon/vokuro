@@ -1,14 +1,33 @@
 <?php
+
+/*
+  +------------------------------------------------------------------------+
+  | Vökuró                                                                 |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2016-present Phalcon Team (https://www.phalconphp.com)   |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Vokuro\Mail;
 
-use Phalcon\Mvc\User\Component;
-use Swift_Message as Message;
-use Swift_SmtpTransport as Smtp;
 use Phalcon\Mvc\View;
+use Swift_Message as Message;
+use Phalcon\Mvc\User\Component;
+use Vokuro\Exception\Exception;
+use Swift_SmtpTransport as Smtp;
 
 /**
- * Vokuro\Mail\Mail
  * Sends e-mails based on pre-defined templates
+ *
+ * Vokuro\Mail\Mail
+ * @package Vokuro\Mail
  */
 class Mail extends Component
 {
@@ -100,7 +119,6 @@ class Mail extends Component
             ->setBody($template, 'text/html');
 
         if (isset($mailSettings) && isset($mailSettings->smtp)) {
-
             if (!$this->transport) {
                 $this->transport = Smtp::newInstance(
                     $mailSettings->smtp->server,

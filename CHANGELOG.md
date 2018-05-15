@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Add `CHANGELOG`
+- Add licence docs to `models`, `controllers`, `library`
+- Add `squizlabs/php_codesniffer` and `travis`
 
 ### Changed
 - Changed `userAgent` column type for `success_logins`, `password_changes` and `remember_tokens` tables to `TEXT` [#83](https://github.com/phalcon/vokuro/issues/83)
