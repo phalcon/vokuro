@@ -1,0 +1,62 @@
+sudo: false
+dist: trusty
+
+language: php
+
+php:
+    - 5.5
+    - nightly
+
+git:
+    depth: 1
+
+env:
+    global:
+        - CC="ccache gcc"
+        - PHALCON_VERSION=v3.3.2
+
+matrix:
+    fast_finish: true
+    allow_failures:
+        - php: nightly
+
+cache:
+    # See: https://github.com/travis-ci/travis-ci/issues/8714
+    edge: true
+    apt: true
+    ccache: true
+    timeout: 604800
+    directories:
+        - $HOME/.ccache
+        - $HOME/.composer/cache
+        - $HOME/pear
+        - $HOME/.local/lib
+
+before_install:
+    - ulimit -c unlimited -S || true
+    - phpenv config-rm xdebug.ini || true
+    - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com $GH_TOKEN; fi;
+
+install:
+    - bash $TRAVIS_BUILD_DIR/tests/ci/install_phalcon.sh
+    - travis_retry composer install --prefer-dist --no-interaction --no-suggest --optimize-autoloader
+    - ls -al `$(phpenv which php-config) --extension-dir`
+
+before_script:
+    - php -S 127.0.0.1:8000 -t public/ .htrouter.php >/dev/null 2>&1 &
+
+script:
+    - vendor/bin/phpcs
+
+after_failure:
+    - for file in `ls ./tests/_output`; do [ -f ./tests/_output/$file ] && cat ./tests/_output/$file; done;
+
+notifications:
+    email:
+        on_success: never
+        on_failure: never
+
+addons:
+    apt:
+        packages:
+            - beanstalkd

@@ -15,21 +15,12 @@
   +------------------------------------------------------------------------+
 */
 
-namespace Vokuro\Controllers;
+namespace Vokuro\Exception;
 
 /**
- * Display the "About" page.
- * Vokuro\Controllers\AboutController
- * @package Vokuro\Controllers
+ * Vokuro\Exception\Exception
+ * @package Vokuro\Exception
  */
-class AboutController extends ControllerBase
+class Exception extends \Exception
 {
-    /**
-     * Default action. Set the public layout (layouts/public.volt)
-     */
-    public function indexAction()
-    {
-        $this->view->setVar('logged_in', is_array($this->auth->getIdentity()));
-        $this->view->setTemplateBefore('public');
-    }
 }

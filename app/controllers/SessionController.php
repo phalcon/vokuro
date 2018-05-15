@@ -1,20 +1,36 @@
 <?php
 
+/*
+  +------------------------------------------------------------------------+
+  | Vökuró                                                                 |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2016-present Phalcon Team (https://www.phalconphp.com)   |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Vokuro\Controllers;
 
+use Vokuro\Models\Users;
 use Vokuro\Forms\LoginForm;
 use Vokuro\Forms\SignUpForm;
-use Vokuro\Forms\ForgotPasswordForm;
-use Vokuro\Auth\Exception as AuthException;
-use Vokuro\Models\Users;
+use Vokuro\Exception\Exception;
 use Vokuro\Models\ResetPasswords;
+use Vokuro\Forms\ForgotPasswordForm;
 
 /**
  * Controller used handle non-authenticated session actions like login/logout, user signup, and forgotten passwords
+ * Vokuro\Controllers\SessionController
+ * @package Vokuro\Controllers
  */
 class SessionController extends ControllerBase
 {
-
     /**
      * Default action. Set the public layout (layouts/public.volt)
      */
@@ -35,9 +51,7 @@ class SessionController extends ControllerBase
         $form = new SignUpForm();
 
         if ($this->request->isPost()) {
-
             if ($form->isValid($this->request->getPost()) != false) {
-
                 $user = new Users([
                     'name' => $this->request->getPost('name', 'striptags'),
                     'email' => $this->request->getPost('email'),
@@ -72,13 +86,11 @@ class SessionController extends ControllerBase
                     return $this->auth->loginWithRememberMe();
                 }
             } else {
-
                 if ($form->isValid($this->request->getPost()) == false) {
                     foreach ($form->getMessages() as $message) {
                         $this->flash->error($message);
                     }
                 } else {
-
                     $this->auth->check([
                         'email' => $this->request->getPost('email'),
                         'password' => $this->request->getPost('password'),
@@ -88,7 +100,7 @@ class SessionController extends ControllerBase
                     return $this->response->redirect('users');
                 }
             }
-        } catch (AuthException $e) {
+        } catch (Exception $e) {
             $this->flash->error($e->getMessage());
         }
 
@@ -103,21 +115,17 @@ class SessionController extends ControllerBase
         $form = new ForgotPasswordForm();
 
         if ($this->request->isPost()) {
-
             // Send emails only is config value is set to true
             if ($this->getDI()->get('config')->useMail) {
-
                 if ($form->isValid($this->request->getPost()) == false) {
                     foreach ($form->getMessages() as $message) {
                         $this->flash->error($message);
                     }
                 } else {
-
                     $user = Users::findFirstByEmail($this->request->getPost('email'));
                     if (!$user) {
                         $this->flash->success('There is no account associated to this email');
                     } else {
-
                         $resetPassword = new ResetPasswords();
                         $resetPassword->usersId = $user->id;
                         if ($resetPassword->save()) {
@@ -130,7 +138,9 @@ class SessionController extends ControllerBase
                     }
                 }
             } else {
-                $this->flash->warning('Emails are currently disabled. Change config key "useMail" to true to enable emails.');
+                $this->flash->warning(
+                    'Emails are currently disabled. Change config key "useMail" to true to enable emails.'
+                );
             }
         }
 

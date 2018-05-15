@@ -1,18 +1,34 @@
 <?php
+
+/*
+  +------------------------------------------------------------------------+
+  | Vökuró                                                                 |
+  +------------------------------------------------------------------------+
+  | Copyright (c) 2016-present Phalcon Team (https://www.phalconphp.com)   |
+  +------------------------------------------------------------------------+
+  | This source file is subject to the New BSD License that is bundled     |
+  | with this package in the file LICENSE.txt.                             |
+  |                                                                        |
+  | If you did not receive a copy of the license and are unable to         |
+  | obtain it through the world-wide-web, please send an email             |
+  | to license@phalconphp.com so we can send you a copy immediately.       |
+  +------------------------------------------------------------------------+
+*/
+
 namespace Vokuro\Acl;
 
+use Vokuro\Models\Profiles;
 use Phalcon\Mvc\User\Component;
-use Phalcon\Acl\Adapter\Memory as AclMemory;
 use Phalcon\Acl\Role as AclRole;
 use Phalcon\Acl\Resource as AclResource;
-use Vokuro\Models\Profiles;
+use Phalcon\Acl\Adapter\Memory as AclMemory;
 
 /**
  * Vokuro\Acl\Acl
+ * @package Vokuro\Acl
  */
 class Acl extends Component
 {
-
     /**
      * The ACL Object
      *
@@ -183,7 +199,6 @@ class Acl extends Component
 
         // Grant access to private area to role Users
         foreach ($profiles as $profile) {
-
             // Grant permissions in "permissions" model
             foreach ($profile->getPermissions() as $permission) {
                 $acl->allow($profile->name, $permission->resource, $permission->action);
@@ -196,7 +211,6 @@ class Acl extends Component
         $filePath = $this->getFilePath();
 
         if (touch($filePath) && is_writable($filePath)) {
-
             file_put_contents($filePath, serialize($acl));
 
             // Store the ACL in APC
@@ -232,7 +246,8 @@ class Acl extends Component
      *
      * @param array $resources
      */
-    public function addPrivateResources(array $resources) {
+    public function addPrivateResources(array $resources)
+    {
         if (count($resources) > 0) {
             $this->privateResources = array_merge($this->privateResources, $resources);
             if (is_object($this->acl)) {
