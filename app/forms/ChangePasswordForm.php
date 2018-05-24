@@ -29,10 +29,14 @@ use Phalcon\Validation\Validator\Confirmation;
  */
 class ChangePasswordForm extends Form
 {
+
     public function initialize()
     {
+        // Password
         $password = new Password('password');
 
+        $password->setLabel('Password');
+        
         $password->addValidators([
             new PresenceOf([
                 'message' => 'Password is required'
@@ -51,6 +55,8 @@ class ChangePasswordForm extends Form
 
         // Confirm Password
         $confirmPassword = new Password('confirmPassword');
+        
+        $confirmPassword->setLabel('Confirm Password');
 
         $confirmPassword->addValidators([
             new PresenceOf([
