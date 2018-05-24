@@ -20,6 +20,7 @@ namespace Vokuro\Forms;
 use Phalcon\Forms\Form;
 use Vokuro\Models\Profiles;
 use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Element\Email as EmailText;
 use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Select;
 use Phalcon\Validation\Validator\Email;
@@ -41,25 +42,22 @@ class UsersForm extends Form
         } else {
             $id = new Text('id');
         }
-
         $this->add($id);
 
         $name = new Text('name', [
-            'placeholder' => 'Name'
-        ]);
-
+           // 'placeholder' => 'Name'
+        ]);       
+        $name->setLabel('Name');
         $name->addValidators([
             new PresenceOf([
                 'message' => 'The name is required'
             ])
         ]);
-
         $this->add($name);
 
-        $email = new Text('email', [
-            'placeholder' => 'Email'
-        ]);
-
+        $email = new EmailText('email', [
+        ]);       
+        $email->setLabel('Email');  
         $email->addValidators([
             new PresenceOf([
                 'message' => 'The e-mail is required'
@@ -68,7 +66,6 @@ class UsersForm extends Form
                 'message' => 'The e-mail is not valid'
             ])
         ]);
-
         $this->add($email);
 
         $profiles = Profiles::find([
@@ -78,29 +75,40 @@ class UsersForm extends Form
             ]
         ]);
 
-        $this->add(new Select('profilesId', $profiles, [
+        $profilesId = new Select('profilesId', $profiles, [
             'using' => [
                 'id',
                 'name'
             ],
             'useEmpty' => true,
             'emptyText' => '...',
-            'emptyValue' => ''
-        ]));
-
-        $this->add(new Select('banned', [
+            'emptyValue' => '',
+        ]);
+        $profilesId->setLabel('Profile');
+        $this->add($profilesId);
+        
+        
+        $banned = new Select('banned', [
             'Y' => 'Yes',
             'N' => 'No'
-        ]));
+        ]);
+        $banned->setLabel('Banned');
+        $this->add($banned);
 
-        $this->add(new Select('suspended', [
+        
+        $suspended = new Select('suspended', [
             'Y' => 'Yes',
             'N' => 'No'
-        ]));
+        ]);
+        $suspended->setLabel('Suspended');
+        $this->add($suspended);
+        
 
-        $this->add(new Select('active', [
+        $active = new Select('active', [
             'Y' => 'Yes',
             'N' => 'No'
-        ]));
+        ]);
+        $active->setLabel('Active');
+        $this->add($active);
     }
 }
