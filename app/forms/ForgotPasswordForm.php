@@ -18,10 +18,11 @@
 namespace Vokuro\Forms;
 
 use Phalcon\Forms\Form;
-use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Element\Email as EmailText;
 use Phalcon\Forms\Element\Submit;
-use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\Email;
+
 
 /**
  * Vokuro\Forms\ForgotPasswordForm
@@ -29,10 +30,12 @@ use Phalcon\Validation\Validator\PresenceOf;
  */
 class ForgotPasswordForm extends Form
 {
+
     public function initialize()
     {
-        $email = new Text('email', [
-            'placeholder' => 'Email'
+        $email = new EmailText('email', [
+            'placeholder' => 'Provide your email',
+            'required' => 'Required'
         ]);
 
         $email->addValidators([
@@ -46,8 +49,6 @@ class ForgotPasswordForm extends Form
 
         $this->add($email);
 
-        $this->add(new Submit('Send', [
-            'class' => 'btn btn-primary'
-        ]));
+        $this->add(new Submit('Send'));
     }
 }
