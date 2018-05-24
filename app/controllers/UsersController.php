@@ -105,11 +105,11 @@ class UsersController extends ControllerBase
                 } else {
                     $this->flash->success("User was created successfully");
 
-                    Tag::resetInput();
+                    $form->clear();
                 }
             }
         }
-
+        
         $this->view->form = $form;
     }
 
@@ -151,7 +151,7 @@ class UsersController extends ControllerBase
                 } else {
                     $this->flash->success("User was updated successfully");
 
-                    Tag::resetInput();
+                    $form->clear();
                 }
             }
         }
@@ -217,7 +217,7 @@ class UsersController extends ControllerBase
                 } else {
                     $this->flash->success('Your password was successfully changed');
 
-                    Tag::resetInput();
+                    $form->clear();
                 }
             }
         }
