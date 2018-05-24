@@ -18,6 +18,7 @@
 namespace Vokuro\Forms;
 
 use Phalcon\Forms\Form;
+use Phalcon\Forms\Element\Email as EmailText;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Check;
 use Phalcon\Forms\Element\Hidden;
@@ -51,7 +52,7 @@ class SignUpForm extends Form
         $this->add($name);
 
         // Email
-        $email = new Text('email');
+        $email = new EmailText('email');
 
         $email->setLabel('E-Mail');
 
@@ -127,9 +128,7 @@ class SignUpForm extends Form
         $this->add($csrf);
 
         // Sign Up
-        $this->add(new Submit('Sign Up', [
-            'class' => 'btn btn-success'
-        ]));
+        $this->add(new Submit('Sign Up'));
     }
 
     /**
