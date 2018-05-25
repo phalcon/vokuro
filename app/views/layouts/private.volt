@@ -35,7 +35,7 @@
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
               <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="drop-menu">{{ auth.getName() }}</a> 
-            <div class="dropdown-menu" aria-lablledby="drop-menu">
+            <div class="dropdown-menu dropdown-menu-right" aria-lablledby="drop-menu">
               {{ link_to('users/changePassword', 'Change Password' , 'class': 'dropdown-item') }}
             </div>
           </li>
