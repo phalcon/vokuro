@@ -37,24 +37,22 @@ class ProfilesForm extends Form
         } else {
             $id = new Text('id');
         }
-
         $this->add($id);
 
-        $name = new Text('name', [
-            'placeholder' => 'Name'
-        ]);
-
+        $name = new Text('name');
+        $name->setLabel('Name');
         $name->addValidators([
             new PresenceOf([
                 'message' => 'The name is required'
             ])
         ]);
-
         $this->add($name);
 
-        $this->add(new Select('active', [
+        $active = new Select('active', [
             'Y' => 'Yes',
             'N' => 'No'
-        ]));
+        ]);
+        $active->setLabel('Active');
+        $this->add($active);
     }
 }

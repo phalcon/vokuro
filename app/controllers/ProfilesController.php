@@ -99,11 +99,10 @@ class ProfilesController extends ControllerBase
             } else {
                 $this->flash->success("Profile was created successfully");
             }
-
-            Tag::resetInput();
         }
 
         $this->view->form = new ProfilesForm(null);
+        $this->view->form->clear();
     }
 
     /**
@@ -132,13 +131,12 @@ class ProfilesController extends ControllerBase
             } else {
                 $this->flash->success("Profile was updated successfully");
             }
-
-            Tag::resetInput();
         }
 
         $this->view->form = new ProfilesForm($profile, [
             'edit' => true
         ]);
+        $this->view->form->clear();
 
         $this->view->profile = $profile;
     }
