@@ -29,6 +29,6 @@
         "squizlabs/php_codesniffer": "~2.7"
     },
     "require-dev": {
-        "phalcongelist/dd": "~1.0"
+        "phalcon/dd": "~1.1.0"
     }
 }

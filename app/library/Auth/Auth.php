@@ -260,6 +260,13 @@ class Auth extends Component
             $this->cookies->get('RMU')->delete();
         }
         if ($this->cookies->has('RMT')) {
+            $token = $this->cookies->get('RMT')->getValue();
+
+            $userId = $this->findFirstByToken($token);
+            if ($userId) {
+                $this->deleteToken($userId);
+            }
+            
             $this->cookies->get('RMT')->delete();
         }
 
@@ -307,5 +314,41 @@ class Auth extends Component
         }
 
         return false;
+    }
+    
+    /**
+     * Returns the current token user
+     *
+     * @param string $token
+     * @return boolean
+     */
+    public function findFirstByToken($token)
+    {
+        $userToken = RememberTokens::findFirst([
+            'conditions' => 'token = :token:',
+            'bind'       => [
+                'token' => $token,
+            ],
+        ]);
+        
+        $user_id = ($userToken) ? $userToken->usersId : false; 
+        return $user_id;
+    }
+
+    /**
+     * Delete the current user token in session
+     */
+    public function deleteToken($userId) 
+    {
+        $user = RememberTokens::find([
+            'conditions' => 'usersId = :userId:',
+            'bind'       => [
+                'userId' => $userId
+            ]
+        ]);
+
+        if ($user) {
+            $user->delete();
+        }
     }
 }
