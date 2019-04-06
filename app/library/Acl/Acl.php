@@ -1,16 +1,16 @@
 <?php
 namespace Vokuro\Acl;
 
-use Phalcon\Mvc\User\Component;
+use Phalcon\Plugin;
 use Phalcon\Acl\Adapter\Memory as AclMemory;
 use Phalcon\Acl\Role as AclRole;
-use Phalcon\Acl\Resource as AclResource;
+use Phalcon\Acl\Component as AclResource;
 use Vokuro\Models\Profiles;
 
 /**
  * Vokuro\Acl\Acl
  */
-class Acl extends Component
+class Acl extends Plugin
 {
 
     /**

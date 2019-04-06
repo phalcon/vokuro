@@ -38,7 +38,7 @@ try {
     */
     $application = new Application($di);
 
-    echo $application->handle()
+    echo $application->handle($_SERVER['REQUEST_URI'])
         ->getContent();
 
 } catch (Exception $e) {

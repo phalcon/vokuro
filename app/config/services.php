@@ -2,11 +2,12 @@
 use Phalcon\Mvc\View;
 use Phalcon\Crypt;
 use Phalcon\Mvc\Dispatcher;
-use Phalcon\Mvc\Url as UrlResolver;
+use Phalcon\Url as UrlResolver;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Files as MetaDataAdapter;
-use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Session\Manager as SessionAdapter;
+use Phalcon\Session\Adapter\Files;
 use Phalcon\Flash\Direct as Flash;
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
@@ -19,12 +20,12 @@ use Vokuro\Mail\Mail;
  */
 $di->setShared('config', function () {
     $config = include APP_PATH . '/config/config.php';
-    
+
     if (is_readable(APP_PATH . '/config/config.dev.php')) {
         $override = include APP_PATH . '/config/config.dev.php';
         $config->merge($override);
     }
-    
+
     return $config;
 });
 
@@ -56,8 +57,7 @@ $di->set('view', function () {
             $volt = new VoltEngine($view, $this);
 
             $volt->setOptions([
-                'compiledPath' => $config->application->cacheDir . 'volt/',
-                'compiledSeparator' => '_'
+                'path' => $config->application->cacheDir . 'volt/'
             ]);
 
             return $volt;
@@ -95,6 +95,7 @@ $di->set('modelsMetadata', function () {
  */
 $di->set('session', function () {
     $session = new SessionAdapter();
+    $session->setHandler(new Files());
     $session->start();
     return $session;
 });
@@ -153,7 +154,7 @@ $di->set('mail', function () {
 });
 
 /**
- * Setup the private resources, if any, for performance optimization of the ACL.  
+ * Setup the private resources, if any, for performance optimization of the ACL.
  */
 $di->setShared('AclResources', function() {
     $pr = [];

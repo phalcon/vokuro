@@ -1,7 +1,7 @@
 <?php
 namespace Vokuro\Auth;
 
-use Phalcon\Mvc\User\Component;
+use Phalcon\Plugin;
 use Vokuro\Models\Users;
 use Vokuro\Models\RememberTokens;
 use Vokuro\Models\SuccessLogins;
@@ -11,7 +11,7 @@ use Vokuro\Models\FailedLogins;
  * Vokuro\Auth\Auth
  * Manages Authentication/Identity Management in Vokuro
  */
-class Auth extends Component
+class Auth extends Plugin
 {
     /**
      * Checks the user credentials
@@ -253,7 +253,7 @@ class Auth extends Component
             if ($userId) {
                 $this->deleteToken($userId);
             }
-            
+
             $this->cookies->get('RMT')->delete();
         }
 
@@ -303,7 +303,7 @@ class Auth extends Component
 
         return false;
     }
-    
+
     /**
      * Returns the current token user
      *
@@ -318,15 +318,15 @@ class Auth extends Component
                 'token' => $token,
             ],
         ]);
-        
-        $user_id = ($userToken) ? $userToken->usersId : false; 
+
+        $user_id = ($userToken) ? $userToken->usersId : false;
         return $user_id;
     }
 
     /**
      * Delete the current user token in session
      */
-    public function deleteToken($userId) 
+    public function deleteToken($userId)
     {
         $user = RememberTokens::find([
             'conditions' => 'usersId = :userId:',

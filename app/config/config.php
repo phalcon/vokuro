@@ -7,9 +7,9 @@ return new Config([
     'database' => [
         'adapter' => 'Mysql',
         'host' => '127.0.0.1',
-        'username' => 'root',
+        'username' => 'vokuro',
         'password' => '',
-        'dbname' => 'vokuro'
+        'dbname' => ''
     ],
     'application' => [
         'controllersDir' => APP_PATH . '/controllers/',

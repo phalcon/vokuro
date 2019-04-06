@@ -18,8 +18,8 @@ If you wish to check older versions or newer ones currently under development, p
 
 To run this application on your machine, you need at least:
 
-* >= PHP 5.5
-* >= Phalcon 3.0
+* >= PHP 7.0
+* >= Phalcon 4.0
 * Apache Web Server with `mod_rewrite enabled`, and `AllowOverride Options` (or `All`) in your `httpd.conf` or Nginx Web Server
 * Latest [Phalcon Framework](https://github.com/phalcon/cphalcon) extension installed/enabled
 * MySQL >= 5.1.5
