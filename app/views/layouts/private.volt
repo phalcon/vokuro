@@ -6,6 +6,7 @@
   {{ renderTitle() }}
   {{ stylesheet_link('/css/bootstrap.min.css') }}
   {{ stylesheet_link('/css/dataTables.bootstrap4.min.css') }}
+  {{ stylesheet_link('/css/responsive.bootstrap4.min.css') }}
   {{ stylesheet_link('/css/fontawesome.min.css') }}
   {{ stylesheet_link('/css/solid.min.css') }}
   {{ stylesheet_link('/css/my_private.css') }}
@@ -60,6 +61,8 @@
   {{ javascript_include('/js/bootstrap.bundle.min.js', false) }}
   {{ javascript_include('/js/jquery.dataTables.min.js', false) }}
   {{ javascript_include('/js/dataTables.bootstrap4.min.js', false) }}
+  {{ javascript_include('/js/dataTables.responsive.min.js', false) }}
+  {{ javascript_include('/js/responsive.bootstrap4.min.js', false) }}
   {{ javascript_include('/js/my_private.js', false) }}
   <script type="text/javascript">
   $('#dataTables').dataTable({
