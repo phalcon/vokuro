@@ -60,7 +60,7 @@
       <p>&copy; {{ date("Y") }} Made with love by the Phalcon Team {{ link_to("privacy", "Privacy Policy") }} {{ link_to("terms", "Terms") }}</p>
     </footer>
 
-    {{ javascript_include('/js/jquery-3.3.1.slim.min.js', false) }}
+    {{ javascript_include('/js/jquery-3.3.1.min.js', false) }}
     {{ javascript_include('/js/bootstrap.min.js', false) }}
     {{ javascript_include('/js/bootstrap.bundle.min.js', false) }}
   </body>
