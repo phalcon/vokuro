@@ -22,7 +22,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="navbar-collapse collapse" id="collapsingNavbar">
+    <div class="collapse navbar-collapse text-right" id="collapsingNavbar">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link" href="/session/logout">Logout</a>
