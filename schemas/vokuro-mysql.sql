@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 07, 2019 at 04:27 AM
+-- Generation Time: Apr 07, 2019 at 11:37 AM
 -- Server version: 10.3.13-MariaDB-1
 -- PHP Version: 7.3.3-1
 
@@ -60,7 +60,7 @@ CREATE TABLE `password_changes` (
   `id` int(10) UNSIGNED NOT NULL,
   `userID` int(10) UNSIGNED NOT NULL,
   `ipAddress` char(15) NOT NULL,
-  `userAgent` text NOT NULL,
+  `userAgent` varchar(500) NOT NULL,
   `createdAt` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -121,7 +121,7 @@ CREATE TABLE `remember_tokens` (
   `id` int(10) UNSIGNED NOT NULL,
   `userID` int(10) UNSIGNED NOT NULL,
   `token` char(32) NOT NULL,
-  `userAgent` varchar(120) NOT NULL,
+  `userAgent` varchar(500) NOT NULL,
   `createdAt` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -171,7 +171,7 @@ CREATE TABLE `success_logins` (
   `id` int(10) UNSIGNED NOT NULL,
   `userID` int(10) UNSIGNED NOT NULL,
   `ipAddress` char(15) NOT NULL,
-  `userAgent` varchar(120) NOT NULL
+  `userAgent` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -242,7 +242,7 @@ ALTER TABLE `remember_tokens`
 --
 ALTER TABLE `reset_passwords`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `usersId` (`userID`);
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `roles`
@@ -256,14 +256,14 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `success_logins`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `usersId` (`userID`);
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `profilesId` (`roleID`);
+  ADD KEY `roleID` (`roleID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
