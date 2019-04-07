@@ -14,60 +14,66 @@ use Phalcon\Validation\Validator\Identical;
 class LoginForm extends Form
 {
 
-    public function initialize()
-    {
-        // Email
-        $email = new Text('email', [
-            'placeholder' => 'Email'
-        ]);
+  public function initialize()
+  {
+    // Email
+    $email = new Text('email', [
+      'class' => 'form-control',
+      'placeholder' => 'E-mail'
+    ]);
+    $email->addValidators([
+      new PresenceOf([
+        'message' => 'The e-mail is required'
+      ]),
+      new Email([
+        'message' => 'The e-mail is not valid'
+      ])
+    ]);
+    $this->add($email);
 
-        $email->addValidators([
-            new PresenceOf([
-                'message' => 'The e-mail is required'
-            ]),
-            new Email([
-                'message' => 'The e-mail is not valid'
-            ])
-        ]);
+    // Password
+    $password = new Password('password', [
+      'class' => 'form-control',
+      'placeholder' => 'Password'
+    ]);
+    $password->addValidator(new PresenceOf([
+      'message' => 'The password is required'
+    ]));
+    $password->clear();
+    $this->add($password);
 
-        $this->add($email);
+    // Remember
+    $remember = new Check('remember', [
+      'value' => 'yes'
+    ]);
 
-        // Password
-        $password = new Password('password', [
-            'placeholder' => 'Password'
-        ]);
+    $remember->setLabel('Remember');
 
-        $password->addValidator(new PresenceOf([
-            'message' => 'The password is required'
-        ]));
+    $this->add($remember);
 
-        $password->clear();
+    // CSRF
+    $csrf = new Hidden('csrf');
+    $csrf->addValidator(new Identical([
+      'value' => $this->security->getSessionToken(),
+      'message' => 'CSRF validation failed'
+    ]));
+    $csrf->clear();
+    $this->add($csrf);
 
-        $this->add($password);
-
-        // Remember
-        $remember = new Check('remember', [
-            'value' => 'yes'
-        ]);
-
-        $remember->setLabel('Remember me');
-
-        $this->add($remember);
-
-        // CSRF
-        $csrf = new Hidden('csrf');
-
-        $csrf->addValidator(new Identical([
-            'value' => $this->security->getSessionToken(),
-            'message' => 'CSRF validation failed'
-        ]));
-
-        $csrf->clear();
-
-        $this->add($csrf);
-
-        $this->add(new Submit('go', [
-            'class' => 'btn btn-success'
-        ]));
+    $this->add(new Submit('go', [
+      'class' => 'btn btn-sm btn-primary btn-block',
+      'value' => 'Login'
+    ]));
+  }
+  /**
+  * Prints messages for a specific element
+  */
+  public function messages($name)
+  {
+    if ($this->hasMessagesFor($name)) {
+      foreach ($this->getMessagesFor($name) as $message) {
+        $this->flash->error($message);
+      }
     }
+  }
 }

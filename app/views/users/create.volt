@@ -1,35 +1,34 @@
-
-<form method="post" autocomplete="off">
-
-<ul class="pager">
-    <li class="previous pull-left">
-        {{ link_to("users", "&larr; Go Back") }}
-    </li>
-    <li class="pull-right">
-        {{ submit_button("Save", "class": "btn btn-success") }}
-    </li>
-</ul>
-
-{{ content() }}
-
-<div class="center scaffold">
-    <h2>Create a User</h2>
-
-    <div class="clearfix">
-        <label for="name">Name</label>
-        {{ form.render("name") }}
+<h1>Users</h1>
+<hr>
+<div class="row mb-3">
+  <div class="col-12">
+    {{ content() }}
+    <div class="card">
+      <div class="card-header">
+        <h4>Add User</h4>
+      </div>
+      <div class="card-body">
+        {{ form() }}
+        <div class="form-group">
+          <label for="name">name</label>
+          {{ form.render("name", ["class": "form-control"]) }}
+        </div>
+        <div class="form-group">
+          <label for="email">e-mail</label>
+          {{ form.render("email", ["class": "form-control"]) }}
+        </div>
+        <div class="form-group">
+          <label for="roleID">role</label>
+          {{ form.render("roleID", ["class": "form-control"]) }}
+        </div>
+        <div class="btn-group">
+          {{ submit_button("Save", "class": "btn btn-success", 'value':'Add') }}
+          {{ link_to("/users", 'Cancel', "class": "btn btn-warning") }}
+        </div>
+        {{ form.render('csrf', ['value': security.getToken()]) }}
+        {{ end_form() }}
+      </div>
     </div>
-
-    <div class="clearfix">
-        <label for="email">E-Mail</label>
-        {{ form.render("email") }}
-    </div>
-
-    <div class="clearfix">
-        <label for="profilesId">Profile</label>
-        {{ form.render("profilesId") }}
-    </div>
-
+  </div>
+  <!-- /.col-12 -->
 </div>
-
-</form>

@@ -1,25 +1,30 @@
 {{ content() }}
-
-<form method="post" autocomplete="off" action="{{ url("users/changePassword") }}">
-
-    <div class="center scaffold">
-
-        <h2>Change Password</h2>
-
-        <div class="clearfix">
-            <label for="password">Password</label>
-            {{ form.render("password") }}
+<div class="card">
+  <div class="card-body">
+    {{ form() }}
+    <div class="form-group">
+      <label>New Password</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-key"></i></span>
         </div>
-
-        <div class="clearfix">
-            <label for="confirmPassword">Confirm Password</label>
-            {{ form.render("confirmPassword") }}
-        </div>
-
-        <div class="clearfix">
-            {{ submit_button("Change Password", "class": "btn btn-primary") }}
-        </div>
-
+        {{ form.render("password") }}
+      </div>
     </div>
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-key"></i></span>
+        </div>
+        {{ form.render("confirmPassword") }}
+      </div>
+    </div>
+    <div class="btn-group">
+      {{ submit_button("Save", "class": "btn btn-success") }}
+      {{ link_to("/dashboard", 'Cancel', "class": "btn btn-warning") }}
+    </div>
+    {{ end_form() }}
 
-</form>
+  </div>
+</div>

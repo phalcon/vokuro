@@ -1,18 +1,25 @@
 <?php
 namespace Vokuro\Controllers;
 
+use Phalcon\Tag;
 /**
- * Display the "About" page.
- */
+* Display the default About page.
+*/
 class AboutController extends ControllerBase
 {
+  /**
+  * Default action. Set the public layout (layouts/public.volt)
+  */
+  public function initialize()
+  {
+    $this->view->setTemplateBefore('public');
+  }
 
-    /**
-     * Default action. Set the public layout (layouts/public.volt)
-     */
-    public function indexAction()
-    {
-        $this->view->setVar('logged_in', is_array($this->auth->getIdentity()));
-        $this->view->setTemplateBefore('public');
-    }
+  public function indexAction()
+  {
+    $this->view->setVar('logged_in', is_array($this->auth->getIdentity()));
+    $this->tag->setTitle('Welcome to Vökuró - About');
+  }
+
+
 }

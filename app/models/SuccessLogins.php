@@ -20,7 +20,7 @@ class SuccessLogins extends Model
      *
      * @var integer
      */
-    public $usersId;
+    public $userID;
 
     /**
      *
@@ -34,9 +34,15 @@ class SuccessLogins extends Model
      */
     public $userAgent;
 
+    /**
+     *
+     * @var string
+     */
+    public $date;
+
     public function initialize()
     {
-        $this->belongsTo('usersId', __NAMESPACE__ . '\Users', 'id', [
+        $this->belongsTo('userID', __NAMESPACE__ . '\Users', 'id', [
             'alias' => 'user'
         ]);
     }

@@ -10,140 +10,139 @@ use Vokuro\Models\Users;
 use Vokuro\Models\ResetPasswords;
 
 /**
- * Controller used handle non-authenticated session actions like login/logout, user signup, and forgotten passwords
- */
+* Controller used handle non-authenticated session actions like login/logout, user signup, and forgotten passwords
+*/
 class SessionController extends ControllerBase
 {
 
-    /**
-     * Default action. Set the public layout (layouts/public.volt)
-     */
-    public function initialize()
-    {
-        $this->view->setTemplateBefore('public');
-    }
+  /**
+  * Default action. Set the public layout (layouts/public.volt)
+  */
+  public function initialize()
+  {
+    $this->view->setTemplateBefore('public');
+  }
 
-    public function indexAction()
-    {
-    }
+  public function indexAction()
+  {
+  }
 
-    /**
-     * Allow a user to signup to the system
-     */
-    public function signupAction()
-    {
-        $form = new SignUpForm();
+  /**
+  * Allow a user to signup to the system
+  */
+  public function signupAction()
+  {
+    $this->tag->setTitle('Welcome to Vökuró - Sign up');
+    $form = new SignUpForm();
 
-        if ($this->request->isPost()) {
-
-            if ($form->isValid($this->request->getPost()) != false) {
-
-                $user = new Users([
-                    'name' => $this->request->getPost('name', 'striptags'),
-                    'email' => $this->request->getPost('email'),
-                    'password' => $this->security->hash($this->request->getPost('password')),
-                    'profilesId' => 2
-                ]);
-
-                if ($user->save()) {
-                    return $this->dispatcher->forward([
-                        'controller' => 'index',
-                        'action' => 'index'
-                    ]);
-                }
-
-                $this->flash->error($user->getMessages());
-            }
+    if ($this->request->isPost()) {
+      if ($form->isValid($this->request->getPost()) == false) {
+        foreach ($form->getMessages() as $message) {
+          $this->flash->error($message);
         }
-
-        $this->view->form = $form;
+      } else {
+        $user = new Users([
+          'name' => $this->request->getPost('name', 'striptags'),
+          'email' => $this->request->getPost('email'),
+          'password' => $this->security->hash($this->request->getPost('password')),
+          'roleID' => 2
+        ]);
+        if ($user->save()) {
+          return $this->dispatcher->forward([
+            'controller' => 'index',
+            'action' => 'index'
+          ]);
+        }
+        foreach ($user->getMessages() as $message) {
+          $this->flash->error($message);
+        }
+      }
     }
 
-    /**
-     * Starts a session in the admin backend
-     */
-    public function loginAction()
-    {
-        $form = new LoginForm();
+    $this->view->form = $form;
+  }
 
-        try {
-            if (!$this->request->isPost()) {
-                if ($this->auth->hasRememberMe()) {
-                    return $this->auth->loginWithRememberMe();
-                }
+  /**
+  * Starts a session in the User backend
+  */
+  public function loginAction()
+  {
+    $this->tag->setTitle('Welcome to Vökuró - Login');
+    $form = new LoginForm();
+
+    try {
+      if (!$this->request->isPost()) {
+        if ($this->auth->hasRememberMe()) {
+          return $this->auth->loginWithRememberMe();
+        }
+      } else {
+        if ($form->isValid($this->request->getPost()) == false) {
+          foreach ($form->getMessages() as $message) {
+            $this->flash->error($message);
+          }
+        } else {
+          $this->auth->check([
+            'email' => $this->request->getPost('email'),
+            'password' => $this->request->getPost('password'),
+            'remember' => $this->request->getPost('remember')
+          ]);
+          return $this->response->redirect('dashboard');
+        }
+      }
+    } catch (AuthException $e) {
+      $this->flash->error($e->getMessage());
+    }
+
+    $this->view->form = $form;
+  }
+
+  /**
+  * Shows the forgot password form
+  */
+  public function forgotPasswordAction()
+  {
+    $form = new ForgotPasswordForm();
+
+    if ($this->request->isPost()) {
+
+      // Send emails only is config value is set to true
+      if ($this->getDI()->get('config')->useMail) {
+
+        if ($form->isValid($this->request->getPost()) == false) {
+          foreach ($form->getMessages() as $message) {
+            $this->flash->error($message);
+          }
+        } else {
+          $user = Users::findFirstByEmail($this->request->getPost('email'));
+          if (!$user) {
+            $this->flash->success('There is no account associated to this email');
+          } else {
+            $resetPassword = new ResetPasswords();
+            $resetPassword->userID = $user->id;
+            if ($resetPassword->save()) {
+              $this->flash->success('Success! Please check your messages for an email reset password');
             } else {
-
-                if ($form->isValid($this->request->getPost()) == false) {
-                    foreach ($form->getMessages() as $message) {
-                        $this->flash->error($message);
-                    }
-                } else {
-
-                    $this->auth->check([
-                        'email' => $this->request->getPost('email'),
-                        'password' => $this->request->getPost('password'),
-                        'remember' => $this->request->getPost('remember')
-                    ]);
-
-                    return $this->response->redirect('users');
-                }
+              foreach ($resetPassword->getMessages() as $message) {
+                $this->flash->error($message);
+              }
             }
-        } catch (AuthException $e) {
-            $this->flash->error($e->getMessage());
+          }
         }
-
-        $this->view->form = $form;
+      } else {
+        $this->flash->warning('Emails are currently disabled. Change config key "useMail" to true to enable emails.');
+      }
     }
 
-    /**
-     * Shows the forgot password form
-     */
-    public function forgotPasswordAction()
-    {
-        $form = new ForgotPasswordForm();
+    $this->view->form = $form;
+  }
 
-        if ($this->request->isPost()) {
+  /**
+  * Closes the session
+  */
+  public function logoutAction()
+  {
+    $this->auth->remove();
 
-            // Send emails only is config value is set to true
-            if ($this->getDI()->get('config')->useMail) {
-
-                if ($form->isValid($this->request->getPost()) == false) {
-                    foreach ($form->getMessages() as $message) {
-                        $this->flash->error($message);
-                    }
-                } else {
-
-                    $user = Users::findFirstByEmail($this->request->getPost('email'));
-                    if (!$user) {
-                        $this->flash->success('There is no account associated to this email');
-                    } else {
-
-                        $resetPassword = new ResetPasswords();
-                        $resetPassword->usersId = $user->id;
-                        if ($resetPassword->save()) {
-                            $this->flash->success('Success! Please check your messages for an email reset password');
-                        } else {
-                            foreach ($resetPassword->getMessages() as $message) {
-                                $this->flash->error($message);
-                            }
-                        }
-                    }
-                }
-            } else {
-                $this->flash->warning('Emails are currently disabled. Change config key "useMail" to true to enable emails.');
-            }
-        }
-
-        $this->view->form = $form;
-    }
-
-    /**
-     * Closes the session
-     */
-    public function logoutAction()
-    {
-        $this->auth->remove();
-
-        return $this->response->redirect('index');
-    }
+    return $this->response->redirect('index');
+  }
 }

@@ -1,30 +1,24 @@
-{{ content() }}
-
-<div align="center" class="well">
-
-	{{ form('class': 'form-search') }}
-
-	<div align="left">
-		<h2>Log In</h2>
+<div class="d-flex justify-content-center">
+	<div class="col-md-6">
+		<div class="card-body">
+			<h3 class="text-center">Login</h3>
+			{{ content() }}
+			{{ form('class': 'form-search') }}
+			<div class="form-group">
+				<label class="control-label">E-Mail</label>
+				{{ form.render('email') }}
+			</div>
+			<div class="form-group">
+				<label class="control-label">Password</label>
+				{{ form.render('password') }}
+			</div>
+			<div align="center">
+				{{ form.render('remember') }}
+				{{ form.label('remember') }}
+			</div>
+			{{ form.render('go') }}
+			{{ form.render('csrf', ['value': security.getToken()]) }}
+		</form>
 	</div>
-
-		{{ form.render('email') }}
-		{{ form.render('password') }}
-		{{ form.render('go') }}
-
-		<div align="center" class="remember">
-			{{ form.render('remember') }}
-			{{ form.label('remember') }}
-		</div>
-
-		{{ form.render('csrf', ['value': security.getToken()]) }}
-
-		<hr>
-
-		<div class="forgot">
-			{{ link_to("session/forgotPassword", "Forgot my password") }}
-		</div>
-
-	</form>
-
+</div>
 </div>

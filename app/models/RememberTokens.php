@@ -20,7 +20,7 @@ class RememberTokens extends Model
      *
      * @var integer
      */
-    public $usersId;
+    public $userID;
 
     /**
      *
@@ -51,7 +51,7 @@ class RememberTokens extends Model
 
     public function initialize()
     {
-        $this->belongsTo('usersId', __NAMESPACE__ . '\Users', 'id', [
+        $this->belongsTo('userID', __NAMESPACE__ . '\Users', 'id', [
             'alias' => 'user'
         ]);
     }

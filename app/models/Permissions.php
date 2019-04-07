@@ -5,7 +5,7 @@ use Phalcon\Mvc\Model;
 
 /**
  * Permissions
- * Stores the permissions by profile
+ * Stores the permissions by role
  */
 class Permissions extends Model
 {
@@ -20,7 +20,7 @@ class Permissions extends Model
      *
      * @var integer
      */
-    public $profilesId;
+    public $roleID;
 
     /**
      *
@@ -36,8 +36,8 @@ class Permissions extends Model
 
     public function initialize()
     {
-        $this->belongsTo('profilesId', __NAMESPACE__ . '\Profiles', 'id', [
-            'alias' => 'profile'
+        $this->belongsTo('roleID', __NAMESPACE__ . '\Roles', 'id', [
+            'alias' => 'role'
         ]);
     }
 }

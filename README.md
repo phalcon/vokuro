@@ -33,21 +33,6 @@ cat schemas/vokuro.sql | mysql -u root vokuro
 
 Also you can override application config by creating `app/config/config.dev.php` (already gitignored).
 
-### Installing Dependencies via Composer
-
-Vökuró's dependencies must be installed using Composer. Install composer in a common location or in your project:
-
-```bash
-curl -s http://getcomposer.org/installer | php
-```
-
-Run the composer installer:
-
-```bash
-cd vokuro
-php composer.phar install
-```
-
 **NOTE** After the installation, please ensure that the following folders have write permissions set:
 - `cache`
 

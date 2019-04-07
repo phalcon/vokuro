@@ -1,60 +1,31 @@
-{{ content() }}
-
-<div align="center">
-
-	{{ form('class': 'form-search') }}
-
-		<div align="left">
-			<h2>Sign Up</h2>
-		</div>
-
-		<table class="signup">
-			<tr>
-				<td align="right">{{ form.label('name') }}</td>
-				<td>
-					{{ form.render('name') }}
-					{{ form.messages('name') }}
-				</td>
-			</tr>
-			<tr>
-				<td align="right">{{ form.label('email') }}</td>
-				<td>
-					{{ form.render('email') }}
-					{{ form.messages('email') }}
-				</td>
-			</tr>
-			<tr>
-				<td align="right">{{ form.label('password') }}</td>
-				<td>
-					{{ form.render('password') }}
-					{{ form.messages('password') }}
-				</td>
-			</tr>
-			<tr>
-				<td align="right">{{ form.label('confirmPassword') }}</td>
-				<td>
-					{{ form.render('confirmPassword') }}
-					{{ form.messages('confirmPassword') }}
-				</td>
-			</tr>
-			<tr>
-				<td align="right"></td>
-				<td>
-					{{ form.render('terms') }} {{ form.label('terms') }}
-					{{ form.messages('terms') }}
-				</td>
-			</tr>
-			<tr>
-				<td align="right"></td>
-				<td>{{ form.render('Sign Up') }}</td>
-			</tr>
-		</table>
-
-		{{ form.render('csrf', ['value': security.getToken()]) }}
-		{{ form.messages('csrf') }}
-
-		<hr>
-
-	</form>
-
+<div class="d-flex justify-content-center">
+	<div class="col-md-6">
+		<div class="card-body">
+			<h3 class="text-center">Sign up</h3>
+			{{ content() }}
+			{{ form('class': 'form-search') }}
+			<div class="form-group">
+				<label class="control-label">Name</label>
+				{{ form.render('name') }}
+			</div>
+			<div class="form-group">
+				<label class="control-label">E-Mail</label>
+				{{ form.render('email') }}
+			</div>
+			<div class="form-group">
+				<label class="control-label">Password</label>
+				{{ form.render('password') }}
+			</div>
+			<div class="form-group">
+				<label class="control-label">Confirm Password</label>
+				{{ form.render('confirmPassword') }}
+			</div>
+			<div align="center">
+				{{ form.render('terms') }} {{ form.label('terms') }}
+			</div>
+			{{ form.render('Sign Up') }}
+			{{ form.render('csrf', ['value': security.getToken()]) }}
+		</form>
+	</div>
+</div>
 </div>
