@@ -36,7 +36,7 @@
 							{% endfor %}
 						</div>
 						<div class="btn-group">
-							{{ submit_button('Submit', 'class': 'btn btn-success', 'value':'Save') }}
+							{{ submit_button('Submit', 'class': 'btn btn-primary', 'value':'Save') }}
 							{{ link_to("/roles", 'Cancel', "class": "btn btn-warning") }}
 						</div>
 						{% endif %}

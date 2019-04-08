@@ -22,7 +22,7 @@
           {{ form.render("roleID", ["class": "form-control"]) }}
         </div>
         <div class="btn-group">
-          {{ submit_button("Save", "class": "btn btn-success", 'value':'Add') }}
+          {{ submit_button("Save", "class": "btn btn-primary", 'value':'Add') }}
           {{ link_to("/users", 'Cancel', "class": "btn btn-warning") }}
         </div>
         {{ form.render('csrf', ['value': security.getToken()]) }}

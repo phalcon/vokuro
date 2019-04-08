@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="btn-group">
-      {{ submit_button("Save", "class": "btn btn-success") }}
+      {{ submit_button("Save", "class": "btn btn-primary") }}
       {{ link_to("/dashboard", 'Cancel', "class": "btn btn-warning") }}
     </div>
     {{ end_form() }}

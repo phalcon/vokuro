@@ -18,7 +18,7 @@
           {{ form.render("active", ["class": "form-control"]) }}
         </div>
         <div class="btn-group">
-          {{ submit_button("Save", "class": "btn btn-success", 'value':'Save') }}
+          {{ submit_button("Save", "class": "btn btn-primary", 'value':'Save') }}
           {{ link_to("/roles", 'Cancel', "class": "btn btn-warning") }}
         </div>
         {{ form.render('csrf', ['value': security.getToken()]) }}
