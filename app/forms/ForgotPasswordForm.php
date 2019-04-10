@@ -9,7 +9,6 @@ use Phalcon\Validation\Validator\Email;
 
 class ForgotPasswordForm extends Form
 {
-
     public function initialize()
     {
         $email = new Text('email', [
