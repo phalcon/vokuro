@@ -14,21 +14,27 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="flex-row d-flex">
-      <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
+      <button type="button" class="navbar-toggler mr-2" data-toggle="offcanvas" title="Toggle responsive left sidebar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="/dashboard" title="Vokuro">User Panel</a>
     </div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse text-right" id="collapsingNavbar">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/session/logout">Logout</a>
-        </li>
-      </ul>
-    </div>
+
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <div class="d-none d-sm-block">
+            <img src="{{ gravatar.getAvatar(auth.getEmail()) }}" class="rounded-circle avatar" alt="User Image"> {{ auth.getName() }}
+          </div>
+          <div class="d-sm-none">
+            <img src="{{ gravatar.getAvatar(auth.getEmail()) }}" class="rounded-circle avatar" alt="User Image">
+          </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+          <a class="dropdown-item" href="/session/logout">Logout</a>
+        </div>
+      </li>
+    </ul>
   </nav>
 
   <div class="container-fluid" id="main">

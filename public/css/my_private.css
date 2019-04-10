@@ -3,6 +3,11 @@
   padding-bottom:150px;
 }
 
+.avatar{
+  width: 20px;
+  height: 20px;
+}
+
 .footer {
   margin-top: 20px;
   margin-bottom: 20px;
