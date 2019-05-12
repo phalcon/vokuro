@@ -12,6 +12,7 @@ class ForgotPasswordForm extends Form
     public function initialize()
     {
         $email = new Text('email', [
+            'class' => 'form-control',
             'placeholder' => 'Email'
         ]);
 
@@ -27,7 +28,7 @@ class ForgotPasswordForm extends Form
         $this->add($email);
 
         $this->add(new Submit('Send', [
-            'class' => 'btn btn-primary'
+            'class' => 'btn btn-sm btn-primary btn-block',
         ]));
     }
 }
