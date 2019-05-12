@@ -27,19 +27,6 @@ $di->setShared('config', function () {
     return $config;
 });
 
-
-/**
- * Add prefix mysql tables for models
- * Example: SELECT * FROM `vk_users`
- */
- /*
-$di->set("modelsManager", function () {
-$modelsManager = new ModelsManager();
-$modelsManager->setModelPrefix("vk_");
-return $modelsManager;
-});
-*/
-
 /**
  * The URL component is used to generate all kind of urls in the application
  */
