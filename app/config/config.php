@@ -7,9 +7,9 @@ return new Config([
     'database' => [
         'adapter'     => 'Mysql',
         'host'        => 'localhost',
-        'username'    => '',
+        'username'    => 'root',
         'password'    => '',
-        'dbname'      => 'vokruo',
+        'dbname'      => 'vokuro',
         'charset'     => 'utf8',
     ],
     'application' => [
