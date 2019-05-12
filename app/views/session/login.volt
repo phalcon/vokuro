@@ -4,21 +4,25 @@
 			<h3 class="text-center">Login</h3>
 			{{ content() }}
 			{{ form('class': 'form-search') }}
-			<div class="form-group">
-				<label class="control-label">E-Mail</label>
-				{{ form.render('email') }}
-			</div>
-			<div class="form-group">
-				<label class="control-label">Password</label>
-				{{ form.render('password') }}
-			</div>
+				<div class="form-group">
+					<label class="control-label">E-Mail</label>
+					{{ form.render('email') }}
+				</div>
+				<div class="form-group">
+					<label class="control-label">Password</label>
+					{{ form.render('password') }}
+				</div>
+				<div align="center">
+					{{ form.render('remember') }}
+					{{ form.label('remember') }}
+				</div>
+				{{ form.render('go') }}
+				{{ form.render('csrf', ['value': security.getToken()]) }}
+			</form>
 			<div align="center">
-				{{ form.render('remember') }}
-				{{ form.label('remember') }}
+				<hr>
+				{{ link_to("session/forgotPassword", "Forgot my password") }}
 			</div>
-			{{ form.render('go') }}
-			{{ form.render('csrf', ['value': security.getToken()]) }}
-		</form>
+		</div>
 	</div>
-</div>
 </div>
