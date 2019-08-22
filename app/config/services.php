@@ -103,6 +103,7 @@ $di->set('session', function () {
     ]);
     $session = new SessionManager();
     $session->setHandler($files);
+    $session->start();
 
     return $session;
 });
