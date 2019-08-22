@@ -21,7 +21,8 @@ return new Config([
         'cacheDir'       => BASE_PATH . '/cache/',
         'baseUri'        => '/',
         'publicUrl'      => 'vokuro.phalconphp.com',
-        'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
+        'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D',
+        'sessionSavePath' => BASE_PATH . '/cache/session/'
     ],
     'mail' => [
         'fromName' => 'Vokuro',
