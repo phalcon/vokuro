@@ -1,7 +1,7 @@
 <?php
 namespace Vokuro\Auth;
 
-use Phalcon\Mvc\User\Component;
+use Phalcon\Plugin;
 use Vokuro\Models\Users;
 use Vokuro\Models\RememberTokens;
 use Vokuro\Models\SuccessLogins;
@@ -11,7 +11,7 @@ use Vokuro\Models\FailedLogins;
  * Vokuro\Auth\Auth
  * Manages Authentication/Identity Management in Vokuro
  */
-class Auth extends Component
+class Auth extends Plugin
 {
     /**
      * Checks the user credentials

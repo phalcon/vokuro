@@ -1,7 +1,7 @@
 <?php
 
 use Phalcon\Config;
-use Phalcon\Logger;
+use Phalcon\Logger\Logger;
 
 return new Config([
     'database' => [
