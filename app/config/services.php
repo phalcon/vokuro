@@ -58,8 +58,8 @@ $di->set('view', function () {
             $volt = new VoltEngine($view, $this);
 
             $volt->setOptions([
-                'compiledPath' => $config->application->cacheDir . 'volt/',
-                'compiledSeparator' => '_'
+                'path' => $config->application->cacheDir . 'volt/',
+                'separator' => '_'
             ]);
 
             return $volt;
