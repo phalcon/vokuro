@@ -37,7 +37,7 @@ class Mail extends Component
         if ($this->amazonSes == null) {
             $this->amazonSes = new \AmazonSES(
                 [
-                    'key'    => $this->config->amazon->AWSAccessKeyId,
+                    'key' => $this->config->amazon->AWSAccessKeyId,
                     'secret' => $this->config->amazon->AWSSecretKey
                 ]
             );
@@ -110,15 +110,14 @@ class Mail extends Component
             ->setBody($template, 'text/html');
 
         if (isset($mailSettings) && isset($mailSettings->smtp)) {
-
             if (!$this->transport) {
                 $this->transport = Smtp::newInstance(
                     $mailSettings->smtp->server,
                     $mailSettings->smtp->port,
                     $mailSettings->smtp->security
                 )
-                ->setUsername($mailSettings->smtp->username)
-                ->setPassword($mailSettings->smtp->password);
+                    ->setUsername($mailSettings->smtp->username)
+                    ->setPassword($mailSettings->smtp->password);
             }
 
             // Create the Mailer using your created Transport

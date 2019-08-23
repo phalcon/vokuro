@@ -163,12 +163,10 @@ class Auth extends Plugin
 
         $user = Users::findFirstById($userId);
         if ($user) {
-
             $userAgent = $this->request->getUserAgent();
             $token = md5($user->email . $user->password . $userAgent);
 
             if ($cookieToken == $token) {
-
                 $remember = RememberTokens::findFirst([
                     'usersId = ?0 AND token = ?1',
                     'bind' => [
@@ -177,10 +175,8 @@ class Auth extends Plugin
                     ]
                 ]);
                 if ($remember) {
-
                     // Check if the cookie has not expired
                     if ((time() - (86400 * 8)) < $remember->createdAt) {
-
                         // Check if the user was flagged
                         $this->checkUserFlags($user);
 
@@ -263,7 +259,7 @@ class Auth extends Plugin
             if ($userId) {
                 $this->deleteToken($userId);
             }
-            
+
             $this->cookies->get('RMT')->delete();
         }
 
@@ -302,7 +298,6 @@ class Auth extends Plugin
     {
         $identity = $this->session->get('auth-identity');
         if (isset($identity['id'])) {
-
             $user = Users::findFirstById($identity['id']);
             if ($user == false) {
                 throw new Exception('The user does not exist');
@@ -313,7 +308,7 @@ class Auth extends Plugin
 
         return false;
     }
-    
+
     /**
      * Returns the current token user
      *
@@ -324,23 +319,22 @@ class Auth extends Plugin
     {
         $userToken = RememberTokens::findFirst([
             'conditions' => 'token = :token:',
-            'bind'       => [
+            'bind' => [
                 'token' => $token,
             ],
         ]);
-        
-        $user_id = ($userToken) ? $userToken->usersId : false; 
-        return $user_id;
+
+        return $userToken ? $userToken->usersId : false;
     }
 
     /**
      * Delete the current user token in session
      */
-    public function deleteToken($userId) 
+    public function deleteToken($userId)
     {
         $user = RememberTokens::find([
             'conditions' => 'usersId = :userId:',
-            'bind'       => [
+            'bind' => [
                 'userId' => $userId
             ]
         ]);
