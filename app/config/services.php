@@ -1,18 +1,20 @@
 <?php
+
 use Phalcon\Mvc\View;
 use Phalcon\Crypt;
 use Phalcon\Mvc\Dispatcher;
-use Phalcon\Mvc\Url as UrlResolver;
+use Phalcon\Url as UrlResolver;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
-use Phalcon\Mvc\Model\Metadata\Files as MetaDataAdapter;
-use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Mvc\Model\Metadata\Stream as MetaDataAdapter;
+use Phalcon\Session\Adapter\Stream as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
-use Phalcon\Logger\Adapter\File as FileLogger;
+use Phalcon\Logger\Adapter\Stream as FileLogger;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
 use Vokuro\Auth\Auth;
 use Vokuro\Acl\Acl;
 use Vokuro\Mail\Mail;
+use Phalcon\Session\Manager as SessionManager;
 
 /**
  * Register the global configuration as config
@@ -56,8 +58,8 @@ $di->set('view', function () {
             $volt = new VoltEngine($view, $this);
 
             $volt->setOptions([
-                'compiledPath' => $config->application->cacheDir . 'volt/',
-                'compiledSeparator' => '_'
+                'path' => $config->application->cacheDir . 'volt/',
+                'separator' => '_'
             ]);
 
             return $volt;
@@ -94,8 +96,15 @@ $di->set('modelsMetadata', function () {
  * Start the session the first time some component request the session service
  */
 $di->set('session', function () {
-    $session = new SessionAdapter();
+    $config = $this->getConfig();
+
+    $files = new SessionAdapter([
+        'savePath' => $config->application->sessionSavePath,
+    ]);
+    $session = new SessionManager();
+    $session->setHandler($files);
     $session->start();
+
     return $session;
 });
 

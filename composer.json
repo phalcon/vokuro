@@ -11,23 +11,24 @@
     "type": "library",
     "license": "BSD-3",
     "homepage": "https://www.phalconphp.com",
-    "authors" : [
+    "authors": [
         {
-            "name" : "Andres Gutierrez",
-            "email" : "andres@phalconphp.com"
+            "name": "Mark Garrett",
+            "email": "mark@moderndeveloperllc.com"
         },
         {
-            "name" : "Mark Garrett",
-            "email" : "mark@moderndeveloperllc.com"
+            "name": "Contributors",
+            "homepage": "https://github.com/phalcon/vokuro/graphs/contributors"
         }
     ],
     "require": {
-        "php": ">=5.5",
-        "ext-phalcon": "~3.0",
+        "php": ">=7.2",
+        "ext-phalcon": "~4.0.0-beta.2",
         "swiftmailer/swiftmailer": "^5.4",
         "aws/aws-sdk-php": "~3.0"
     },
     "require-dev": {
-        "phalcon/dd": "~1.1.0"
+        "phalcon/dd": "~1.1.3",
+        "phalcon/ide-stubs": "4.0.0-beta.2"
     }
 }
