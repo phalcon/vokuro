@@ -13,12 +13,12 @@
     "homepage": "https://www.phalconphp.com",
     "authors": [
         {
-            "name": "Andres Gutierrez",
-            "email": "andres@phalconphp.com"
-        },
-        {
             "name": "Mark Garrett",
             "email": "mark@moderndeveloperllc.com"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/phalcon/vokuro/graphs/contributors"
         }
     ],
     "require": {
