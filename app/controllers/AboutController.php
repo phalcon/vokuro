@@ -16,7 +16,6 @@ namespace Vokuro\Controllers;
  */
 class AboutController extends ControllerBase
 {
-
     /**
      * Default action. Set the public layout (layouts/public.volt)
      */

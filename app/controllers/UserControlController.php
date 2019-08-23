@@ -20,7 +20,6 @@ use Vokuro\Models\ResetPasswords;
  */
 class UserControlController extends ControllerBase
 {
-
     public function initialize()
     {
         if ($this->session->has('auth-identity')) {
@@ -30,7 +29,6 @@ class UserControlController extends ControllerBase
 
     public function indexAction()
     {
-
     }
 
     /**
@@ -64,7 +62,6 @@ class UserControlController extends ControllerBase
          * Change the confirmation to 'confirmed' and update the user to 'active'
          */
         if (!$confirmation->save()) {
-
             foreach ($confirmation->getMessages() as $message) {
                 $this->flash->error($message);
             }
@@ -84,7 +81,6 @@ class UserControlController extends ControllerBase
          * Check if the user must change his/her password
          */
         if ($confirmation->user->mustChangePassword == 'Y') {
-
             $this->flash->success('The email was successfully confirmed. Now you must change your password');
 
             return $this->dispatcher->forward([
@@ -127,7 +123,6 @@ class UserControlController extends ControllerBase
          * Change the confirmation to 'reset'
          */
         if (!$resetPassword->save()) {
-
             foreach ($resetPassword->getMessages() as $message) {
                 $this->flash->error($message);
             }

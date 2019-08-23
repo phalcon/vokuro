@@ -16,7 +16,6 @@ namespace Vokuro\Controllers;
  */
 class IndexController extends ControllerBase
 {
-
     /**
      * Default action. Set the public layout (layouts/public.volt)
      */

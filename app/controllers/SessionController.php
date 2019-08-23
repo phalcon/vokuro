@@ -23,7 +23,6 @@ use Vokuro\Models\ResetPasswords;
  */
 class SessionController extends ControllerBase
 {
-
     /**
      * Default action. Set the public layout (layouts/public.volt)
      */
@@ -44,9 +43,7 @@ class SessionController extends ControllerBase
         $form = new SignUpForm();
 
         if ($this->request->isPost()) {
-
             if ($form->isValid($this->request->getPost()) != false) {
-
                 $user = new Users([
                     'name' => $this->request->getPost('name', 'striptags'),
                     'email' => $this->request->getPost('email'),
@@ -81,13 +78,11 @@ class SessionController extends ControllerBase
                     return $this->auth->loginWithRememberMe();
                 }
             } else {
-
                 if ($form->isValid($this->request->getPost()) == false) {
                     foreach ($form->getMessages() as $message) {
                         $this->flash->error($message);
                     }
                 } else {
-
                     $this->auth->check([
                         'email' => $this->request->getPost('email'),
                         'password' => $this->request->getPost('password'),
@@ -112,21 +107,17 @@ class SessionController extends ControllerBase
         $form = new ForgotPasswordForm();
 
         if ($this->request->isPost()) {
-
             // Send emails only is config value is set to true
             if ($this->getDI()->get('config')->useMail) {
-
                 if ($form->isValid($this->request->getPost()) == false) {
                     foreach ($form->getMessages() as $message) {
                         $this->flash->error($message);
                     }
                 } else {
-
                     $user = Users::findFirstByEmail($this->request->getPost('email'));
                     if (!$user) {
                         $this->flash->success('There is no account associated to this email');
                     } else {
-
                         $resetPassword = new ResetPasswords();
                         $resetPassword->usersId = $user->id;
                         if ($resetPassword->save()) {
@@ -139,7 +130,9 @@ class SessionController extends ControllerBase
                     }
                 }
             } else {
-                $this->flash->warning('Emails are currently disabled. Change config key "useMail" to true to enable emails.');
+                $this->flash->warning(
+                    'Emails are currently disabled. Change config key "useMail" to true to enable emails.'
+                );
             }
         }
 
