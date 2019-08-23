@@ -30,12 +30,12 @@ use Phalcon\Session\Manager as SessionManager;
  */
 $di->setShared('config', function () {
     $config = include APP_PATH . '/config/config.php';
-    
+
     if (is_readable(APP_PATH . '/config/config.dev.php')) {
         $override = include APP_PATH . '/config/config.dev.php';
         $config->merge($override);
     }
-    
+
     return $config;
 });
 
@@ -171,9 +171,9 @@ $di->set('mail', function () {
 });
 
 /**
- * Setup the private resources, if any, for performance optimization of the ACL.  
+ * Setup the private resources, if any, for performance optimization of the ACL.
  */
-$di->setShared('AclResources', function() {
+$di->setShared('AclResources', function () {
     $pr = [];
     if (is_readable(APP_PATH . '/config/privateResources.php')) {
         $pr = include APP_PATH . '/config/privateResources.php';
@@ -198,12 +198,12 @@ $di->set('acl', function () {
 $di->set('logger', function ($filename = null, $format = null) {
     $config = $this->getConfig();
 
-    $format   = $format ?: $config->get('logger')->format;
+    $format = $format ?: $config->get('logger')->format;
     $filename = trim($filename ?: $config->get('logger')->filename, '\\/');
-    $path     = rtrim($config->get('logger')->path, '\\/') . DIRECTORY_SEPARATOR;
+    $path = rtrim($config->get('logger')->path, '\\/') . DIRECTORY_SEPARATOR;
 
     $formatter = new FormatterLine($format, $config->get('logger')->date);
-    $logger    = new FileLogger($path . $filename);
+    $logger = new FileLogger($path . $filename);
 
     $logger->setFormatter($formatter);
     $logger->setLogLevel($config->get('logger')->logLevel);
