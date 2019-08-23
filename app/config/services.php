@@ -24,6 +24,7 @@ use Vokuro\Auth\Auth;
 use Vokuro\Acl\Acl;
 use Vokuro\Mail\Mail;
 use Phalcon\Session\Manager as SessionManager;
+use Phalcon\Session\Bag as SessionBag;
 
 /**
  * Register the global configuration as config
@@ -115,6 +116,15 @@ $di->set('session', function () {
     $session->start();
 
     return $session;
+});
+
+/**
+ * A component that helps separating session data into namespaces
+ *
+ * @see https://docs.phalconphp.com/4.0/en/session#session-bags
+ */
+$di->set('sessionBag', function () {
+    return new SessionBag('conditions');
 });
 
 /**
