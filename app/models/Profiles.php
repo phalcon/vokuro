@@ -20,7 +20,6 @@ use Phalcon\Mvc\Model\Relation;
  */
 class Profiles extends Model
 {
-
     /**
      * ID
      * @var integer

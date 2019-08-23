@@ -19,7 +19,6 @@ use Phalcon\Mvc\Model;
  */
 class Permissions extends Model
 {
-
     /**
      *
      * @var integer

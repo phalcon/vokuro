@@ -19,7 +19,6 @@ use Phalcon\Mvc\Model;
  */
 class RememberTokens extends Model
 {
-
     /**
      *
      * @var integer
@@ -55,7 +54,7 @@ class RememberTokens extends Model
      */
     public function beforeValidationOnCreate()
     {
-        // Timestamp the confirmaton
+        // Timestamp the confirmation
         $this->createdAt = time();
     }
 

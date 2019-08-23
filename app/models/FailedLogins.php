@@ -19,7 +19,6 @@ use Phalcon\Mvc\Model;
  */
 class FailedLogins extends Model
 {
-
     /**
      *
      * @var integer

@@ -19,7 +19,6 @@ use Phalcon\Mvc\Model;
  */
 class EmailConfirmations extends Model
 {
-
     /**
      *
      * @var integer

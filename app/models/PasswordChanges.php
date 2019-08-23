@@ -19,7 +19,6 @@ use Phalcon\Mvc\Model;
  */
 class PasswordChanges extends Model
 {
-
     /**
      *
      * @var integer

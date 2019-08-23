@@ -19,7 +19,6 @@ use Phalcon\Mvc\Model;
  */
 class ResetPasswords extends Model
 {
-
     /**
      *
      * @var integer
