@@ -23,7 +23,6 @@ use Phalcon\Validation\Validator\Identical;
 
 class LoginForm extends Form
 {
-
     public function initialize()
     {
         // Email

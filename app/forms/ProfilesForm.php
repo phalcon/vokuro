@@ -20,7 +20,6 @@ use Phalcon\Validation\Validator\Email;
 
 class ProfilesForm extends Form
 {
-
     public function initialize($entity = null, $options = null)
     {
         if (isset($options['edit']) && $options['edit']) {
