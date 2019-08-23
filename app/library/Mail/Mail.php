@@ -11,7 +11,7 @@
 
 namespace Vokuro\Mail;
 
-use Phalcon\Mvc\User\Component;
+use Phalcon\Plugin;
 use Swift_Message as Message;
 use Swift_SmtpTransport as Smtp;
 use Phalcon\Mvc\View;
@@ -20,7 +20,7 @@ use Phalcon\Mvc\View;
  * Vokuro\Mail\Mail
  * Sends e-mails based on pre-defined templates
  */
-class Mail extends Component
+class Mail extends Plugin
 {
     protected $transport;
 
@@ -29,6 +29,7 @@ class Mail extends Component
     /**
      * Send a raw e-mail via AmazonSES
      *
+     * @deprecated
      * @param string $raw
      * @return bool
      */

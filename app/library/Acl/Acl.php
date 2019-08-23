@@ -11,6 +11,7 @@
 
 namespace Vokuro\Acl;
 
+use Phalcon\Acl\Enum as AclEnum;
 use Phalcon\Plugin;
 use Phalcon\Acl\Adapter\Memory as AclMemory;
 use Phalcon\Acl\Role as AclRole;
@@ -171,7 +172,7 @@ class Acl extends Plugin
     public function rebuild()
     {
         $acl = new AclMemory();
-        $acl->setDefaultAction(\Phalcon\Acl::DENY);
+        $acl->setDefaultAction(AclEnum::DENY);
 
         $profiles = Profiles::find([
             'active = :active:',
@@ -184,7 +185,7 @@ class Acl extends Plugin
         }
 
         foreach ($this->privateResources as $resource => $actions) {
-            $acl->addResource(new AclComponent($resource), $actions);
+            $acl->addComponent(new AclComponent($resource), $actions);
         }
 
         // Grant access to private area to role Users
