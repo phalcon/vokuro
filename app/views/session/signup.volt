@@ -1,9 +1,7 @@
 {{ content() }}
 
 <div align="center">
-
 	{{ form('class': 'form-search') }}
-
 		<div align="left">
 			<h2>Sign Up</h2>
 		</div>
@@ -54,7 +52,5 @@
 		{{ form.messages('csrf') }}
 
 		<hr>
-
 	</form>
-
 </div>

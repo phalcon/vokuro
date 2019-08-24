@@ -10,8 +10,8 @@
 </ul>
 
 {% for user in page.items %}
-{% if loop.first %}
-<table class="table table-bordered table-striped" align="center">
+    {% if loop.first %}
+    <table class="table table-bordered table-striped" align="center">
     <thead>
         <tr>
             <th>Id</th>
@@ -24,7 +24,7 @@
         </tr>
     </thead>
     <tbody>
-{% endif %}
+    {% endif %}
         <tr>
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
@@ -36,7 +36,7 @@
             <td width="12%">{{ link_to("users/edit/" ~ user.id, '<i class="icon-pencil"></i> Edit', "class": "btn") }}</td>
             <td width="12%">{{ link_to("users/delete/" ~ user.id, '<i class="icon-remove"></i> Delete', "class": "btn") }}</td>
         </tr>
-{% if loop.last %}
+    {% if loop.last %}
     </tbody>
     <tfoot>
         <tr>
@@ -51,8 +51,8 @@
             </td>
         </tr>
     </tfoot>
-</table>
-{% endif %}
+    </table>
+    {% endif %}
 {% else %}
     No users are recorded
 {% endfor %}

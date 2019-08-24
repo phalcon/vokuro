@@ -1,5 +1,4 @@
 <div align="center">
-
 	<div align="left">
 		<h2>About this Demo</h2>
 	</div>
@@ -10,5 +9,4 @@
 		feedback or comments. Feel free to clone the code of this application <a href="https://github.com/phalcon/vokuro">here</a>.
 		The purpose of this application is merely academic. Thanks!.
 	</div>
-
 </div>

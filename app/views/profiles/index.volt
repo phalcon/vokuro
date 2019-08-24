@@ -5,9 +5,7 @@
 </div>
 
 <form method="post" action="{{ url("profiles/search") }}" autocomplete="off">
-
     <div class="center scaffold">
-
         <h2>Search profiles</h2>
 
         <div class="clearfix">
@@ -23,7 +21,5 @@
         <div class="clearfix">
             {{ submit_button("Search", "class": "btn btn-primary") }}
         </div>
-
     </div>
-
 </form>
