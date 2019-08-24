@@ -1,6 +1,17 @@
 <?php
+
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalconphp.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Vokuro\Acl;
 
+use Phalcon\Acl\Enum as AclEnum;
 use Phalcon\Plugin;
 use Phalcon\Acl\Adapter\Memory as AclMemory;
 use Phalcon\Acl\Role as AclRole;
@@ -12,7 +23,6 @@ use Vokuro\Models\Profiles;
  */
 class Acl extends Plugin
 {
-
     /**
      * The ACL Object
      *
@@ -162,10 +172,7 @@ class Acl extends Plugin
     public function rebuild()
     {
         $acl = new AclMemory();
-
-        $acl->setDefaultAction(\Phalcon\Acl::DENY);
-
-        // Register roles
+        $acl->setDefaultAction(AclEnum::DENY);
 
         $profiles = Profiles::find([
             'active = :active:',
@@ -178,12 +185,11 @@ class Acl extends Plugin
         }
 
         foreach ($this->privateResources as $resource => $actions) {
-            $acl->addResource(new AclComponent($resource), $actions);
+            $acl->addComponent(new AclComponent($resource), $actions);
         }
 
         // Grant access to private area to role Users
         foreach ($profiles as $profile) {
-
             // Grant permissions in "permissions" model
             foreach ($profile->getPermissions() as $permission) {
                 $acl->allow($profile->name, $permission->resource, $permission->action);
@@ -194,9 +200,7 @@ class Acl extends Plugin
         }
 
         $filePath = $this->getFilePath();
-
         if (touch($filePath) && is_writable($filePath)) {
-
             file_put_contents($filePath, serialize($acl));
 
             // Store the ACL in APC
@@ -232,7 +236,8 @@ class Acl extends Plugin
      *
      * @param array $resources
      */
-    public function addPrivateResources(array $resources) {
+    public function addPrivateResources(array $resources)
+    {
         if (count($resources) > 0) {
             $this->privateResources = array_merge($this->privateResources, $resources);
             if (is_object($this->acl)) {

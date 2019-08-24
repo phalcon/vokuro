@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalconphp.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Vokuro\Models;
 
 use Phalcon\Mvc\Model;
@@ -72,7 +82,6 @@ class Users extends Model
     public function beforeValidationOnCreate()
     {
         if (empty($this->password)) {
-
             // Generate a plain temporary password
             $tempPassword = preg_replace('/[^a-zA-Z0-9]/', '', base64_encode(openssl_random_pseudo_bytes(12)));
 
@@ -95,7 +104,7 @@ class Users extends Model
         } else {
             $this->active = 'Y';
         }
-        
+
         // The account is not suspended by default
         $this->suspended = 'N';
 
@@ -110,11 +119,8 @@ class Users extends Model
     {
         // Only send the confirmation email if emails are turned on in the config
         if ($this->getDI()->get('config')->useMail) {
-
             if ($this->active == 'N') {
-
                 $emailConfirmation = new EmailConfirmations();
-
                 $emailConfirmation->usersId = $this->id;
 
                 if ($emailConfirmation->save()) {

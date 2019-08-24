@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalconphp.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Vokuro\Controllers;
 
 use Vokuro\Models\Profiles;
@@ -9,7 +19,6 @@ use Vokuro\Models\Permissions;
  */
 class PermissionsController extends ControllerBase
 {
-
     /**
      * View the permissions for a profile level, and change them if we have a POST.
      */
@@ -18,20 +27,14 @@ class PermissionsController extends ControllerBase
         $this->view->setTemplateBefore('private');
 
         if ($this->request->isPost()) {
-
-            // Validate the profile
             $profile = Profiles::findFirstById($this->request->getPost('profileId'));
-
             if ($profile) {
-
                 if ($this->request->hasPost('permissions') && $this->request->hasPost('submit')) {
-
                     // Deletes the current permissions
                     $profile->getPermissions()->delete();
 
                     // Save the new permissions
                     foreach ($this->request->getPost('permissions') as $permission) {
-
                         $parts = explode('.', $permission);
 
                         $permission = new Permissions();

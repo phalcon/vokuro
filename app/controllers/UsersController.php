@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalconphp.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Vokuro\Controllers;
 
 use Phalcon\Tag;
@@ -15,7 +25,6 @@ use Vokuro\Models\PasswordChanges;
  */
 class UsersController extends ControllerBase
 {
-
     public function initialize()
     {
         $this->view->setTemplateBefore('private');
@@ -62,7 +71,7 @@ class UsersController extends ControllerBase
             "page" => $numberPage
         ]);
 
-        $this->view->page = $paginator->getPaginate();
+        $this->view->page = $paginator->paginate();
     }
 
     /**
@@ -71,17 +80,12 @@ class UsersController extends ControllerBase
     public function createAction()
     {
         $form = new UsersForm(null);
-
         if ($this->request->isPost()) {
-
             if ($form->isValid($this->request->getPost()) == false) {
-                
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error($message);
                 }
-                
             } else {
-
                 $user = new Users([
                     'name' => $this->request->getPost('name', 'striptags'),
                     'profilesId' => $this->request->getPost('profilesId', 'int'),
@@ -91,7 +95,6 @@ class UsersController extends ControllerBase
                 if (!$user->save()) {
                     $this->flash->error($user->getMessages());
                 } else {
-
                     $this->flash->success("User was created successfully");
 
                     Tag::resetInput();
@@ -108,16 +111,14 @@ class UsersController extends ControllerBase
     public function editAction($id)
     {
         $user = Users::findFirstById($id);
-        
         if (!$user) {
             $this->flash->error("User was not found");
             return $this->dispatcher->forward([
-                        'action' => 'index'
+                'action' => 'index'
             ]);
         }
 
         if ($this->request->isPost()) {
-
             $user->assign([
                 'name' => $this->request->getPost('name', 'striptags'),
                 'profilesId' => $this->request->getPost('profilesId', 'int'),
@@ -132,17 +133,13 @@ class UsersController extends ControllerBase
             ]);
 
             if ($form->isValid($this->request->getPost()) == false) {
-                
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error($message);
                 }
-                
             } else {
-
                 if (!$user->save()) {
                     $this->flash->error($user->getMessages());
                 } else {
-
                     $this->flash->success("User was updated successfully");
 
                     Tag::resetInput();
@@ -191,14 +188,11 @@ class UsersController extends ControllerBase
         $form = new ChangePasswordForm();
 
         if ($this->request->isPost()) {
-
             if (!$form->isValid($this->request->getPost())) {
-
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error($message);
                 }
             } else {
-
                 $user = $this->auth->getUser();
 
                 $user->password = $this->security->hash($this->request->getPost('password'));
@@ -212,7 +206,6 @@ class UsersController extends ControllerBase
                 if (!$passwordChange->save()) {
                     $this->flash->error($passwordChange->getMessages());
                 } else {
-
                     $this->flash->success('Your password was successfully changed');
 
                     Tag::resetInput();

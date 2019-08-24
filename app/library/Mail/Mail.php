@@ -1,7 +1,17 @@
 <?php
+
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalconphp.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Vokuro\Mail;
 
-use Phalcon\Mvc\User\Component;
+use Phalcon\Plugin;
 use Swift_Message as Message;
 use Swift_SmtpTransport as Smtp;
 use Phalcon\Mvc\View;
@@ -10,7 +20,7 @@ use Phalcon\Mvc\View;
  * Vokuro\Mail\Mail
  * Sends e-mails based on pre-defined templates
  */
-class Mail extends Component
+class Mail extends Plugin
 {
     protected $transport;
 
@@ -19,6 +29,7 @@ class Mail extends Component
     /**
      * Send a raw e-mail via AmazonSES
      *
+     * @deprecated
      * @param string $raw
      * @return bool
      */
@@ -27,7 +38,7 @@ class Mail extends Component
         if ($this->amazonSes == null) {
             $this->amazonSes = new \AmazonSES(
                 [
-                    'key'    => $this->config->amazon->AWSAccessKeyId,
+                    'key' => $this->config->amazon->AWSAccessKeyId,
                     'secret' => $this->config->amazon->AWSSecretKey
                 ]
             );
@@ -100,15 +111,14 @@ class Mail extends Component
             ->setBody($template, 'text/html');
 
         if (isset($mailSettings) && isset($mailSettings->smtp)) {
-
             if (!$this->transport) {
                 $this->transport = Smtp::newInstance(
                     $mailSettings->smtp->server,
                     $mailSettings->smtp->port,
                     $mailSettings->smtp->security
                 )
-                ->setUsername($mailSettings->smtp->username)
-                ->setPassword($mailSettings->smtp->password);
+                    ->setUsername($mailSettings->smtp->username)
+                    ->setPassword($mailSettings->smtp->password);
             }
 
             // Create the Mailer using your created Transport

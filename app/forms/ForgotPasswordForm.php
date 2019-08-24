@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalconphp.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Vokuro\Forms;
 
 use Phalcon\Forms\Form;
@@ -9,7 +19,6 @@ use Phalcon\Validation\Validator\Email;
 
 class ForgotPasswordForm extends Form
 {
-
     public function initialize()
     {
         $email = new Text('email', [

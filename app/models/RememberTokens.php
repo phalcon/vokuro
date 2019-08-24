@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalconphp.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Vokuro\Models;
 
 use Phalcon\Mvc\Model;
@@ -9,7 +19,6 @@ use Phalcon\Mvc\Model;
  */
 class RememberTokens extends Model
 {
-
     /**
      *
      * @var integer
@@ -45,7 +54,7 @@ class RememberTokens extends Model
      */
     public function beforeValidationOnCreate()
     {
-        // Timestamp the confirmaton
+        // Timestamp the confirmation
         $this->createdAt = time();
     }
 

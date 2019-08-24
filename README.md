@@ -46,6 +46,7 @@ Run the composer installer:
 ```bash
 cd vokuro
 php composer.phar install
+cp .env.example .env
 ```
 
 **NOTE** After the installation, please ensure that the following folders have write permissions set:

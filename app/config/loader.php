@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalconphp.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 use Phalcon\Loader;
 
 $loader = new Loader();
@@ -15,6 +24,3 @@ $loader->registerNamespaces([
 ]);
 
 $loader->register();
-
-// Use composer autoloader to load vendor classes
-require_once BASE_PATH . '/vendor/autoload.php';

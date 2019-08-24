@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalconphp.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Vokuro\Controllers;
 
 use Phalcon\Tag;
@@ -13,7 +23,6 @@ use Vokuro\Models\Profiles;
  */
 class ProfilesController extends ControllerBase
 {
-
     /**
      * Default action. Set the private (authenticated) layout (layouts/private.volt)
      */
@@ -51,7 +60,6 @@ class ProfilesController extends ControllerBase
 
         $profiles = Profiles::find($parameters);
         if (count($profiles) == 0) {
-
             $this->flash->notice("The search did not find any profiles");
 
             return $this->dispatcher->forward([
@@ -65,7 +73,7 @@ class ProfilesController extends ControllerBase
             "page" => $numberPage
         ]);
 
-        $this->view->page = $paginator->getPaginate();
+        $this->view->page = $paginator->paginate();
     }
 
     /**
@@ -74,7 +82,6 @@ class ProfilesController extends ControllerBase
     public function createAction()
     {
         if ($this->request->isPost()) {
-
             $profile = new Profiles([
                 'name' => $this->request->getPost('name', 'striptags'),
                 'active' => $this->request->getPost('active')
@@ -108,7 +115,6 @@ class ProfilesController extends ControllerBase
         }
 
         if ($this->request->isPost()) {
-
             $profile->assign([
                 'name' => $this->request->getPost('name', 'striptags'),
                 'active' => $this->request->getPost('active')
@@ -139,7 +145,6 @@ class ProfilesController extends ControllerBase
     {
         $profile = Profiles::findFirstById($id);
         if (!$profile) {
-
             $this->flash->error("Profile was not found");
 
             return $this->dispatcher->forward([
