@@ -88,7 +88,7 @@ class ProfilesController extends ControllerBase
             ]);
 
             if (!$profile->save()) {
-                $this->flash->error($profile->getMessages());
+                $this->flash->error(join('<br/>', $profile->getMessages()));
             } else {
                 $this->flash->success("Profile was created successfully");
             }
