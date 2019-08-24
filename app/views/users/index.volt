@@ -12,7 +12,7 @@
 
     <div class="form-group">
         <label for="name" class="sr-only">Name</label>
-        {{ form.render('name', ['class': 'form-control mr-sm-2', 'placeholder': 'name']) }}
+        {{ form.render('name', ['class': 'form-control mr-sm-2', 'placeholder': 'Name']) }}
     </div>
 
     <div class="form-group">
