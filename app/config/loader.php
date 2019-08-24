@@ -24,6 +24,3 @@ $loader->registerNamespaces([
 ]);
 
 $loader->register();
-
-// Use composer autoloader to load vendor classes
-require_once BASE_PATH . '/vendor/autoload.php';

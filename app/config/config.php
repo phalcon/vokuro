@@ -14,11 +14,11 @@ use Phalcon\Logger\Logger;
 
 return new Config([
     'database' => [
-        'adapter' => 'Mysql',
-        'host' => '127.0.0.1',
-        'username' => 'root',
-        'password' => '',
-        'dbname' => 'vokuro'
+        'adapter' => getenv('DB_ADAPTER'),
+        'host' => getenv('DB_HOST'),
+        'username' => getenv('DB_USERNAME'),
+        'password' => getenv('DB_PASSWORD'),
+        'dbname' => getenv('DB_NAME'),
     ],
     'application' => [
         'controllersDir' => APP_PATH . '/controllers/',
@@ -28,25 +28,25 @@ return new Config([
         'libraryDir'     => APP_PATH . '/library/',
         'pluginsDir'     => APP_PATH . '/plugins/',
         'cacheDir'       => BASE_PATH . '/cache/',
-        'baseUri'        => '/',
-        'publicUrl'      => 'vokuro.phalconphp.com',
-        'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D',
-        'sessionSavePath' => BASE_PATH . '/cache/session/'
+        'baseUri'        => getenv('APP_BASE_URI'),
+        'publicUrl'      => getenv('APP_PUBLIC_URL'),
+        'cryptSalt'      => getenv('APP_CRYPT_SALT'),
+        'sessionSavePath' => BASE_PATH . '/cache/session/',
     ],
     'mail' => [
-        'fromName' => 'Vokuro',
-        'fromEmail' => 'phosphorum@phalconphp.com',
+        'fromName' => getenv('MAIL_FROM_NAME'),
+        'fromEmail' => getenv('MAIL_FROM_EMAIL'),
         'smtp' => [
-            'server' => 'smtp.gmail.com',
-            'port' => 587,
-            'security' => 'tls',
-            'username' => '',
-            'password' => ''
+            'server' => getenv('MAIL_SMTP_SERVER'),
+            'port' => getenv('MAIL_SMTP_PORT'),
+            'security' => getenv('MAIL_SMTP_SECURITY'),
+            'username' => getenv('MAIL_SMTP_USERNAME'),
+            'password' => getenv('MAIL_SMTP_PASSWORD'),
         ]
     ],
     'amazon' => [
         'AWSAccessKeyId' => '',
-        'AWSSecretKey' => ''
+        'AWSSecretKey' => '',
     ],
     'logger' => [
         'path'     => BASE_PATH . '/logs/',
@@ -56,5 +56,5 @@ return new Config([
         'filename' => 'application.log',
     ],
     // Set to false to disable sending emails (for use in test environment)
-    'useMail' => true
+    'useMail' => true,
 ]);

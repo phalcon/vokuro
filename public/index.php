@@ -21,6 +21,14 @@ define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
 
 try {
+    // Use composer autoloader to load vendor classes
+    require_once BASE_PATH . '/vendor/autoload.php';
+
+    /**
+     * Load .env configurations
+     */
+    $dotenv = Dotenv\Dotenv::create(BASE_PATH);
+    $dotenv->load();
 
     /**
      * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
