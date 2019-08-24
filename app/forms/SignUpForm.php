@@ -128,8 +128,10 @@ class SignUpForm extends Form
     {
         if ($this->hasMessagesFor($name)) {
             foreach ($this->getMessagesFor($name) as $message) {
-                $this->flash->error($message);
+                return $message;
             }
         }
+
+        return '';
     }
 }
