@@ -15,6 +15,7 @@ class CreateRememberTokens extends AbstractMigration
             ->addColumn('token', 'char', ['limit' => 32])
             ->addColumn('userAgent', 'text')
             ->addColumn('createdAt', 'integer')
-            ->addIndex(['token']);
+            ->addIndex(['token'])
+            ->create();
     }
 }

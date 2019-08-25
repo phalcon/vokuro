@@ -15,7 +15,7 @@ class CreateResetPasswords extends AbstractMigration
             ->addColumn('code', 'integer')
             ->addColumn('createdAt', 'integer')
             ->addColumn('modifiedAt', 'integer')
-            ->addColumn('reset', 'chat', ['limit' => 1])
+            ->addColumn('reset', 'char', ['limit' => 1])
             ->addIndex(['usersId'])
             ->create();
     }
