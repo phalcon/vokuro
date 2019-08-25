@@ -37,3 +37,11 @@ table.perms select {
 table.perms label {
     margin-right: 10px;
 }
+
+.td-width-12 {
+    width: 12%;
+}
+
+.td-width-5 {
+    width: 5%;
+}

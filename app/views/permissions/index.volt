@@ -17,7 +17,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th style="width: 5%;"></th>
+                    <th class="td-width-5"></th>
                     <th>Description</th>
                 </tr>
                 </thead>

@@ -19,10 +19,10 @@
             <td>{{ profile.id }}</td>
             <td>{{ profile.name }}</td>
             <td>{{ profile.active == 'Y' ? 'Yes' : 'No' }}</td>
-            <td style="width: 12%;">
+            <td class="td-width-12">
                 {{ link_to("profiles/edit/" ~ profile.id, '<i class="icon-pencil"></i> Edit', "class": "btn btn-sm btn-outline-warning") }}
             </td>
-            <td style="width: 12%;">
+            <td class="td-width-12">
                 {{ link_to("profiles/delete/" ~ profile.id, '<i class="icon-remove"></i> Delete', "class": "btn btn-sm btn-outline-danger") }}
             </td>
         </tr>
