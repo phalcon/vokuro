@@ -11,10 +11,10 @@ class CreateFailedLogins extends AbstractMigration
             return;
         }
 
-        $table->addColumn('userId', 'integer', ['null' => true])
+        $table->addColumn('usersId', 'integer', ['null' => true])
             ->addColumn('ipAddress', 'char', ['limit' => 15])
             ->addColumn('attempted', 'integer')
-            ->addIndex(['userId'])
+            ->addIndex(['usersId'])
             ->create();
     }
 }
