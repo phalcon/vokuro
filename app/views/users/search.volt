@@ -1,30 +1,24 @@
-{{ content() }}
+<h1 class="mt-3">Found users</h1>
 
-<ul class="pager">
-    <li class="previous pull-left">
-        {{ link_to("users/index", "&larr; Go Back") }}
-    </li>
-    <li class="pull-right">
-        {{ link_to("users/create", "Create users", "class": "btn btn-primary") }}
-    </li>
-</ul>
+<div class="btn-group mb-5" role="group">
+    {{ link_to("users/index", "&larr; Go Back", "class": "btn btn-warning") }}
+    {{ link_to("users/create", "Create users", "class": "btn btn-primary") }}
+</div>
 
-{% for user in page.items %}
-    {% if loop.first %}
-    <table class="table table-bordered table-striped" align="center">
+<table class="table table-bordered table-striped">
     <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Profile</th>
-            <th>Banned?</th>
-            <th>Suspended?</th>
-            <th>Confirmed?</th>
-        </tr>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Profile</th>
+        <th>Banned?</th>
+        <th>Suspended?</th>
+        <th>Confirmed?</th>
+    </tr>
     </thead>
     <tbody>
-    {% endif %}
+    {% for user in page.items %}
         <tr>
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
@@ -33,26 +27,33 @@
             <td>{{ user.banned == 'Y' ? 'Yes' : 'No' }}</td>
             <td>{{ user.suspended == 'Y' ? 'Yes' : 'No' }}</td>
             <td>{{ user.active == 'Y' ? 'Yes' : 'No' }}</td>
-            <td width="12%">{{ link_to("users/edit/" ~ user.id, '<i class="icon-pencil"></i> Edit', "class": "btn") }}</td>
-            <td width="12%">{{ link_to("users/delete/" ~ user.id, '<i class="icon-remove"></i> Delete', "class": "btn") }}</td>
+            <td style="width: 12%;">{{ link_to("users/edit/" ~ user.id, '<i class="icon-pencil"></i> Edit', "class": "btn btn-sm btn-outline-warning") }}</td>
+            <td style="width: 12%;">{{ link_to("users/delete/" ~ user.id, '<i class="icon-remove"></i> Delete', "class": "btn btn-sm btn-outline-danger") }}</td>
         </tr>
-    {% if loop.last %}
-    </tbody>
-    <tfoot>
+    {% else %}
         <tr>
-            <td colspan="10" align="right">
-                <div class="btn-group">
-                    {{ link_to("users/search", '<i class="icon-fast-backward"></i> First', "class": "btn") }}
-                    {{ link_to("users/search?page=" ~ page.before, '<i class="icon-step-backward"></i> Previous', "class": "btn ") }}
-                    {{ link_to("users/search?page=" ~ page.next, '<i class="icon-step-forward"></i> Next', "class": "btn") }}
-                    {{ link_to("users/search?page=" ~ page.last, '<i class="icon-fast-forward"></i> Last', "class": "btn") }}
-                    <span class="help-inline">{{ page.current }}/{{ page.total_pages }}</span>
-                </div>
+            <td colspan="10">
+                No users are recorded
             </td>
         </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="10" class="text-right">
+            <div class="btn-group" role="group">
+                {{ link_to("users/search", '<i class="icon-fast-backward"></i> First', "class": "btn btn-secondary") }}
+                {{ link_to("users/search?page=" ~ page.before, '<i class="icon-step-backward"></i> Previous', "class": "btn btn-secondary") }}
+                {{ link_to("users/search?page=" ~ page.next, '<i class="icon-step-forward"></i> Next', "class": "btn btn-secondary") }}
+                {{ link_to("users/search?page=" ~ page.last, '<i class="icon-fast-forward"></i> Last', "class": "btn btn-secondary") }}
+            </div>
+
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-secondary" disabled>{{ page.current }}</button>
+                <button type="button" class="btn btn-secondary" disabled>/</button>
+                <button type="button" class="btn btn-secondary" disabled>{{ page.last }}</button>
+            </div>
+        </td>
+    </tr>
     </tfoot>
-    </table>
-    {% endif %}
-{% else %}
-    No users are recorded
-{% endfor %}
+</table>
