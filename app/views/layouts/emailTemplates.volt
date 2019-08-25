@@ -23,12 +23,12 @@
                 <tbody>
                 <tr style="border-bottom:1px solid #999999;">
                     <td width="24" style="padding:0 7px 0 0;">
-                        <a href="//www.facebook.com/pages/Phalcon/134230726685897" style="border-width:0;">
+                        <a href="https://phalcon.link/facebook" style="border-width:0;">
                             <img src="//{{ publicUrl }}/img/facebook.gif" width="24" height="24" alt="Facebook Image">
                         </a>
                     </td>
                     <td width="24">
-                        <a href="//twitter.com/phalconphp" style="border-width:0;">
+                        <a href="https://phalcon.link/twitter" style="border-width:0;">
                             <img src="//{{ publicUrl }}/img/twitter.gif" width="24" height="24" alt="Twitter Image">
                         </a>
                     </td>
