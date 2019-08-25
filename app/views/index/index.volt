@@ -33,7 +33,7 @@
         </address>
         <address>
             <strong>Full Name</strong><br>
-            <a href="mailto:#">vokuro@phalconphp.com</a>
+            <a href="mailto:#">vokuro@phalcon.io</a>
         </address>
     </div>
 </div>
