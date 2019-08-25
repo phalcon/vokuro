@@ -58,12 +58,24 @@ class PermissionsController extends ControllerBase
             $this->view->profile = $profile;
         }
 
-        // Pass all the active profiles
-        $this->view->profiles = Profiles::find([
+        $profiles = Profiles::find([
             'active = :active:',
             'bind' => [
                 'active' => 'Y'
             ]
+        ]);
+
+        $this->view->profilesSelect = $this->tag->select([
+            'profileId',
+            $profiles,
+            'using' => [
+                'id',
+                'name',
+            ],
+            'useEmpty' => true,
+            'emptyText' => '...',
+            'emptyValue' => '',
+            'class' => 'form-control mr-sm-2',
         ]);
     }
 }
