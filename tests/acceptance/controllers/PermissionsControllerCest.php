@@ -19,6 +19,7 @@ final class PermissionsControllerCest
 
     /**
      * @depends login
+     * @param AcceptanceTester $I
      */
     public function testIndex(\AcceptanceTester $I): void
     {
