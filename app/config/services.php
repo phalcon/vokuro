@@ -3,7 +3,7 @@
 /**
  * This file is part of the Vökuró.
  *
- * (c) Phalcon Team <team@phalconphp.com>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -121,7 +121,7 @@ $di->set('session', function () {
 /**
  * A component that helps separating session data into namespaces
  *
- * @see https://docs.phalconphp.com/4.0/en/session#session-bags
+ * @see https://docs.phalcon.io/4.0/en/session#session-bags
  */
 $di->set('sessionBag', function () {
     return new SessionBag('conditions');
