@@ -47,6 +47,8 @@ Run the composer installer:
 cd vokuro
 php composer.phar install
 cp .env.example .env
+vendor/bin/phinx migrate
+vendor/bin/phinx seed:run
 ```
 
 **NOTE** After the installation, please ensure that the following folders have write permissions set:

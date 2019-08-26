@@ -29,7 +29,8 @@
         "ext-phalcon": "~4.0.0-beta.2",
         "swiftmailer/swiftmailer": "^5.4",
         "aws/aws-sdk-php": "~3.0",
-        "vlucas/phpdotenv": "^3.4"
+        "vlucas/phpdotenv": "^3.4",
+        "robmorgan/phinx": "^0.10.8"
     },
     "require-dev": {
         "phalcon/dd": "~1.1.3",
