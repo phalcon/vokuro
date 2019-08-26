@@ -1,4 +1,4 @@
-<h1 class="mt-3">Found profies</h1>
+<h1 class="mt-3">Found profiles</h1>
 
 <div class="btn-group mb-5" role="group">
     {{ link_to("profiles/index", "&larr; Go Back", "class": "btn btn-warning") }}
