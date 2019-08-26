@@ -1,18 +1,14 @@
-{{ content() }}
+<h1 class="mt-3">Forgot Password?</h1>
 
-<div align="center" class="well">
+<form method="post">
+    <div class="form-group">
+        <label for="forgot-email-input">Email address</label>
+        {{ form.render('email', ['class': 'form-control', 'id': 'forgot-email-input', 'placeholder': 'Enter email']) }}
+    </div>
 
-	{{ form('class': 'form-search') }}
+    {{ form.render('Send') }}
+</form>
 
-	<div align="left">
-		<h2>Forgot Password?</h2>
-	</div>
+<hr />
 
-		{{ form.render('email') }}
-		{{ form.render('Send') }}
-
-		<hr>
-
-	</form>
-
-</div>
+{{ link_to('session/login', "&larr; Back to Login") }}

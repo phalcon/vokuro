@@ -1,30 +1,27 @@
+<h1 class="mt-3">Create a Profile</h1>
 
-<form method="post" autocomplete="off">
-
-<ul class="pager">
-    <li class="previous pull-left">
-        {{ link_to("profiles", "&larr; Go Back") }}
-    </li>
-    <li class="pull-right">
-        {{ submit_button("Save", "class": "btn btn-success") }}
-    </li>
-</ul>
-
-{{ content() }}
-
-<div class="center scaffold">
-    <h2>Create a Profile</h2>
-
-    <div class="clearfix">
-        <label for="name">Name</label>
-        {{ form.render("name") }}
-    </div>
-
-    <div class="clearfix">
-        <label for="active">Active?</label>
-        {{ form.render("active") }}
-    </div>
-
+<div class="mb-5">
+    {{ link_to("profiles", 'class': 'btn btn-primary', "&larr; Go Back") }}
 </div>
 
+<form method="post">
+    <div class="form-group row">
+        {{ form.label('name', ['class': 'col-sm-2 col-form-label']) }}
+        <div class="col-sm-10">
+            {{ form.render('name', ['class': 'form-control', 'placeholder': 'Name']) }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="active" class="col-sm-2 col-form-label">Active?</label>
+        <div class="col-sm-10">
+            {{ form.render('active', ['class': 'form-control', 'placeholder': 'Active?']) }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            {{ submit_button("Save", "class": "btn btn-success") }}
+        </div>
+    </div>
 </form>

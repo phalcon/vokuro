@@ -56,7 +56,8 @@ class LoginForm extends Form
 
         // Remember
         $remember = new Check('remember', [
-            'value' => 'yes'
+            'value' => 'yes',
+            'id' => 'login-remember',
         ]);
 
         $remember->setLabel('Remember me');
@@ -75,8 +76,8 @@ class LoginForm extends Form
 
         $this->add($csrf);
 
-        $this->add(new Submit('go', [
-            'class' => 'btn btn-success'
+        $this->add(new Submit('Login', [
+            'class' => 'btn btn-primary'
         ]));
     }
 }
