@@ -51,14 +51,14 @@ try {
     include APP_PATH . '/config/loader.php';
 
     /**
-    * Handle the request
-    */
+     * Handle the request
+     */
     $application = new Application($di);
 
     echo $application->handle($_SERVER['REQUEST_URI'])
         ->getContent();
 
 } catch (Exception $e) {
-	echo $e->getMessage(), '<br>';
-	echo nl2br(htmlentities($e->getTraceAsString()));
+    echo $e->getMessage(), '<br>';
+    echo nl2br(htmlentities($e->getTraceAsString()));
 }
