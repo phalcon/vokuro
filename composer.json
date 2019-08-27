@@ -30,6 +30,7 @@
         "swiftmailer/swiftmailer": "^5.4",
         "aws/aws-sdk-php": "~3.0",
         "vlucas/phpdotenv": "^3.4",
+        "symfony/console": "~4.3.3, !=4.3.4",
         "robmorgan/phinx": "^0.10.8"
     },
     "require-dev": {
