@@ -8,8 +8,12 @@ $dotenv->load();
 return
 [
     'paths' => [
-        'migrations' => '%%PHINX_CONFIG_DIR%%/db/migrations',
-        'seeds' => '%%PHINX_CONFIG_DIR%%/db/seeds'
+        'migrations' => [
+            'Vokuro\\Migrations' => '%%PHINX_CONFIG_DIR%%/db/migrations'
+        ],
+        'seeds' => [
+            'Vokuro\\Seeds' => '%%PHINX_CONFIG_DIR%%/db/seeds',
+        ],
     ],
     'environments' => [
         'default_migration_table' => 'phinxlog',

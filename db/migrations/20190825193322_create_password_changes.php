@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
+
+namespace Vokuro\Migrations;
 
 use Phinx\Migration\AbstractMigration;
 
-class CreatePasswordChanges extends AbstractMigration
+final class CreatePasswordChanges extends AbstractMigration
 {
-    public function change()
+    public function change(): void
     {
         $table = $this->table('password_changes');
         if ($table->exists()) {

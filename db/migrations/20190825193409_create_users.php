@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
+
+namespace Vokuro\Migrations;
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateUsers extends AbstractMigration
+final class CreateUsers extends AbstractMigration
 {
-    public function change()
+    public function change(): void
     {
         $table = $this->table('users');
         if ($table->exists()) {

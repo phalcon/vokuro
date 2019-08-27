@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
+
+namespace Vokuro\Migrations;
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateRememberTokens extends AbstractMigration
+final class CreateRememberTokens extends AbstractMigration
 {
-    public function change()
+    public function change(): void
     {
         $table = $this->table('remember_tokens');
         if ($table->exists()) {
