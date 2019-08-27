@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -21,17 +22,17 @@ use Vokuro\Models\ResetPasswords;
 /**
  * Controller used handle non-authenticated session actions like login/logout, user signup, and forgotten passwords
  */
-class SessionController extends ControllerBase
+final class SessionController extends ControllerBase
 {
     /**
      * Default action. Set the public layout (layouts/public.volt)
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->view->setTemplateBefore('public');
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
     }
 
@@ -102,7 +103,7 @@ class SessionController extends ControllerBase
     /**
      * Shows the forgot password form
      */
-    public function forgotPasswordAction()
+    public function forgotPasswordAction(): void
     {
         $form = new ForgotPasswordForm();
 

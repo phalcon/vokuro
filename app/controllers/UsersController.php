@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -23,9 +24,9 @@ use Vokuro\Models\PasswordChanges;
  * Vokuro\Controllers\UsersController
  * CRUD to manage users
  */
-class UsersController extends ControllerBase
+final class UsersController extends ControllerBase
 {
-    public function initialize()
+    public function initialize(): void
     {
         $this->view->setTemplateBefore('private');
     }
@@ -33,7 +34,7 @@ class UsersController extends ControllerBase
     /**
      * Default action, shows the search form
      */
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->persistent->conditions = null;
         $this->view->form = new UsersForm();
@@ -77,7 +78,7 @@ class UsersController extends ControllerBase
     /**
      * Creates a User
      */
-    public function createAction()
+    public function createAction(): void
     {
         $form = new UsersForm(null);
         if ($this->request->isPost()) {
@@ -108,7 +109,7 @@ class UsersController extends ControllerBase
     /**
      * Saves the user from the 'edit' action
      */
-    public function editAction($id)
+    public function editAction($id): void
     {
         $user = Users::findFirstById($id);
         if (!$user) {
@@ -183,7 +184,7 @@ class UsersController extends ControllerBase
     /**
      * Users must use this action to change its password
      */
-    public function changePasswordAction()
+    public function changePasswordAction(): void
     {
         $form = new ChangePasswordForm();
 

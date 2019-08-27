@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -14,12 +15,12 @@ namespace Vokuro\Controllers;
 /**
  * Display the terms and conditions page.
  */
-class TermsController extends ControllerBase
+final class TermsController extends ControllerBase
 {
     /**
      * Default action. Set the public layout (layouts/public.volt)
      */
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->view->setTemplateBefore('public');
     }

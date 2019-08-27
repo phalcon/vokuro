@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -29,7 +30,7 @@ class ControllerBase extends Controller
      * @param Dispatcher $dispatcher
      * @return boolean
      */
-    public function beforeExecuteRoute(Dispatcher $dispatcher)
+    public function beforeExecuteRoute(Dispatcher $dispatcher): bool
     {
         $controllerName = $dispatcher->getControllerName();
 
@@ -69,5 +70,7 @@ class ControllerBase extends Controller
                 return false;
             }
         }
+
+        return true;
     }
 }

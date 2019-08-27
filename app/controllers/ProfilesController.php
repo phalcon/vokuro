@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -21,12 +22,12 @@ use Vokuro\Models\Profiles;
  * Vokuro\Controllers\ProfilesController
  * CRUD to manage profiles
  */
-class ProfilesController extends ControllerBase
+final class ProfilesController extends ControllerBase
 {
     /**
      * Default action. Set the private (authenticated) layout (layouts/private.volt)
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->view->setTemplateBefore('private');
     }
@@ -34,7 +35,7 @@ class ProfilesController extends ControllerBase
     /**
      * Default action, shows the search form
      */
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->persistent->conditions = null;
         $this->view->form = new ProfilesForm();
@@ -79,7 +80,7 @@ class ProfilesController extends ControllerBase
     /**
      * Creates a new Profile
      */
-    public function createAction()
+    public function createAction(): void
     {
         if ($this->request->isPost()) {
             $profile = new Profiles([
@@ -104,7 +105,7 @@ class ProfilesController extends ControllerBase
      *
      * @param int $id
      */
-    public function editAction($id)
+    public function editAction($id): void
     {
         $profile = Profiles::findFirstById($id);
         if (!$profile) {

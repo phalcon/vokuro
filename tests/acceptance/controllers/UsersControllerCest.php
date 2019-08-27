@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-class UsersControllerCest
+final class UsersControllerCest
 {
     private $cookie = null;
 

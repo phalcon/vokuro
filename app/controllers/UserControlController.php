@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -18,16 +19,16 @@ use Vokuro\Models\ResetPasswords;
  * UserControlController
  * Provides help to users to confirm their passwords or reset them
  */
-class UserControlController extends ControllerBase
+final class UserControlController extends ControllerBase
 {
-    public function initialize()
+    public function initialize(): void
     {
         if ($this->session->has('auth-identity')) {
             $this->view->setTemplateBefore('private');
         }
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
     }
 

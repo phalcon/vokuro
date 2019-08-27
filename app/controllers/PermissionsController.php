@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -17,12 +18,12 @@ use Vokuro\Models\Permissions;
 /**
  * View and define permissions for the various profile levels.
  */
-class PermissionsController extends ControllerBase
+final class PermissionsController extends ControllerBase
 {
     /**
      * View the permissions for a profile level, and change them if we have a POST.
      */
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->view->setTemplateBefore('private');
 
