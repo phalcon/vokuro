@@ -33,7 +33,7 @@ final class UserControlController extends ControllerBase
     }
 
     /**
-     * Confirms an e-mail, if the user must change thier password then changes it
+     * Confirms an e-mail, if the user must change their password then changes it
      */
     public function confirmEmailAction()
     {
@@ -64,7 +64,7 @@ final class UserControlController extends ControllerBase
          */
         if (!$confirmation->save()) {
             foreach ($confirmation->getMessages() as $message) {
-                $this->flash->error($message);
+                $this->flash->error((string) $message);
             }
 
             return $this->dispatcher->forward([
@@ -125,7 +125,7 @@ final class UserControlController extends ControllerBase
          */
         if (!$resetPassword->save()) {
             foreach ($resetPassword->getMessages() as $message) {
-                $this->flash->error($message);
+                $this->flash->error((string) $message);
             }
 
             return $this->dispatcher->forward([
