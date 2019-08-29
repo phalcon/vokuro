@@ -59,7 +59,9 @@ final class SessionController extends ControllerBase
                     ]);
                 }
 
-                $this->flash->error($user->getMessages());
+                foreach ($user->getMessages() as $message) {
+                    $this->flash->error((string) $message);
+                }
             }
         }
 
@@ -125,7 +127,7 @@ final class SessionController extends ControllerBase
                             $this->flash->success('Success! Please check your messages for an email reset password');
                         } else {
                             foreach ($resetPassword->getMessages() as $message) {
-                                $this->flash->error($message);
+                                $this->flash->error((string) $message);
                             }
                         }
                     }

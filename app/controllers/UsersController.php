@@ -94,7 +94,9 @@ final class UsersController extends ControllerBase
                 ]);
 
                 if (!$user->save()) {
-                    $this->flash->error($user->getMessages());
+                    foreach ($user->getMessages() as $message) {
+                        $this->flash->error((string) $message);
+                    }
                 } else {
                     $this->flash->success("User was created successfully");
 
@@ -205,7 +207,9 @@ final class UsersController extends ControllerBase
                 $passwordChange->userAgent = $this->request->getUserAgent();
 
                 if (!$passwordChange->save()) {
-                    $this->flash->error($passwordChange->getMessages());
+                    foreach ($passwordChange->getMessages() as $message) {
+                        $this->flash->error((string) $message);
+                    }
                 } else {
                     $this->flash->success('Your password was successfully changed');
 
