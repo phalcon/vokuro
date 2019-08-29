@@ -10,7 +10,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Vokuro\Auth;
+namespace Vokuro\Plugins\Auth;
 
 use Phalcon\Plugin;
 use Vokuro\Models\Users;

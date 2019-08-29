@@ -10,7 +10,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Vokuro\Mail;
+namespace Vokuro\Plugins\Mail;
 
 use Phalcon\Plugin;
 use Swift_Message as Message;

@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Vokuro\Auth;
+namespace Vokuro\Plugins\Auth;
 
 class Exception extends \Exception
 {

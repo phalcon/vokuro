@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Vokuro\Mail;
+namespace Vokuro\Plugins\Mail;
 
 class Exception extends \Exception
 {

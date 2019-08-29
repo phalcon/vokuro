@@ -10,7 +10,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Vokuro\Acl;
+namespace Vokuro\Plugins\Acl;
 
 use Phalcon\Acl\Enum as AclEnum;
 use Phalcon\Plugin;
