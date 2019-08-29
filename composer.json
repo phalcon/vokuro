@@ -22,7 +22,9 @@
         }
     ],
     "autoload": {
-        "classmap": ["app/"]
+        "psr-4": {
+            "Vokuro\\": "app/"
+        }
     },
     "require": {
         "php": ">=7.2",
