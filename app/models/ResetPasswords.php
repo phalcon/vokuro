@@ -17,6 +17,8 @@ use Phalcon\Mvc\Model;
 /**
  * ResetPasswords
  * Stores the reset password codes and their evolution
+ *
+ * @method static ResetPasswords findFirstByCode(string $code)
  */
 class ResetPasswords extends Model
 {
@@ -61,7 +63,7 @@ class ResetPasswords extends Model
      */
     public function beforeValidationOnCreate()
     {
-        // Timestamp the confirmaton
+        // Timestamp the confirmation
         $this->createdAt = time();
 
         // Generate a random confirmation code
@@ -76,7 +78,7 @@ class ResetPasswords extends Model
      */
     public function beforeValidationOnUpdate()
     {
-        // Timestamp the confirmaton
+        // Timestamp the confirmation
         $this->modifiedAt = time();
     }
 
@@ -96,7 +98,7 @@ class ResetPasswords extends Model
 
     public function initialize()
     {
-        $this->belongsTo('usersId', __NAMESPACE__ . '\Users', 'id', [
+        $this->belongsTo('usersId', Users::class, 'id', [
             'alias' => 'user'
         ]);
     }

@@ -17,6 +17,8 @@ use Phalcon\Mvc\Model;
 /**
  * EmailConfirmations
  * Stores the reset password codes and their evolution
+ *
+ * @method static EmailConfirmations findFirstByCode(string $code)
  */
 class EmailConfirmations extends Model
 {
@@ -88,7 +90,7 @@ class EmailConfirmations extends Model
 
     public function initialize()
     {
-        $this->belongsTo('usersId', __NAMESPACE__ . '\Users', 'id', [
+        $this->belongsTo('usersId', Users::class, 'id', [
             'alias' => 'user'
         ]);
     }
