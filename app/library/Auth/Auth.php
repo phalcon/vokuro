@@ -28,12 +28,10 @@ class Auth extends Plugin
      * Checks the user credentials
      *
      * @param array $credentials
-     * @return boolean
      * @throws Exception
      */
     public function check($credentials)
     {
-
         // Check if the user exist
         $user = Users::findFirstByEmail($credentials['email']);
         if ($user == false) {
@@ -68,7 +66,7 @@ class Auth extends Plugin
     /**
      * Creates the remember me environment settings the related cookies and generating tokens
      *
-     * @param \Vokuro\Models\Users $user
+     * @param Users $user
      * @throws Exception
      */
     public function saveSuccessLogin($user)
@@ -123,7 +121,7 @@ class Auth extends Plugin
     /**
      * Creates the remember me environment settings the related cookies and generating tokens
      *
-     * @param \Vokuro\Models\Users $user
+     * @param Users $user
      */
     public function createRememberEnvironment(Users $user)
     {
@@ -155,6 +153,7 @@ class Auth extends Plugin
     /**
      * Logs on using the information in the cookies
      *
+     * @throws Exception
      * @return \Phalcon\Http\Response
      */
     public function loginWithRememberMe()
@@ -206,7 +205,7 @@ class Auth extends Plugin
     /**
      * Checks if the user is banned/inactive/suspended
      *
-     * @param \Vokuro\Models\Users $user
+     * @param Users $user
      * @throws Exception
      */
     public function checkUserFlags(Users $user)
@@ -292,22 +291,23 @@ class Auth extends Plugin
     /**
      * Get the entity related to user in the active identity
      *
-     * @return \Vokuro\Models\Users
+     * @return Users
      * @throws Exception
      */
     public function getUser()
     {
         $identity = $this->session->get('auth-identity');
-        if (isset($identity['id'])) {
-            $user = Users::findFirstById($identity['id']);
-            if ($user == false) {
-                throw new Exception('The user does not exist');
-            }
 
-            return $user;
+        if (!isset($identity['id'])) {
+            throw new Exception('Session was broken. Try to re-login');
         }
 
-        return false;
+        $user = Users::findFirstById($identity['id']);
+        if ($user == false) {
+            throw new Exception('The user does not exist');
+        }
+
+        return $user;
     }
 
     /**
