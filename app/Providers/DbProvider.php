@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Config;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+use function Vokuro\config;
 
 class DbProvider extends AbstractProvider
 {
@@ -20,14 +22,14 @@ class DbProvider extends AbstractProvider
 
     public function register(): void
     {
-        // TODO
-        $this->di->set('db', function () {
-            $config = $this->getConfig();
+        /** @var Config $dbConfig */
+        $dbConfig = config('database');
+        $this->di->set($this->providerName, function () use ($dbConfig) {
             return new DbAdapter([
-                'host' => $config->database->host,
-                'username' => $config->database->username,
-                'password' => $config->database->password,
-                'dbname' => $config->database->dbname
+                'host' => $dbConfig->host,
+                'username' => $dbConfig->username,
+                'password' => $dbConfig->password,
+                'dbname' => $dbConfig->dbname
             ]);
         });
     }
