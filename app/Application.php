@@ -18,6 +18,8 @@ use Phalcon\Mvc\Application as MvcApplication;
 
 class Application
 {
+    const APPLICATION_PROVIDER = 'bootstrap';
+
     /**
      * @var MvcApplication
      */
@@ -43,6 +45,8 @@ class Application
         $this->di = new FactoryDefault();
         $this->app = $this->createApplication();
         $this->rootPath = $rootPath;
+
+        $this->di->setShared(self::APPLICATION_PROVIDER, $this);
     }
 
     /**
