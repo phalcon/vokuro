@@ -8,7 +8,6 @@ use Phalcon\Di;
 /**
  * Call Dependency Injection container
  *
- * @param mixed
  * @return mixed
  */
 function container()
@@ -28,7 +27,6 @@ function container()
  * Also can access nested values.
  * Example: config('config.db.name')
  *
- * @param mixed
  * @return mixed
  */
 function config()
