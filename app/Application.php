@@ -1,5 +1,5 @@
 <?php
-declare(strict_typesr=1);
+declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -92,9 +92,10 @@ class Application
             throw new Exception('File providers.php does not exist or is not readable.');
         }
 
-        /** @var ProviderInterface[] $providers */
         $providers = include_once $filename;
-        foreach ($providers as $provider) {
+        foreach ($providers as $providerClass) {
+            /** @var ProviderInterface $provider */
+            $provider = new $providerClass;
             $provider->register();
         }
     }
