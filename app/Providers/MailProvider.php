@@ -12,14 +12,15 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Vokuro\Plugins\Mail\Mail;
+
 class MailProvider extends AbstractProvider
 {
     protected $providerName = 'mail';
 
     public function register(): void
     {
-        // TODO
-        $this->di->set('mail', function () {
+        $this->di->set($this->providerName, function () {
             return new Mail();
         });
     }
