@@ -9,11 +9,8 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use Phalcon\Config;
-use Phalcon\Logger;
-
-return new Config([
-    'privateResources' => [
+return [
+    'private' => [
         'users' => [
             'index',
             'search',
@@ -33,4 +30,4 @@ return new Config([
             'index'
         ]
     ]
-]);
+];

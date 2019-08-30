@@ -12,21 +12,31 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Vokuro\Application;
+use Vokuro\Plugins\Acl\Acl;
+use function Vokuro\container;
+
 class AclProvider extends AbstractProvider
 {
     protected $providerName = 'acl';
 
     public function register(): void
     {
-        // TODO
-        $this->di->set('acl', function () {
-            $pr = [];
-            if (is_readable(APP_PATH . '/config/privateResources.php')) {
-                $pr = include APP_PATH . '/config/privateResources.php';
+        /** @var string $rootPath */
+        $rootPath = container(Application::APPLICATION_PROVIDER);
+        $this->di->setShared($this->providerName, function () use ($rootPath) {
+            $filename = $rootPath . '/configs/acl.php';
+            $privateResources = [];
+            if (is_readable($filename)) {
+                $privateResources = include $filename;
+                if (!empty($privateResources['private'])) {
+                    $privateResources = $privateResources['private'];
+                }
             }
 
             $acl = new Acl();
-            $acl->addPrivateResources($pr);
+            $acl->addPrivateResources($privateResources);
+
             return $acl;
         });
     }
