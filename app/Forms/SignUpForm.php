@@ -29,9 +29,7 @@ class SignUpForm extends Form
     public function initialize($entity = null, $options = null)
     {
         $name = new Text('name');
-
         $name->setLabel('Name');
-
         $name->addValidators([
             new PresenceOf([
                 'message' => 'The name is required'
@@ -42,9 +40,7 @@ class SignUpForm extends Form
 
         // Email
         $email = new Text('email');
-
         $email->setLabel('E-Mail');
-
         $email->addValidators([
             new PresenceOf([
                 'message' => 'The e-mail is required'
@@ -58,9 +54,7 @@ class SignUpForm extends Form
 
         // Password
         $password = new Password('password');
-
         $password->setLabel('Password');
-
         $password->addValidators([
             new PresenceOf([
                 'message' => 'The password is required'
@@ -79,9 +73,7 @@ class SignUpForm extends Form
 
         // Confirm Password
         $confirmPassword = new Password('confirmPassword');
-
         $confirmPassword->setLabel('Confirm Password');
-
         $confirmPassword->addValidators([
             new PresenceOf([
                 'message' => 'The confirmation password is required'
@@ -96,7 +88,6 @@ class SignUpForm extends Form
         ]);
 
         $terms->setLabel('Accept terms and conditions');
-
         $terms->addValidator(new Identical([
             'value' => 'yes',
             'message' => 'Terms and conditions must be accepted'
@@ -106,12 +97,10 @@ class SignUpForm extends Form
 
         // CSRF
         $csrf = new Hidden('csrf');
-
         $csrf->addValidator(new Identical([
             'value' => $this->security->getSessionToken(),
             'message' => 'CSRF validation failed'
         ]));
-
         $csrf->clear();
 
         $this->add($csrf);

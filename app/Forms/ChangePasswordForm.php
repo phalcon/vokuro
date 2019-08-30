@@ -24,7 +24,6 @@ class ChangePasswordForm extends Form
     {
         // Password
         $password = new Password('password');
-
         $password->addValidators([
             new PresenceOf([
                 'message' => 'Password is required'
@@ -43,7 +42,6 @@ class ChangePasswordForm extends Form
 
         // Confirm Password
         $confirmPassword = new Password('confirmPassword');
-
         $confirmPassword->addValidators([
             new PresenceOf([
                 'message' => 'The confirmation password is required'

@@ -46,11 +46,9 @@ class LoginForm extends Form
         $password = new Password('password', [
             'placeholder' => 'Password'
         ]);
-
         $password->addValidator(new PresenceOf([
             'message' => 'The password is required'
         ]));
-
         $password->clear();
 
         $this->add($password);
@@ -60,23 +58,19 @@ class LoginForm extends Form
             'value' => 'yes',
             'id' => 'login-remember',
         ]);
-
         $remember->setLabel('Remember me');
 
         $this->add($remember);
 
         // CSRF
         $csrf = new Hidden('csrf');
-
         $csrf->addValidator(new Identical([
             'value' => $this->security->getSessionToken(),
             'message' => 'CSRF validation failed'
         ]));
-
         $csrf->clear();
 
         $this->add($csrf);
-
         $this->add(new Submit('Login', [
             'class' => 'btn btn-primary'
         ]));
