@@ -12,16 +12,18 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Mvc\Dispatcher;
+
 class DispatcherProvider extends AbstractProvider
 {
     protected $providerName = 'dispatcher';
 
     public function register(): void
     {
-        // TODO
-        $this->di->set('dispatcher', function () {
+        $this->di->set($this->providerName, function () {
             $dispatcher = new Dispatcher();
             $dispatcher->setDefaultNamespace('Vokuro\Controllers');
+
             return $dispatcher;
         });
     }
