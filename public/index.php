@@ -32,11 +32,6 @@ try {
     $di = new FactoryDefault();
 
     /**
-     * Read services
-     */
-    include APP_PATH . '/config/services.php';
-
-    /**
      * Get config service for use in inline setup below
      */
     $config = $di->getConfig();
