@@ -12,14 +12,15 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Flash\Direct as Flash;
+
 class FlashProvider extends AbstractProvider
 {
     protected $providerName = 'flash';
 
     public function register(): void
     {
-        // TODO
-        $this->di->set('flash', function () {
+        $this->di->set($this->providerName, function () {
             return new Flash([
                 'error' => 'alert alert-danger',
                 'success' => 'alert alert-success',
