@@ -24,7 +24,10 @@
     "autoload": {
         "psr-4": {
             "Vokuro\\": "app/"
-        }
+        },
+        "files": [
+            "app/Helpers.php"
+        ]
     },
     "require": {
         "ext-openssl": "*",
