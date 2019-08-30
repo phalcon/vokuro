@@ -12,21 +12,20 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
-use Phalcon\Url as UrlResolver;
-
-class UrlProvider extends AbstractProvider
+class CryptProvider extends AbstractProvider
 {
-    protected $providerName = 'url';
+    protected $providerName = 'crypt';
 
     public function register(): void
     {
         // TODO
-        $this->di->setShared('url', function () {
+        $this->di->set('crypt', function () {
             $config = $this->getConfig();
 
-            $url = new UrlResolver();
-            $url->setBaseUri($config->application->baseUri);
-            return $url;
+            $crypt = new Crypt();
+            $crypt->setKey($config->application->cryptSalt);
+            return $crypt;
         });
+
     }
 }

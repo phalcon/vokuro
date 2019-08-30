@@ -12,21 +12,18 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
-use Phalcon\Url as UrlResolver;
-
-class UrlProvider extends AbstractProvider
+class ModelsMetadataProvider extends AbstractProvider
 {
-    protected $providerName = 'url';
+    protected $providerName = 'modelsMetadata';
 
     public function register(): void
     {
         // TODO
-        $this->di->setShared('url', function () {
+        $this->di->set('modelsMetadata', function () {
             $config = $this->getConfig();
-
-            $url = new UrlResolver();
-            $url->setBaseUri($config->application->baseUri);
-            return $url;
+            return new MetaDataAdapter([
+                'metaDataDir' => $config->application->cacheDir . 'metaData/'
+            ]);
         });
     }
 }
