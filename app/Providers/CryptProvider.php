@@ -12,18 +12,21 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Crypt;
+use function Vokuro\config;
+
 class CryptProvider extends AbstractProvider
 {
     protected $providerName = 'crypt';
 
     public function register(): void
     {
-        // TODO
-        $this->di->set('crypt', function () {
-            $config = $this->getConfig();
-
+        /** @var string $cryptSalt */
+        $cryptSalt = config('application.cryptSalt');
+        $this->di->set($this->providerName, function () use ($cryptSalt) {
             $crypt = new Crypt();
-            $crypt->setKey($config->application->cryptSalt);
+            $crypt->setKey($cryptSalt);
+
             return $crypt;
         });
 
