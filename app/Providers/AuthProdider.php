@@ -12,14 +12,15 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Vokuro\Plugins\Auth\Auth;
+
 class AuthProvider extends AbstractProvider
 {
     protected $providerName = 'auth';
 
     public function register(): void
     {
-        // TODO
-        $this->di->set('auth', function () {
+        $this->di->setShared($this->providerName, function () {
             return new Auth();
         });
     }
