@@ -42,11 +42,6 @@ try {
     $config = $di->getConfig();
 
     /**
-     * Include Autoloader
-     */
-    include APP_PATH . '/config/loader.php';
-
-    /**
      * Handle the request
      */
     $application = new Application($di);
