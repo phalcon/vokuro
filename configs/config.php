@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,10 +10,9 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use Phalcon\Config;
 use Phalcon\Logger\Logger;
 
-return new Config([
+return [
     'database' => [
         'adapter' => getenv('DB_ADAPTER'),
         'host' => getenv('DB_HOST'),
@@ -57,4 +57,4 @@ return new Config([
     ],
     // Set to false to disable sending emails (for use in test environment)
     'useMail' => true,
-]);
+];
