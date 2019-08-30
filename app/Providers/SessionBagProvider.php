@@ -12,15 +12,16 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Session\Bag;
+
 class SessionBagProvider extends AbstractProvider
 {
     protected $providerName = 'sessionBag';
 
     public function register(): void
     {
-        // TODO
-        $this->di->set('sessionBag', function () {
-            return new SessionBag('conditions');
+        $this->di->set($this->providerName, function () {
+            return new Bag('conditions');
         });
     }
 }
