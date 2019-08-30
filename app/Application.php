@@ -12,9 +12,11 @@ declare(strict_typesr=1);
 
 namespace Vokuro;
 
+use Exception;
 use Phalcon\Application\AbstractApplication;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Application as MvcApplication;
+use Vokuro\Providers\ProviderInterface;
 
 class Application
 {
@@ -39,6 +41,7 @@ class Application
 
     /**
      * @param string $rootPath
+     * @throws Exception
      */
     public function __construct(string $rootPath)
     {
@@ -47,6 +50,8 @@ class Application
         $this->rootPath = $rootPath;
 
         $this->di->setShared(self::APPLICATION_PROVIDER, $this);
+
+        $this->initializeProviders();
     }
 
     /**
@@ -75,5 +80,22 @@ class Application
     protected function createApplication(): AbstractApplication
     {
         return new MvcApplication($this->di);
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function initializeProviders(): void
+    {
+        $filename = $this->rootPath . '/configs/providers.php';
+        if (!file_exists($filename) || !is_readable($filename)) {
+            throw new Exception('File providers.php does not exist or is not readable.');
+        }
+
+        /** @var ProviderInterface[] $providers */
+        $providers = include_once $filename;
+        foreach ($providers as $provider) {
+            $provider->register();
+        }
     }
 }
