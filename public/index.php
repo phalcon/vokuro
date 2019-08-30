@@ -9,41 +9,23 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use Phalcon\DI\FactoryDefault;
-use Phalcon\Mvc\Application;
+use Vokuro\Application as VokuroApplication;
 
 error_reporting(E_ALL);
-
-require_once dirname(__DIR__) . '/bootstrap/autoload.php';
+$rootPath = dirname(__DIR__);
 
 try {
-    // Use composer autoloader to load vendor classes
-    require_once BASE_PATH . '/vendor/autoload.php';
+    require_once $rootPath . '/vendor/autoload.php';
 
     /**
      * Load .env configurations
      */
-    $dotenv = Dotenv\Dotenv::create(BASE_PATH);
-    $dotenv->load();
+    Dotenv\Dotenv::create($rootPath)->load();
 
     /**
-     * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
+     * Run Vökuró!
      */
-    $di = new FactoryDefault();
-
-    /**
-     * Get config service for use in inline setup below
-     */
-    $config = $di->getConfig();
-
-    /**
-     * Handle the request
-     */
-    $application = new Application($di);
-
-    echo $application->handle($_SERVER['REQUEST_URI'])
-        ->getContent();
-
+    (new VokuroApplication($rootPath))->run();
 } catch (Exception $e) {
     echo $e->getMessage(), '<br>';
     echo nl2br(htmlentities($e->getTraceAsString()));
