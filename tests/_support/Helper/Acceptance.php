@@ -13,6 +13,13 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class Acceptance extends \Codeception\Module
 {
+    public function _initialize()
+    {
+        $this->getModule('PhpBrowser')->_setConfig([
+            'url' => 'http://' . getenv('CODECEPTION_URL') . ':' . getenv('CODECEPTION_PORT'),
+        ]);
+    }
+
     /**
      * @param TestInterface $test
      * @throws Exception
