@@ -22,8 +22,6 @@ before_install:
   - |
     # Hide "You are in 'detached HEAD' state" message
     git config --global advice.detachedHead false
-  - mysql -e 'CREATE DATABASE vokuro_test;'
-  - php -S 0.0.0.0:80 -t public/ .htrouter.php &
 
 install:
   - pecl install --force psr
@@ -31,12 +29,14 @@ install:
   - echo extension=phalcon.so | tee -a "$(phpenv prefix)/etc/php.ini"
 
 before_script:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS vokuro_test CHARSET=utf8 COLLATE=utf8_unicode_ci;'
+  - php -S 127.0.0.1:80 -t public/ .htrouter.php &
   - travis_retry composer install --no-interaction --no-ansi --no-progress --no-suggest
   - cp .env.example .env
 
 script:
-  - vendor/bin/phinx migrate
-  - vendor/bin/phinx seed:run
+  - vendor/bin/phinx migrate -e testing
+  - vendor/bin/phinx seed:run -e testing
   - vendor/bin/codecept build --quiet
   - vendor/bin/codecept run
   - vendor/bin/psalm --show-info=false
