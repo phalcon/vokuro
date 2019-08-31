@@ -9,20 +9,26 @@ dist: xenial
 services:
   - mysql
 
+env:
+  global:
+    - PHALCON_VERSION=4.0.0-beta.2
+    - PHALCON_BUILD=754
+    - PHALCON_BRANCH=mainline
+    - PHALCON_OS=ubuntu/xenial
+  matrix:
+    - PHP_VERSION=7.3
+    - PHP_VERSION=7.2
+
 cache:
   timeout: 604800
   directories:
     - ${HOME}/.composer/cache
 
-before_install:
+install:
+  - pecl install --force psr
   - |
-    PHALCON_VERSION=4.0.0-beta.2
-    PHALCON_BUILD=754
-    PHALCON_BRANCH=mainline
-    PHALCON_OS=debian/buster
-
     PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH"
-    PHALCON_PKG="php7.3-phalcon_$PHALCON_VERSION-$PHALCON_BUILD+php7.3_amd64.deb"
+    PHALCON_PKG="php$PHP_VERSION-phalcon_$PHALCON_VERSION-$PHALCON_BUILD+php$PHP_VERSION_amd64.deb"
 
     curl -sSL \
       "$PHALCON_REPO/packages/$PHALCON_OS/$PHALCON_PKG/download.deb" \
@@ -32,10 +38,12 @@ before_install:
     dpkg-deb -R /tmp/phalcon.deb /tmp/pkg
     cp /tmp/pkg/usr/lib/php/*/phalcon.so "$(php-config  --extension-dir)/phalcon.so"
 
-script:
+before_script:
   - travis_retry composer install --no-interaction --no-ansi --no-progress --no-suggest
   - cp .env.example .env
   - chmod 777 cache
+
+script:
   - vendor/bin/phinx migrate
   - vendor/bin/phinx seed:run
   - vendor/bin/codecept build --quiet
