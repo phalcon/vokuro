@@ -23,6 +23,7 @@ before_install:
     # Hide "You are in 'detached HEAD' state" message
     git config --global advice.detachedHead false
   - mysql -e 'CREATE DATABASE vokuro_test;'
+  - php -S 0.0.0.0:80 -t public/ .htrouter.php &
 
 install:
   - pecl install --force psr
