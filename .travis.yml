@@ -1,28 +1,42 @@
 language: php
+
 php:
-  - '7.4snapshot'
   - '7.3'
   - '7.2'
 
-dist: bionic
+dist: xenial
 
-git:
-  depth: 5
-  quiet: true
+services:
+  - mysql
 
 cache:
   timeout: 604800
   directories:
     - ${HOME}/.composer/cache
 
-services:
-  - mysql
-  - mongodb
-  - redis-server
-  - postgresql
-  - memcached
+before_install:
+  - |
+    PHALCON_VERSION=4.0.0-beta.2
+    PHALCON_BUILD=754
+    PHALCON_BRANCH=mainline
+    PHALCON_OS=debian/buster
+
+    PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH"
+    PHALCON_PKG="php7.3-phalcon_$PHALCON_VERSION-$PHALCON_BUILD+php7.3_amd64.deb"
+
+    curl -sSL \
+      "$PHALCON_REPO/packages/$PHALCON_OS/$PHALCON_PKG/download.deb" \
+      -o /tmp/phalcon.deb \
+
+    mkdir /tmp/pkg
+    dpkg-deb -R /tmp/phalcon.deb /tmp/pkg
+    cp /tmp/pkg/usr/lib/php/*/phalcon.so "$(php-config  --extension-dir)/phalcon.so"
 
 script:
+  - cp .env.example .env
+  - chmod 777 cache
+  - vendor/bin/phinx migrate
+  - vendor/bin/phinx seed:run
   - vendor/bin/codecept build --quiet
   - vendor/bin/codecept run
   - vendor/bin/psalm
