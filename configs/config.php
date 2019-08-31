@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 use Phalcon\Logger\Logger;
+use function Vokuro\root_path;
 
 return [
     'database' => [
@@ -24,9 +25,9 @@ return [
         'baseUri' => getenv('APP_BASE_URI'),
         'publicUrl' => getenv('APP_PUBLIC_URL'),
         'cryptSalt' => getenv('APP_CRYPT_SALT'),
-        'sessionSavePath' => BASE_PATH . '/cache/session/',
-        'viewsDir' => APP_PATH . '/views/',
-        'cacheDir' => BASE_PATH . '/cache/',
+        'viewsDir' => root_path('themes/vokuro/'),
+        'cacheDir' => root_path('var/cache/'),
+        'sessionSavePath' => root_path('var/cache/session/'),
     ],
     'mail' => [
         'fromName' => getenv('MAIL_FROM_NAME'),
@@ -44,7 +45,7 @@ return [
         'AWSSecretKey' => '',
     ],
     'logger' => [
-        'path' => BASE_PATH . '/logs/',
+        'path' => root_path('logs/'),
         'format' => '%date% [%type%] %message%',
         'date' => 'D j H:i:s',
         'logLevel' => Logger::DEBUG,
