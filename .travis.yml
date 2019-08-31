@@ -8,6 +8,7 @@ dist: xenial
 
 services:
   - mysql
+  - nginx
 
 env:
   global:
@@ -30,7 +31,7 @@ install:
 
 before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS vokuro_test CHARSET=utf8 COLLATE=utf8_unicode_ci;'
-  - php -S 0.0.0.0:81 -t public/ .htrouter.php &
+  - php -S 127.0.0.1:8888 -t public/ .htrouter.php &
   - travis_retry composer install --no-interaction --no-ansi --no-progress --no-suggest
   - cp .env.example .env
 
