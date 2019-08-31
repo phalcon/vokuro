@@ -10,4 +10,3 @@ extensions:
         - Codeception\Extension\RunFailed
 params:
     - .env
-
