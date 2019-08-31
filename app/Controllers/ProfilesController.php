@@ -105,7 +105,7 @@ final class ProfilesController extends ControllerBase
      *
      * @param int $id
      */
-    public function editAction($id): void
+    public function editAction($id)
     {
         $profile = Profiles::findFirstById($id);
         if (!$profile) {

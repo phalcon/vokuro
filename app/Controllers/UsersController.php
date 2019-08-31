@@ -111,7 +111,7 @@ final class UsersController extends ControllerBase
     /**
      * Saves the user from the 'edit' action
      */
-    public function editAction($id): void
+    public function editAction($id)
     {
         $user = Users::findFirstById($id);
         if (!$user) {
