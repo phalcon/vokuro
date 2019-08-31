@@ -18,6 +18,12 @@ cache:
   directories:
     - ${HOME}/.composer/cache
 
+before_install:
+  - |
+    # Hide "You are in 'detached HEAD' state" message
+    git config --global advice.detachedHead false
+  - mysql -e 'CREATE DATABASE vokuro_test;'
+
 install:
   - pecl install --force psr
   - .ci/install-phalcon.sh
@@ -26,14 +32,13 @@ install:
 before_script:
   - travis_retry composer install --no-interaction --no-ansi --no-progress --no-suggest
   - cp .env.example .env
-  - chmod 777 var/cache var/logs
 
 script:
   - vendor/bin/phinx migrate
   - vendor/bin/phinx seed:run
   - vendor/bin/codecept build --quiet
   - vendor/bin/codecept run
-  - vendor/bin/psalm
+  - vendor/bin/psalm --show-info=false
 
 notifications:
   email: false
