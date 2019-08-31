@@ -17,7 +17,6 @@ use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Router;
 use Vokuro\Application;
-use function Vokuro\container;
 
 class RouterProvider implements ServiceProviderInterface
 {
@@ -33,7 +32,7 @@ class RouterProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var Application $application */
-        $application = container(Application::APPLICATION_PROVIDER);
+        $application = $di->getShared(Application::APPLICATION_PROVIDER);
         /** @var string $basePath */
         $basePath = $application->getRootPath();
 

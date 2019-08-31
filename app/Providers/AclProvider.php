@@ -16,7 +16,6 @@ use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Vokuro\Application;
 use Vokuro\Plugins\Acl\Acl;
-use function Vokuro\container;
 
 class AclProvider implements ServiceProviderInterface
 {
@@ -32,7 +31,7 @@ class AclProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var Application $application */
-        $application = container(Application::APPLICATION_PROVIDER);
+        $application = $di->getShared(Application::APPLICATION_PROVIDER);
         /** @var string $rootPath */
         $rootPath = $application->getRootPath();
 

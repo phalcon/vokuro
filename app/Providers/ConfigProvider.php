@@ -16,7 +16,6 @@ use Phalcon\Config;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Vokuro\Application;
-use function Vokuro\container;
 
 /**
  * Register the global configuration as config
@@ -35,7 +34,7 @@ class ConfigProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var Application $application */
-        $application = container(Application::APPLICATION_PROVIDER);
+        $application = $di->getShared(Application::APPLICATION_PROVIDER);
         /** @var string $rootPath */
         $rootPath = $application->getRootPath();
 
