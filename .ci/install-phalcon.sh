@@ -23,3 +23,4 @@ curl -sSL \
 mkdir /tmp/pkg
 dpkg-deb -R /tmp/phalcon.deb /tmp/pkg
 cp /tmp/pkg/usr/lib/php/*/phalcon.so "$(php-config  --extension-dir)/phalcon.so"
+echo "extension=phalcon.so" > /etc/php/${PHP_VERSION}/cli/conf.d/50-phalcon.ini
