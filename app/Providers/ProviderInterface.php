@@ -12,9 +12,7 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
-use Phalcon\Di\InjectionAwareInterface;
-
-interface ProviderInterface extends InjectionAwareInterface
+interface ProviderInterface
 {
     /**
      * Register application service
