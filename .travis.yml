@@ -15,9 +15,6 @@ env:
     - PHALCON_BUILD=754
     - PHALCON_BRANCH=mainline
     - PHALCON_OS=ubuntu/xenial
-  matrix:
-    - PHP_VERSION=7.3
-    - PHP_VERSION=7.2
 
 cache:
   timeout: 604800
@@ -26,17 +23,7 @@ cache:
 
 install:
   - pecl install --force psr
-  - |
-    PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH"
-    PHALCON_PKG="php$PHP_VERSION-phalcon_$PHALCON_VERSION-$PHALCON_BUILD+php$PHP_VERSION_amd64.deb"
-
-    curl -sSL \
-      "$PHALCON_REPO/packages/$PHALCON_OS/$PHALCON_PKG/download.deb" \
-      -o /tmp/phalcon.deb \
-
-    mkdir /tmp/pkg
-    dpkg-deb -R /tmp/phalcon.deb /tmp/pkg
-    cp /tmp/pkg/usr/lib/php/*/phalcon.so "$(php-config  --extension-dir)/phalcon.so"
+  - .ci/install-phalcon.sh
 
 before_script:
   - travis_retry composer install --no-interaction --no-ansi --no-progress --no-suggest
