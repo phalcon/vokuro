@@ -25,7 +25,7 @@ try {
     /**
      * Run Vökuró!
      */
-    (new VokuroApplication($rootPath))->run();
+    echo (new VokuroApplication($rootPath))->run();
 } catch (Exception $e) {
     echo $e->getMessage(), '<br>';
     echo nl2br(htmlentities($e->getTraceAsString()));
