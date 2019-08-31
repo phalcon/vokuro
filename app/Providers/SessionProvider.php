@@ -12,18 +12,29 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Session\Adapter\Stream as SessionAdapter;
 use Phalcon\Session\Manager as SessionManager;
 use function Vokuro\config;
 
-class SessionProvider extends AbstractProvider
+class SessionProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected $providerName = 'session';
 
-    public function register(): void
+    /**
+     * @param DiInterface $di
+     * @return void
+     */
+    public function register(DiInterface $di): void
     {
+        /** @var string $savePath */
         $savePath = config('application.sessionSavePath');
-        $this->di->set($this->providerName, function () use ($savePath) {
+
+        $di->set($this->providerName, function () use ($savePath) {
             $files = new SessionAdapter([
                 'savePath' => $savePath,
             ]);

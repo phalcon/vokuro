@@ -12,14 +12,23 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\ServiceProviderInterface;
 use Vokuro\Plugins\Auth\Auth;
 
-class AuthProvider extends AbstractProvider
+class AuthProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected $providerName = 'auth';
 
-    public function register(): void
+    /**
+     * @param DiInterface $di
+     * @return void
+     */
+    public function register(DiInterface $di): void
     {
-        $this->di->setShared($this->providerName, Auth::class);
+        $di->setShared($this->providerName, Auth::class);
     }
 }

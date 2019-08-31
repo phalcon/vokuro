@@ -12,21 +12,31 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\ServiceProviderInterface;
 use Vokuro\Application;
 use Vokuro\Plugins\Acl\Acl;
 use function Vokuro\container;
 
-class AclProvider extends AbstractProvider
+class AclProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected $providerName = 'acl';
 
-    public function register(): void
+    /**
+     * @param DiInterface $di
+     * @return void
+     */
+    public function register(DiInterface $di): void
     {
         /** @var Application $application */
         $application = container(Application::APPLICATION_PROVIDER);
         /** @var string $rootPath */
         $rootPath = $application->getRootPath();
-        $this->di->setShared($this->providerName, function () use ($rootPath) {
+
+        $di->setShared($this->providerName, function () use ($rootPath) {
             $filename = $rootPath . '/configs/acl.php';
             $privateResources = [];
             if (is_readable($filename)) {

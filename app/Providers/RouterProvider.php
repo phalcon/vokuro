@@ -12,21 +12,42 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Exception;
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\ServiceProviderInterface;
+use Phalcon\Mvc\Router;
 use Vokuro\Application;
 use function Vokuro\container;
 
-class RouterProvider extends AbstractProvider
+class RouterProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected $providerName = 'router';
 
-    public function register(): void
+    /**
+     * @param DiInterface $di
+     * @return void
+     */
+    public function register(DiInterface $di): void
     {
         /** @var Application $application */
         $application = container(Application::APPLICATION_PROVIDER);
         /** @var string $basePath */
         $basePath = $application->getRootPath();
-        $this->di->set($this->providerName, function () use ($basePath) {
-            return require $basePath . '/configs/routes.php';
+
+        $di->set($this->providerName, function () use ($basePath) {
+            $router = new Router();
+
+            $routes = $basePath . '/configs/routes.php';
+            if (!file_exists($routes) || !is_readable($routes)) {
+                throw new Exception($routes . ' file does not exist or is not readable.');
+            }
+
+            require_once $routes;
+
+            return $router;
         });
     }
 }

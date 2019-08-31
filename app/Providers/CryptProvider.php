@@ -13,22 +13,31 @@ declare(strict_types=1);
 namespace Vokuro\Providers;
 
 use Phalcon\Crypt;
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\ServiceProviderInterface;
 use function Vokuro\config;
 
-class CryptProvider extends AbstractProvider
+class CryptProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected $providerName = 'crypt';
 
-    public function register(): void
+    /**
+     * @param DiInterface $di
+     * @return void
+     */
+    public function register(DiInterface $di): void
     {
         /** @var string $cryptSalt */
         $cryptSalt = config('application.cryptSalt');
-        $this->di->set($this->providerName, function () use ($cryptSalt) {
+
+        $di->set($this->providerName, function () use ($cryptSalt) {
             $crypt = new Crypt();
             $crypt->setKey($cryptSalt);
 
             return $crypt;
         });
-
     }
 }

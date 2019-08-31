@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace Vokuro\Providers;
 
 use Phalcon\Config;
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Logger\Adapter\Stream as FileLogger;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
 use function Vokuro\config;
@@ -20,15 +22,23 @@ use function Vokuro\config;
 /**
  * Logger service
  */
-class LoggerProvider extends AbstractProvider
+class LoggerProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected $providerName = 'logger';
 
-    public function register(): void
+    /**
+     * @param DiInterface $di
+     * @return void
+     */
+    public function register(DiInterface $di): void
     {
         /** @var Config $loggerConfigs */
         $loggerConfigs = config('logger');
-        $this->di->set($this->providerName, function () use($loggerConfigs) {
+
+        $di->set($this->providerName, function () use($loggerConfigs) {
             $filename = trim($loggerConfigs->get('filename'), '\\/');
             $path = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
 

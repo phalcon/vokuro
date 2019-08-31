@@ -12,15 +12,24 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Flash\Direct as Flash;
 
-class FlashProvider extends AbstractProvider
+class FlashProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected $providerName = 'flash';
 
-    public function register(): void
+    /**
+     * @param DiInterface $di
+     * @return void
+     */
+    public function register(DiInterface $di): void
     {
-        $this->di->set($this->providerName, function () {
+        $di->set($this->providerName, function () {
             return new Flash([
                 'error' => 'alert alert-danger',
                 'success' => 'alert alert-success',

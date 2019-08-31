@@ -12,14 +12,23 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\ServiceProviderInterface;
 use Vokuro\Plugins\Mail\Mail;
 
-class MailProvider extends AbstractProvider
+class MailProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected $providerName = 'mail';
 
-    public function register(): void
+    /**
+     * @param DiInterface $di
+     * @return void
+     */
+    public function register(DiInterface $di): void
     {
-        $this->di->set($this->providerName, Mail::class);
+        $di->set($this->providerName, Mail::class);
     }
 }

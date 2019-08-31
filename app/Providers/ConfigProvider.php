@@ -13,23 +13,33 @@ declare(strict_types=1);
 namespace Vokuro\Providers;
 
 use Phalcon\Config;
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\ServiceProviderInterface;
 use Vokuro\Application;
 use function Vokuro\container;
 
 /**
  * Register the global configuration as config
  */
-class ConfigProvider extends AbstractProvider
+class ConfigProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected $providerName = 'config';
 
-    public function register(): void
+    /**
+     * @param DiInterface $di
+     * @return void
+     */
+    public function register(DiInterface $di): void
     {
         /** @var Application $application */
         $application = container(Application::APPLICATION_PROVIDER);
         /** @var string $rootPath */
         $rootPath = $application->getRootPath();
-        $this->di->setShared($this->providerName, function () use ($rootPath) {
+
+        $di->setShared($this->providerName, function () use ($rootPath) {
             $config = include $rootPath . '/configs/config.php';
 
             return new Config($config);

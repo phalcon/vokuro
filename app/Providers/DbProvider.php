@@ -14,17 +14,27 @@ namespace Vokuro\Providers;
 
 use Phalcon\Config;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\ServiceProviderInterface;
 use function Vokuro\config;
 
-class DbProvider extends AbstractProvider
+class DbProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected $providerName = 'db';
 
-    public function register(): void
+    /**
+     * @param DiInterface $di
+     * @return void
+     */
+    public function register(DiInterface $di): void
     {
         /** @var Config $dbConfig */
         $dbConfig = config('database');
-        $this->di->set($this->providerName, function () use ($dbConfig) {
+
+        $di->set($this->providerName, function () use ($dbConfig) {
             return new DbAdapter([
                 'host' => $dbConfig->get('host'),
                 'username' => $dbConfig->get('username'),
