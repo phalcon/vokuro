@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Vokuro\Plugins\Mail;
 
+use Aws\Ses\SesClient;
 use Phalcon\Plugin;
 use Swift_Message as Message;
 use Swift_SmtpTransport as Smtp;
@@ -37,26 +38,18 @@ class Mail extends Plugin
     private function amazonSESSend($raw)
     {
         if ($this->amazonSes == null) {
-            $this->amazonSes = new \AmazonSES(
-                [
-                    'key' => $this->config->amazon->AWSAccessKeyId,
-                    'secret' => $this->config->amazon->AWSSecretKey
-                ]
-            );
-            @$this->amazonSes->disable_ssl_verification();
+            $this->amazonSes = new SesClient([
+                'key' => $this->config->amazon->AWSAccessKeyId,
+                'secret' => $this->config->amazon->AWSSecretKey
+            ]);
         }
 
-        $response = $this->amazonSes->send_raw_email(
-            [
-                'Data' => base64_encode($raw)
-            ],
-            [
-                'curlopts' => [
-                    CURLOPT_SSL_VERIFYHOST => 0,
-                    CURLOPT_SSL_VERIFYPEER => 0
-                ]
+        $response = $this->amazonSes->sendRawEmail(['Data' => base64_encode($raw)], [
+            'curlopts' => [
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0
             ]
-        );
+        ]);
 
         if (!$response->isOK()) {
             $this->logger->error('Error sending email from AWS SES: ' . $response->body->asXML());
