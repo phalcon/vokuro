@@ -11,10 +11,7 @@ services:
 
 env:
   global:
-    - PHALCON_VERSION=4.0.0-beta.2
-    - PHALCON_BUILD=754
-    - PHALCON_BRANCH=mainline
-    - PHALCON_OS=ubuntu/xenial
+    - PHALCON_VERSION=v4.0.0-beta.2
 
 cache:
   timeout: 604800
