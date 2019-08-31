@@ -33,6 +33,7 @@ before_install:
     cp /tmp/pkg/usr/lib/php/*/phalcon.so "$(php-config  --extension-dir)/phalcon.so"
 
 script:
+  - travis_retry composer install --no-interaction --no-ansi --no-progress --no-suggest
   - cp .env.example .env
   - chmod 777 cache
   - vendor/bin/phinx migrate
