@@ -1,0 +1,31 @@
+language: php
+php:
+  - '7.4snapshot'
+  - '7.3'
+  - '7.2'
+
+dist: bionic
+
+git:
+  depth: 5
+  quiet: true
+
+cache:
+  timeout: 604800
+  directories:
+    - ${HOME}/.composer/cache
+
+services:
+  - mysql
+  - mongodb
+  - redis-server
+  - postgresql
+  - memcached
+
+script:
+  - vendor/bin/codecept build --quiet
+  - vendor/bin/codecept run
+  - vendor/bin/psalm
+
+notifications:
+  email: false
