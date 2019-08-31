@@ -126,7 +126,7 @@ final class ProfilesController extends ControllerBase
             }
         }
 
-        $this->view->form = new ProfilesForm($profile, [
+        $this->view->form = new ProfilesForm(null, [
             'edit' => true
         ]);
 
