@@ -27,7 +27,7 @@ class Acl extends Plugin
     /**
      * The ACL Object
      *
-     * @var \Phalcon\Acl\Adapter\Memory
+     * @var \Phalcon\Acl\Adapter\AbstractAdapter|mixed
      */
     private $acl;
 
@@ -87,7 +87,7 @@ class Acl extends Plugin
     /**
      * Returns the ACL list
      *
-     * @return \Phalcon\Acl\Adapter\Memory
+     * @return \Phalcon\Acl\Adapter\AbstractAdapter|mixed
      */
     public function getAcl()
     {

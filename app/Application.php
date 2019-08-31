@@ -14,21 +14,25 @@ namespace Vokuro;
 
 use Exception;
 use Phalcon\Application\AbstractApplication;
+use Phalcon\Di\DiInterface;
 use Phalcon\Di\FactoryDefault;
+use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Application as MvcApplication;
-use Vokuro\Providers\ProviderInterface;
 
+/**
+ * Vökuró Application
+ */
 class Application
 {
     const APPLICATION_PROVIDER = 'bootstrap';
 
     /**
-     * @var MvcApplication
+     * @var AbstractApplication
      */
     protected $app;
 
     /**
-     * @var
+     * @var DiInterface
      */
     protected $di;
 
@@ -94,9 +98,9 @@ class Application
 
         $providers = include_once $filename;
         foreach ($providers as $providerClass) {
-            /** @var ProviderInterface $provider */
+            /** @var ServiceProviderInterface $provider */
             $provider = new $providerClass;
-            $provider->register();
+            $provider->register($this->di);
         }
     }
 }

@@ -314,7 +314,7 @@ class Auth extends Plugin
      * Returns the current token user
      *
      * @param string $token
-     * @return boolean
+     * @return int|null
      */
     public function findFirstByToken($token)
     {
@@ -325,13 +325,15 @@ class Auth extends Plugin
             ],
         ]);
 
-        return $userToken ? $userToken->usersId : false;
+        return $userToken ? $userToken->usersId : null;
     }
 
     /**
      * Delete the current user token in session
+     *
+     * @param int $userId
      */
-    public function deleteToken($userId)
+    public function deleteToken(int $userId): void
     {
         $user = RememberTokens::find([
             'conditions' => 'usersId = :userId:',

@@ -23,31 +23,33 @@ use Phalcon\Mvc\Model;
 class EmailConfirmations extends Model
 {
     /**
-     *
      * @var integer
      */
     public $id;
 
     /**
-     *
      * @var integer
      */
     public $usersId;
 
+    /**
+     * @var string
+     */
     public $code;
 
     /**
-     *
      * @var integer
      */
     public $createdAt;
 
     /**
-     *
      * @var integer
      */
     public $modifiedAt;
 
+    /**
+     * @var string
+     */
     public $confirmed;
 
     /**

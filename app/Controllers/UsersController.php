@@ -62,7 +62,7 @@ final class UsersController extends ControllerBase
         if (count($users) == 0) {
             $this->flash->notice("The search did not find any users");
             return $this->dispatcher->forward([
-                "action" => "index"
+                'action' => 'index',
             ]);
         }
 
@@ -80,7 +80,7 @@ final class UsersController extends ControllerBase
      */
     public function createAction(): void
     {
-        $form = new UsersForm(null);
+        $form = new UsersForm();
         if ($this->request->isPost()) {
             if ($form->isValid($this->request->getPost()) == false) {
                 foreach ($form->getMessages() as $message) {
@@ -110,6 +110,7 @@ final class UsersController extends ControllerBase
 
     /**
      * Saves the user from the 'edit' action
+     * @param int $id
      */
     public function editAction($id)
     {
@@ -131,7 +132,7 @@ final class UsersController extends ControllerBase
                 'active' => $this->request->getPost('active')
             ]);
 
-            $form = new UsersForm($user, [
+            $form = new UsersForm([
                 'edit' => true
             ]);
 
@@ -152,7 +153,7 @@ final class UsersController extends ControllerBase
 
         $this->view->user = $user;
 
-        $this->view->form = new UsersForm($user, [
+        $this->view->form = new UsersForm(null, [
             'edit' => true
         ]);
     }

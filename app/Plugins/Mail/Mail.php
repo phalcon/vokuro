@@ -12,72 +12,17 @@ declare(strict_types=1);
 
 namespace Vokuro\Plugins\Mail;
 
-use Aws\Ses\SesClient;
+use Phalcon\Mvc\View;
 use Phalcon\Plugin;
+use Swift_Mailer;
 use Swift_Message as Message;
 use Swift_SmtpTransport as Smtp;
-use Phalcon\Mvc\View;
 
 /**
- * Vokuro\Mail\Mail
  * Sends e-mails based on pre-defined templates
  */
 class Mail extends Plugin
 {
-    protected $transport;
-
-    protected $amazonSes;
-
-    /**
-     * Send a raw e-mail via AmazonSES
-     *
-     * @deprecated
-     * @param string $raw
-     * @return bool
-     */
-    private function amazonSESSend($raw)
-    {
-        if ($this->amazonSes == null) {
-            $this->amazonSes = new SesClient([
-                'key' => $this->config->amazon->AWSAccessKeyId,
-                'secret' => $this->config->amazon->AWSSecretKey
-            ]);
-        }
-
-        $response = $this->amazonSes->sendRawEmail(['Data' => base64_encode($raw)], [
-            'curlopts' => [
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0
-            ]
-        ]);
-
-        if (!$response->isOK()) {
-            $this->logger->error('Error sending email from AWS SES: ' . $response->body->asXML());
-        }
-
-        return true;
-    }
-
-    /**
-     * Applies a template to be used in the e-mail
-     *
-     * @param string $name
-     * @param array $params
-     * @return string
-     */
-    public function getTemplate($name, $params)
-    {
-        $parameters = array_merge([
-            'publicUrl' => $this->config->application->publicUrl
-        ], $params);
-
-        return $this->view->getRender('emailTemplates', $name, $parameters, function ($view) {
-            $view->setRenderLevel(View::LEVEL_LAYOUT);
-        });
-
-        return $view->getContent();
-    }
-
     /**
      * Sends e-mails via AmazonSES based on predefined templates
      *
@@ -85,14 +30,12 @@ class Mail extends Plugin
      * @param string $subject
      * @param string $name
      * @param array $params
-     * @return bool|int
-     * @throws Exception
+     * @return int
      */
-    public function send($to, $subject, $name, $params)
+    public function send($to, $subject, $name, $params): int
     {
         // Settings
         $mailSettings = $this->config->mail;
-
         $template = $this->getTemplate($name, $params);
 
         // Create the message
@@ -104,23 +47,32 @@ class Mail extends Plugin
             ])
             ->setBody($template, 'text/html');
 
-        if (isset($mailSettings) && isset($mailSettings->smtp)) {
-            if (!$this->transport) {
-                $this->transport = Smtp::newInstance(
-                    $mailSettings->smtp->server,
-                    $mailSettings->smtp->port,
-                    $mailSettings->smtp->security
-                )
-                    ->setUsername($mailSettings->smtp->username)
-                    ->setPassword($mailSettings->smtp->password);
-            }
+        $transport = Smtp::newInstance(
+            $mailSettings->smtp->server,
+            $mailSettings->smtp->port,
+            $mailSettings->smtp->security
+        )
+            ->setUsername($mailSettings->smtp->username)
+            ->setPassword($mailSettings->smtp->password);
 
-            // Create the Mailer using your created Transport
-            $mailer = \Swift_Mailer::newInstance($this->transport);
+        return Swift_Mailer::newInstance($transport)->send($message);
+    }
 
-            return $mailer->send($message);
-        } else {
-            return $this->amazonSESSend($message->toString());
-        }
+    /**
+     * Applies a template to be used in the e-mail
+     *
+     * @param string $name
+     * @param array $params
+     * @return string
+     */
+    public function getTemplate(string $name, array $params)
+    {
+        $parameters = array_merge([
+            'publicUrl' => $this->config->application->publicUrl
+        ], $params);
+
+        return $this->view->getRender('emailTemplates', $name, $parameters, function (View $view) {
+            $view->setRenderLevel(View::LEVEL_LAYOUT);
+        });
     }
 }

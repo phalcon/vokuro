@@ -17,13 +17,16 @@ use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Select;
 use Phalcon\Validation\Validator\PresenceOf;
-use Phalcon\Validation\Validator\Email;
 
 class ProfilesForm extends Form
 {
-    public function initialize($entity = null, $options = null)
+    /**
+     * @param string|null $entity
+     * @param array $options
+     */
+    public function initialize(string $entity = null, array $options = [])
     {
-        if (isset($options['edit']) && $options['edit']) {
+        if (!empty($options['edit'])) {
             $id = new Hidden('id');
         } else {
             $id = new Text('id');

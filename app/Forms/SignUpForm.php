@@ -26,7 +26,11 @@ use Phalcon\Validation\Validator\Confirmation;
 
 class SignUpForm extends Form
 {
-    public function initialize($entity = null, $options = null)
+    /**
+     * @param string|null $entity
+     * @param array $options
+     */
+    public function initialize(string $entity = null, array $options = [])
     {
         $name = new Text('name');
         $name->setLabel('Name');
@@ -113,8 +117,11 @@ class SignUpForm extends Form
 
     /**
      * Prints messages for a specific element
+     *
+     * @param string $name
+     * @return string
      */
-    public function messages($name)
+    public function messages(string $name)
     {
         if ($this->hasMessagesFor($name)) {
             foreach ($this->getMessagesFor($name) as $message) {

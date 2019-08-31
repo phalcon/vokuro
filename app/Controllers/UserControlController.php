@@ -39,8 +39,8 @@ final class UserControlController extends ControllerBase
     {
         $code = $this->dispatcher->getParam('code');
 
+        /** @var EmailConfirmations $confirmation */
         $confirmation = EmailConfirmations::findFirstByCode($code);
-
         if (!$confirmation) {
             return $this->dispatcher->forward([
                 'controller' => 'index',
@@ -56,7 +56,6 @@ final class UserControlController extends ControllerBase
         }
 
         $confirmation->confirmed = 'Y';
-
         $confirmation->user->active = 'Y';
 
         /**
