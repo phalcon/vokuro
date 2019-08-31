@@ -15,7 +15,7 @@ namespace Vokuro\Controllers;
 use Vokuro\Forms\LoginForm;
 use Vokuro\Forms\SignUpForm;
 use Vokuro\Forms\ForgotPasswordForm;
-use Vokuro\Auth\Exception as AuthException;
+use Vokuro\Plugins\Auth\Exception as AuthException;
 use Vokuro\Models\Users;
 use Vokuro\Models\ResetPasswords;
 
