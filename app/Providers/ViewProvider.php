@@ -12,24 +12,29 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Mvc\View;
+use Phalcon\Mvc\View\Engine\Volt;
+use function Vokuro\config;
+
 class ViewProvider extends AbstractProvider
 {
     protected $providerName = 'view';
 
     public function register(): void
     {
-        // TODO
-        $this->di->setShared('view', function () {
-            $config = $this->getConfig();
+        /** @var string $viewsDir */
+        $viewsDir = config('application.viewsDir');
+        /** @var string $cacheDir */
+        $cacheDir = config('application.cacheDir');
 
+        $this->di->setShared($this->providerName, function () use ($viewsDir, $cacheDir) {
             $view = new View();
-            $view->setViewsDir($config->application->viewsDir);
+            $view->setViewsDir($viewsDir);
             $view->registerEngines([
-                '.volt' => function ($view) {
-                    $config = $this->getConfig();
-                    $volt = new VoltEngine($view, $this);
+                '.volt' => function ($view) use ($cacheDir) {
+                    $volt = new Volt($view, $this);
                     $volt->setOptions([
-                        'path' => $config->application->cacheDir . 'volt/',
+                        'path' => $cacheDir . 'volt/',
                         'separator' => '_'
                     ]);
 

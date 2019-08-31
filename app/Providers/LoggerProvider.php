@@ -12,25 +12,30 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Config;
+use Phalcon\Logger\Adapter\Stream as FileLogger;
+use Phalcon\Logger\Formatter\Line as FormatterLine;
+use function Vokuro\config;
+
+/**
+ * Logger service
+ */
 class LoggerProvider extends AbstractProvider
 {
     protected $providerName = 'logger';
 
     public function register(): void
     {
-        // TODO
-        $this->di->set('logger', function ($filename = null, $format = null) {
-            $config = $this->getConfig();
+        /** @var Config $loggerConfigs */
+        $loggerConfigs = config('logger');
+        $this->di->set($this->providerName, function () use($loggerConfigs) {
+            $filename = trim($loggerConfigs->get('filename'), '\\/');
+            $path = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
 
-            $format = $format ?: $config->get('logger')->format;
-            $filename = trim($filename ?: $config->get('logger')->filename, '\\/');
-            $path = rtrim($config->get('logger')->path, '\\/') . DIRECTORY_SEPARATOR;
-
-            $formatter = new FormatterLine($format, $config->get('logger')->date);
+            $formatter = new FormatterLine($loggerConfigs->get('format'), $loggerConfigs->get('date'));
             $logger = new FileLogger($path . $filename);
 
             $logger->setFormatter($formatter);
-            $logger->setLogLevel($config->get('logger')->logLevel);
 
             return $logger;
         });

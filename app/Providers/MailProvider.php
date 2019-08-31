@@ -20,8 +20,6 @@ class MailProvider extends AbstractProvider
 
     public function register(): void
     {
-        $this->di->set($this->providerName, function () {
-            return new Mail();
-        });
+        $this->di->set($this->providerName, Mail::class);
     }
 }

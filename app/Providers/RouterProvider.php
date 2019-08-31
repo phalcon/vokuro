@@ -12,15 +12,21 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Vokuro\Application;
+use function Vokuro\container;
+
 class RouterProvider extends AbstractProvider
 {
     protected $providerName = 'router';
 
     public function register(): void
     {
-        // TODO
-        $this->di->set('router', function () {
-            return require APP_PATH . '/config/routes.php';
+        /** @var Application $application */
+        $application = container(Application::APPLICATION_PROVIDER);
+        /** @var string $basePath */
+        $basePath = $application->getRootPath();
+        $this->di->set($this->providerName, function () use ($basePath) {
+            return require $basePath . '/configs/routes.php';
         });
     }
 }

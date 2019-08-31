@@ -26,10 +26,10 @@ class DbProvider extends AbstractProvider
         $dbConfig = config('database');
         $this->di->set($this->providerName, function () use ($dbConfig) {
             return new DbAdapter([
-                'host' => $dbConfig->host,
-                'username' => $dbConfig->username,
-                'password' => $dbConfig->password,
-                'dbname' => $dbConfig->dbname
+                'host' => $dbConfig->get('host'),
+                'username' => $dbConfig->get('username'),
+                'password' => $dbConfig->get('password'),
+                'dbname' => $dbConfig->get('dbname'),
             ]);
         });
     }

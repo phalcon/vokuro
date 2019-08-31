@@ -22,8 +22,10 @@ class AclProvider extends AbstractProvider
 
     public function register(): void
     {
+        /** @var Application $application */
+        $application = container(Application::APPLICATION_PROVIDER);
         /** @var string $rootPath */
-        $rootPath = container(Application::APPLICATION_PROVIDER);
+        $rootPath = $application->getRootPath();
         $this->di->setShared($this->providerName, function () use ($rootPath) {
             $filename = $rootPath . '/configs/acl.php';
             $privateResources = [];

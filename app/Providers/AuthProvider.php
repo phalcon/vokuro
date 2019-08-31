@@ -20,8 +20,6 @@ class AuthProvider extends AbstractProvider
 
     public function register(): void
     {
-        $this->di->setShared($this->providerName, function () {
-            return new Auth();
-        });
+        $this->di->setShared($this->providerName, Auth::class);
     }
 }

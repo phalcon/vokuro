@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Vokuro\Providers;
 
 use Phalcon\Url as UrlResolver;
+use function Vokuro\config;
 
 class UrlProvider extends AbstractProvider
 {
@@ -20,12 +21,12 @@ class UrlProvider extends AbstractProvider
 
     public function register(): void
     {
-        // TODO
-        $this->di->setShared('url', function () {
-            $config = $this->getConfig();
-
+        /** @var string $baseUri */
+        $baseUri = config('application.baseUri');
+        $this->di->setShared($this->providerName, function () use ($baseUri) {
             $url = new UrlResolver();
-            $url->setBaseUri($config->application->baseUri);
+            $url->setBaseUri($baseUri);
+
             return $url;
         });
     }
