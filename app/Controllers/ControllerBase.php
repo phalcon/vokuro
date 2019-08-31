@@ -14,12 +14,15 @@ namespace Vokuro\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
+use Vokuro\Plugins\Acl\Acl;
+use Vokuro\Plugins\Auth\Auth;
 
 /**
  * ControllerBase
  * This is the base controller for all controllers in the application
  *
- * @property \Vokuro\Auth\Auth auth
+ * @property Auth auth
+ * @property Acl acl
  */
 class ControllerBase extends Controller
 {
@@ -33,6 +36,7 @@ class ControllerBase extends Controller
     public function beforeExecuteRoute(Dispatcher $dispatcher): bool
     {
         $controllerName = $dispatcher->getControllerName();
+        $actionName = $dispatcher->getActionName();
 
         // Only check permissions on private controllers
         if ($this->acl->isPrivate($controllerName)) {
@@ -51,7 +55,6 @@ class ControllerBase extends Controller
             }
 
             // Check if the user have permission to the current option
-            $actionName = $dispatcher->getActionName();
             if (!$this->acl->isAllowed($identity['profile'], $controllerName, $actionName)) {
                 $this->flash->notice('You don\'t have access to this module: ' . $controllerName . ':' . $actionName);
 

@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
-use Phalcon\Tag;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Vokuro\Forms\ChangePasswordForm;
@@ -99,8 +98,6 @@ final class UsersController extends ControllerBase
                     }
                 } else {
                     $this->flash->success("User was created successfully");
-
-                    Tag::resetInput();
                 }
             }
         }
@@ -145,14 +142,11 @@ final class UsersController extends ControllerBase
                     $this->flash->error($user->getMessages());
                 } else {
                     $this->flash->success("User was updated successfully");
-
-                    Tag::resetInput();
                 }
             }
         }
 
         $this->view->user = $user;
-
         $this->view->form = new UsersForm(null, [
             'edit' => true
         ]);
@@ -213,8 +207,6 @@ final class UsersController extends ControllerBase
                     }
                 } else {
                     $this->flash->success('Your password was successfully changed');
-
-                    Tag::resetInput();
                 }
             }
         }
