@@ -23,7 +23,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Vokuro\\": "app/"
+            "Vokuro\\": "app/",
+            "Phalcon\\": "app/Phalcon"
         },
         "files": [
             "app/Helpers.php"
