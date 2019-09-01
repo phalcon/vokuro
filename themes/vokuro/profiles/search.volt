@@ -39,7 +39,7 @@
         <td colspan="10" class="text-right">
             <div class="btn-group" role="group">
                 {{ link_to("profiles/search", '<i class="icon-fast-backward"></i> First', "class": "btn btn-secondary") }}
-                {{ link_to("profiles/search?page=" ~ page.before, '<i class="icon-step-backward"></i> Previous', "class": "btn btn-secondary") }}
+                {{ link_to("profiles/search?page=" ~ page.previous, '<i class="icon-step-backward"></i> Previous', "class": "btn btn-secondary") }}
                 {{ link_to("profiles/search?page=" ~ page.next, '<i class="icon-step-forward"></i> Next', "class": "btn btn-secondary") }}
                 {{ link_to("profiles/search?page=" ~ page.last, '<i class="icon-fast-forward"></i> Last', "class": "btn btn-secondary") }}
             </div>
