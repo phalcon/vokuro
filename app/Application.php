@@ -62,10 +62,11 @@ class Application
      * Run Vökuró Application
      *
      * @return string
+     * @throws Exception
      */
     public function run(): string
     {
-        return $this->app->handle($_SERVER['REQUEST_URI'])->getContent();
+        return (string) $this->app->handle($_SERVER['REQUEST_URI'])->getContent();
     }
 
     /**
