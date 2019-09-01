@@ -120,7 +120,7 @@ final class ProfilesController extends ControllerBase
             ]);
 
             if (!$profile->save()) {
-                $this->flash->error($profile->getMessages());
+                $this->flash->error(nl2br($profile->getMessages()));
             } else {
                 $this->flash->success("Profile was updated successfully");
             }
@@ -150,7 +150,7 @@ final class ProfilesController extends ControllerBase
         }
 
         if (!$profile->delete()) {
-            $this->flash->error($profile->getMessages());
+            $this->flash->error(nl2br($profile->getMessages()));
         } else {
             $this->flash->success("Profile was deleted");
         }
