@@ -35,9 +35,7 @@ class SessionProvider implements ServiceProviderInterface
         $savePath = config('application.sessionSavePath');
 
         $di->set($this->providerName, function () use ($savePath) {
-            $files = new SessionAdapter([
-                'savePath' => $savePath,
-            ]);
+            $files = new SessionAdapter();
 
             $session = new SessionManager();
             $session->setHandler($files);
