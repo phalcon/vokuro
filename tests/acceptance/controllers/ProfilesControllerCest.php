@@ -80,9 +80,15 @@ final class ProfilesControllerCest
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
-        $I->amOnPage('/profiles/delete/3');
         $I->amOnPage('/profiles');
         $I->click('Search');
-        $I->cantSee('Read-Only');
+        $I->see('Found profiles');
+        $I->see('Administrators');
+
+        $I->click('//a[@href="/profiles/delete/1"]');
+
+        $I->amOnPage('/profiles');
+        $I->see('Search');
+        $I->cantSee('Administrators');
     }
 }
