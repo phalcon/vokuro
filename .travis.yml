@@ -8,7 +8,6 @@ dist: xenial
 
 services:
   - mysql
-  - nginx
 
 env:
   global:
