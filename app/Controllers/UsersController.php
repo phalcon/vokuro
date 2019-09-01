@@ -139,7 +139,7 @@ final class UsersController extends ControllerBase
                 }
             } else {
                 if (!$user->save()) {
-                    $this->flash->error($user->getMessages());
+                    $this->flash->error(nl2br($user->getMessages()));
                 } else {
                     $this->flash->success("User was updated successfully");
                 }
@@ -168,7 +168,7 @@ final class UsersController extends ControllerBase
         }
 
         if (!$user->delete()) {
-            $this->flash->error($user->getMessages());
+            $this->flash->error(nl2br($user->getMessages()));
         } else {
             $this->flash->success("User was deleted");
         }
