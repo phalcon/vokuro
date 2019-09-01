@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
+use Vokuro\Forms\ForgotPasswordForm;
 use Vokuro\Forms\LoginForm;
 use Vokuro\Forms\SignUpForm;
-use Vokuro\Forms\ForgotPasswordForm;
-use Vokuro\Plugins\Auth\Exception as AuthException;
-use Vokuro\Models\Users;
 use Vokuro\Models\ResetPasswords;
+use Vokuro\Models\Users;
+use Vokuro\Plugins\Auth\Exception as AuthException;
 
 /**
  * Controller used handle non-authenticated session actions like login/logout, user signup, and forgotten passwords
@@ -60,7 +60,7 @@ final class SessionController extends ControllerBase
                 }
 
                 foreach ($user->getMessages() as $message) {
-                    $this->flash->error((string) $message);
+                    $this->flash->error((string)$message);
                 }
             }
         }
@@ -83,7 +83,7 @@ final class SessionController extends ControllerBase
             } else {
                 if ($form->isValid($this->request->getPost()) == false) {
                     foreach ($form->getMessages() as $message) {
-                        $this->flash->error($message);
+                        $this->flash->error((string)$message);
                     }
                 } else {
                     $this->auth->check([
@@ -127,7 +127,7 @@ final class SessionController extends ControllerBase
                             $this->flash->success('Success! Please check your messages for an email reset password');
                         } else {
                             foreach ($resetPassword->getMessages() as $message) {
-                                $this->flash->error((string) $message);
+                                $this->flash->error((string)$message);
                             }
                         }
                     }
