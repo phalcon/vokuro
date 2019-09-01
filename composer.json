@@ -17,6 +17,10 @@
             "email": "mark@moderndeveloperllc.com"
         },
         {
+            "name": "Anton Vasiliev",
+            "homepage": "https://github.com/Jeckerson"
+        },
+        {
             "name": "Contributors",
             "homepage": "https://github.com/phalcon/vokuro/graphs/contributors"
         }
