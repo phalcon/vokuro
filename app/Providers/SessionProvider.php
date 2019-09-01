@@ -61,7 +61,7 @@ class SessionProvider implements ServiceProviderInterface
             'savePath' => $savePath,
         ];
 
-        if (Version::get() === '4.0.0-beta.2') {
+        if (Version::get() !== '4.0.0-beta.2') {
             return new SessionAdapter($options);
         }
 
