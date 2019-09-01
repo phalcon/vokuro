@@ -45,7 +45,7 @@ return [
         'AWSSecretKey' => '',
     ],
     'logger' => [
-        'path' => root_path('logs/'),
+        'path' => root_path('var/logs/'),
         'format' => '%date% [%type%] %message%',
         'date' => 'D j H:i:s',
         'logLevel' => Logger::DEBUG,
