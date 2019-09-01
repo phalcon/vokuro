@@ -13,6 +13,7 @@ services:
 env:
   global:
     - PHALCON_VERSION=v4.0.0-beta.2
+    - DB_NAME=vokuro_test
 
 cache:
   timeout: 604800
