@@ -34,7 +34,6 @@ before_script:
   - php -S 127.0.0.1:8888 -t public/ .htrouter.php &
   - travis_retry composer install --no-interaction --no-ansi --no-progress --no-suggest
   - cp .env.example .env
-  - chmod 777 var/{cache,logs} var/cache/session
 
 script:
   - vendor/bin/phinx migrate -e testing
