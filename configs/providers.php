@@ -23,6 +23,7 @@ return [
     \Vokuro\Providers\RouterProvider::class,
     \Vokuro\Providers\SessionBagProvider::class,
     \Vokuro\Providers\SessionProvider::class,
+    \Vokuro\Providers\SecurityProvider::class,
     \Vokuro\Providers\UrlProvider::class,
     \Vokuro\Providers\ViewProvider::class,
 ];
