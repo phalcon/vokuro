@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Phalcon;
 
-use function Vokuro\container;
-
 /**
  * Extended class for fixing phalcon/cphalcon#14346 issue
  *
@@ -32,13 +30,19 @@ class Beta2FixSecurity extends Security
      */
     public function getSessionToken(): string
     {
-        if (!container()->has('session')) {
+        $di = $this->getDI();
+
+        if (!is_object($di)) {
             throw new Exception(
                 Exception::containerServiceNotFound("the 'session' service")
             );
         }
 
-        $session = container()->getShared('session');
-        return (string) $session->get($this->tokenValueSessionId);
+        if ($di->has('session')) {
+            $session = $di->getShared('session');
+            return (string) $session->get($this->tokenValueSessionId);
+        }
+
+        return '';
     }
 }
