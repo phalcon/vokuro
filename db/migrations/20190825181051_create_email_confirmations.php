@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
+
+namespace Vokuro\Migrations;
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateEmailConfirmations extends AbstractMigration
+final class CreateEmailConfirmations extends AbstractMigration
 {
-    public function change()
+    public function change(): void
     {
         $table = $this->table('email_confirmations');
         if ($table->exists()) {

@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
+
+namespace Vokuro\Seeds;
 
 use Phinx\Seed\AbstractSeed;
 
-class ProfilesSeeder extends AbstractSeed
+final class ProfilesSeeder extends AbstractSeed
 {
-    public function run()
+    public function run(): void
     {
         $data = [
             [

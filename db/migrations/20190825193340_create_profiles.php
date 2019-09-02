@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
+
+namespace Vokuro\Migrations;
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateProfiles extends AbstractMigration
+final class CreateProfiles extends AbstractMigration
 {
-    public function change()
+    public function change(): void
     {
         $table = $this->table('profiles');
         if ($table->exists()) {

@@ -7,11 +7,6 @@ Please write us if you have any feedback.
 
 Thanks.
 
-## NOTE
-
-The master branch will always contain the latest stable version.
-If you wish to check older versions or newer ones currently under development, please switch to the relevant branch.
-
 ## Get Started
 
 ### Requirements
@@ -23,15 +18,6 @@ To run this application on your machine, you need at least:
 * MySQL >= 5.5
 * Apache Web Server with `mod_rewrite enabled`, and `AllowOverride Options` (or `All`) in your `httpd.conf` or Nginx Web Server
 * Latest [Phalcon Framework](https://github.com/phalcon/cphalcon) extension installed/enabled
-
-Then you'll need to create the database and initialize schema:
-
-```bash
-echo 'CREATE DATABASE vokuro' | mysql -u root
-cat schemas/vokuro.sql | mysql -u root vokuro
-```
-
-Also you can override application config by creating `app/config/config.dev.php` (already gitignored).
 
 ### Installing Dependencies via Composer
 
@@ -45,7 +31,7 @@ Run the composer installer:
 
 ```bash
 cd vokuro
-php composer.phar install
+composer install
 cp .env.example .env
 vendor/bin/phinx migrate
 vendor/bin/phinx seed:run
@@ -53,6 +39,11 @@ vendor/bin/phinx seed:run
 
 **NOTE** After the installation, please ensure that the following folders have write permissions set:
 - `cache`
+
+## NOTE
+
+The master branch will always contain the latest stable version.
+If you wish to check older versions or newer ones currently under development, please switch to the relevant branch.
 
 ## Improving this Sample
 

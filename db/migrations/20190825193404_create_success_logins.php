@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
+
+namespace Vokuro\Migrations;
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateSuccessLogins extends AbstractMigration
+final class CreateSuccessLogins extends AbstractMigration
 {
-    public function change()
+    public function change(): void
     {
         $table = $this->table('success_logins');
         if ($table->exists()) {
