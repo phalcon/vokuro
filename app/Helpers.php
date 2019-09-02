@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace Vokuro;
 
 use Phalcon\Di;
+use Phalcon\Di\DiInterface;
 
 /**
  * Call Dependency Injection container
  *
- * @return mixed
+ * @return mixed|null|DiInterface
  */
 function container()
 {
