@@ -38,7 +38,7 @@ final class ProfilesController extends ControllerBase
     public function indexAction(): void
     {
         $this->persistent->conditions = null;
-        $this->view->form = new ProfilesForm();
+        $this->view->setVar('form', new ProfilesForm(null));
     }
 
     /**
@@ -74,7 +74,7 @@ final class ProfilesController extends ControllerBase
             "page" => $numberPage
         ]);
 
-        $this->view->page = $paginator->paginate();
+        $this->view->setVar('page', $paginator->paginate());
     }
 
     /**
@@ -97,7 +97,7 @@ final class ProfilesController extends ControllerBase
             }
         }
 
-        $this->view->form = new ProfilesForm(null);
+        $this->view->setVar('form', new ProfilesForm(null));
     }
 
     /**
@@ -130,11 +130,10 @@ final class ProfilesController extends ControllerBase
             }
         }
 
-        $this->view->form = new ProfilesForm(null, [
-            'edit' => true
+        $this->view->setVars([
+            'form' => new ProfilesForm(null, ['edit' => true]),
+            'profile' => $profile,
         ]);
-
-        $this->view->profile = $profile;
     }
 
     /**

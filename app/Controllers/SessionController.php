@@ -99,7 +99,7 @@ final class SessionController extends ControllerBase
             $this->flash->error($e->getMessage());
         }
 
-        $this->view->form = $form;
+        $this->view->setVar('form', $form);
     }
 
     /**
@@ -139,7 +139,7 @@ final class SessionController extends ControllerBase
             }
         }
 
-        $this->view->form = $form;
+        $this->view->setVar('form', $form);
     }
 
     /**
