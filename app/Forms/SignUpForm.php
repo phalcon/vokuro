@@ -102,7 +102,7 @@ class SignUpForm extends Form
         // CSRF
         $csrf = new Hidden('csrf');
         $csrf->addValidator(new Identical([
-            'value' => $this->security->getSessionToken(),
+            'value' => $this->security->getRequestToken(),
             'message' => 'CSRF validation failed'
         ]));
         $csrf->clear();
