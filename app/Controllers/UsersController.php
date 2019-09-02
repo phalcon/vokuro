@@ -36,7 +36,7 @@ final class UsersController extends ControllerBase
     public function indexAction(): void
     {
         $this->persistent->conditions = null;
-        $this->view->form = new UsersForm();
+        $this->view->setVar('form', new UsersForm());
     }
 
     /**
@@ -71,7 +71,7 @@ final class UsersController extends ControllerBase
             "page" => $numberPage
         ]);
 
-        $this->view->page = $paginator->paginate();
+        $this->view->setVar('page', $paginator->paginate());
     }
 
     /**
@@ -102,7 +102,7 @@ final class UsersController extends ControllerBase
             }
         }
 
-        $this->view->form = $form;
+        $this->view->setVar('form', $form);
     }
 
     /**
@@ -148,9 +148,11 @@ final class UsersController extends ControllerBase
             }
         }
 
-        $this->view->user = $user;
-        $this->view->form = new UsersForm(null, [
-            'edit' => true
+        $this->view->setVars([
+            'user' => $user,
+            'form' => new UsersForm(null, [
+                'edit' => true
+            ]),
         ]);
     }
 
@@ -215,6 +217,6 @@ final class UsersController extends ControllerBase
             }
         }
 
-        $this->view->form = $form;
+        $this->view->setVar('form', $form);
     }
 }

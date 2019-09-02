@@ -68,7 +68,7 @@ class SignUpForm extends Form
                 'messageMinimum' => 'Password is too short. Minimum 8 characters'
             ]),
             new Confirmation([
-                'message' => 'Password doesn\'t match confirmation',
+                'message' => "Password doesn't match confirmation",
                 'with' => 'confirmPassword'
             ])
         ]);
@@ -102,7 +102,7 @@ class SignUpForm extends Form
         // CSRF
         $csrf = new Hidden('csrf');
         $csrf->addValidator(new Identical([
-            'value' => $this->security->getSessionToken(),
+            'value' => $this->security->getRequestToken(),
             'message' => 'CSRF validation failed'
         ]));
         $csrf->clear();

@@ -53,10 +53,10 @@ final class PermissionsController extends ControllerBase
                 $this->acl->rebuild();
 
                 // Pass the current permissions to the view
-                $this->view->permissions = $this->acl->getPermissions($profile);
+                $this->view->setVar('permissions', $this->acl->getPermissions($profile));
             }
 
-            $this->view->profile = $profile;
+            $this->view->setVar('profile', $profile);
         }
 
         $profiles = Profiles::find([
@@ -66,7 +66,7 @@ final class PermissionsController extends ControllerBase
             ]
         ]);
 
-        $this->view->profilesSelect = $this->tag->select([
+        $profilesSelect = $this->tag->select([
             'profileId',
             $profiles,
             'using' => [
@@ -78,5 +78,7 @@ final class PermissionsController extends ControllerBase
             'emptyValue' => '',
             'class' => 'form-control mr-sm-2',
         ]);
+
+        $this->view->setVar('profilesSelect', $profilesSelect);
     }
 }

@@ -226,7 +226,7 @@ class Auth extends Plugin
     /**
      * Returns the current identity
      *
-     * @return array
+     * @return array|null
      */
     public function getIdentity()
     {
