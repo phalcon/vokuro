@@ -17,65 +17,83 @@ use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 
 /**
- * Vokuro\Models\Users
  * All the users registered in the application
  */
 class Users extends Model
 {
-
     /**
-     *
      * @var integer
      */
     public $id;
 
     /**
-     *
      * @var string
      */
     public $name;
 
     /**
-     *
      * @var string
      */
     public $email;
 
     /**
-     *
      * @var string
      */
     public $password;
 
     /**
-     *
      * @var string
      */
     public $mustChangePassword;
 
     /**
-     *
      * @var string
      */
     public $profilesId;
 
     /**
-     *
      * @var string
      */
     public $banned;
 
     /**
-     *
      * @var string
      */
     public $suspended;
 
     /**
-     *
      * @var string
      */
     public $active;
+
+    public function initialize()
+    {
+        $this->belongsTo('profilesId', Profiles::class, 'id', [
+            'alias' => 'profile',
+            'reusable' => true
+        ]);
+
+        $this->hasMany('id', SuccessLogins::class, 'usersId', [
+            'alias' => 'successLogins',
+            'foreignKey' => [
+                'message' => 'User cannot be deleted because he/she has activity in the system'
+            ]
+        ]);
+
+        $this->hasMany('id', PasswordChanges::class, 'usersId', [
+            'alias' => 'passwordChanges',
+            'foreignKey' => [
+                'message' => 'User cannot be deleted because he/she has activity in the system'
+            ]
+        ]);
+
+        $this->hasMany('id', ResetPasswords::class, 'usersId', [
+            'alias' => 'resetPasswords',
+            'foreignKey' => [
+                'message' => 'User cannot be deleted because he/she has activity in the system'
+            ]
+        ]);
+    }
 
     /**
      * Before create the user assign a password
@@ -145,34 +163,5 @@ class Users extends Model
         ]));
 
         return $this->validate($validator);
-    }
-
-    public function initialize()
-    {
-        $this->belongsTo('profilesId', __NAMESPACE__ . '\Profiles', 'id', [
-            'alias' => 'profile',
-            'reusable' => true
-        ]);
-
-        $this->hasMany('id', __NAMESPACE__ . '\SuccessLogins', 'usersId', [
-            'alias' => 'successLogins',
-            'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system'
-            ]
-        ]);
-
-        $this->hasMany('id', __NAMESPACE__ . '\PasswordChanges', 'usersId', [
-            'alias' => 'passwordChanges',
-            'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system'
-            ]
-        ]);
-
-        $this->hasMany('id', __NAMESPACE__ . '\ResetPasswords', 'usersId', [
-            'alias' => 'resetPasswords',
-            'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system'
-            ]
-        ]);
     }
 }

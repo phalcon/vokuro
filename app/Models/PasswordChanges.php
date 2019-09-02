@@ -50,19 +50,19 @@ class PasswordChanges extends Model
      */
     public $createdAt;
 
+    public function initialize()
+    {
+        $this->belongsTo('usersId', Users::class, 'id', [
+            'alias' => 'user'
+        ]);
+    }
+
     /**
      * Before create the user assign a password
      */
     public function beforeValidationOnCreate()
     {
-        // Timestamp the confirmaton
+        // Timestamp the confirmation
         $this->createdAt = time();
-    }
-
-    public function initialize()
-    {
-        $this->belongsTo('usersId', __NAMESPACE__ . '\Users', 'id', [
-            'alias' => 'user'
-        ]);
     }
 }

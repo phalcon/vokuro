@@ -23,40 +23,41 @@ use Phalcon\Mvc\Model;
 class ResetPasswords extends Model
 {
     /**
-     *
      * @var integer
      */
     public $id;
 
     /**
-     *
      * @var integer
      */
     public $usersId;
 
     /**
-     *
      * @var string
      */
     public $code;
 
     /**
-     *
      * @var integer
      */
     public $createdAt;
 
     /**
-     *
      * @var integer
      */
     public $modifiedAt;
 
     /**
-     *
      * @var string
      */
     public $reset;
+
+    public function initialize()
+    {
+        $this->belongsTo('usersId', Users::class, 'id', [
+            'alias' => 'user'
+        ]);
+    }
 
     /**
      * Before create the user assign a password
@@ -94,12 +95,5 @@ class ResetPasswords extends Model
             ], "Reset your password", 'reset', [
                 'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email
             ]);
-    }
-
-    public function initialize()
-    {
-        $this->belongsTo('usersId', Users::class, 'id', [
-            'alias' => 'user'
-        ]);
     }
 }

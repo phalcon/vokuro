@@ -38,14 +38,14 @@ class Profiles extends Model
      */
     public function initialize()
     {
-        $this->hasMany('id', __NAMESPACE__ . '\Users', 'profilesId', [
+        $this->hasMany('id', Users::class, 'profilesId', [
             'alias' => 'users',
             'foreignKey' => [
                 'message' => 'Profile cannot be deleted because it\'s used on Users'
             ]
         ]);
 
-        $this->hasMany('id', __NAMESPACE__ . '\Permissions', 'profilesId', [
+        $this->hasMany('id', Permissions::class , 'profilesId', [
             'alias' => 'permissions',
             'foreignKey' => [
                 'action' => Relation::ACTION_CASCADE

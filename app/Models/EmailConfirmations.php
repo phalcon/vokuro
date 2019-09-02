@@ -52,6 +52,13 @@ class EmailConfirmations extends Model
      */
     public $confirmed;
 
+    public function initialize()
+    {
+        $this->belongsTo('usersId', Users::class, 'id', [
+            'alias' => 'user'
+        ]);
+    }
+
     /**
      * Before create the user assign a password
      */
@@ -88,12 +95,5 @@ class EmailConfirmations extends Model
             ], "Please confirm your email", 'confirmation', [
                 'confirmUrl' => '/confirm/' . $this->code . '/' . $this->user->email
             ]);
-    }
-
-    public function initialize()
-    {
-        $this->belongsTo('usersId', Users::class, 'id', [
-            'alias' => 'user'
-        ]);
     }
 }

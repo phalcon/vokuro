@@ -21,34 +21,36 @@ use Phalcon\Mvc\Model;
 class RememberTokens extends Model
 {
     /**
-     *
      * @var integer
      */
     public $id;
 
     /**
-     *
      * @var integer
      */
     public $usersId;
 
     /**
-     *
      * @var string
      */
     public $token;
 
     /**
-     *
      * @var string
      */
     public $userAgent;
 
     /**
-     *
      * @var integer
      */
     public $createdAt;
+
+    public function initialize()
+    {
+        $this->belongsTo('usersId', Users::class, 'id', [
+            'alias' => 'user'
+        ]);
+    }
 
     /**
      * Before create the user assign a password
@@ -57,12 +59,5 @@ class RememberTokens extends Model
     {
         // Timestamp the confirmation
         $this->createdAt = time();
-    }
-
-    public function initialize()
-    {
-        $this->belongsTo('usersId', __NAMESPACE__ . '\Users', 'id', [
-            'alias' => 'user'
-        ]);
     }
 }
