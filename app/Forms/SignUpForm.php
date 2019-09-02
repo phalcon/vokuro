@@ -68,7 +68,7 @@ class SignUpForm extends Form
                 'messageMinimum' => 'Password is too short. Minimum 8 characters'
             ]),
             new Confirmation([
-                'message' => 'Password doesn\'t match confirmation',
+                'message' => "Password doesn't match confirmation",
                 'with' => 'confirmPassword'
             ])
         ]);
