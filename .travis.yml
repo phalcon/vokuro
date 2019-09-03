@@ -4,7 +4,7 @@ php:
   - '7.3'
   - '7.2'
 
-dist: xenial
+dist: bionic
 
 services:
   - mysql
@@ -20,14 +20,11 @@ cache:
     - ${HOME}/.composer/cache
 
 before_install:
-  - |
-    # Hide "You are in 'detached HEAD' state" message
-    git config --global advice.detachedHead false
+  - git config --global advice.detachedHead false
 
 install:
   - pecl install --force psr
   - .ci/install-phalcon.sh
-  - echo extension=phalcon.so | tee -a "$(phpenv prefix)/etc/php.ini"
 
 before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS vokuro_test CHARSET=utf8 COLLATE=utf8_unicode_ci;'
