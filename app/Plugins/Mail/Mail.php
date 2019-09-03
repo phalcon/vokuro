@@ -24,7 +24,7 @@ use Swift_SmtpTransport as Smtp;
 class Mail extends Plugin
 {
     /**
-     * Sends e-mails via AmazonSES based on predefined templates
+     * Sends e-mails based on predefined templates
      *
      * @param array $to
      * @param string $subject

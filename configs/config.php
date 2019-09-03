@@ -40,10 +40,6 @@ return [
             'password' => getenv('MAIL_SMTP_PASSWORD'),
         ]
     ],
-    'amazon' => [
-        'AWSAccessKeyId' => '',
-        'AWSSecretKey' => '',
-    ],
     'logger' => [
         'path' => root_path('var/logs/'),
         'format' => '%date% [%type%] %message%',
