@@ -1,5 +1,6 @@
 {
     "name": "phalcon/vokuro",
+    "type": "library",
     "description": "This is a sample application for the Phalcon PHP Framework",
     "keywords": [
         "phalcon",
@@ -7,9 +8,8 @@
         "sample app",
         "vokuro"
     ],
-    "type": "library",
-    "license": "BSD-3",
     "homepage": "https://phalcon.io",
+    "license": "BSD-3",
     "authors": [
         {
             "name": "Mark Garrett",
@@ -24,6 +24,21 @@
             "homepage": "https://github.com/phalcon/vokuro/graphs/contributors"
         }
     ],
+    "require": {
+        "php": ">=7.2",
+        "ext-openssl": "*",
+        "ext-phalcon": "~4.0.0-beta.2",
+        "robmorgan/phinx": "^0.11.1",
+        "swiftmailer/swiftmailer": "^5.4",
+        "vlucas/phpdotenv": "^3.4"
+    },
+    "require-dev": {
+        "codeception/codeception": "^3.1",
+        "phalcon/ide-stubs": "4.0.0-beta.2",
+        "phpunit/phpunit": "^8.3",
+        "squizlabs/php_codesniffer": "3.*",
+        "vimeo/psalm": "^3.4"
+    },
     "autoload": {
         "psr-4": {
             "Vokuro\\": "app/",
@@ -32,20 +47,5 @@
         "files": [
             "app/Helpers.php"
         ]
-    },
-    "require": {
-        "ext-openssl": "*",
-        "php": ">=7.2",
-        "ext-phalcon": "~4.0.0-beta.2",
-        "swiftmailer/swiftmailer": "^5.4",
-        "vlucas/phpdotenv": "^3.4",
-        "robmorgan/phinx": "^0.11.1"
-    },
-    "require-dev": {
-        "phalcon/ide-stubs": "4.0.0-beta.2",
-        "squizlabs/php_codesniffer": "3.*",
-        "phpunit/phpunit": "^8.3",
-        "vimeo/psalm": "^3.4",
-        "codeception/codeception": "^3.1"
     }
 }
