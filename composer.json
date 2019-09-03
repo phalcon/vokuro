@@ -1,7 +1,6 @@
 {
     "name": "phalcon/vokuro",
     "description": "This is a sample application for the Phalcon PHP Framework",
-    "version": "1.2.0",
     "keywords": [
         "phalcon",
         "framework",
