@@ -11,10 +11,22 @@ set -e
 
 : "${PHALCON_VERSION:=master}"
 
-git clone --depth=1 -v https://github.com/phalcon/cphalcon.git -b "$PHALCON_VERSION" /tmp/phalcon
-cd /tmp/phalcon/build || extit 1
+EXT_DIR="$(php-config --extension-dir)"
+ASSETS="phalcon-$PHALCON_VERSION/php-$(php-config --vernum)/$(lscpu | grep Architecture | awk '{print $2}')"
 
-./install --phpize "$(phpenv which phpize)" --php-config "$(phpenv which php-config)" 1> /dev/null
+# Using cache only for tagged Phalcon versions
+if [[ -f "$HOME/assets/$ASSETS/phalcon.so" ]] && [[ "$PHALCON_VERSION" != "master" ]]
+then
+  cp "$HOME/assets/$ASSETS/phalcon.so" "$EXT_DIR/phalcon.so"
+else
+  git clone --depth=1 -v https://github.com/phalcon/cphalcon.git -b "$PHALCON_VERSION" /tmp/phalcon
+  cd /tmp/phalcon/build || extit 1
+  ./install --phpize "$(phpenv which phpize)" --php-config "$(phpenv which php-config)" 1> /dev/null
+
+  mkdir -p "$HOME/assets/$ASSETS"
+  cp "$EXT_DIR/phalcon.so" "$HOME/assets/$ASSETS/phalcon.so"
+fi
+
 echo extension=phalcon.so >> "$(phpenv prefix)/etc/php.ini"
 
 "$(phpenv which php)" -m | grep -q phalcon

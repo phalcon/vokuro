@@ -17,7 +17,8 @@ env:
 cache:
   timeout: 604800
   directories:
-    - ${HOME}/.composer/cache
+    - "$HOME/.composer/cache"
+    - "$HOME/assets"
 
 before_install:
   - git config --global advice.detachedHead false
