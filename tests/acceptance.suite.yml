@@ -8,6 +8,8 @@ actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://127.0.0.1
+            url: 'http://%CODECEPTION_URL%:%CODECEPTION_PORT%'
+            curl:
+                CURLOPT_RETURNTRANSFER: true
         - \Helper\Acceptance
     step_decorators: ~

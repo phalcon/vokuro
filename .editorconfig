@@ -14,5 +14,5 @@ trim_trailing_whitespace = true
 [*.md]
 trim_trailing_whitespace = false
 
-[*.{yml,xml,sh}]
+[*.{xml,sh}]
 indent_size              = 2
