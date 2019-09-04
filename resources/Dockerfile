@@ -1,12 +1,25 @@
+# docker build -t phalcon/vokuro ../
+
 # debian/buster
 FROM php:7.3-cli
 
-ENV PHALCON_VERSION=4.0.0-beta.2 \
+ARG BUILD_ID=1
+ARG VERSION=4.0.0
+
+ENV BUILD_ID=$BUILD_ID \
+    APP_VERSION=$VERSION \
+    PHALCON_VERSION=4.0.0-beta.2 \
     PHALCON_BUILD=754 \
     PHALCON_BRANCH=mainline \
     PHALCON_OS=debian/buster
 
-ADD . /code
+LABEL build_id="$BUILD_ID" \
+      version="$VERSION" \
+      vendor="Phalcon" \
+      maintainer="Phalcon Team <team@phalcon.io>" \
+      description="The PHP image to test Vökuró example concepts"
+
+ADD .. /code
 
 RUN export PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH" \
            PHALCON_PKG="php7.3-phalcon_$PHALCON_VERSION-$PHALCON_BUILD+php7.3_amd64.deb" \
@@ -36,5 +49,5 @@ RUN docker-php-ext-install opcache pdo_mysql mysqli 1> /dev/null \
 
 EXPOSE 80
 
-# docker run -p 80:80 phalcon/vokuro:latest
+# docker run -p 80:80 phalcon/vokuro
 CMD ["php", "-S", "0.0.0.0:80", "-t", "public/", ".htrouter.php"]

@@ -9,4 +9,4 @@
 .php-version
 *.md
 *.txt
-Dockerfile
+resources/Dockerfile
