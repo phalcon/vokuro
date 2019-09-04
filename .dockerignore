@@ -1,0 +1,12 @@
+.dockerignore
+.editorconfig
+.env.example
+.git
+.gitattributes
+.gitignore
+.htaccess
+.idea
+.php-version
+*.md
+*.txt
+Dockerfile
