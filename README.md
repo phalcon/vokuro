@@ -57,6 +57,22 @@ Phalcon is an open source project and a volunteer effort.
 Vökuró does not have human resources fully dedicated to the maintenance of this software.
 If you want something to be improved or you want a new feature please submit a Pull Request.
 
+## Sponsors
+
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/phalcon#sponsor)]
+
+<a href="https://opencollective.com/phalcon/#contributors">
+<img src="https://opencollective.com/phalcon/tiers/sponsors.svg?avatarHeight=48&width=800">
+</a>
+
+## Backers
+
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/phalcon#backer)]
+
+<a href="https://opencollective.com/phalcon/#contributors">
+<img src="https://opencollective.com/phalcon/tiers/backers.svg?avatarHeight=48&width=800&height=200">
+</a>
+
 ## License
 
 Vökuró is open-sourced software licensed under the New BSD License.
