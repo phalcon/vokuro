@@ -36,6 +36,7 @@ before_script:
 script:
   - vendor/bin/phinx migrate -e testing
   - vendor/bin/phinx seed:run -e testing
+  - vendor/bin/phpcs
   - vendor/bin/codecept build --quiet
   - vendor/bin/codecept run
   - vendor/bin/psalm --show-info=false

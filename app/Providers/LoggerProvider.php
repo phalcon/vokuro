@@ -38,7 +38,7 @@ class LoggerProvider implements ServiceProviderInterface
         /** @var Config $loggerConfigs */
         $loggerConfigs = config('logger');
 
-        $di->set($this->providerName, function () use($loggerConfigs) {
+        $di->set($this->providerName, function () use ($loggerConfigs) {
             $filename = trim($loggerConfigs->get('filename'), '\\/');
             $path = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
 

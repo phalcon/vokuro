@@ -1,11 +1,21 @@
 <?php
 declare(strict_types=1);
 
+namespace Vokuro\Tests\Acceptance\Controllers;
+
+use AcceptanceTester;
+
 final class PermissionsControllerCest
 {
+    /**
+     * @var string|null
+     */
     private $cookie = null;
 
-    public function login(\AcceptanceTester $I): void
+    /**
+     * @param AcceptanceTester $I
+     */
+    public function login(AcceptanceTester $I): void
     {
         $I->amOnPage('/session/login');
         $I->see('Log In');
@@ -21,7 +31,7 @@ final class PermissionsControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testIndex(\AcceptanceTester $I): void
+    public function testIndex(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
@@ -29,7 +39,10 @@ final class PermissionsControllerCest
         $I->see('Manage Permissions');
     }
 
-    public function testIndexAsGuest(\AcceptanceTester $I): void
+    /**
+     * @param AcceptanceTester $I
+     */
+    public function testIndexAsGuest(AcceptanceTester $I): void
     {
         $I->amOnPage('/permissions');
         $I->see('You don\'t have access to this module: private');

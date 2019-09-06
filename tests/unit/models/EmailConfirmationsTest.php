@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace Vokuro\Tests\Unit\Models;
+
 use Codeception\Stub;
 use Codeception\Test\Unit;
 use Phalcon\Mvc\Model;
