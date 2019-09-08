@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
-use Phalcon\Tag;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Vokuro\Forms\ProfilesForm;
