@@ -16,3 +16,6 @@ trim_trailing_whitespace = false
 
 [*.{xml,sh}]
 indent_size              = 2
+
+[.travis.yml]
+indent_size              = 2

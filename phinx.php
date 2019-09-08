@@ -26,17 +26,8 @@ return
             'pass' => getenv('DB_PASSWORD'),
             'port' => getenv('DB_PORT'),
             'charset' => 'utf8',
-        ],
-        'testing' => [
-            'adapter' => getenv('DB_TESTING_ADAPTER'),
-            'host' => getenv('DB_TESTING_HOST'),
-            'name' => getenv('DB_TESTING_NAME'),
-            'user' => getenv('DB_TESTING_USERNAME'),
-            'pass' => getenv('DB_TESTING_PASSWORD'),
-            'port' => getenv('DB_TESTING_PORT'),
-            'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-        ]
+        ],
     ],
     'version_order' => 'creation'
 ];

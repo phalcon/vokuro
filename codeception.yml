@@ -29,6 +29,6 @@ extensions:
 
 # Get params from .env file
 params:
-    - .env
+    - tests/.env.test
 
 error_level: "E_ALL"

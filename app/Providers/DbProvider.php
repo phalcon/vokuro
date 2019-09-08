@@ -13,9 +13,10 @@ declare(strict_types=1);
 namespace Vokuro\Providers;
 
 use Phalcon\Config;
-use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+use Phalcon\Db\Adapter\Pdo;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
+use RuntimeException;
 use function Vokuro\config;
 
 class DbProvider implements ServiceProviderInterface
@@ -26,21 +27,57 @@ class DbProvider implements ServiceProviderInterface
     protected $providerName = 'db';
 
     /**
+     * Class map of database adapters, indexed by PDO::ATTR_DRIVER_NAME.
+     *
+     * @var array
+     */
+    protected $adapters = [
+        'mysql' => Pdo\Mysql::class,
+        'pgsql' => Pdo\Postgresql::class,
+        'sqlite' => Pdo\Sqlite::class,
+    ];
+
+
+    /**
      * @param DiInterface $di
      * @return void
+     * @throws RuntimeException
      */
     public function register(DiInterface $di): void
     {
-        /** @var Config $dbConfig */
-        $dbConfig = config('database');
+        $that = $this;
+        $di->set($this->providerName, function () use ($that) {
+            $config = config('database');
+            $class = $that->getClass($config);
 
-        $di->set($this->providerName, function () use ($dbConfig) {
-            return new DbAdapter([
-                'host' => $dbConfig->get('host'),
-                'username' => $dbConfig->get('username'),
-                'password' => $dbConfig->get('password'),
-                'dbname' => $dbConfig->get('dbname'),
-            ]);
+            // To prevent Postgresql error: SQLSTATE[08006] [7] invalid connection option "adapter"
+            $dbConfig = $config->toArray();
+            unset($dbConfig['adapter']);
+
+            return new $class($dbConfig);
         });
+    }
+
+    /**
+     * Get an adapter class by name.
+     *
+     * @param Config $config
+     * @return string
+     * @throws RuntimeException
+     */
+    private function getClass(Config $config): string
+    {
+        $name = $config->get('adapter', 'Unknown');
+
+        if (empty($this->adapters[$name])) {
+            throw new RuntimeException(
+                sprintf(
+                    'Adapter "%s" has not been registered',
+                    $name
+                )
+            );
+        }
+
+        return $this->adapters[$name];
     }
 }
