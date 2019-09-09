@@ -18,13 +18,13 @@ addons:
 env:
   global:
     - PHALCON_VERSION=v4.0.0-beta.2
+  matrix:
     - DB=mysql DB_ADAPTER=mysql DB_PORT=3306 DB_USERNAME=root
+    - DB=postgres DB_ADAPTER=pgsql DB_PORT=5432 DB_USERNAME=postgres
+    - DB=sqlite DB_ADAPTER=sqlite
 
 matrix:
   fast_finish: true
-  include:
-    - env: DB=postgres DB_ADAPTER=pgsql DB_PORT=5432 DB_USERNAME=postgres
-    - env: DB=sqlite DB_ADAPTER=sqlite
   allow_failures:
     - env: DB=sqlite DB_ADAPTER=sqlite
 

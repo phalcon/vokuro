@@ -9,6 +9,8 @@
 
 set -e
 
+: "${DB_NAME:=vokuro}"
+
 case "$DB_ADAPTER" in
   "mysql")
     cmd="CREATE DATABASE IF NOT EXISTS $DB_NAME CHARSET=utf8 COLLATE=utf8_unicode_ci;"
