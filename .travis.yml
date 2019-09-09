@@ -16,14 +16,17 @@ addons:
     - dev.vokuro.phalcon.io
 
 env:
-  - DB=mysql DB_ADAPTER=mysql DB_NAME=vokuro DB_PORT=3306 DB_USERNAME=root PHALCON_VERSION=v4.0.0-beta.2
-  - DB=postgres DB_ADAPTER=pgsql DB_NAME=vokuro DB_PORT=5432 DB_USERNAME=postgres PHALCON_VERSION=v4.0.0-beta.2
-  - DB=sqlite DB_ADAPTER=sqlite DB_NAME=/tmp/vokuro.sqlite3 PHALCON_VERSION=v4.0.0-beta.2
+  global:
+    - PHALCON_VERSION=v4.0.0-beta.2
+    - DB=mysql DB_ADAPTER=mysql DB_PORT=3306 DB_USERNAME=root
 
 matrix:
   fast_finish: true
+  include:
+    - env: DB=postgres DB_ADAPTER=pgsql DB_PORT=5432 DB_USERNAME=postgres
+    - env: DB=sqlite DB_ADAPTER=sqlite
   allow_failures:
-    - env: DB=sqlite DB_ADAPTER=sqlite DB_NAME=/tmp/vokuro.sqlite3 PHALCON_VERSION=v4.0.0-beta.2
+    - env: DB=sqlite DB_ADAPTER=sqlite
 
 cache:
   timeout: 604800
@@ -54,11 +57,11 @@ install:
   - .ci/install-phalcon.sh
 
 before_script:
-  - php -S 127.0.0.1:8888 -t public/ .htrouter.php &
   - travis_retry composer install --no-interaction --no-ansi --no-progress --no-suggest
   - cp tests/.env.test .env
   - vendor/bin/phinx migrate -e development
   - vendor/bin/phinx seed:run -e development
+  - php -S 127.0.0.1:8888 -t public/ .htrouter.php &
 
 script:
   - vendor/bin/codecept build --quiet
