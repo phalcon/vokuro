@@ -80,11 +80,12 @@ class DbProvider implements ServiceProviderInterface
 
     private function createConfig(Config $config): array
     {
-        // To prevent Postgresql error: SQLSTATE[08006] [7] invalid connection option "adapter"
+        // To prevent error: SQLSTATE[08006] [7] invalid connection option "adapter"
         $dbConfig = $config->toArray();
         unset($dbConfig['adapter']);
 
-        switch ($config->get('adapter')) {
+        $name = $config->get('adapter');
+        switch ($this->adapters[$name]) {
             case Pdo\Sqlite::class:
                 // Resolve database path
                 $dbConfig['dbname'] = root_path("db/{$config->get('dbname')}.sqlite3");
