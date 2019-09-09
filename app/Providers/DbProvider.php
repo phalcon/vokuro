@@ -18,6 +18,7 @@ use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use RuntimeException;
 use function Vokuro\config;
+use function Vokuro\root_path;
 
 class DbProvider implements ServiceProviderInterface
 {
@@ -45,16 +46,12 @@ class DbProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $that = $this;
-        $di->set($this->providerName, function () use ($that) {
-            $config = config('database');
-            $class = $that->getClass($config);
+        $config = config('database');
+        $class = $this->getClass($config);
+        $config = $this->createConfig($config);
 
-            // To prevent Postgresql error: SQLSTATE[08006] [7] invalid connection option "adapter"
-            $dbConfig = $config->toArray();
-            unset($dbConfig['adapter']);
-
-            return new $class($dbConfig);
+        $di->set($this->providerName, function () use ($class, $config) {
+            return new $class($config);
         });
     }
 
@@ -79,5 +76,27 @@ class DbProvider implements ServiceProviderInterface
         }
 
         return $this->adapters[$name];
+    }
+
+    private function createConfig(Config $config): array
+    {
+        // To prevent Postgresql error: SQLSTATE[08006] [7] invalid connection option "adapter"
+        $dbConfig = $config->toArray();
+        unset($dbConfig['adapter']);
+
+        switch ($config->get('adapter')) {
+            case Pdo\Sqlite::class:
+                // Resolve database path
+                $dbConfig['dbname'] = root_path("db/{$config->get('dbname')}.sqlite3");
+                // Sqlite does not allow the charset to be changed in the DSN.
+                unset($dbConfig['charset']);
+                break;
+            case Pdo\Postgresql::class:
+                // Postgres does not allow the charset to be changed in the DSN.
+                unset($dbConfig['charset']);
+                break;
+        }
+
+        return $dbConfig;
     }
 }

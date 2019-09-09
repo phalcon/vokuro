@@ -21,7 +21,9 @@ return
         'development' => [
             'adapter' => strtolower(getenv('DB_ADAPTER')),
             'host' => getenv('DB_HOST'),
-            'name' => getenv('DB_NAME'),
+            'name' => strtolower(getenv('DB_ADAPTER')) === 'sqlite' ?
+                '%%PHINX_CONFIG_DIR%%/db/' . getenv('DB_NAME') :
+                getenv('DB_NAME'),
             'user' => getenv('DB_USERNAME'),
             'pass' => getenv('DB_PASSWORD'),
             'port' => getenv('DB_PORT'),
