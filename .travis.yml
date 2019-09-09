@@ -51,6 +51,12 @@ before_install:
         psql --version
       fi
 
+      # Setting up Github token
+      if [ -n "$GITHUB_TOKEN" ]; then
+        composer config github-oauth.github.com "$GITHUB_TOKEN"
+        echo 'Add Github token'
+      fi
+
 install:
   - pecl install --force psr
   - .ci/create-db.sh
@@ -67,17 +73,11 @@ script:
   - vendor/bin/codecept build --quiet
   - vendor/bin/codecept run
   - vendor/bin/psalm --show-info=false
-
-jobs:
-  include:
-    - stage: Static Code Analysis
-      php: '7.2'
-      install:
-        - travis_retry composer install --no-interaction --no-ansi --no-progress --no-suggest --ignore-platform-reqs
-      before_script:
-        - phpenv config-rm xdebug.ini || true
-      script:
-        - vendor/bin/phpcs
+  - |
+      if [ "$TRAVIS_PHP_VERSION" = "7.2" ]; then
+        phpenv config-rm xdebug.ini || true
+        vendor/bin/phpcs
+      fi
 
 after_script:
   - getent hosts dev.vokuro.phalcon.io
