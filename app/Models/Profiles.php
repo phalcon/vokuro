@@ -45,7 +45,7 @@ class Profiles extends Model
             ]
         ]);
 
-        $this->hasMany('id', Permissions::class , 'profilesId', [
+        $this->hasMany('id', Permissions::class, 'profilesId', [
             'alias' => 'permissions',
             'foreignKey' => [
                 'action' => Relation::ACTION_CASCADE

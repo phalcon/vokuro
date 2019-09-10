@@ -1,11 +1,21 @@
 <?php
 declare(strict_types=1);
 
+namespace Vokuro\Tests\Acceptance\Controllers;
+
+use AcceptanceTester;
+
 final class ProfilesControllerCest
 {
+    /**
+     * @var string|null
+     */
     private $cookie = null;
 
-    public function login(\AcceptanceTester $I): void
+    /**
+     * @param AcceptanceTester $I
+     */
+    public function login(AcceptanceTester $I): void
     {
         $I->amOnPage('/session/login');
         $I->see('Log In');
@@ -17,7 +27,10 @@ final class ProfilesControllerCest
         $this->cookie = $I->grabCookie('PHPSESSID');
     }
 
-    public function testIndexAsGuest(\AcceptanceTester $I): void
+    /**
+     * @param AcceptanceTester $I
+     */
+    public function testIndexAsGuest(AcceptanceTester $I): void
     {
         $I->amOnPage('/profiles');
         $I->see('You don\'t have access to this module: private');
@@ -27,7 +40,7 @@ final class ProfilesControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testIndex(\AcceptanceTester $I): void
+    public function testIndex(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
@@ -39,7 +52,7 @@ final class ProfilesControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testSearch(\AcceptanceTester $I): void
+    public function testSearch(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
@@ -52,7 +65,7 @@ final class ProfilesControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testCreate(\AcceptanceTester $I): void
+    public function testCreate(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
@@ -64,7 +77,7 @@ final class ProfilesControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testEdit(\AcceptanceTester $I): void
+    public function testEdit(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
@@ -76,7 +89,7 @@ final class ProfilesControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testDelete(\AcceptanceTester $I): void
+    public function testDelete(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 

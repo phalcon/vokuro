@@ -1,4 +1,4 @@
-# docker build -t phalcon/vokuro ../
+# docker build -t phalcon/vokuro:4.0.0 -f resources/Dockerfile .
 
 # debian/buster
 FROM php:7.3-cli
@@ -19,7 +19,9 @@ LABEL build_id="$BUILD_ID" \
       maintainer="Phalcon Team <team@phalcon.io>" \
       description="The PHP image to test Vökuró example concepts"
 
-ADD .. /code
+ADD . /code
+
+WORKDIR /code
 
 RUN export PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH" \
            PHALCON_PKG="php7.3-phalcon_$PHALCON_VERSION-$PHALCON_BUILD+php7.3_amd64.deb" \
@@ -28,11 +30,8 @@ RUN export PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH" \
         -o /tmp/phalcon.deb \
     && mkdir /tmp/pkg \
     && dpkg-deb -R /tmp/phalcon.deb /tmp/pkg \
-    && cp /tmp/pkg/usr/lib/php/*/phalcon.so "$(php-config  --extension-dir)/phalcon.so"
-
-WORKDIR /code
-
-RUN docker-php-ext-install opcache pdo_mysql mysqli 1> /dev/null \
+    && cp /tmp/pkg/usr/lib/php/*/phalcon.so "$(php-config  --extension-dir)/phalcon.so" \
+    && docker-php-ext-install opcache pdo_mysql mysqli 1> /dev/null \
     && printf "\\n" | pecl install --force psr 1> /dev/null \
     && echo "extension=psr.so" > "$PHP_INI_DIR/conf.d/docker-php-ext-psr.ini" \
     && echo "extension=phalcon.so" > "$PHP_INI_DIR/conf.d/docker-php-ext-phalcon.ini" \
@@ -49,5 +48,5 @@ RUN docker-php-ext-install opcache pdo_mysql mysqli 1> /dev/null \
 
 EXPOSE 80
 
-# docker run -p 80:80 phalcon/vokuro
+# docker run -p 80:80 phalcon/vokuro:4.0.0
 CMD ["php", "-S", "0.0.0.0:80", "-t", "public/", ".htrouter.php"]

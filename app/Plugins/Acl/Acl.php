@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Vokuro\Plugins\Acl;
 
+use Phalcon\Acl\Adapter\AbstractAdapter;
 use Phalcon\Acl\Enum as AclEnum;
 use Phalcon\Plugin;
 use Phalcon\Acl\Adapter\Memory as AclMemory;
@@ -24,10 +25,12 @@ use Vokuro\Models\Profiles;
  */
 class Acl extends Plugin
 {
+    const APC_CACHE_VARIABLE_KEY = 'vokuro-acl';
+
     /**
      * The ACL Object
      *
-     * @var \Phalcon\Acl\Adapter\AbstractAdapter|mixed
+     * @var AbstractAdapter|mixed
      */
     private $acl;
 
@@ -43,7 +46,7 @@ class Acl extends Plugin
      *
      * @var array
      */
-    private $privateResources = array();
+    private $privateResources = [];
 
     /**
      * Human-readable descriptions of the actions used in {@see $privateResources}
@@ -65,7 +68,7 @@ class Acl extends Plugin
      * @param string $controllerName
      * @return boolean
      */
-    public function isPrivate($controllerName)
+    public function isPrivate($controllerName): bool
     {
         $controllerName = strtolower($controllerName);
         return isset($this->privateResources[$controllerName]);
@@ -79,7 +82,7 @@ class Acl extends Plugin
      * @param string $action
      * @return boolean
      */
-    public function isAllowed($profile, $controller, $action)
+    public function isAllowed($profile, $controller, $action): bool
     {
         return $this->getAcl()->isAllowed($profile, $controller, $action);
     }
@@ -87,7 +90,7 @@ class Acl extends Plugin
     /**
      * Returns the ACL list
      *
-     * @return \Phalcon\Acl\Adapter\AbstractAdapter|mixed
+     * @return AbstractAdapter|mixed
      */
     public function getAcl()
     {
@@ -98,9 +101,10 @@ class Acl extends Plugin
 
         // Check if the ACL is in APC
         if (function_exists('apc_fetch')) {
-            $acl = apc_fetch('vokuro-acl');
-            if (is_object($acl)) {
+            $acl = apc_fetch(self::APC_CACHE_VARIABLE_KEY);
+            if ($acl !== false) {
                 $this->acl = $acl;
+
                 return $acl;
             }
         }
@@ -119,7 +123,7 @@ class Acl extends Plugin
 
         // Store the ACL in APC
         if (function_exists('apc_store')) {
-            apc_store('vokuro-acl', $this->acl);
+            apc_store(self::APC_CACHE_VARIABLE_KEY, $this->acl);
         }
 
         return $this->acl;
@@ -131,12 +135,13 @@ class Acl extends Plugin
      * @param Profiles $profile
      * @return array
      */
-    public function getPermissions(Profiles $profile)
+    public function getPermissions(Profiles $profile): array
     {
         $permissions = [];
         foreach ($profile->getPermissions() as $permission) {
             $permissions[$permission->resource . '.' . $permission->action] = true;
         }
+
         return $permissions;
     }
 
@@ -145,7 +150,7 @@ class Acl extends Plugin
      *
      * @return array
      */
-    public function getResources()
+    public function getResources(): array
     {
         return $this->privateResources;
     }
@@ -156,21 +161,17 @@ class Acl extends Plugin
      * @param string $action
      * @return string
      */
-    public function getActionDescription($action)
+    public function getActionDescription($action): string
     {
-        if (isset($this->actionDescriptions[$action])) {
-            return $this->actionDescriptions[$action];
-        } else {
-            return $action;
-        }
+        return $this->actionDescriptions[$action] ?? $action;
     }
 
     /**
      * Rebuilds the access list into a file
      *
-     * @return \Phalcon\Acl\Adapter\Memory
+     * @return AclMemory
      */
-    public function rebuild()
+    public function rebuild(): AclMemory
     {
         $acl = new AclMemory();
         $acl->setDefaultAction(AclEnum::DENY);
@@ -206,12 +207,10 @@ class Acl extends Plugin
 
             // Store the ACL in APC
             if (function_exists('apc_store')) {
-                apc_store('vokuro-acl', $acl);
+                apc_store(self::APC_CACHE_VARIABLE_KEY, $acl);
             }
         } else {
-            $this->flash->error(
-                'The user does not have write permissions to create the ACL list at ' . $filePath
-            );
+            $this->flash->error('The user does not have write permissions to create the ACL list at ' . $filePath);
         }
 
         return $acl;
@@ -239,11 +238,13 @@ class Acl extends Plugin
      */
     public function addPrivateResources(array $resources)
     {
-        if (count($resources) > 0) {
-            $this->privateResources = array_merge($this->privateResources, $resources);
-            if (is_object($this->acl)) {
-                $this->acl = $this->rebuild();
-            }
+        if (empty($resources)) {
+            return;
+        }
+
+        $this->privateResources = array_merge($this->privateResources, $resources);
+        if (is_object($this->acl)) {
+            $this->acl = $this->rebuild();
         }
     }
 }

@@ -1,11 +1,18 @@
 <?php
 declare(strict_types=1);
 
+namespace Vokuro\Tests\Acceptance\Controllers;
+
+use AcceptanceTester;
+
 final class UsersControllerCest
 {
     private $cookie = null;
 
-    public function login(\AcceptanceTester $I): void
+    /**
+     * @param AcceptanceTester $I
+     */
+    public function login(AcceptanceTester $I): void
     {
         $I->amOnPage('/session/login');
         $I->see('Log In');
@@ -17,7 +24,10 @@ final class UsersControllerCest
         $this->cookie = $I->grabCookie('PHPSESSID');
     }
 
-    public function testIndexAsGuest(\AcceptanceTester $I): void
+    /**
+     * @param AcceptanceTester $I
+     */
+    public function testIndexAsGuest(AcceptanceTester $I): void
     {
         $I->amOnPage('/users');
         $I->see('You don\'t have access to this module: private');
@@ -27,7 +37,7 @@ final class UsersControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testIndex(\AcceptanceTester $I): void
+    public function testIndex(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
@@ -39,7 +49,7 @@ final class UsersControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testSearch(\AcceptanceTester $I): void
+    public function testSearch(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
@@ -51,7 +61,7 @@ final class UsersControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testCreate(\AcceptanceTester $I): void
+    public function testCreate(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
@@ -63,7 +73,7 @@ final class UsersControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testEdit(\AcceptanceTester $I): void
+    public function testEdit(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
@@ -75,7 +85,7 @@ final class UsersControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testDelete(\AcceptanceTester $I): void
+    public function testDelete(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
@@ -88,7 +98,7 @@ final class UsersControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testChangePassword(\AcceptanceTester $I): void
+    public function testChangePassword(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 

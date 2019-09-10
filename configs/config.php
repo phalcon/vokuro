@@ -17,6 +17,7 @@ return [
     'database' => [
         'adapter' => getenv('DB_ADAPTER'),
         'host' => getenv('DB_HOST'),
+        'port' => getenv('DB_PORT'),
         'username' => getenv('DB_USERNAME'),
         'password' => getenv('DB_PASSWORD'),
         'dbname' => getenv('DB_NAME'),
@@ -39,10 +40,6 @@ return [
             'username' => getenv('MAIL_SMTP_USERNAME'),
             'password' => getenv('MAIL_SMTP_PASSWORD'),
         ]
-    ],
-    'amazon' => [
-        'AWSAccessKeyId' => '',
-        'AWSSecretKey' => '',
     ],
     'logger' => [
         'path' => root_path('var/logs/'),
