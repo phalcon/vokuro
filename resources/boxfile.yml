@@ -1,0 +1,129 @@
+# Runtime configuration
+run.config:
+    # Main engine
+    engine: php
+    engine.config:
+        # Using the PHP 7.1 runtime
+        runtime: php-7.2
+        document_root: public
+
+        # php.ini settings
+        allow_url_fopen: 'On'
+
+        # Timezone/Locale/Mimetype/Encoding
+        date_timezone: 'UTC'
+        default_locale: 'en_US'
+        default_mimetype: 'text/html'
+        iconv_internal_encoding: 'UTF-8'
+
+        # Security
+        expose_php: 'Off'
+        #    disable_functions:
+        #      - exec
+        #      - shell_exec
+        #      - system
+
+        # Error reporting
+        display_errors: 'stderr'
+        error_reporting: E_ALL
+
+        # Execution/Input Vars/Memory Limit
+        max_execution_time: 30
+        max_input_time: 60
+        max_input_vars: 1000
+        memory_limit: '128M'
+
+        # Register argc/globals
+        register_argc_argv: 'Off'
+        register_globals: 'Off'
+
+        # Enabled extensions
+        extensions:
+            - ctype
+            - curl
+            - dom
+            - json
+            - iconv
+            - igbinary
+            - ldap
+            - mbstring
+            - memcached
+            - pdo
+            - pdo_mysql
+            - posix
+            - session
+            - simplexml
+            - tokenizer
+            - xml
+            - xmlwriter
+            - zip
+            - igbinary
+            - redis
+        zend_extensions:
+            - opcache
+        dev_zend_extensions:
+            add:
+                - xdebug
+            rm:
+                - opcache
+    extra_packages:
+        - autoconf
+        - mysql-client
+        #    - postgresql94-client
+        - re2c
+    extra_steps:
+        #===========================================================================
+        # PSR extension compilation
+        - |
+            (
+              CURRENT_FOLDER=$(pwd)
+              rm -fR $CURRENT_FOLDER/var/php-psr
+              cd $CURRENT_FOLDER/var
+              git clone --depth=1 https://github.com/jbboehr/php-psr.git
+              cd php-psr
+              set -e
+              phpize
+              ./configure --with-php-config=$(which php-config)
+              make -j"$(getconf _NPROCESSORS_ONLN)"
+              make install
+              cd $CURRENT_FOLDER
+              rm -fR $CURRENT_FOLDER/var/php-psr
+              unset CURRENT_FOLDER
+            )
+        - echo -e 'extension=psr.so' >> "/data/etc/php/dev_php.ini"
+        #===========================================================================
+        # Phalcon
+        - |
+            (
+              CURRENT_FOLDER=$(pwd)
+              rm -fR $CURRENT_FOLDER/var/cphalcon
+              cd $CURRENT_FOLDER/var
+              git clone --depth=1 https://github.com/phalcon/cphalcon.git -b 4.0.x
+              cd cphalcon/build
+              ./install
+              cd $CURRENT_FOLDER
+              rm -fR $CURRENT_FOLDER/var/cphalcon
+              unset CURRENT_FOLDER
+            )
+        #===========================================================================
+        # This is here so that Phalcon can be used right after compilation
+        - echo 'extension=phalcon.so' >> "/data/etc/php/dev_php.ini"
+        - echo 'extension=phalcon.so' >> "/data/etc/php/prod_php.ini"
+        #===========================================================================
+        # Options for session, opcache and apcu
+        - echo -e 'session.save_path="/tmp"' >> "/data/etc/php/dev_php.ini"
+        - echo -e 'opcache.enable_cli=1' >> "/data/etc/php/dev_php.ini"
+        - echo -e 'apcu.enabled=1' >> "/data/etc/php/dev_php.ini"
+        - echo -e 'apcu.enable_cli=1' >> "/data/etc/php/dev_php.ini"
+        - echo -e 'apc.enabled=1' >> "/data/etc/php/dev_php.ini"
+        - echo -e 'apc.enable_cli=1' >> "/data/etc/php/dev_php.ini"
+        #===========================================================================
+
+# Components
+# MySQL - database
+data.mysql:
+    image: nanobox/mysql:5.7
+    config:
+        plugins:
+            - federated
+        event_scheduler: 'Off'
