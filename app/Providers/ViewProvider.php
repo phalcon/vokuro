@@ -42,12 +42,12 @@ class ViewProvider implements ServiceProviderInterface
                 '.volt' => function (View $view) use ($cacheDir, $di) {
                     $volt = new Volt($view, $di);
                     $volt->setOptions([
-                        'path' => $cacheDir . 'volt/',
-                        'separator' => '_'
+                        'path'      => $cacheDir . 'volt/',
+                        'separator' => '_',
                     ]);
 
                     return $volt;
-                }
+                },
             ]);
 
             return $view;

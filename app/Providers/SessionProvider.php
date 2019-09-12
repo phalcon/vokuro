@@ -30,13 +30,14 @@ class SessionProvider implements ServiceProviderInterface
 
     /**
      * @param DiInterface $di
+     *
      * @return void
      */
     public function register(DiInterface $di): void
     {
         /** @var string $savePath */
         $savePath = config('application.sessionSavePath');
-        $handler = $this->getSessionAdapter($savePath);
+        $handler  = $this->getSessionAdapter($savePath);
 
         $di->set($this->providerName, function () use ($handler) {
             $session = new SessionManager();
@@ -53,6 +54,7 @@ class SessionProvider implements ServiceProviderInterface
      * @see https://github.com/phalcon/cphalcon/issues/14265
      *
      * @param string $savePath
+     *
      * @return Noop
      */
     protected function getSessionAdapter(string $savePath): Noop

@@ -24,7 +24,8 @@ use Vokuro\Models\Profiles;
 final class ProfilesController extends ControllerBase
 {
     /**
-     * Default action. Set the private (authenticated) layout (layouts/private.volt)
+     * Default action. Set the private (authenticated) layout
+     * (layouts/private.volt)
      */
     public function initialize(): void
     {
@@ -47,7 +48,7 @@ final class ProfilesController extends ControllerBase
     {
         $numberPage = 1;
         if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, 'Vokuro\Models\Profiles', $this->request->getPost());
+            $query                          = Criteria::fromInput($this->di, 'Vokuro\Models\Profiles', $this->request->getPost());
             $this->persistent->searchParams = $query->getParams();
         } else {
             $numberPage = $this->request->getQuery("page", "int");
@@ -63,14 +64,14 @@ final class ProfilesController extends ControllerBase
             $this->flash->notice("The search did not find any profiles");
 
             return $this->dispatcher->forward([
-                "action" => "index"
+                "action" => "index",
             ]);
         }
 
         $paginator = new Paginator([
-            "data" => $profiles,
+            "data"  => $profiles,
             "limit" => 10,
-            "page" => $numberPage
+            "page"  => $numberPage,
         ]);
 
         $this->view->setVar('page', $paginator->paginate());
@@ -83,13 +84,13 @@ final class ProfilesController extends ControllerBase
     {
         if ($this->request->isPost()) {
             $profile = new Profiles([
-                'name' => $this->request->getPost('name', 'striptags'),
-                'active' => $this->request->getPost('active')
+                'name'   => $this->request->getPost('name', 'striptags'),
+                'active' => $this->request->getPost('active'),
             ]);
 
             if (!$profile->save()) {
                 foreach ($profile->getMessages() as $message) {
-                    $this->flash->error((string)$message);
+                    $this->flash->error((string) $message);
                 }
             } else {
                 $this->flash->success("Profile was created successfully");
@@ -110,19 +111,19 @@ final class ProfilesController extends ControllerBase
         if (!$profile) {
             $this->flash->error("Profile was not found");
             return $this->dispatcher->forward([
-                'action' => 'index'
+                'action' => 'index',
             ]);
         }
 
         if ($this->request->isPost()) {
             $profile->assign([
-                'name' => $this->request->getPost('name', 'striptags'),
-                'active' => $this->request->getPost('active')
+                'name'   => $this->request->getPost('name', 'striptags'),
+                'active' => $this->request->getPost('active'),
             ]);
 
             if (!$profile->save()) {
                 foreach ($profile->getMessages() as $message) {
-                    $this->flash->error((string)$message);
+                    $this->flash->error((string) $message);
                 }
             } else {
                 $this->flash->success("Profile was updated successfully");
@@ -130,7 +131,7 @@ final class ProfilesController extends ControllerBase
         }
 
         $this->view->setVars([
-            'form' => new ProfilesForm(null, ['edit' => true]),
+            'form'    => new ProfilesForm(null, ['edit' => true]),
             'profile' => $profile,
         ]);
     }
@@ -147,20 +148,20 @@ final class ProfilesController extends ControllerBase
             $this->flash->error("Profile was not found");
 
             return $this->dispatcher->forward([
-                'action' => 'index'
+                'action' => 'index',
             ]);
         }
 
         if (!$profile->delete()) {
             foreach ($profile->getMessages() as $message) {
-                $this->flash->error((string)$message);
+                $this->flash->error((string) $message);
             }
         } else {
             $this->flash->success("Profile was deleted");
         }
 
         return $this->dispatcher->forward([
-            'action' => 'index'
+            'action' => 'index',
         ]);
     }
 }

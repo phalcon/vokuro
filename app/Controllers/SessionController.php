@@ -20,7 +20,8 @@ use Vokuro\Models\Users;
 use Vokuro\Plugins\Auth\Exception as AuthException;
 
 /**
- * Controller used handle non-authenticated session actions like login/logout, user signup, and forgotten passwords
+ * Controller used handle non-authenticated session actions like login/logout,
+ * user signup, and forgotten passwords
  */
 final class SessionController extends ControllerBase
 {
@@ -45,22 +46,24 @@ final class SessionController extends ControllerBase
 
         if ($this->request->isPost()) {
             if ($form->isValid($this->request->getPost()) != false) {
-                $user = new Users([
-                    'name' => $this->request->getPost('name', 'striptags'),
-                    'email' => $this->request->getPost('email'),
-                    'password' => $this->security->hash($this->request->getPost('password')),
-                    'profilesId' => 2
-                ]);
+                $user = new Users(
+                    [
+                        'name'       => $this->request->getPost('name', 'striptags'),
+                        'email'      => $this->request->getPost('email'),
+                        'password'   => $this->security->hash($this->request->getPost('password')),
+                        'profilesId' => 2,
+                    ]
+                );
 
                 if ($user->save()) {
                     return $this->dispatcher->forward([
                         'controller' => 'index',
-                        'action' => 'index'
+                        'action'     => 'index',
                     ]);
                 }
 
                 foreach ($user->getMessages() as $message) {
-                    $this->flash->error((string)$message);
+                    $this->flash->error((string) $message);
                 }
             }
         }
@@ -83,13 +86,13 @@ final class SessionController extends ControllerBase
             } else {
                 if ($form->isValid($this->request->getPost()) == false) {
                     foreach ($form->getMessages() as $message) {
-                        $this->flash->error((string)$message);
+                        $this->flash->error((string) $message);
                     }
                 } else {
                     $this->auth->check([
-                        'email' => $this->request->getPost('email'),
+                        'email'    => $this->request->getPost('email'),
                         'password' => $this->request->getPost('password'),
-                        'remember' => $this->request->getPost('remember')
+                        'remember' => $this->request->getPost('remember'),
                     ]);
 
                     return $this->response->redirect('users');
@@ -121,13 +124,13 @@ final class SessionController extends ControllerBase
                     if (!$user) {
                         $this->flash->success('There is no account associated to this email');
                     } else {
-                        $resetPassword = new ResetPasswords();
+                        $resetPassword          = new ResetPasswords();
                         $resetPassword->usersId = $user->id;
                         if ($resetPassword->save()) {
                             $this->flash->success('Success! Please check your messages for an email reset password');
                         } else {
                             foreach ($resetPassword->getMessages() as $message) {
-                                $this->flash->error((string)$message);
+                                $this->flash->error((string) $message);
                             }
                         }
                     }

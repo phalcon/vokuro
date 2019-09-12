@@ -55,7 +55,7 @@ class EmailConfirmations extends Model
     public function initialize()
     {
         $this->belongsTo('usersId', Users::class, 'id', [
-            'alias' => 'user'
+            'alias' => 'user',
         ]);
     }
 
@@ -89,11 +89,12 @@ class EmailConfirmations extends Model
     public function afterCreate()
     {
         $this->getDI()
-            ->getMail()
-            ->send([
-                $this->user->email => $this->user->name
-            ], "Please confirm your email", 'confirmation', [
-                'confirmUrl' => '/confirm/' . $this->code . '/' . $this->user->email
-            ]);
+             ->getMail()
+             ->send([
+                 $this->user->email => $this->user->name,
+             ], "Please confirm your email", 'confirmation', [
+                 'confirmUrl' => '/confirm/' . $this->code . '/' . $this->user->email,
+             ])
+        ;
     }
 }

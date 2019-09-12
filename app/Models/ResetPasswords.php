@@ -55,7 +55,7 @@ class ResetPasswords extends Model
     public function initialize()
     {
         $this->belongsTo('usersId', Users::class, 'id', [
-            'alias' => 'user'
+            'alias' => 'user',
         ]);
     }
 
@@ -89,11 +89,12 @@ class ResetPasswords extends Model
     public function afterCreate()
     {
         $this->getDI()
-            ->getMail()
-            ->send([
-                $this->user->email => $this->user->name
-            ], "Reset your password", 'reset', [
-                'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email
-            ]);
+             ->getMail()
+             ->send([
+                 $this->user->email => $this->user->name,
+             ], "Reset your password", 'reset', [
+                 'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email,
+             ])
+        ;
     }
 }

@@ -12,23 +12,23 @@ declare(strict_types=1);
 
 namespace Vokuro\Forms;
 
-use Phalcon\Forms\Form;
-use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Element\Check;
 use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Password;
 use Phalcon\Forms\Element\Submit;
-use Phalcon\Forms\Element\Check;
-use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Form;
+use Phalcon\Validation\Validator\Confirmation;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\Identical;
+use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\StringLength;
-use Phalcon\Validation\Validator\Confirmation;
 
 class SignUpForm extends Form
 {
     /**
      * @param string|null $entity
-     * @param array $options
+     * @param array       $options
      */
     public function initialize(string $entity = null, array $options = [])
     {
@@ -36,8 +36,8 @@ class SignUpForm extends Form
         $name->setLabel('Name');
         $name->addValidators([
             new PresenceOf([
-                'message' => 'The name is required'
-            ])
+                'message' => 'The name is required',
+            ]),
         ]);
 
         $this->add($name);
@@ -47,11 +47,11 @@ class SignUpForm extends Form
         $email->setLabel('E-Mail');
         $email->addValidators([
             new PresenceOf([
-                'message' => 'The e-mail is required'
+                'message' => 'The e-mail is required',
             ]),
             new Email([
-                'message' => 'The e-mail is not valid'
-            ])
+                'message' => 'The e-mail is not valid',
+            ]),
         ]);
 
         $this->add($email);
@@ -61,16 +61,16 @@ class SignUpForm extends Form
         $password->setLabel('Password');
         $password->addValidators([
             new PresenceOf([
-                'message' => 'The password is required'
+                'message' => 'The password is required',
             ]),
             new StringLength([
-                'min' => 8,
-                'messageMinimum' => 'Password is too short. Minimum 8 characters'
+                'min'            => 8,
+                'messageMinimum' => 'Password is too short. Minimum 8 characters',
             ]),
             new Confirmation([
                 'message' => "Password doesn't match confirmation",
-                'with' => 'confirmPassword'
-            ])
+                'with'    => 'confirmPassword',
+            ]),
         ]);
 
         $this->add($password);
@@ -80,21 +80,21 @@ class SignUpForm extends Form
         $confirmPassword->setLabel('Confirm Password');
         $confirmPassword->addValidators([
             new PresenceOf([
-                'message' => 'The confirmation password is required'
-            ])
+                'message' => 'The confirmation password is required',
+            ]),
         ]);
 
         $this->add($confirmPassword);
 
         // Remember
         $terms = new Check('terms', [
-            'value' => 'yes'
+            'value' => 'yes',
         ]);
 
         $terms->setLabel('Accept terms and conditions');
         $terms->addValidator(new Identical([
-            'value' => 'yes',
-            'message' => 'Terms and conditions must be accepted'
+            'value'   => 'yes',
+            'message' => 'Terms and conditions must be accepted',
         ]));
 
         $this->add($terms);
@@ -102,8 +102,8 @@ class SignUpForm extends Form
         // CSRF
         $csrf = new Hidden('csrf');
         $csrf->addValidator(new Identical([
-            'value' => $this->security->getRequestToken(),
-            'message' => 'CSRF validation failed'
+            'value'   => $this->security->getRequestToken(),
+            'message' => 'CSRF validation failed',
         ]));
         $csrf->clear();
 
@@ -111,7 +111,7 @@ class SignUpForm extends Form
 
         // Sign Up
         $this->add(new Submit('Sign Up', [
-            'class' => 'btn btn-success'
+            'class' => 'btn btn-success',
         ]));
     }
 
@@ -119,6 +119,7 @@ class SignUpForm extends Form
      * Prints messages for a specific element
      *
      * @param string $name
+     *
      * @return string
      */
     public function messages(string $name)

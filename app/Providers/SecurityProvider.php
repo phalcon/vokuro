@@ -27,6 +27,7 @@ class SecurityProvider implements ServiceProviderInterface
 
     /**
      * @param DiInterface $di
+     *
      * @return void
      */
     public function register(DiInterface $di): void
@@ -43,6 +44,7 @@ class SecurityProvider implements ServiceProviderInterface
      * @see https://github.com/phalcon/cphalcon/issues/14346
      *
      * @param DiInterface $di
+     *
      * @return Security
      */
     protected function getSecurity(DiInterface $di): Security

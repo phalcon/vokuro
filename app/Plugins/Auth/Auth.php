@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Vokuro\Plugins\Auth;
 
+use Phalcon\Http\Response;
 use Phalcon\Plugin;
-use Vokuro\Models\Users;
+use Vokuro\Models\FailedLogins;
 use Vokuro\Models\RememberTokens;
 use Vokuro\Models\SuccessLogins;
-use Vokuro\Models\FailedLogins;
+use Vokuro\Models\Users;
 
 /**
  * Vokuro\Auth\Auth
@@ -28,6 +29,7 @@ class Auth extends Plugin
      * Checks the user credentials
      *
      * @param array $credentials
+     *
      * @throws Exception
      */
     public function check($credentials)
@@ -57,22 +59,24 @@ class Auth extends Plugin
         }
 
         $this->session->set('auth-identity', [
-            'id' => $user->id,
-            'name' => $user->name,
-            'profile' => $user->profile->name
+            'id'      => $user->id,
+            'name'    => $user->name,
+            'profile' => $user->profile->name,
         ]);
     }
 
     /**
-     * Creates the remember me environment settings the related cookies and generating tokens
+     * Creates the remember me environment settings the related cookies and
+     * generating tokens
      *
      * @param Users $user
+     *
      * @throws Exception
      */
     public function saveSuccessLogin($user)
     {
-        $successLogin = new SuccessLogins();
-        $successLogin->usersId = $user->id;
+        $successLogin            = new SuccessLogins();
+        $successLogin->usersId   = $user->id;
         $successLogin->ipAddress = $this->request->getClientAddress();
         $successLogin->userAgent = $this->request->getUserAgent();
         if (!$successLogin->save()) {
@@ -89,8 +93,8 @@ class Auth extends Plugin
      */
     public function registerUserThrottling($userId)
     {
-        $failedLogin = new FailedLogins();
-        $failedLogin->usersId = $userId;
+        $failedLogin            = new FailedLogins();
+        $failedLogin->usersId   = $userId;
         $failedLogin->ipAddress = $this->request->getClientAddress();
         $failedLogin->attempted = time();
         $failedLogin->save();
@@ -99,8 +103,8 @@ class Auth extends Plugin
             'ipAddress = ?0 AND attempted >= ?1',
             'bind' => [
                 $this->request->getClientAddress(),
-                time() - 3600 * 6
-            ]
+                time() - 3600 * 6,
+            ],
         ]);
 
         switch ($attempts) {
@@ -119,18 +123,19 @@ class Auth extends Plugin
     }
 
     /**
-     * Creates the remember me environment settings the related cookies and generating tokens
+     * Creates the remember me environment settings the related cookies and
+     * generating tokens
      *
      * @param Users $user
      */
     public function createRememberEnvironment(Users $user)
     {
         $userAgent = $this->request->getUserAgent();
-        $token = md5($user->email . $user->password . $userAgent);
+        $token     = md5($user->email . $user->password . $userAgent);
 
-        $remember = new RememberTokens();
-        $remember->usersId = $user->id;
-        $remember->token = $token;
+        $remember            = new RememberTokens();
+        $remember->usersId   = $user->id;
+        $remember->token     = $token;
         $remember->userAgent = $userAgent;
 
         if ($remember->save() != false) {
@@ -153,26 +158,26 @@ class Auth extends Plugin
     /**
      * Logs on using the information in the cookies
      *
+     * @return Response
      * @throws Exception
-     * @return \Phalcon\Http\Response
      */
     public function loginWithRememberMe()
     {
-        $userId = $this->cookies->get('RMU')->getValue();
+        $userId      = $this->cookies->get('RMU')->getValue();
         $cookieToken = $this->cookies->get('RMT')->getValue();
 
         $user = Users::findFirstById($userId);
         if ($user) {
             $userAgent = $this->request->getUserAgent();
-            $token = md5($user->email . $user->password . $userAgent);
+            $token     = md5($user->email . $user->password . $userAgent);
 
             if ($cookieToken == $token) {
                 $remember = RememberTokens::findFirst([
                     'usersId = ?0 AND token = ?1',
                     'bind' => [
                         $user->id,
-                        $token
-                    ]
+                        $token,
+                    ],
                 ]);
                 if ($remember) {
                     // Check if the cookie has not expired
@@ -182,9 +187,9 @@ class Auth extends Plugin
 
                         // Register identity
                         $this->session->set('auth-identity', [
-                            'id' => $user->id,
-                            'name' => $user->name,
-                            'profile' => $user->profile->name
+                            'id'      => $user->id,
+                            'name'    => $user->name,
+                            'profile' => $user->profile->name,
                         ]);
 
                         // Register the successful login
@@ -206,6 +211,7 @@ class Auth extends Plugin
      * Checks if the user is banned/inactive/suspended
      *
      * @param Users $user
+     *
      * @throws Exception
      */
     public function checkUserFlags(Users $user)
@@ -270,6 +276,7 @@ class Auth extends Plugin
      * Auths the user by his/her id
      *
      * @param int $id
+     *
      * @throws Exception
      */
     public function authUserById($id)
@@ -282,9 +289,9 @@ class Auth extends Plugin
         $this->checkUserFlags($user);
 
         $this->session->set('auth-identity', [
-            'id' => $user->id,
-            'name' => $user->name,
-            'profile' => $user->profile->name
+            'id'      => $user->id,
+            'name'    => $user->name,
+            'profile' => $user->profile->name,
         ]);
     }
 
@@ -314,13 +321,14 @@ class Auth extends Plugin
      * Returns the current token user
      *
      * @param string $token
+     *
      * @return int|null
      */
     public function findFirstByToken($token)
     {
         $userToken = RememberTokens::findFirst([
             'conditions' => 'token = :token:',
-            'bind' => [
+            'bind'       => [
                 'token' => $token,
             ],
         ]);
@@ -337,9 +345,9 @@ class Auth extends Plugin
     {
         $user = RememberTokens::find([
             'conditions' => 'usersId = :userId:',
-            'bind' => [
-                'userId' => $userId
-            ]
+            'bind'       => [
+                'userId' => $userId,
+            ],
         ]);
 
         if ($user) {

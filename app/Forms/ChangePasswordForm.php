@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 namespace Vokuro\Forms;
 
-use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Password;
+use Phalcon\Forms\Form;
+use Phalcon\Validation\Validator\Confirmation;
 use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\StringLength;
-use Phalcon\Validation\Validator\Confirmation;
 
 class ChangePasswordForm extends Form
 {
@@ -26,16 +26,16 @@ class ChangePasswordForm extends Form
         $password = new Password('password');
         $password->addValidators([
             new PresenceOf([
-                'message' => 'Password is required'
+                'message' => 'Password is required',
             ]),
             new StringLength([
-                'min' => 8,
-                'messageMinimum' => 'Password is too short. Minimum 8 characters'
+                'min'            => 8,
+                'messageMinimum' => 'Password is too short. Minimum 8 characters',
             ]),
             new Confirmation([
                 'message' => 'Password doesn\'t match confirmation',
-                'with' => 'confirmPassword'
-            ])
+                'with'    => 'confirmPassword',
+            ]),
         ]);
 
         $this->add($password);
@@ -44,8 +44,8 @@ class ChangePasswordForm extends Form
         $confirmPassword = new Password('confirmPassword');
         $confirmPassword->addValidators([
             new PresenceOf([
-                'message' => 'The confirmation password is required'
-            ])
+                'message' => 'The confirmation password is required',
+            ]),
         ]);
 
         $this->add($confirmPassword);

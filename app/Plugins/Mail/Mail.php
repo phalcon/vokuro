@@ -26,34 +26,37 @@ class Mail extends Plugin
     /**
      * Sends e-mails based on predefined templates
      *
-     * @param array $to
+     * @param array  $to
      * @param string $subject
      * @param string $name
-     * @param array $params
+     * @param array  $params
+     *
      * @return int
      */
     public function send($to, $subject, $name, $params): int
     {
         // Settings
         $mailSettings = $this->config->mail;
-        $template = $this->getTemplate($name, $params);
+        $template     = $this->getTemplate($name, $params);
 
         // Create the message
         $message = Message::newInstance()
-            ->setSubject($subject)
-            ->setTo($to)
-            ->setFrom([
-                $mailSettings->fromEmail => $mailSettings->fromName
-            ])
-            ->setBody($template, 'text/html');
+                          ->setSubject($subject)
+                          ->setTo($to)
+                          ->setFrom([
+                              $mailSettings->fromEmail => $mailSettings->fromName,
+                          ])
+                          ->setBody($template, 'text/html')
+        ;
 
         $transport = Smtp::newInstance(
             $mailSettings->smtp->server,
             $mailSettings->smtp->port,
             $mailSettings->smtp->security
         )
-            ->setUsername($mailSettings->smtp->username)
-            ->setPassword($mailSettings->smtp->password);
+                         ->setUsername($mailSettings->smtp->username)
+                         ->setPassword($mailSettings->smtp->password)
+        ;
 
         return Swift_Mailer::newInstance($transport)->send($message);
     }
@@ -62,13 +65,14 @@ class Mail extends Plugin
      * Applies a template to be used in the e-mail
      *
      * @param string $name
-     * @param array $params
+     * @param array  $params
+     *
      * @return string
      */
     public function getTemplate(string $name, array $params)
     {
         $parameters = array_merge([
-            'publicUrl' => $this->config->application->publicUrl
+            'publicUrl' => $this->config->application->publicUrl,
         ], $params);
 
         return $this->view->getRender('emailTemplates', $name, $parameters, function (View $view) {

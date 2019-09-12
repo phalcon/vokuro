@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
-use Vokuro\Models\Profiles;
 use Vokuro\Models\Permissions;
+use Vokuro\Models\Profiles;
 
 /**
  * View and define permissions for the various profile levels.
@@ -21,7 +21,8 @@ use Vokuro\Models\Permissions;
 final class PermissionsController extends ControllerBase
 {
     /**
-     * View the permissions for a profile level, and change them if we have a POST.
+     * View the permissions for a profile level, and change them if we have a
+     * POST.
      */
     public function indexAction(): void
     {
@@ -38,10 +39,10 @@ final class PermissionsController extends ControllerBase
                     foreach ($this->request->getPost('permissions') as $permission) {
                         $parts = explode('.', $permission);
 
-                        $permission = new Permissions();
+                        $permission             = new Permissions();
                         $permission->profilesId = $profile->id;
-                        $permission->resource = $parts[0];
-                        $permission->action = $parts[1];
+                        $permission->resource   = $parts[0];
+                        $permission->action     = $parts[1];
 
                         $permission->save();
                     }
@@ -62,21 +63,21 @@ final class PermissionsController extends ControllerBase
         $profiles = Profiles::find([
             'active = :active:',
             'bind' => [
-                'active' => 'Y'
-            ]
+                'active' => 'Y',
+            ],
         ]);
 
         $profilesSelect = $this->tag->select([
             'profileId',
             $profiles,
-            'using' => [
+            'using'      => [
                 'id',
                 'name',
             ],
-            'useEmpty' => true,
-            'emptyText' => '...',
+            'useEmpty'   => true,
+            'emptyText'  => '...',
             'emptyValue' => '',
-            'class' => 'form-control mr-sm-2',
+            'class'      => 'form-control mr-sm-2',
         ]);
 
         $this->view->setVar('profilesSelect', $profilesSelect);

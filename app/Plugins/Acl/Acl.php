@@ -13,11 +13,11 @@ declare(strict_types=1);
 namespace Vokuro\Plugins\Acl;
 
 use Phalcon\Acl\Adapter\AbstractAdapter;
-use Phalcon\Acl\Enum as AclEnum;
-use Phalcon\Plugin;
 use Phalcon\Acl\Adapter\Memory as AclMemory;
-use Phalcon\Acl\Role as AclRole;
 use Phalcon\Acl\Component as AclComponent;
+use Phalcon\Acl\Enum as AclEnum;
+use Phalcon\Acl\Role as AclRole;
+use Phalcon\Plugin;
 use Vokuro\Models\Profiles;
 
 /**
@@ -42,30 +42,33 @@ class Acl extends Plugin
     private $filePath;
 
     /**
-     * Define the resources that are considered "private". These controller => actions require authentication.
+     * Define the resources that are considered "private". These controller =>
+     * actions require authentication.
      *
      * @var array
      */
     private $privateResources = [];
 
     /**
-     * Human-readable descriptions of the actions used in {@see $privateResources}
+     * Human-readable descriptions of the actions used in
+     * {@see $privateResources}
      *
      * @var array
      */
     private $actionDescriptions = [
-        'index' => 'Access',
-        'search' => 'Search',
-        'create' => 'Create',
-        'edit' => 'Edit',
-        'delete' => 'Delete',
-        'changePassword' => 'Change password'
+        'index'          => 'Access',
+        'search'         => 'Search',
+        'create'         => 'Create',
+        'edit'           => 'Edit',
+        'delete'         => 'Delete',
+        'changePassword' => 'Change password',
     ];
 
     /**
      * Checks if a controller is private or not
      *
      * @param string $controllerName
+     *
      * @return boolean
      */
     public function isPrivate($controllerName): bool
@@ -80,6 +83,7 @@ class Acl extends Plugin
      * @param string $profile
      * @param string $controller
      * @param string $action
+     *
      * @return boolean
      */
     public function isAllowed($profile, $controller, $action): bool
@@ -118,7 +122,7 @@ class Acl extends Plugin
         }
 
         // Get the ACL from the data file
-        $data = file_get_contents($filePath);
+        $data      = file_get_contents($filePath);
         $this->acl = unserialize($data);
 
         // Store the ACL in APC
@@ -133,6 +137,7 @@ class Acl extends Plugin
      * Returns the permissions assigned to a profile
      *
      * @param Profiles $profile
+     *
      * @return array
      */
     public function getPermissions(Profiles $profile): array
@@ -159,6 +164,7 @@ class Acl extends Plugin
      * Returns the action description according to its simplified name
      *
      * @param string $action
+     *
      * @return string
      */
     public function getActionDescription($action): string
@@ -179,8 +185,8 @@ class Acl extends Plugin
         $profiles = Profiles::find([
             'active = :active:',
             'bind' => [
-                'active' => 'Y'
-            ]
+                'active' => 'Y',
+            ],
         ]);
         foreach ($profiles as $profile) {
             $acl->addRole(new AclRole($profile->name));

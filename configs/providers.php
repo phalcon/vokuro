@@ -10,21 +10,38 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+use Vokuro\Providers\AclProvider;
+use Vokuro\Providers\AuthProvider;
+use Vokuro\Providers\ConfigProvider;
+use Vokuro\Providers\CryptProvider;
+use Vokuro\Providers\DbProvider;
+use Vokuro\Providers\DispatcherProvider;
+use Vokuro\Providers\FlashProvider;
+use Vokuro\Providers\LoggerProvider;
+use Vokuro\Providers\MailProvider;
+use Vokuro\Providers\ModelsMetadataProvider;
+use Vokuro\Providers\RouterProvider;
+use Vokuro\Providers\SecurityProvider;
+use Vokuro\Providers\SessionBagProvider;
+use Vokuro\Providers\SessionProvider;
+use Vokuro\Providers\UrlProvider;
+use Vokuro\Providers\ViewProvider;
+
 return [
-    \Vokuro\Providers\AclProvider::class,
-    \Vokuro\Providers\AuthProvider::class,
-    \Vokuro\Providers\ConfigProvider::class,
-    \Vokuro\Providers\CryptProvider::class,
-    \Vokuro\Providers\DbProvider::class,
-    \Vokuro\Providers\DispatcherProvider::class,
-    \Vokuro\Providers\FlashProvider::class,
-    \Vokuro\Providers\LoggerProvider::class,
-    \Vokuro\Providers\MailProvider::class,
-    \Vokuro\Providers\ModelsMetadataProvider::class,
-    \Vokuro\Providers\RouterProvider::class,
-    \Vokuro\Providers\SessionBagProvider::class,
-    \Vokuro\Providers\SessionProvider::class,
-    \Vokuro\Providers\SecurityProvider::class,
-    \Vokuro\Providers\UrlProvider::class,
-    \Vokuro\Providers\ViewProvider::class,
+    AclProvider::class,
+    AuthProvider::class,
+    ConfigProvider::class,
+    CryptProvider::class,
+    DbProvider::class,
+    DispatcherProvider::class,
+    FlashProvider::class,
+    LoggerProvider::class,
+    MailProvider::class,
+    ModelsMetadataProvider::class,
+    RouterProvider::class,
+    SessionBagProvider::class,
+    SessionProvider::class,
+    SecurityProvider::class,
+    UrlProvider::class,
+    ViewProvider::class,
 ];

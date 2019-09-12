@@ -69,29 +69,29 @@ class Users extends Model
     public function initialize()
     {
         $this->belongsTo('profilesId', Profiles::class, 'id', [
-            'alias' => 'profile',
-            'reusable' => true
+            'alias'    => 'profile',
+            'reusable' => true,
         ]);
 
         $this->hasMany('id', SuccessLogins::class, 'usersId', [
-            'alias' => 'successLogins',
+            'alias'      => 'successLogins',
             'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system'
-            ]
+                'message' => 'User cannot be deleted because he/she has activity in the system',
+            ],
         ]);
 
         $this->hasMany('id', PasswordChanges::class, 'usersId', [
-            'alias' => 'passwordChanges',
+            'alias'      => 'passwordChanges',
             'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system'
-            ]
+                'message' => 'User cannot be deleted because he/she has activity in the system',
+            ],
         ]);
 
         $this->hasMany('id', ResetPasswords::class, 'usersId', [
-            'alias' => 'resetPasswords',
+            'alias'      => 'resetPasswords',
             'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system'
-            ]
+                'message' => 'User cannot be deleted because he/she has activity in the system',
+            ],
         ]);
     }
 
@@ -109,8 +109,9 @@ class Users extends Model
 
             // Use this password as default
             $this->password = $this->getDI()
-                ->getSecurity()
-                ->hash($tempPassword);
+                                   ->getSecurity()
+                                   ->hash($tempPassword)
+            ;
         } else {
             // The user must not change its password in first login
             $this->mustChangePassword = 'N';
@@ -139,13 +140,14 @@ class Users extends Model
         // Only send the confirmation email if emails are turned on in the config
         if ($this->getDI()->get('config')->useMail) {
             if ($this->active == 'N') {
-                $emailConfirmation = new EmailConfirmations();
+                $emailConfirmation          = new EmailConfirmations();
                 $emailConfirmation->usersId = $this->id;
 
                 if ($emailConfirmation->save()) {
                     $this->getDI()
-                        ->getFlash()
-                        ->notice('A confirmation mail has been sent to ' . $this->email);
+                         ->getFlash()
+                         ->notice('A confirmation mail has been sent to ' . $this->email)
+                    ;
                 }
             }
         }
@@ -159,7 +161,7 @@ class Users extends Model
         $validator = new Validation();
 
         $validator->add('email', new Uniqueness([
-            "message" => "The email is already registered"
+            "message" => "The email is already registered",
         ]));
 
         return $this->validate($validator);

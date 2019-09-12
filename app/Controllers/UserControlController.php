@@ -33,7 +33,8 @@ final class UserControlController extends ControllerBase
     }
 
     /**
-     * Confirms an e-mail, if the user must change their password then changes it
+     * Confirms an e-mail, if the user must change their password then changes
+     * it
      */
     public function confirmEmailAction()
     {
@@ -44,18 +45,18 @@ final class UserControlController extends ControllerBase
         if (!$confirmation) {
             return $this->dispatcher->forward([
                 'controller' => 'index',
-                'action' => 'index'
+                'action'     => 'index',
             ]);
         }
 
         if ($confirmation->confirmed != 'N') {
             return $this->dispatcher->forward([
                 'controller' => 'session',
-                'action' => 'login'
+                'action'     => 'login',
             ]);
         }
 
-        $confirmation->confirmed = 'Y';
+        $confirmation->confirmed    = 'Y';
         $confirmation->user->active = 'Y';
 
         /**
@@ -68,7 +69,7 @@ final class UserControlController extends ControllerBase
 
             return $this->dispatcher->forward([
                 'controller' => 'index',
-                'action' => 'index'
+                'action'     => 'index',
             ]);
         }
 
@@ -85,7 +86,7 @@ final class UserControlController extends ControllerBase
 
             return $this->dispatcher->forward([
                 'controller' => 'users',
-                'action' => 'changePassword'
+                'action'     => 'changePassword',
             ]);
         }
 
@@ -93,7 +94,7 @@ final class UserControlController extends ControllerBase
 
         return $this->dispatcher->forward([
             'controller' => 'users',
-            'action' => 'index'
+            'action'     => 'index',
         ]);
     }
 
@@ -106,14 +107,14 @@ final class UserControlController extends ControllerBase
         if (!$resetPassword) {
             return $this->dispatcher->forward([
                 'controller' => 'index',
-                'action' => 'index'
+                'action'     => 'index',
             ]);
         }
 
         if ($resetPassword->reset != 'N') {
             return $this->dispatcher->forward([
                 'controller' => 'session',
-                'action' => 'login'
+                'action'     => 'login',
             ]);
         }
 
@@ -129,7 +130,7 @@ final class UserControlController extends ControllerBase
 
             return $this->dispatcher->forward([
                 'controller' => 'index',
-                'action' => 'index'
+                'action'     => 'index',
             ]);
         }
 
@@ -142,7 +143,7 @@ final class UserControlController extends ControllerBase
 
         return $this->dispatcher->forward([
             'controller' => 'users',
-            'action' => 'changePassword'
+            'action'     => 'changePassword',
         ]);
     }
 }

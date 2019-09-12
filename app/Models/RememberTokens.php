@@ -48,7 +48,7 @@ class RememberTokens extends Model
     public function initialize()
     {
         $this->belongsTo('usersId', Users::class, 'id', [
-            'alias' => 'user'
+            'alias' => 'user',
         ]);
     }
 

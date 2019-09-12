@@ -14,7 +14,7 @@ use Phalcon\Di\DiInterface;
 function container()
 {
     $default = Di::getDefault();
-    $args = func_get_args();
+    $args    = func_get_args();
     if (empty($args)) {
         return $default;
     }
@@ -32,7 +32,7 @@ function container()
  */
 function config()
 {
-    $args = func_get_args();
+    $args   = func_get_args();
     $config = Di::getDefault()->getShared('config');
 
     if (empty($args)) {
@@ -46,6 +46,7 @@ function config()
  * Get projects relative root path
  *
  * @param string $prefix
+ *
  * @return string
  */
 function root_path(string $prefix = ''): string

@@ -22,21 +22,23 @@ use Vokuro\Plugins\Auth\Auth;
  * This is the base controller for all controllers in the application
  *
  * @property Auth auth
- * @property Acl acl
+ * @property Acl  acl
  */
 class ControllerBase extends Controller
 {
     /**
-     * Execute before the router so we can determine if this is a private controller, and must be authenticated, or a
-     * public controller that is open to all.
+     * Execute before the router so we can determine if this is a private
+     * controller, and must be authenticated, or a public controller that is
+     * open to all.
      *
      * @param Dispatcher $dispatcher
+     *
      * @return boolean
      */
     public function beforeExecuteRoute(Dispatcher $dispatcher): bool
     {
         $controllerName = $dispatcher->getControllerName();
-        $actionName = $dispatcher->getActionName();
+        $actionName     = $dispatcher->getActionName();
 
         // Only check permissions on private controllers
         if ($this->acl->isPrivate($controllerName)) {
@@ -49,7 +51,7 @@ class ControllerBase extends Controller
 
                 $dispatcher->forward([
                     'controller' => 'index',
-                    'action' => 'index'
+                    'action'     => 'index',
                 ]);
                 return false;
             }
@@ -61,12 +63,12 @@ class ControllerBase extends Controller
                 if ($this->acl->isAllowed($identity['profile'], $controllerName, 'index')) {
                     $dispatcher->forward([
                         'controller' => $controllerName,
-                        'action' => 'index'
+                        'action'     => 'index',
                     ]);
                 } else {
                     $dispatcher->forward([
                         'controller' => 'user_control',
-                        'action' => 'index'
+                        'action'     => 'index',
                     ]);
                 }
 

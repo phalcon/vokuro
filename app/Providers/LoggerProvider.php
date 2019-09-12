@@ -31,6 +31,7 @@ class LoggerProvider implements ServiceProviderInterface
 
     /**
      * @param DiInterface $di
+     *
      * @return void
      */
     public function register(DiInterface $di): void
@@ -40,10 +41,10 @@ class LoggerProvider implements ServiceProviderInterface
 
         $di->set($this->providerName, function () use ($loggerConfigs) {
             $filename = trim($loggerConfigs->get('filename'), '\\/');
-            $path = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
+            $path     = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
 
             $formatter = new FormatterLine($loggerConfigs->get('format'), $loggerConfigs->get('date'));
-            $logger = new FileLogger($path . $filename);
+            $logger    = new FileLogger($path . $filename);
 
             $logger->setFormatter($formatter);
 

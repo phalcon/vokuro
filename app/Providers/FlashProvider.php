@@ -25,16 +25,17 @@ class FlashProvider implements ServiceProviderInterface
 
     /**
      * @param DiInterface $di
+     *
      * @return void
      */
     public function register(DiInterface $di): void
     {
         $di->set($this->providerName, function () {
             return new Flash([
-                'error' => 'alert alert-danger',
+                'error'   => 'alert alert-danger',
                 'success' => 'alert alert-success',
-                'notice' => 'alert alert-info',
-                'warning' => 'alert alert-warning'
+                'notice'  => 'alert alert-info',
+                'warning' => 'alert alert-warning',
             ]);
         });
     }

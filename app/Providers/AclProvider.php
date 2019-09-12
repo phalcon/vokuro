@@ -26,6 +26,7 @@ class AclProvider implements ServiceProviderInterface
 
     /**
      * @param DiInterface $di
+     *
      * @return void
      */
     public function register(DiInterface $di): void
@@ -36,7 +37,7 @@ class AclProvider implements ServiceProviderInterface
         $rootPath = $application->getRootPath();
 
         $di->setShared($this->providerName, function () use ($rootPath) {
-            $filename = $rootPath . '/configs/acl.php';
+            $filename         = $rootPath . '/configs/acl.php';
             $privateResources = [];
             if (is_readable($filename)) {
                 $privateResources = include $filename;

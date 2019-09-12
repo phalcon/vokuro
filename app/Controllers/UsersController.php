@@ -16,8 +16,8 @@ use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Vokuro\Forms\ChangePasswordForm;
 use Vokuro\Forms\UsersForm;
-use Vokuro\Models\Users;
 use Vokuro\Models\PasswordChanges;
+use Vokuro\Models\Users;
 
 /**
  * Vokuro\Controllers\UsersController
@@ -46,7 +46,7 @@ final class UsersController extends ControllerBase
     {
         $numberPage = 1;
         if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, 'Vokuro\Models\Users', $this->request->getPost());
+            $query                          = Criteria::fromInput($this->di, 'Vokuro\Models\Users', $this->request->getPost());
             $this->persistent->searchParams = $query->getParams();
         } else {
             $numberPage = $this->request->getQuery("page", "int");
@@ -66,9 +66,9 @@ final class UsersController extends ControllerBase
         }
 
         $paginator = new Paginator([
-            "data" => $users,
+            "data"  => $users,
             "limit" => 10,
-            "page" => $numberPage
+            "page"  => $numberPage,
         ]);
 
         $this->view->setVar('page', $paginator->paginate());
@@ -87,9 +87,9 @@ final class UsersController extends ControllerBase
                 }
             } else {
                 $user = new Users([
-                    'name' => $this->request->getPost('name', 'striptags'),
+                    'name'       => $this->request->getPost('name', 'striptags'),
                     'profilesId' => $this->request->getPost('profilesId', 'int'),
-                    'email' => $this->request->getPost('email', 'email')
+                    'email'      => $this->request->getPost('email', 'email'),
                 ]);
 
                 if (!$user->save()) {
@@ -107,6 +107,7 @@ final class UsersController extends ControllerBase
 
     /**
      * Saves the user from the 'edit' action
+     *
      * @param int $id
      */
     public function editAction($id)
@@ -115,22 +116,22 @@ final class UsersController extends ControllerBase
         if (!$user) {
             $this->flash->error("User was not found");
             return $this->dispatcher->forward([
-                'action' => 'index'
+                'action' => 'index',
             ]);
         }
 
         if ($this->request->isPost()) {
             $user->assign([
-                'name' => $this->request->getPost('name', 'striptags'),
+                'name'       => $this->request->getPost('name', 'striptags'),
                 'profilesId' => $this->request->getPost('profilesId', 'int'),
-                'email' => $this->request->getPost('email', 'email'),
-                'banned' => $this->request->getPost('banned'),
-                'suspended' => $this->request->getPost('suspended'),
-                'active' => $this->request->getPost('active')
+                'email'      => $this->request->getPost('email', 'email'),
+                'banned'     => $this->request->getPost('banned'),
+                'suspended'  => $this->request->getPost('suspended'),
+                'active'     => $this->request->getPost('active'),
             ]);
 
             $form = new UsersForm([
-                'edit' => true
+                'edit' => true,
             ]);
 
             if ($form->isValid($this->request->getPost()) == false) {
@@ -140,7 +141,7 @@ final class UsersController extends ControllerBase
             } else {
                 if (!$user->save()) {
                     foreach ($user->getMessages() as $message) {
-                        $this->flash->error((string)$message);
+                        $this->flash->error((string) $message);
                     }
                 } else {
                     $this->flash->success("User was updated successfully");
@@ -151,7 +152,7 @@ final class UsersController extends ControllerBase
         $this->view->setVars([
             'user' => $user,
             'form' => new UsersForm(null, [
-                'edit' => true
+                'edit' => true,
             ]),
         ]);
     }
@@ -167,20 +168,20 @@ final class UsersController extends ControllerBase
         if (!$user) {
             $this->flash->error("User was not found");
             return $this->dispatcher->forward([
-                'action' => 'index'
+                'action' => 'index',
             ]);
         }
 
         if (!$user->delete()) {
             foreach ($user->getMessages() as $message) {
-                $this->flash->error((string)$message);
+                $this->flash->error((string) $message);
             }
         } else {
             $this->flash->success("User was deleted");
         }
 
         return $this->dispatcher->forward([
-            'action' => 'index'
+            'action' => 'index',
         ]);
     }
 
@@ -199,11 +200,11 @@ final class UsersController extends ControllerBase
             } else {
                 $user = $this->auth->getUser();
 
-                $user->password = $this->security->hash($this->request->getPost('password'));
+                $user->password           = $this->security->hash($this->request->getPost('password'));
                 $user->mustChangePassword = 'N';
 
-                $passwordChange = new PasswordChanges();
-                $passwordChange->user = $user;
+                $passwordChange            = new PasswordChanges();
+                $passwordChange->user      = $user;
                 $passwordChange->ipAddress = $this->request->getClientAddress();
                 $passwordChange->userAgent = $this->request->getUserAgent();
 

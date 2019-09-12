@@ -23,12 +23,14 @@ class Profiles extends Model
 {
     /**
      * ID
+     *
      * @var integer
      */
     public $id;
 
     /**
      * Name
+     *
      * @var string
      */
     public $name;
@@ -39,17 +41,17 @@ class Profiles extends Model
     public function initialize()
     {
         $this->hasMany('id', Users::class, 'profilesId', [
-            'alias' => 'users',
+            'alias'      => 'users',
             'foreignKey' => [
-                'message' => 'Profile cannot be deleted because it\'s used on Users'
-            ]
+                'message' => 'Profile cannot be deleted because it\'s used on Users',
+            ],
         ]);
 
         $this->hasMany('id', Permissions::class, 'profilesId', [
-            'alias' => 'permissions',
+            'alias'      => 'permissions',
             'foreignKey' => [
-                'action' => Relation::ACTION_CASCADE
-            ]
+                'action' => Relation::ACTION_CASCADE,
+            ],
         ]);
     }
 }

@@ -33,21 +33,22 @@ class DbProvider implements ServiceProviderInterface
      * @var array
      */
     protected $adapters = [
-        'mysql' => Pdo\Mysql::class,
-        'pgsql' => Pdo\Postgresql::class,
+        'mysql'  => Pdo\Mysql::class,
+        'pgsql'  => Pdo\Postgresql::class,
         'sqlite' => Pdo\Sqlite::class,
     ];
 
 
     /**
      * @param DiInterface $di
+     *
      * @return void
      * @throws RuntimeException
      */
     public function register(DiInterface $di): void
     {
         $config = config('database');
-        $class = $this->getClass($config);
+        $class  = $this->getClass($config);
         $config = $this->createConfig($config);
 
         $di->set($this->providerName, function () use ($class, $config) {
@@ -59,6 +60,7 @@ class DbProvider implements ServiceProviderInterface
      * Get an adapter class by name.
      *
      * @param Config $config
+     *
      * @return string
      * @throws RuntimeException
      */

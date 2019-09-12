@@ -45,12 +45,13 @@ class Application
 
     /**
      * @param string $rootPath
+     *
      * @throws Exception
      */
     public function __construct(string $rootPath)
     {
-        $this->di = new FactoryDefault();
-        $this->app = $this->createApplication();
+        $this->di       = new FactoryDefault();
+        $this->app      = $this->createApplication();
         $this->rootPath = $rootPath;
 
         $this->di->setShared(self::APPLICATION_PROVIDER, $this);

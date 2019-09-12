@@ -10,16 +10,18 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+use Phalcon\Mvc\Router;
+
 /**
- * @var $router \Phalcon\Mvc\Router
+ * @var $router Router
  */
 
 $router->add('/confirm/{code}/{email}', [
     'controller' => 'user_control',
-    'action' => 'confirmEmail'
+    'action'     => 'confirmEmail',
 ]);
 
 $router->add('/reset-password/{code}/{email}', [
     'controller' => 'user_control',
-    'action' => 'resetPassword'
+    'action'     => 'resetPassword',
 ]);

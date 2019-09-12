@@ -15,7 +15,8 @@ namespace Vokuro\Models;
 use Phalcon\Mvc\Model;
 
 /**
- * This model registers unsuccessfully logins registered and non-registered users have made
+ * This model registers unsuccessfully logins registered and non-registered
+ * users have made
  */
 class FailedLogins extends Model
 {
@@ -42,7 +43,7 @@ class FailedLogins extends Model
     public function initialize()
     {
         $this->belongsTo('usersId', Users::class, 'id', [
-            'alias' => 'user'
+            'alias' => 'user',
         ]);
     }
 }

@@ -12,15 +12,15 @@ declare(strict_types=1);
 
 namespace Vokuro\Forms;
 
-use Phalcon\Forms\Form;
-use Phalcon\Forms\Element\Text;
-use Phalcon\Forms\Element\Password;
-use Phalcon\Forms\Element\Submit;
 use Phalcon\Forms\Element\Check;
 use Phalcon\Forms\Element\Hidden;
-use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Forms\Element\Password;
+use Phalcon\Forms\Element\Submit;
+use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Form;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\Identical;
+use Phalcon\Validation\Validator\PresenceOf;
 
 class LoginForm extends Form
 {
@@ -28,26 +28,26 @@ class LoginForm extends Form
     {
         // Email
         $email = new Text('email', [
-            'placeholder' => 'Email'
+            'placeholder' => 'Email',
         ]);
 
         $email->addValidators([
             new PresenceOf([
-                'message' => 'The e-mail is required'
+                'message' => 'The e-mail is required',
             ]),
             new Email([
-                'message' => 'The e-mail is not valid'
-            ])
+                'message' => 'The e-mail is not valid',
+            ]),
         ]);
 
         $this->add($email);
 
         // Password
         $password = new Password('password', [
-            'placeholder' => 'Password'
+            'placeholder' => 'Password',
         ]);
         $password->addValidator(new PresenceOf([
-            'message' => 'The password is required'
+            'message' => 'The password is required',
         ]));
         $password->clear();
 
@@ -56,7 +56,7 @@ class LoginForm extends Form
         // Remember
         $remember = new Check('remember', [
             'value' => 'yes',
-            'id' => 'login-remember',
+            'id'    => 'login-remember',
         ]);
         $remember->setLabel('Remember me');
 
@@ -65,14 +65,14 @@ class LoginForm extends Form
         // CSRF
         $csrf = new Hidden('csrf');
         $csrf->addValidator(new Identical([
-            'value' => $this->security->getRequestToken(),
-            'message' => 'CSRF validation failed'
+            'value'   => $this->security->getRequestToken(),
+            'message' => 'CSRF validation failed',
         ]));
         $csrf->clear();
 
         $this->add($csrf);
         $this->add(new Submit('Login', [
-            'class' => 'btn btn-primary'
+            'class' => 'btn btn-primary',
         ]));
     }
 }

@@ -26,13 +26,14 @@ class ModelsMetadataProvider implements ServiceProviderInterface
 
     /**
      * @param DiInterface $di
+     *
      * @return void
      */
     public function register(DiInterface $di): void
     {
         $di->set($this->providerName, function () {
             return new MetaDataAdapter([
-                'metaDataDir' => config('application.cacheDir') . 'metaData/'
+                'metaDataDir' => config('application.cacheDir') . 'metaData/',
             ]);
         });
     }

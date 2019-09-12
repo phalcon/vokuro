@@ -12,17 +12,17 @@ declare(strict_types=1);
 
 namespace Vokuro\Forms;
 
-use Phalcon\Forms\Form;
-use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Select;
+use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Form;
 use Phalcon\Validation\Validator\PresenceOf;
 
 class ProfilesForm extends Form
 {
     /**
      * @param string|null $entity
-     * @param array $options
+     * @param array       $options
      */
     public function initialize(string $entity = null, array $options = [])
     {
@@ -35,19 +35,19 @@ class ProfilesForm extends Form
         $this->add($id);
 
         $name = new Text('name', [
-            'placeholder' => 'Name'
+            'placeholder' => 'Name',
         ]);
         $name->addValidators([
             new PresenceOf([
-                'message' => 'The name is required'
-            ])
+                'message' => 'The name is required',
+            ]),
         ]);
 
         $this->add($name);
 
         $this->add(new Select('active', [
             'Y' => 'Yes',
-            'N' => 'No'
+            'N' => 'No',
         ]));
     }
 }

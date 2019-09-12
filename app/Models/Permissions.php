@@ -44,7 +44,7 @@ class Permissions extends Model
     public function initialize()
     {
         $this->belongsTo('profilesId', Profiles::class, 'id', [
-            'alias' => 'profile'
+            'alias' => 'profile',
         ]);
     }
 }
