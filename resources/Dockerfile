@@ -1,4 +1,4 @@
-# docker build -t phalcon/vokuro:4.0.0 -f resources/Dockerfile .
+# docker build -t phalconphp/vokuro:4.0.0 -f resources/Dockerfile .
 
 # debian/buster
 FROM php:7.3-cli
@@ -37,6 +37,7 @@ RUN export PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH" \
     && echo "extension=phalcon.so" > "$PHP_INI_DIR/conf.d/docker-php-ext-phalcon.ini" \
     && php -m | grep -i "opcache\|mysql\|phalcon\|psr\|pdo\|mbstring" \
     && unset PHALCON_REPO PHALCON_PKG \
+    && mv /code/.env.example /code/.env \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /tmp/* /var/tmp/* \
@@ -48,5 +49,5 @@ RUN export PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH" \
 
 EXPOSE 80
 
-# docker run -p 80:80 phalcon/vokuro:4.0.0
+# docker run -p 80:80 phalconphp/vokuro:4.0.0
 CMD ["php", "-S", "0.0.0.0:80", "-t", "public/", ".htrouter.php"]
