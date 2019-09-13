@@ -1,6 +1,6 @@
 .dockerignore
 .editorconfig
-.env.example
+.env
 .git
 .gitattributes
 .gitignore
