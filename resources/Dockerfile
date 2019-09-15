@@ -39,6 +39,7 @@ RUN export PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH" \
     && unset PHALCON_REPO PHALCON_PKG \
     && mv /code/.env.example /code/.env \
     && apt-get autoremove -y \
+    && apt-get autoclean -y \
     && apt-get clean -y \
     && rm -rf /tmp/* /var/tmp/* \
     && find /var/cache/apt/archives /var/lib/apt/lists /var/cache \
