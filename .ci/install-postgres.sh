@@ -14,7 +14,7 @@ if [ "${CI}" != "true" ]
 then
   (>&2 echo "This script is designed to run inside a CI container only.")
   (>&2 echo "Aborting.")
-	exit 1
+  exit 1
 fi
 
 # 1. Shut down 9.* PostgreSQL database

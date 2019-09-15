@@ -34,8 +34,8 @@ cache:
 
 before_install:
   - git config --global advice.detachedHead false
-  - [ "$DB" = "postgres" ] && .ci/install-postgres
-  - [ -n "$GITHUB_TOKEN" ] && composer config github-oauth.github.com "$GITHUB_TOKEN"
+  - if [ "$DB" = "postgres" ]; then .ci/install-postgres.sh; fi
+  - if [ -n "$GITHUB_TOKEN" ]; then composer config github-oauth.github.com "$GITHUB_TOKEN"; fi
 
 install:
   - pecl install --force psr
@@ -58,9 +58,6 @@ script:
         phpenv config-rm xdebug.ini || true
         vendor/bin/phpcs
       fi
-
-after_script:
-  - getent hosts dev.vokuro.phalcon.io
 
 notifications:
   email: false
