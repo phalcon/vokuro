@@ -34,8 +34,8 @@ cache:
 
 before_install:
   - git config --global advice.detachedHead false
-  - if [ "$DB" = "postgres" ]; then .ci/install-postgres.sh; fi
-  - if [ -n "$GITHUB_TOKEN" ]; then composer config github-oauth.github.com "$GITHUB_TOKEN"; fi
+  - '[ "$DB" = "postgres" ] && .ci/install-postgres.sh'
+  - '[ -n "$GITHUB_TOKEN" ] && composer config github-oauth.github.com "$GITHUB_TOKEN"'
 
 install:
   - pecl install --force psr
