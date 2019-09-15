@@ -17,7 +17,6 @@ use Phalcon\Db\Adapter\Pdo;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use RuntimeException;
-use function Vokuro\config;
 use function Vokuro\root_path;
 
 class DbProvider implements ServiceProviderInterface
@@ -47,7 +46,8 @@ class DbProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $config = config('database');
+        /** @var Config $config */
+        $config = $di->getShared('config')->get('database');
         $class  = $this->getClass($config);
         $config = $this->createConfig($config);
 

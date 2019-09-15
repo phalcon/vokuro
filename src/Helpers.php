@@ -23,26 +23,6 @@ function container()
 }
 
 /**
- * Get configuration value
- *
- * Also can access nested values.
- * Example: config('config.db.name')
- *
- * @return mixed
- */
-function config()
-{
-    $args   = func_get_args();
-    $config = Di::getDefault()->getShared('config');
-
-    if (empty($args)) {
-        return $config;
-    }
-
-    return call_user_func_array([$config, 'path'], $args);
-}
-
-/**
  * Get projects relative root path
  *
  * @param string $prefix

@@ -17,7 +17,6 @@ use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Logger\Adapter\Stream as FileLogger;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
-use function Vokuro\config;
 
 /**
  * Logger service
@@ -37,7 +36,7 @@ class LoggerProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var Config $loggerConfigs */
-        $loggerConfigs = config('logger');
+        $loggerConfigs = $di->getShared('config')->get('logger');
 
         $di->set($this->providerName, function () use ($loggerConfigs) {
             $filename = trim($loggerConfigs->get('filename'), '\\/');

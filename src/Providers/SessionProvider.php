@@ -19,7 +19,6 @@ use Phalcon\Session\Adapter\Noop;
 use Phalcon\Session\Adapter\Stream as SessionAdapter;
 use Phalcon\Session\Manager as SessionManager;
 use Phalcon\Version;
-use function Vokuro\config;
 
 class SessionProvider implements ServiceProviderInterface
 {
@@ -36,7 +35,7 @@ class SessionProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var string $savePath */
-        $savePath = config('application.sessionSavePath');
+        $savePath = $di->getShared('config')->path('application.sessionSavePath');
         $handler  = $this->getSessionAdapter($savePath);
 
         $di->set($this->providerName, function () use ($handler) {

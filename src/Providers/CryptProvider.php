@@ -15,7 +15,6 @@ namespace Vokuro\Providers;
 use Phalcon\Crypt;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use function Vokuro\config;
 
 class CryptProvider implements ServiceProviderInterface
 {
@@ -32,7 +31,7 @@ class CryptProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var string $cryptSalt */
-        $cryptSalt = config('application.cryptSalt');
+        $cryptSalt = $di->getShared('config')->path('application.cryptSalt');
 
         $di->set($this->providerName, function () use ($cryptSalt) {
             $crypt = new Crypt();

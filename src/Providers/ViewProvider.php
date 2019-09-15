@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Config;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt;
-use function Vokuro\config;
 
 class ViewProvider implements ServiceProviderInterface
 {
@@ -30,10 +30,12 @@ class ViewProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
+        /** @var Config $config */
+        $config = $di->getShared('config');
         /** @var string $viewsDir */
-        $viewsDir = config('application.viewsDir');
+        $viewsDir = $config->path('application.viewsDir');
         /** @var string $cacheDir */
-        $cacheDir = config('application.cacheDir');
+        $cacheDir = $config->path('application.cacheDir');
 
         $di->setShared($this->providerName, function () use ($viewsDir, $cacheDir, $di) {
             $view = new View();

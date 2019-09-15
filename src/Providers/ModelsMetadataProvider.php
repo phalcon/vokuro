@@ -15,7 +15,6 @@ namespace Vokuro\Providers;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Model\Metadata\Stream as MetaDataAdapter;
-use function Vokuro\config;
 
 class ModelsMetadataProvider implements ServiceProviderInterface
 {
@@ -31,9 +30,11 @@ class ModelsMetadataProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $di->set($this->providerName, function () {
+        /** @var string $cacheDir */
+        $cacheDir = $di->getShared('config')->path('application.cacheDir');
+        $di->set($this->providerName, function () use ($cacheDir) {
             return new MetaDataAdapter([
-                'metaDataDir' => config('application.cacheDir') . 'metaData/',
+                'metaDataDir' => $cacheDir . 'metaData/',
             ]);
         });
     }
