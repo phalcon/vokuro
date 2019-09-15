@@ -17,7 +17,7 @@
 
                 <br>
                 <br>
-                Vökuró!. Enjoy!
+                Vökuró. Enjoy!
                 <br>
             </p>
         </td>

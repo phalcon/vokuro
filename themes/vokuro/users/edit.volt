@@ -83,7 +83,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="3" class="text-center">User does not have successfull logins</td>
+                        <td colspan="3" class="text-center">User does not have successful logins</td>
                     </tr>
                 {% endfor %}
                 </tbody>
