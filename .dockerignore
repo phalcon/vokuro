@@ -19,5 +19,7 @@ db/*.sqlite3
 resources/boxfile.yml
 resources/Dockerfile
 
+tests/_output/*.*
+
 var/cache/*/*.*
 var/logs/*.*
