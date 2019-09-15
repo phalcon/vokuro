@@ -45,3 +45,11 @@ table.perms label {
 .td-width-5 {
     width: 5%;
 }
+
+.jumbotron {
+    margin: 1em 0 .5em
+}
+
+.jumbotron + .row {
+    padding: .5em 0 1em
+}
