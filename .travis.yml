@@ -34,26 +34,8 @@ cache:
 
 before_install:
   - git config --global advice.detachedHead false
-  - |
-      # 1. Shut down 9.* PostgreSQL database
-      # 2. Install PostgreSQL 11.*
-      # 3. Copy the authentication information from the old 9.6 configuration
-      # 4. Create a role called "travis"
-      if [ "$DB" = "postgres" ]; then
-        sudo apt-get update
-        sudo apt-get --yes remove postgresql\* 1> /dev/null
-        sudo apt-get install -y postgresql-11 postgresql-client-11 1> /dev/null
-        sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
-        sudo service postgresql restart 11
-        psql -c 'CREATE ROLE travis SUPERUSER LOGIN CREATEDB;' -U postgres
-        psql --version
-      fi
-
-      # Setting up Github token
-      if [ -n "$GITHUB_TOKEN" ]; then
-        composer config github-oauth.github.com "$GITHUB_TOKEN"
-        echo 'Add Github token'
-      fi
+  - [ "$DB" = "postgres" ] && .ci/install-postgres
+  - [ -n "$GITHUB_TOKEN" ] && composer config github-oauth.github.com "$GITHUB_TOKEN"
 
 install:
   - pecl install --force psr
