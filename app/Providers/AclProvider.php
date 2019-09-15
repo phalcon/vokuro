@@ -37,7 +37,7 @@ class AclProvider implements ServiceProviderInterface
         $rootPath = $application->getRootPath();
 
         $di->setShared($this->providerName, function () use ($rootPath) {
-            $filename         = $rootPath . '/configs/acl.php';
+            $filename         = $rootPath . '/config/acl.php';
             $privateResources = [];
             if (is_readable($filename)) {
                 $privateResources = include $filename;

@@ -40,7 +40,7 @@ class ConfigProvider implements ServiceProviderInterface
         $rootPath = $application->getRootPath();
 
         $di->setShared($this->providerName, function () use ($rootPath) {
-            $config = include $rootPath . '/configs/config.php';
+            $config = include $rootPath . '/config/config.php';
 
             return new Config($config);
         });

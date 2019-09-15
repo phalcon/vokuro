@@ -93,7 +93,7 @@ class Application
      */
     protected function initializeProviders(): void
     {
-        $filename = $this->rootPath . '/configs/providers.php';
+        $filename = $this->rootPath . '/config/providers.php';
         if (!file_exists($filename) || !is_readable($filename)) {
             throw new Exception('File providers.php does not exist or is not readable.');
         }
