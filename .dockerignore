@@ -1,3 +1,4 @@
+.ci
 .dockerignore
 .editorconfig
 .env
@@ -7,6 +8,18 @@
 .htaccess
 .idea
 .php-version
+.travis.yml
 *.md
 *.txt
+
+db/*.sql
+db/*.sqlite
+db/*.sqlite3
+
+resources/boxfile.yml
 resources/Dockerfile
+
+tests/_output/*.*
+
+var/cache/*/*.*
+var/logs/*.*
