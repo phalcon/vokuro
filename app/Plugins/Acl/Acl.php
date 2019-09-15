@@ -17,13 +17,13 @@ use Phalcon\Acl\Adapter\Memory as AclMemory;
 use Phalcon\Acl\Component as AclComponent;
 use Phalcon\Acl\Enum as AclEnum;
 use Phalcon\Acl\Role as AclRole;
-use Phalcon\Plugin;
+use Phalcon\Di\Injectable;
 use Vokuro\Models\Profiles;
 
 /**
  * Vokuro\Acl\Acl
  */
-class Acl extends Plugin
+class Acl extends Injectable
 {
     const APC_CACHE_VARIABLE_KEY = 'vokuro-acl';
 

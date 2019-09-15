@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Vokuro\Plugins\Auth;
 
+use Phalcon\Di\Injectable;
 use Phalcon\Http\Response;
-use Phalcon\Plugin;
 use Vokuro\Models\FailedLogins;
 use Vokuro\Models\RememberTokens;
 use Vokuro\Models\SuccessLogins;
@@ -23,7 +23,7 @@ use Vokuro\Models\Users;
  * Vokuro\Auth\Auth
  * Manages Authentication/Identity Management in Vokuro
  */
-class Auth extends Plugin
+class Auth extends Injectable
 {
     /**
      * Checks the user credentials

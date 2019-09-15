@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Vokuro\Plugins\Mail;
 
+use Phalcon\Di\Injectable;
 use Phalcon\Mvc\View;
-use Phalcon\Plugin;
 use Swift_Mailer;
 use Swift_Message as Message;
 use Swift_SmtpTransport as Smtp;
@@ -21,7 +21,7 @@ use Swift_SmtpTransport as Smtp;
 /**
  * Sends e-mails based on pre-defined templates
  */
-class Mail extends Plugin
+class Mail extends Injectable
 {
     /**
      * Sends e-mails based on predefined templates
