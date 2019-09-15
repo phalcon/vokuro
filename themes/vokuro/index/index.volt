@@ -27,13 +27,13 @@
     <div class="col-md-12 col-lg-4">
         <h3>Example addresses</h3>
         <address>
-            <strong>Vokuri, Inc.</strong><br>
+            <strong>Vökuró, Inc.</strong><br>
             456 Infinite Loop, Suite 101<br>
-            <abbr title="Phone">P:</abbr> (123) 456-7890
+            <abbr title="Phone">P:</abbr>&nbsp;<a href="tel:+11234567890" title="Call us">(123) 456-7890</a>
         </address>
         <address>
-            <strong>Full Name</strong><br>
-            <a href="mailto:#">vokuro@phalcon.io</a>
+            <strong>Contacts</strong><br>
+            <a href="mailto:team@phalcon.io?subject=Vökuró feedback" title="Send feedback">team@phalcon.io</a>
         </address>
     </div>
 </div>
