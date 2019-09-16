@@ -23,7 +23,7 @@ use Vokuro\Plugins\Auth\Exception as AuthException;
  * Controller used handle non-authenticated session actions like login/logout,
  * user signup, and forgotten passwords
  */
-final class SessionController extends ControllerBase
+class SessionController extends ControllerBase
 {
     /**
      * Default action. Set the public layout (layouts/public.volt)

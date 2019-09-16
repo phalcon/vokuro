@@ -19,7 +19,7 @@ use Vokuro\Models\ResetPasswords;
  * UserControlController
  * Provides help to users to confirm their passwords or reset them
  */
-final class UserControlController extends ControllerBase
+class UserControlController extends ControllerBase
 {
     public function initialize(): void
     {

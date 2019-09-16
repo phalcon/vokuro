@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 return [
     'private' => [
-        'users'       => [
+        'users' => [
             'index',
             'search',
             'edit',
@@ -20,7 +20,7 @@ return [
             'delete',
             'changePassword',
         ],
-        'profiles'    => [
+        'profiles' => [
             'index',
             'search',
             'edit',

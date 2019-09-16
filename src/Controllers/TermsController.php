@@ -15,7 +15,7 @@ namespace Vokuro\Controllers;
 /**
  * Display the terms and conditions page.
  */
-final class TermsController extends ControllerBase
+class TermsController extends ControllerBase
 {
     /**
      * Default action. Set the public layout (layouts/public.volt)

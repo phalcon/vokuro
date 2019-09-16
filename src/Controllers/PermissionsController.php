@@ -18,7 +18,7 @@ use Vokuro\Models\Profiles;
 /**
  * View and define permissions for the various profile levels.
  */
-final class PermissionsController extends ControllerBase
+class PermissionsController extends ControllerBase
 {
     /**
      * View the permissions for a profile level, and change them if we have a

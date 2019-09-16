@@ -21,7 +21,7 @@ use Vokuro\Models\Profiles;
  * Vokuro\Controllers\ProfilesController
  * CRUD to manage profiles
  */
-final class ProfilesController extends ControllerBase
+class ProfilesController extends ControllerBase
 {
     /**
      * Default action. Set the private (authenticated) layout

@@ -15,7 +15,7 @@ namespace Vokuro\Controllers;
 /**
  * Display the privacy page.
  */
-final class PrivacyController extends ControllerBase
+class PrivacyController extends ControllerBase
 {
     /**
      * Default action. Set the public layout (layouts/public.volt)

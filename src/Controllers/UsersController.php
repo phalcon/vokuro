@@ -23,7 +23,7 @@ use Vokuro\Models\Users;
  * Vokuro\Controllers\UsersController
  * CRUD to manage users
  */
-final class UsersController extends ControllerBase
+class UsersController extends ControllerBase
 {
     public function initialize(): void
     {
