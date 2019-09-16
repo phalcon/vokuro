@@ -5,13 +5,13 @@ namespace Vokuro\Tests\Unit\Models;
 
 use Codeception\Test\Unit;
 use Phalcon\Mvc\Model;
-use Vokuro\Models\EmailConfirmations;
+use Vokuro\Models\RememberTokens;
 
-final class EmailConfirmationsTest extends Unit
+final class RememberTokensTest extends Unit
 {
     public function testModelInstanceOf(): void
     {
-        $class = $this->make(EmailConfirmations::class);
+        $class = $this->make(RememberTokens::class);
 
         $this->assertInstanceOf(Model::class, $class);
     }
