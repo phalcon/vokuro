@@ -14,6 +14,7 @@ namespace Vokuro\Controllers;
 
 use Vokuro\Models\EmailConfirmations;
 use Vokuro\Models\ResetPasswords;
+use Vokuro\Models\Users;
 
 /**
  * UserControlController
@@ -26,10 +27,6 @@ class UserControlController extends ControllerBase
         if ($this->session->has('auth-identity')) {
             $this->view->setTemplateBefore('private');
         }
-    }
-
-    public function indexAction(): void
-    {
     }
 
     /**
@@ -56,12 +53,26 @@ class UserControlController extends ControllerBase
             ]);
         }
 
-        $confirmation->confirmed    = 'Y';
-        $confirmation->user->active = 'Y';
+        /**
+         * Activate user
+         */
+        $user = Users::findFirst($confirmation->user->id);
+        $user->active = 'Y';
+        if (!$user->save()) {
+            foreach ($confirmation->user->getMessages() as $message) {
+                $this->flash->error((string) $message);
+            }
+
+            return $this->dispatcher->forward([
+                'controller' => 'index',
+                'action'     => 'index',
+            ]);
+        }
 
         /**
          * Change the confirmation to 'confirmed' and update the user to 'active'
          */
+        $confirmation->confirmed = 'Y';
         if (!$confirmation->save()) {
             foreach ($confirmation->getMessages() as $message) {
                 $this->flash->error((string) $message);

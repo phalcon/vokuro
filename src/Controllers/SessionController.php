@@ -45,15 +45,13 @@ class SessionController extends ControllerBase
         $form = new SignUpForm();
 
         if ($this->request->isPost()) {
-            if ($form->isValid($this->request->getPost()) != false) {
-                $user = new Users(
-                    [
-                        'name'       => $this->request->getPost('name', 'striptags'),
-                        'email'      => $this->request->getPost('email'),
-                        'password'   => $this->security->hash($this->request->getPost('password')),
-                        'profilesId' => 2,
-                    ]
-                );
+            if ($form->isValid($this->request->getPost())) {
+                $user = new Users([
+                    'name'       => $this->request->getPost('name', 'striptags'),
+                    'email'      => $this->request->getPost('email'),
+                    'password'   => $this->security->hash($this->request->getPost('password')),
+                    'profilesId' => 2,
+                ]);
 
                 if ($user->save()) {
                     return $this->dispatcher->forward([

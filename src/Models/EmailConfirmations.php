@@ -19,6 +19,7 @@ use Phalcon\Mvc\Model;
  * Stores the reset password codes and their evolution
  *
  * @method static EmailConfirmations findFirstByCode(string $code)
+ * @property Users $user
  */
 class EmailConfirmations extends Model
 {

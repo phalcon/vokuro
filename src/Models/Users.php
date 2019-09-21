@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Vokuro\Models;
 
 use Phalcon\Mvc\Model;
+use Phalcon\Security;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 
@@ -107,11 +108,10 @@ class Users extends Model
             // The user must change its password in first login
             $this->mustChangePassword = 'Y';
 
+            /** @var Security $security */
+            $security = $this->getDI()->getShared('security');
             // Use this password as default
-            $this->password = $this->getDI()
-                                   ->getSecurity()
-                                   ->hash($tempPassword)
-            ;
+            $this->password = $security->hash($tempPassword);
         } else {
             // The user must not change its password in first login
             $this->mustChangePassword = 'N';
@@ -135,20 +135,17 @@ class Users extends Model
     /**
      * Send a confirmation e-mail to the user if the account is not active
      */
-    public function afterSave()
+    public function afterCreate()
     {
         // Only send the confirmation email if emails are turned on in the config
-        if ($this->getDI()->get('config')->useMail) {
-            if ($this->active == 'N') {
-                $emailConfirmation          = new EmailConfirmations();
-                $emailConfirmation->usersId = $this->id;
+        if ($this->getDI()->get('config')->useMail && $this->active == 'N') {
+            $emailConfirmation          = new EmailConfirmations();
+            $emailConfirmation->usersId = $this->id;
 
-                if ($emailConfirmation->save()) {
-                    $this->getDI()
-                         ->getFlash()
-                         ->notice('A confirmation mail has been sent to ' . $this->email)
-                    ;
-                }
+            if ($emailConfirmation->save()) {
+                $this->getDI()
+                    ->getFlash()
+                    ->notice('A confirmation mail has been sent to ' . $this->email);
             }
         }
     }
