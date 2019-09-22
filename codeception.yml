@@ -36,6 +36,5 @@ error_level: "E_ALL"
 coverage:
     enabled: true
     remote: false
-    whitelist:
-        include:
-            - src/*.php
+    include:
+        - src/*
