@@ -51,7 +51,7 @@ before_script:
 
 script:
   - vendor/bin/codecept build --quiet
-  - vendor/bin/codecept run --coverage --coverage-xml
+  - vendor/bin/codecept run
   - vendor/bin/psalm --show-info=false
   - |
       if [ "$TRAVIS_PHP_VERSION" = "7.2" ]; then
