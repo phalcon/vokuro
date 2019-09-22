@@ -51,13 +51,16 @@ before_script:
 
 script:
   - vendor/bin/codecept build --quiet
-  - vendor/bin/codecept run
+  - vendor/bin/codecept run --coverage --coverage-xml
   - vendor/bin/psalm --show-info=false
   - |
       if [ "$TRAVIS_PHP_VERSION" = "7.2" ]; then
         phpenv config-rm xdebug.ini || true
         vendor/bin/phpcs
       fi
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email: false
