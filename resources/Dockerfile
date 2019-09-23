@@ -36,7 +36,6 @@ RUN export PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH" \
     && echo "extension=psr.so" > "$PHP_INI_DIR/conf.d/docker-php-ext-psr.ini" \
     && echo "extension=phalcon.so" > "$PHP_INI_DIR/conf.d/docker-php-ext-phalcon.ini" \
     && php -m | grep -i "opcache\|mysql\|phalcon\|psr\|pdo\|mbstring" \
-    && unset PHALCON_REPO PHALCON_PKG \
     && mv /code/.env.example /code/.env \
     && apt-get autoremove -y \
     && apt-get autoclean -y \

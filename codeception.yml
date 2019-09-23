@@ -32,3 +32,9 @@ params:
     - tests/.env.test
 
 error_level: "E_ALL"
+
+#coverage:
+#    enabled: true
+#    remote: false
+#    include:
+#        - src/*

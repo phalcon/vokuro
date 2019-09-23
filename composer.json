@@ -44,11 +44,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Vokuro\\": "app/",
-            "Phalcon\\": "app/Phalcon"
+            "Vokuro\\": "src/",
+            "Phalcon\\": "src/Phalcon"
         },
         "files": [
-            "app/Helpers.php"
+            "src/Helpers.php"
         ]
     }
 }

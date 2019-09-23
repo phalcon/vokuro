@@ -8,8 +8,8 @@
         <exclude name="Generic.Files.LineLength.TooLong"/>
         <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
     </rule>
-    <file>app</file>
-    <file>configs</file>
+    <file>src</file>
+    <file>config</file>
     <file>db</file>
     <file>public/index.php</file>
     <file>tests/acceptance</file>
