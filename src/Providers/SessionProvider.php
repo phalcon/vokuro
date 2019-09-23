@@ -14,11 +14,8 @@ namespace Vokuro\Providers;
 
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Session\Adapter\Beta2FixStream;
-use Phalcon\Session\Adapter\Noop;
 use Phalcon\Session\Adapter\Stream as SessionAdapter;
 use Phalcon\Session\Manager as SessionManager;
-use Phalcon\Version;
 
 class SessionProvider implements ServiceProviderInterface
 {
@@ -36,36 +33,16 @@ class SessionProvider implements ServiceProviderInterface
     {
         /** @var string $savePath */
         $savePath = $di->getShared('config')->path('application.sessionSavePath');
-        $handler  = $this->getSessionAdapter($savePath);
+        $handler  = new SessionAdapter([
+            'savePath' => $savePath,
+        ]);
 
         $di->set($this->providerName, function () use ($handler) {
             $session = new SessionManager();
-            $session->setHandler($handler);
+            $session->setAdapter($handler);
             $session->start();
 
             return $session;
         });
-    }
-
-    /**
-     * Remove current method after after next release of Phalcon 4
-     *
-     * @see https://github.com/phalcon/cphalcon/issues/14265
-     *
-     * @param string $savePath
-     *
-     * @return Noop
-     */
-    protected function getSessionAdapter(string $savePath): Noop
-    {
-        $options = [
-            'savePath' => $savePath,
-        ];
-
-        if (Version::get() !== '4.0.0-beta.2') {
-            return new SessionAdapter($options);
-        }
-
-        return new Beta2FixStream($options);
     }
 }
