@@ -38,7 +38,10 @@ vendor/bin/phinx seed:run
 ```
 
 **NOTE** After the installation, please ensure that the following folders have write permissions set:
-- `cache`
+- `var/cache/acl`
+- `var/cache/metaData`
+- `var/cache/session`
+- `var/cache/volt`
 
 ## NOTE
 
