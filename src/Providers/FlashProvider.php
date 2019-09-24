@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
+use Phalcon\Escaper;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Flash\Direct as Flash;
@@ -31,12 +32,16 @@ class FlashProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         $di->set($this->providerName, function () {
-            return new Flash([
+            $escaper = new Escaper();
+            $flash = new Flash($escaper);
+            $flash->setCssClasses([
                 'error'   => 'alert alert-danger',
                 'success' => 'alert alert-success',
                 'notice'  => 'alert alert-info',
                 'warning' => 'alert alert-warning',
             ]);
+
+            return $flash;
         });
     }
 }
