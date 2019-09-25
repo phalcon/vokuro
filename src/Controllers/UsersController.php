@@ -35,7 +35,6 @@ class UsersController extends ControllerBase
      */
     public function indexAction(): void
     {
-        $this->persistent->conditions = null;
         $this->view->setVar('form', new UsersForm());
     }
 
@@ -44,31 +43,21 @@ class UsersController extends ControllerBase
      */
     public function searchAction()
     {
-        $numberPage = 1;
-        if ($this->request->isPost()) {
-            $query                          = Criteria::fromInput($this->di, 'Vokuro\Models\Users', $this->request->getPost());
-            $this->persistent->searchParams = $query->getParams();
-        } else {
-            $numberPage = $this->request->getQuery("page", "int");
-        }
-
-        $parameters = [];
-        if ($this->persistent->searchParams) {
-            $parameters = $this->persistent->searchParams;
-        }
+        $numberPage = $this->request->getQuery('page', 'int', 1);
+        $parameters = Criteria::fromInput($this->di, Users::class, $this->request->getQuery())->getParams();
 
         $users = Users::find($parameters);
-        if (count($users) == 0) {
-            $this->flash->notice("The search did not find any users");
+        if (count($users) === 0) {
+            $this->flash->notice('The search did not find any users');
             return $this->dispatcher->forward([
                 'action' => 'index',
             ]);
         }
 
         $paginator = new Paginator([
-            "data"  => $users,
-            "limit" => 10,
-            "page"  => $numberPage,
+            'data'  => $users,
+            'limit' => 10,
+            'page'  => $numberPage,
         ]);
 
         $this->view->setVar('page', $paginator->paginate());
