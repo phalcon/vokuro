@@ -24,5 +24,5 @@
         {{ form.render('profilesId', ['class': 'form-control mr-sm-2']) }}
     </div>
 
-    <button type="submit" class="btn btn-primary">Confirm identity</button>
+    <button type="submit" class="btn btn-primary">Search</button>
 </form>
