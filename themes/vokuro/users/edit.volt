@@ -4,6 +4,8 @@
     {{ link_to("users/index", "&larr; Go Back", "class": "btn btn-warning") }}
 </div>
 
+{{ flash.output() }}
+
 <form method="post">
     <ul class="nav nav-tabs" id="user-edit-tabs" role="tablist">
         <li class="nav-item">
