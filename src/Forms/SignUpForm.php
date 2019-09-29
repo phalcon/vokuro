@@ -27,10 +27,10 @@ use Phalcon\Validation\Validator\StringLength;
 class SignUpForm extends Form
 {
     /**
-     * @param string|null $entity
-     * @param array       $options
+     * @param null $entity
+     * @param array $options
      */
-    public function initialize(string $entity = null, array $options = [])
+    public function initialize($entity = null, array $options = [])
     {
         $name = new Text('name');
         $name->setLabel('Name');
