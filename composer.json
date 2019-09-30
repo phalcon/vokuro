@@ -50,5 +50,14 @@
         "files": [
             "src/Helpers.php"
         ]
+    },
+    "archive": {
+        "exclude": [
+            "/.ci",
+            ".dockerignore",
+            ".travis.yml",
+            "CODE_OF_CONDUCT.md",
+            "CONTRIBUTING.md"
+        ]
     }
 }
