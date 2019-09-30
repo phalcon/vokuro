@@ -44,8 +44,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Vokuro\\": "src/",
-            "Phalcon\\": "src/Phalcon"
+            "Vokuro\\": "src/"
         },
         "files": [
             "src/Helpers.php"
