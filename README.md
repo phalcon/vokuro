@@ -19,6 +19,14 @@ To run this application on your machine, you need at least:
 * Apache Web Server with `mod_rewrite enabled`, and `AllowOverride Options` (or `All`) in your `httpd.conf` or Nginx Web Server
 * Latest [Phalcon Framework](https://github.com/phalcon/cphalcon) extension installed/enabled
 
+### Install Vökuró via composer create-project
+
+TODO: change version after next release is launched.
+
+```bash
+composer create-project phalcon/vokuro /path/to/vokuro-folder "4.0.x-dev" --prefer-dist
+```
+
 ### Installing Dependencies via Composer
 
 Vökuró's dependencies must be installed using Composer. Install composer in a common location or in your project:
