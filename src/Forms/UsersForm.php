@@ -23,10 +23,10 @@ use Vokuro\Models\Profiles;
 class UsersForm extends Form
 {
     /**
-     * @param string|null $entity
-     * @param array       $options
+     * @param null $entity
+     * @param array $options
      */
-    public function initialize(string $entity = null, array $options = [])
+    public function initialize($entity = null, array $options = [])
     {
         // In edition the id is hidden
         if (!empty($options['edit'])) {

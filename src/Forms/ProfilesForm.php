@@ -21,10 +21,10 @@ use Phalcon\Validation\Validator\PresenceOf;
 class ProfilesForm extends Form
 {
     /**
-     * @param string|null $entity
-     * @param array       $options
+     * @param null $entity
+     * @param array $options
      */
-    public function initialize(string $entity = null, array $options = [])
+    public function initialize($entity = null, array $options = [])
     {
         if (!empty($options['edit'])) {
             $id = new Hidden('id');

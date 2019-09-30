@@ -35,7 +35,6 @@ class UsersController extends ControllerBase
      */
     public function indexAction(): void
     {
-        $this->persistent->conditions = null;
         $this->view->setVar('form', new UsersForm());
     }
 
@@ -44,31 +43,21 @@ class UsersController extends ControllerBase
      */
     public function searchAction()
     {
-        $numberPage = 1;
-        if ($this->request->isPost()) {
-            $query                          = Criteria::fromInput($this->di, 'Vokuro\Models\Users', $this->request->getPost());
-            $this->persistent->searchParams = $query->getParams();
-        } else {
-            $numberPage = $this->request->getQuery("page", "int");
-        }
-
-        $parameters = [];
-        if ($this->persistent->searchParams) {
-            $parameters = $this->persistent->searchParams;
-        }
+        $numberPage = $this->request->getQuery('page', 'int', 1);
+        $parameters = Criteria::fromInput($this->di, Users::class, $this->request->getQuery())->getParams();
 
         $users = Users::find($parameters);
-        if (count($users) == 0) {
-            $this->flash->notice("The search did not find any users");
+        if (count($users) === 0) {
+            $this->flash->notice('The search did not find any users');
             return $this->dispatcher->forward([
                 'action' => 'index',
             ]);
         }
 
         $paginator = new Paginator([
-            "data"  => $users,
-            "limit" => 10,
-            "page"  => $numberPage,
+            'data'  => $users,
+            'limit' => 10,
+            'page'  => $numberPage,
         ]);
 
         $this->view->setVar('page', $paginator->paginate());
@@ -80,10 +69,11 @@ class UsersController extends ControllerBase
     public function createAction(): void
     {
         $form = new UsersForm();
+
         if ($this->request->isPost()) {
-            if ($form->isValid($this->request->getPost()) == false) {
+            if (!$form->isValid($this->request->getPost())) {
                 foreach ($form->getMessages() as $message) {
-                    $this->flash->error($message);
+                    $this->flash->error((string) $message);
                 }
             } else {
                 $user = new Users([
@@ -114,11 +104,16 @@ class UsersController extends ControllerBase
     {
         $user = Users::findFirstById($id);
         if (!$user) {
-            $this->flash->error("User was not found");
+            $this->flash->error('User was not found.');
+
             return $this->dispatcher->forward([
                 'action' => 'index',
             ]);
         }
+
+        $form = new UsersForm($user, [
+            'edit' => true,
+        ]);
 
         if ($this->request->isPost()) {
             $user->assign([
@@ -130,13 +125,9 @@ class UsersController extends ControllerBase
                 'active'     => $this->request->getPost('active'),
             ]);
 
-            $form = new UsersForm([
-                'edit' => true,
-            ]);
-
-            if ($form->isValid($this->request->getPost()) == false) {
+            if (!$form->isValid($this->request->getPost())) {
                 foreach ($form->getMessages() as $message) {
-                    $this->flash->error($message);
+                    $this->flash->error((string) $message);
                 }
             } else {
                 if (!$user->save()) {
@@ -144,16 +135,14 @@ class UsersController extends ControllerBase
                         $this->flash->error((string) $message);
                     }
                 } else {
-                    $this->flash->success("User was updated successfully");
+                    $this->flash->success('User was updated successfully.');
                 }
             }
         }
 
         $this->view->setVars([
             'user' => $user,
-            'form' => new UsersForm(null, [
-                'edit' => true,
-            ]),
+            'form' => $form,
         ]);
     }
 
@@ -166,7 +155,8 @@ class UsersController extends ControllerBase
     {
         $user = Users::findFirstById($id);
         if (!$user) {
-            $this->flash->error("User was not found");
+            $this->flash->error('User was not found.');
+
             return $this->dispatcher->forward([
                 'action' => 'index',
             ]);
@@ -177,7 +167,7 @@ class UsersController extends ControllerBase
                 $this->flash->error((string) $message);
             }
         } else {
-            $this->flash->success("User was deleted");
+            $this->flash->success('User was deleted.');
         }
 
         return $this->dispatcher->forward([
@@ -195,7 +185,7 @@ class UsersController extends ControllerBase
         if ($this->request->isPost()) {
             if (!$form->isValid($this->request->getPost())) {
                 foreach ($form->getMessages() as $message) {
-                    $this->flash->error($message);
+                    $this->flash->error((string) $message);
                 }
             } else {
                 $user = $this->auth->getUser();
