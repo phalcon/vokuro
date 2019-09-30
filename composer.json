@@ -9,7 +9,7 @@
         "vokuro"
     ],
     "type": "library",
-    "license": "BSD-3",
+    "license": "BSD-3-Clause",
     "homepage": "https://www.phalconphp.com",
     "authors" : [
         {
