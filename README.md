@@ -1,6 +1,6 @@
 # Vökuró
 
-[![Discord](https://img.shields.io/discord/310910488152375297?label=Discord&style=plastic)](http://phalcon.link/discord)
+[![Discord](https://img.shields.io/discord/310910488152375297?label=Discord)](http://phalcon.link/discord)
 [![Build Status](https://travis-ci.org/phalcon/vokuro.svg?branch=master)](https://travis-ci.org/phalcon/vokuro)
 [![Phalcon Backers](https://img.shields.io/badge/phalcon-backers-99ddc0.svg)](https://github.com/phalcon/cphalcon/blob/master/BACKERS.md)
 [![OpenCollective](https://opencollective.com/phalcon/backers/badge.svg)](#backers)
