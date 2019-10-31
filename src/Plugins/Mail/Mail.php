@@ -40,25 +40,19 @@ class Mail extends Injectable
         $template     = $this->getTemplate($name, $params);
 
         // Create the message
-        $message = Message::newInstance()
-                          ->setSubject($subject)
-                          ->setTo($to)
-                          ->setFrom([
-                              $mailSettings->fromEmail => $mailSettings->fromName,
-                          ])
-                          ->setBody($template, 'text/html')
-        ;
+        $message = new Message();
+        $message
+            ->setSubject($subject)
+            ->setTo($to)
+            ->setFrom([$mailSettings->fromEmail => $mailSettings->fromName])
+            ->setBody($template, 'text/html');
 
-        $transport = Smtp::newInstance(
-            $mailSettings->smtp->server,
-            $mailSettings->smtp->port,
-            $mailSettings->smtp->security
-        )
-                         ->setUsername($mailSettings->smtp->username)
-                         ->setPassword($mailSettings->smtp->password)
-        ;
+        $transport = new Smtp($mailSettings->smtp->server, $mailSettings->smtp->port, $mailSettings->smtp->security);
+        $transport
+             ->setUsername($mailSettings->smtp->username)
+             ->setPassword($mailSettings->smtp->password);
 
-        return Swift_Mailer::newInstance($transport)->send($message);
+        return (new Swift_Mailer($transport))->send($message);
     }
 
     /**
