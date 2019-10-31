@@ -23,11 +23,7 @@
 
         <MissingReturnType errorLevel="info" />
         <MissingConstructor errorLevel="info" />
-        <DocblockTypeContradiction errorLevel="info" />
         <UnresolvableInclude errorLevel="info" />
-
-        <!-- level 5 issues - should be avoided at mosts costs... -->
-        <TooManyArguments errorLevel="info" />
 
         <!-- level 8 issues - some fatal errors in PHP -->
         <MethodSignatureMismatch errorLevel="info" />

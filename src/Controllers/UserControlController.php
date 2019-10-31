@@ -37,9 +37,9 @@ class UserControlController extends ControllerBase
     {
         $code = $this->dispatcher->getParam('code');
 
-        /** @var EmailConfirmations $confirmation */
+        /** @var EmailConfirmations|false $confirmation */
         $confirmation = EmailConfirmations::findFirstByCode($code);
-        if (!$confirmation) {
+        if (!$confirmation instanceof EmailConfirmations) {
             return $this->dispatcher->forward([
                 'controller' => 'index',
                 'action'     => 'index',
@@ -113,9 +113,9 @@ class UserControlController extends ControllerBase
     {
         $code = $this->dispatcher->getParam('code');
 
+        /** @var ResetPasswords|false $resetPassword */
         $resetPassword = ResetPasswords::findFirstByCode($code);
-
-        if (!$resetPassword) {
+        if (!$resetPassword instanceof ResetPasswords) {
             return $this->dispatcher->forward([
                 'controller' => 'index',
                 'action'     => 'index',
