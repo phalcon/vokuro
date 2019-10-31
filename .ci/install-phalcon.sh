@@ -22,7 +22,7 @@ then
   cp "$HOME/assets/$LOCAL_PATH/phalcon.so" "$EXT_DIR/phalcon.so"
 else
   git clone --depth=1 -v https://github.com/phalcon/cphalcon.git -b "$PHALCON_VERSION" /tmp/phalcon
-  cd /tmp/phalcon/build || extit 1
+  cd /tmp/phalcon/build || exit 1
   ./install --phpize "$(phpenv which phpize)" --php-config "$(phpenv which php-config)" 1> /dev/null
 
   mkdir -p "$HOME/assets/$LOCAL_PATH"

@@ -4,6 +4,8 @@
     {{ link_to("users", 'class': 'btn btn-primary', "&larr; Go Back") }}
 </div>
 
+{{ flash.output() }}
+
 <form method="post">
     <div class="form-group row">
         <label for="name" class="col-sm-2 col-form-label">Name</label>

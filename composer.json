@@ -9,7 +9,7 @@
         "vokuro"
     ],
     "homepage": "https://phalcon.io",
-    "license": "BSD-3",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Mark Garrett",
@@ -44,11 +44,19 @@
     },
     "autoload": {
         "psr-4": {
-            "Vokuro\\": "src/",
-            "Phalcon\\": "src/Phalcon"
+            "Vokuro\\": "src/"
         },
         "files": [
             "src/Helpers.php"
+        ]
+    },
+    "archive": {
+        "exclude": [
+            "/.ci",
+            ".dockerignore",
+            ".travis.yml",
+            "CODE_OF_CONDUCT.md",
+            "CONTRIBUTING.md"
         ]
     }
 }
