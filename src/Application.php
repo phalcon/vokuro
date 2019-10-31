@@ -13,10 +13,10 @@ declare(strict_types=1);
 namespace Vokuro;
 
 use Exception;
-use Phalcon\Application\AbstractApplication;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Di\ServiceProviderInterface;
+use Phalcon\Http\ResponseInterface;
 use Phalcon\Mvc\Application as MvcApplication;
 
 /**
@@ -27,7 +27,7 @@ class Application
     const APPLICATION_PROVIDER = 'bootstrap';
 
     /**
-     * @var AbstractApplication
+     * @var MvcApplication
      */
     protected $app;
 
@@ -50,8 +50,8 @@ class Application
      */
     public function __construct(string $rootPath)
     {
-        $this->di       = new FactoryDefault();
-        $this->app      = $this->createApplication();
+        $this->di = new FactoryDefault();
+        $this->app = $this->createApplication();
         $this->rootPath = $rootPath;
 
         $this->di->setShared(self::APPLICATION_PROVIDER, $this);
@@ -67,7 +67,10 @@ class Application
      */
     public function run(): string
     {
-        return (string) $this->app->handle($_SERVER['REQUEST_URI'])->getContent();
+        /** @var ResponseInterface $response */
+        $response = $this->app->handle($_SERVER['REQUEST_URI']);
+
+        return (string)$response->getContent();
     }
 
     /**
@@ -81,9 +84,9 @@ class Application
     }
 
     /**
-     * @return AbstractApplication
+     * @return MvcApplication
      */
-    protected function createApplication(): AbstractApplication
+    protected function createApplication(): MvcApplication
     {
         return new MvcApplication($this->di);
     }
