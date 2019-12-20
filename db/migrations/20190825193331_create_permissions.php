@@ -15,8 +15,8 @@ final class CreatePermissions extends AbstractMigration
         }
 
         $table->addColumn('profilesId', 'integer')
-            ->addColumn('resource', 'string', ['limit' => 16])
-            ->addColumn('action', 'string', ['limit' => 16])
+            ->addColumn('resource', 'string', ['limit' => 245])
+            ->addColumn('action', 'string', ['limit' => 245])
             ->addIndex(['profilesId'])
             ->create();
     }
