@@ -181,7 +181,7 @@ class Auth extends Injectable
                 ]);
                 if ($remember) {
                     // Check if the cookie has not expired
-                    if ((time() - (86400 * 8)) < $remember->createdAt) {
+                    if (((time() - $remember->createdAt) / (86400 * 8)) < 8) {
                         // Check if the user was flagged
                         $this->checkUserFlags($user);
 
