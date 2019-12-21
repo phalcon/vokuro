@@ -8,9 +8,9 @@ ARG VERSION=4.0.0
 
 ENV BUILD_ID=$BUILD_ID \
     APP_VERSION=$VERSION \
-    PHALCON_VERSION=4.0.0-rc.2 \
-    PHALCON_BUILD=813 \
-    PHALCON_BRANCH=mainline \
+    PHALCON_VERSION=4.0.0 \
+    PHALCON_BUILD=848 \
+    PHALCON_BRANCH=nightly \
     PHALCON_OS=debian/buster
 
 LABEL build_id="$BUILD_ID" \
