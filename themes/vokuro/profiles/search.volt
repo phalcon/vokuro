@@ -1,5 +1,7 @@
 <h1 class="mt-3">Found profiles</h1>
 
+{{ flash.output() }}
+
 <div class="btn-group mb-5" role="group">
     {{ link_to("profiles/index", "&larr; Go Back", "class": "btn btn-warning") }}
     {{ link_to("profiles/create", "Create profiles", "class": "btn btn-primary") }}
@@ -16,14 +18,14 @@
     <tbody>
     {% for profile in page.items %}
         <tr>
-            <td>{{ profile.id }}</td>
-            <td>{{ profile.name }}</td>
-            <td>{{ profile.active == 'Y' ? 'Yes' : 'No' }}</td>
+            <td>{{ profile['id'] }}</td>
+            <td>{{ profile['name'] }}</td>
+            <td>{{ profile['active'] == 'Y' ? 'Yes' : 'No' }}</td>
             <td class="td-width-12">
-                {{ link_to("profiles/edit/" ~ profile.id, '<i class="icon-pencil"></i> Edit', "class": "btn btn-sm btn-outline-warning") }}
+                {{ link_to("profiles/edit/" ~ profile['id'], '<i class="icon-pencil"></i> Edit', "class": "btn btn-sm btn-outline-warning") }}
             </td>
             <td class="td-width-12">
-                {{ link_to("profiles/delete/" ~ profile.id, '<i class="icon-remove"></i> Delete', "class": "btn btn-sm btn-outline-danger") }}
+                {{ link_to("profiles/delete/" ~ profile['id'], '<i class="icon-remove"></i> Delete', "class": "btn btn-sm btn-outline-danger") }}
             </td>
         </tr>
     {% else %}

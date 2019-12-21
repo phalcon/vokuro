@@ -1,5 +1,7 @@
 <h1 class="mt-3">Forgot Password?</h1>
 
+{{ flash.output() }}
+
 <form method="post">
     <div class="form-group">
         <label for="forgot-email-input">Email address</label>

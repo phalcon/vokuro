@@ -6,6 +6,8 @@
 
 <h1 class="mt-3">Sign Up</h1>
 
+{{ flash.output() }}
+
 <form method="post">
     <div class="form-group row">
         {{ form.label('name', ['class': 'col-sm-2 col-form-label']) }}

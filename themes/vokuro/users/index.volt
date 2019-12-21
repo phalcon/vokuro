@@ -4,6 +4,8 @@
     {{ link_to("users/create", "Create Users", "class": "btn btn-primary") }}
 </div>
 
+{{ flash.output() }}
+
 <form class="form-inline" method="get" action="{{ url("users/search") }}">
     <div class="form-group">
         <label for="id" class="sr-only">Id</label>

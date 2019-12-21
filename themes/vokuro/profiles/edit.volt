@@ -1,5 +1,7 @@
 <h1 class="mt-3">Edit profile</h1>
 
+{{ flash.output() }}
+
 <div class="btn-group mb-5" role="group">
     {{ link_to("profiles/index", "&larr; Go Back", "class": "btn btn-warning") }}
 </div>

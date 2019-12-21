@@ -1,5 +1,7 @@
 <h1 class="mt-3">Search profiles</h1>
 
+{{ flash.output() }}
+
 <div class="mb-5">
     {{ link_to("profiles/create", "<i class='icon-plus-sign'></i> Create Profiles", "class": "btn btn-primary") }}
 </div>

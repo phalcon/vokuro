@@ -1,5 +1,7 @@
 <h1 class="mt-3">Log In</h1>
 
+{{ flash.output() }}
+
 <form method="post">
     <div class="form-group">
         <label for="email-input">Email address</label>

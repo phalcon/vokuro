@@ -1,4 +1,4 @@
-{{ content() }}
+{{ flash.output() }}
 
 <header class="jumbotron" id="overview">
     <h1 class="display-4">Welcome!</h1>
