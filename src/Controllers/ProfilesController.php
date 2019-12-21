@@ -46,12 +46,9 @@ class ProfilesController extends ControllerBase
      */
     public function searchAction()
     {
-        $numberPage = 1;
         if ($this->request->isPost()) {
-            $query                          = Criteria::fromInput($this->di, 'Vokuro\Models\Profiles', $this->request->getPost());
+            $query = Criteria::fromInput($this->di, 'Vokuro\Models\Profiles', $this->request->getPost());
             $this->persistent->searchParams = $query->getParams();
-        } else {
-            $numberPage = $this->request->getQuery("page", "int");
         }
 
         $parameters = [];
@@ -69,9 +66,10 @@ class ProfilesController extends ControllerBase
         }
 
         $paginator = new Paginator([
-            "data"  => $profiles,
-            "limit" => 10,
-            "page"  => $numberPage,
+            'model'  => Profiles::class,
+            'parameters' => $parameters,
+            'limit' => 10,
+            'page'  => $this->request->getQuery('page', 'int', 1),
         ]);
 
         $this->view->setVar('page', $paginator->paginate());
