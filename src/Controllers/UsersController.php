@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Vokuro\Controllers;
 
 use Phalcon\Mvc\Model\Criteria;
-use Phalcon\Paginator\Adapter\Model as Paginator;
+use Phalcon\Paginator\Adapter\QueryBuilder as Paginator;
 use Vokuro\Forms\ChangePasswordForm;
 use Vokuro\Forms\UsersForm;
 use Vokuro\Models\PasswordChanges;
@@ -41,23 +41,24 @@ class UsersController extends ControllerBase
     /**
      * Searches for users
      */
-    public function searchAction()
+    public function searchAction(): void
     {
-        $numberPage = $this->request->getQuery('page', 'int', 1);
-        $parameters = Criteria::fromInput($this->di, Users::class, $this->request->getQuery())->getParams();
+        $builder = Criteria::fromInput($this->getDI(), Users::class, $this->request->getQuery());
 
-        $users = Users::find($parameters);
-        if (count($users) === 0) {
+        $count = Users::count($builder->getParams());
+        if ($count === 0) {
             $this->flash->notice('The search did not find any users');
-            return $this->dispatcher->forward([
+            $this->dispatcher->forward([
                 'action' => 'index',
             ]);
+
+            return;
         }
 
         $paginator = new Paginator([
-            'data'  => $users,
+            'builder'  => $builder->createBuilder(),
             'limit' => 10,
-            'page'  => $numberPage,
+            'page'  => $this->request->getQuery('page', 'int', 1),
         ]);
 
         $this->view->setVar('page', $paginator->paginate());

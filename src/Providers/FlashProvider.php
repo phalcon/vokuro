@@ -34,6 +34,7 @@ class FlashProvider implements ServiceProviderInterface
         $di->set($this->providerName, function () {
             $escaper = new Escaper();
             $flash = new Flash($escaper);
+            $flash->setImplicitFlush(false);
             $flash->setCssClasses([
                 'error'   => 'alert alert-danger',
                 'success' => 'alert alert-success',

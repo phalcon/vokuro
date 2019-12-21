@@ -69,7 +69,7 @@ class Users extends Model
 
     public function initialize()
     {
-        $this->belongsTo('profilesId', Profiles::class, 'id', [
+        $this->hasOne('profilesId', Profiles::class, 'id', [
             'alias'    => 'profile',
             'reusable' => true,
         ]);
