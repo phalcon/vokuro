@@ -43,7 +43,7 @@ class UsersController extends ControllerBase
      */
     public function searchAction(): void
     {
-        $builder = Criteria::fromInput($this->di, Users::class, $this->request->getQuery());
+        $builder = Criteria::fromInput($this->getDI(), Users::class, $this->request->getQuery());
 
         $count = Users::count($builder->getParams());
         if ($count === 0) {
