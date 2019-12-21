@@ -47,7 +47,7 @@ class ProfilesController extends ControllerBase
     public function searchAction()
     {
         if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, 'Vokuro\Models\Profiles', $this->request->getPost());
+            $query = Criteria::fromInput($this->di, Profiles::class, $this->request->getPost());
             $this->persistent->searchParams = $query->getParams();
         }
 
