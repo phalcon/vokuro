@@ -1,33 +1,62 @@
 {
     "name": "phalcon/vokuro",
+    "type": "library",
     "description": "This is a sample application for the Phalcon PHP Framework",
-    "version": "1.2.0",
     "keywords": [
         "phalcon",
         "framework",
         "sample app",
         "vokuro"
     ],
-    "type": "library",
+    "homepage": "https://phalcon.io",
     "license": "BSD-3-Clause",
-    "homepage": "https://www.phalconphp.com",
-    "authors" : [
+    "authors": [
         {
-            "name" : "Andres Gutierrez",
-            "email" : "andres@phalconphp.com"
+            "name": "Mark Garrett",
+            "email": "mark@moderndeveloperllc.com"
         },
         {
-            "name" : "Mark Garrett",
-            "email" : "mark@moderndeveloperllc.com"
+            "name": "Anton Vasiliev",
+            "homepage": "https://github.com/Jeckerson"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/phalcon/vokuro/graphs/contributors"
         }
     ],
     "require": {
-        "php": ">=5.5",
-        "ext-phalcon": "~3.0",
-        "swiftmailer/swiftmailer": "^5.4",
-        "aws/aws-sdk-php": "~3.0"
+        "php": ">=7.2",
+        "ext-openssl": "*",
+        "ext-phalcon": "~4.0.0",
+        "robmorgan/phinx": "^0.11.1",
+        "swiftmailer/swiftmailer": "^6.2",
+        "vlucas/phpdotenv": "^3.6"
     },
     "require-dev": {
-        "phalcon/dd": "~1.1.0"
+        "codeception/codeception": "^3.1",
+        "phalcon/ide-stubs": "4.0.0",
+        "phpunit/phpunit": "^8.4",
+        "squizlabs/php_codesniffer": "3.5",
+        "vimeo/psalm": "^3.7"
+    },
+    "suggest": {
+        "ext-apc": "Needed to support caching ACL"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vokuro\\": "src/"
+        },
+        "files": [
+            "src/Helpers.php"
+        ]
+    },
+    "archive": {
+        "exclude": [
+            "/.ci",
+            ".dockerignore",
+            ".travis.yml",
+            "CODE_OF_CONDUCT.md",
+            "CONTRIBUTING.md"
+        ]
     }
 }

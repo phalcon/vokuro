@@ -1,15 +1,10 @@
 div.remember {
-	margin-top: 7px;
-	color: #969696;
+    margin-top: 7px;
+    color: #969696;
 }
 
 div.remember label {
-	padding-top: 15px;
-}
-
-div.forgot {
-	margin-top: 7px;
-	color: #dadada;
+    padding-top: 15px;
 }
 
 footer {
@@ -21,28 +16,40 @@ footer {
 }
 
 footer a {
-	margin-left: 10px;
-	margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 table.signup td {
-	padding: 10px;
+    padding: 10px;
 }
 
 table.signup .alert {
-	margin-bottom: 0;
+    margin-bottom: 0;
     margin-top: 3px;
 }
 
 table.perms select {
-	margin-top: 5px;
-	margin-right: 10px;
+    margin-top: 5px;
+    margin-right: 10px;
 }
 
 table.perms label {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
-div.main-container {
-	min-height: 450px;
+.td-width-12 {
+    width: 12%;
+}
+
+.td-width-5 {
+    width: 5%;
+}
+
+.jumbotron {
+    margin: 1em 0 .5em
+}
+
+.jumbotron + .row {
+    padding: .5em 0 1em
 }

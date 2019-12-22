@@ -1,0 +1,40 @@
+paths:
+    # where the modules stored
+    tests: tests
+    output: tests/_output
+    # directory for fixture data
+    data: tests/_data
+    # directory for custom modules (helpers)
+    support: tests/_support
+    envs: tests/_envs
+
+# can be changed while bootstrapping project
+actor_suffix: Tester
+
+settings:
+  # Tests (especially functional) can take a lot of memory
+  # We set a high limit for them by default.
+  memory_limit: 1024M
+
+modules:
+  enabled:
+    - PhpBrowser:
+        url: 'http://localhost'
+        curl:
+          CURLOPT_RETURNTRANSFER: true
+
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
+
+# Get params from .env file
+params:
+    - tests/.env.test
+
+error_level: "E_ALL"
+
+#coverage:
+#    enabled: true
+#    remote: false
+#    include:
+#        - src/*

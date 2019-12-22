@@ -1,0 +1,66 @@
+language: php
+
+php:
+  - '7.3'
+  - '7.2'
+
+dist: bionic
+
+services:
+  - mysql
+  - postgresql
+
+addons:
+  postgresql: "11.2"
+  hosts:
+    - dev.vokuro.phalcon.io
+
+env:
+  global:
+    - PHALCON_VERSION=v4.0.0
+  matrix:
+    - DB=mysql DB_ADAPTER=mysql DB_PORT=3306 DB_USERNAME=root
+    - DB=postgres DB_ADAPTER=pgsql DB_PORT=5432 DB_USERNAME=postgres
+    - DB=sqlite DB_ADAPTER=sqlite
+
+matrix:
+  fast_finish: true
+
+cache:
+  timeout: 604800
+  directories:
+    - "$HOME/.composer/cache"
+    - "$HOME/assets"
+
+before_install:
+  - git config --global advice.detachedHead false
+  - if [ "$DB" = "postgres" ]; then .ci/install-postgres.sh; fi
+  - if [ -n "$GITHUB_TOKEN" ]; then composer config github-oauth.github.com "$GITHUB_TOKEN"; fi
+
+install:
+  - pecl install --force psr
+  - .ci/create-db.sh
+  - .ci/install-phalcon.sh
+
+before_script:
+  - travis_retry composer install --no-interaction --no-ansi --no-progress --no-suggest
+  - cp tests/.env.test .env
+  - vendor/bin/phinx migrate -e development
+  - vendor/bin/phinx seed:run -e development
+  - php -S 127.0.0.1:8888 -t public/ .htrouter.php &
+
+script:
+  - vendor/bin/codecept build --quiet
+  - vendor/bin/codecept run
+  - vendor/bin/psalm --show-info=false
+  - |
+      if [ "$TRAVIS_PHP_VERSION" = "7.2" ]; then
+        phpenv config-rm xdebug.ini || true
+        vendor/bin/phpcs
+      fi
+
+#after_success:
+#  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email: false

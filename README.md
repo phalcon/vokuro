@@ -1,5 +1,11 @@
 # Vökuró
 
+[![Discord](https://img.shields.io/discord/310910488152375297?label=Discord)](http://phalcon.link/discord)
+[![Build Status](https://travis-ci.org/phalcon/vokuro.svg?branch=master)](https://travis-ci.org/phalcon/vokuro)
+[![Phalcon Backers](https://img.shields.io/badge/phalcon-backers-99ddc0.svg)](https://github.com/phalcon/cphalcon/blob/master/BACKERS.md)
+[![OpenCollective](https://opencollective.com/phalcon/backers/badge.svg)](#backers)
+[![OpenCollective](https://opencollective.com/phalcon/sponsors/badge.svg)](#sponsors)
+
 This is a sample application for the [Phalcon Framework](https://github.com/phalcon/cphalcon).
 We expect to implement as many features as possible to showcase the framework and its potential.
 
@@ -7,31 +13,25 @@ Please write us if you have any feedback.
 
 Thanks.
 
-## NOTE
-
-The master branch will always contain the latest stable version.
-If you wish to check older versions or newer ones currently under development, please switch to the relevant branch.
-
 ## Get Started
 
 ### Requirements
 
 To run this application on your machine, you need at least:
 
-* >= PHP 5.5
-* >= Phalcon 3.0
+* PHP >= 7.2
+* Phalcon >= 4.0
+* MySQL >= 5.5
 * Apache Web Server with `mod_rewrite enabled`, and `AllowOverride Options` (or `All`) in your `httpd.conf` or Nginx Web Server
 * Latest [Phalcon Framework](https://github.com/phalcon/cphalcon) extension installed/enabled
-* MySQL >= 5.1.5
 
-Then you'll need to create the database and initialize schema:
+### Install Vökuró via composer create-project
+
+TODO: change version after next release is launched.
 
 ```bash
-echo 'CREATE DATABASE vokuro' | mysql -u root
-cat schemas/vokuro.sql | mysql -u root vokuro
+composer create-project phalcon/vokuro /path/to/vokuro-folder "4.0.x-dev" --prefer-dist
 ```
-
-Also you can override application config by creating `app/config/config.dev.php` (already gitignored).
 
 ### Installing Dependencies via Composer
 
@@ -45,11 +45,22 @@ Run the composer installer:
 
 ```bash
 cd vokuro
-php composer.phar install
+composer install
+cp .env.example .env
+vendor/bin/phinx migrate
+vendor/bin/phinx seed:run
 ```
 
 **NOTE** After the installation, please ensure that the following folders have write permissions set:
-- `cache`
+- `var/cache/acl`
+- `var/cache/metaData`
+- `var/cache/session`
+- `var/cache/volt`
+
+## NOTE
+
+The master branch will always contain the latest stable version.
+If you wish to check older versions or newer ones currently under development, please switch to the relevant branch.
 
 ## Improving this Sample
 
@@ -62,7 +73,7 @@ If you want something to be improved or you want a new feature please submit a P
 Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/phalcon#sponsor)]
 
 <a href="https://opencollective.com/phalcon/#contributors">
-<img src="https://opencollective.com/phalcon/tiers/sponsors.svg?avatarHeight=48&width=800">
+<img src="https://opencollective.com/phalcon/tiers/sponsors.svg?avatarHeight=48&width=800" alt="sponsors">
 </a>
 
 ## Backers
@@ -70,7 +81,7 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/phalcon#backer)]
 
 <a href="https://opencollective.com/phalcon/#contributors">
-<img src="https://opencollective.com/phalcon/tiers/backers.svg?avatarHeight=48&width=800&height=200">
+<img src="https://opencollective.com/phalcon/tiers/backers.svg?avatarHeight=48&width=800&height=200" alt="backers">
 </a>
 
 ## License

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<psalm
+    totallyTyped="false"
+    resolveFromConfigFile="true"
+    allowStringToStandInForClass="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    autoloader="vendor/autoload.php"
+>
+    <projectFiles>
+        <directory name="src" />
+        <file name="public/index.php" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <LessSpecificReturnType errorLevel="info" />
+
+        <!-- level 3 issues - slightly lazy code writing, but provably low false-negatives -->
+
+        <MissingReturnType errorLevel="info" />
+        <MissingConstructor errorLevel="info" />
+        <UnresolvableInclude errorLevel="info" />
+
+        <!-- level 8 issues - some fatal errors in PHP -->
+        <MethodSignatureMismatch errorLevel="info" />
+
+    </issueHandlers>
+</psalm>

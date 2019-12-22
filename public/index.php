@@ -1,47 +1,32 @@
 <?php
 
-use Phalcon\DI\FactoryDefault;
-use Phalcon\Mvc\Application;
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
+use Vokuro\Application as VokuroApplication;
 
 error_reporting(E_ALL);
-
-/**
- * Define some useful constants
- */
-define('BASE_PATH', dirname(__DIR__));
-define('APP_PATH', BASE_PATH . '/app');
+$rootPath = dirname(__DIR__);
 
 try {
+    require_once $rootPath . '/vendor/autoload.php';
 
     /**
-     * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
+     * Load .env configurations
      */
-    $di = new FactoryDefault();
+    Dotenv\Dotenv::create($rootPath)->load();
 
     /**
-     * Read services
+     * Run Vökuró!
      */
-    include APP_PATH . "/config/services.php";
-
-    /**
-     * Get config service for use in inline setup below
-     */
-    $config = $di->getConfig();
-
-    /**
-     * Include Autoloader
-     */
-    include APP_PATH . '/config/loader.php';
-
-    /**
-    * Handle the request
-    */
-    $application = new Application($di);
-
-    echo $application->handle()
-        ->getContent();
-
+    echo (new VokuroApplication($rootPath))->run();
 } catch (Exception $e) {
-	echo $e->getMessage(), '<br>';
-	echo nl2br(htmlentities($e->getTraceAsString()));
+    echo $e->getMessage(), '<br>';
+    echo nl2br(htmlentities($e->getTraceAsString()));
 }
