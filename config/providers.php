@@ -26,6 +26,7 @@ use Vokuro\Providers\SessionBagProvider;
 use Vokuro\Providers\SessionProvider;
 use Vokuro\Providers\UrlProvider;
 use Vokuro\Providers\ViewProvider;
+use Vokuro\Providers\AssetsProvider;
 
 return [
     AclProvider::class,
@@ -44,4 +45,6 @@ return [
     SecurityProvider::class,
     UrlProvider::class,
     ViewProvider::class,
+    ViewProvider::class,
+    AssetsProvider::class,
 ];

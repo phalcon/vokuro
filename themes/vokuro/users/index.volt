@@ -3,6 +3,7 @@
 <div class="mb-5">
     {{ link_to("users/create", "Create Users", "class": "btn btn-primary") }}
 </div>
+<h6 id="adminDemoContainer">Seperated admin javascript has been loaded to private/admin layout</h6>
 
 <form class="form-inline" method="get" action="{{ url("users/search") }}">
     <div class="form-group">
