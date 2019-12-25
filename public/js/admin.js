@@ -9,8 +9,9 @@ var Admin = (function () {
 
     function getRandomColor() {
 
-        return "#"+"0123456789abcdef".split("").map(function(v,i,a){
-            return i>5 ? null : a[Math.floor(Math.random()*16)] }).join("");
+        return "#" + "0123456789abcdef".split("").map(function (v, i, a) {
+            return i > 5 ? null : a[Math.floor(Math.random() * 16)]
+        }).join("");
     }
 
     function initAdminPrivateDemo() {
@@ -21,7 +22,7 @@ var Admin = (function () {
 
         setInterval(function () {
             $adminDemoContainer.css({
-                "color" : getRandomColor(),
+                "color": getRandomColor(),
             });
         }, 2000);
     }
@@ -41,8 +42,9 @@ var Admin = (function () {
             }
         );
     };
-})();
+}());
 
-//init the javascript "class"
-var Admin = new Admin();
-
+if ( typeof vokuro === "undefined" ) {
+    vokuro = {};
+}
+vokuro.admin = new Admin();
