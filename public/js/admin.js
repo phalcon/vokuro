@@ -1,7 +1,7 @@
-;var Admin = (function () {
-    'use strict';
+var Admin = (function () {
+    "use strict";
 
-    var $adminDemoContainer = "";
+    var $adminDemoContainer;
 
     function setVars() {
         $adminDemoContainer = $("#adminDemoContainer");
@@ -9,7 +9,8 @@
 
     function getRandomColor() {
 
-        return '#'+Math.floor(Math.random()*16777215).toString(16);
+        return "#"+"0123456789abcdef".split("").map(function(v,i,a){
+            return i>5 ? null : a[Math.floor(Math.random()*16)] }).join("");
     }
 
     function initAdminPrivateDemo() {
@@ -39,8 +40,9 @@
                 me.init();
             }
         );
-    }
+    };
 })();
 
 //init the javascript "class"
-new Admin();
+var Admin = new Admin();
+
