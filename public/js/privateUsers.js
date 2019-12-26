@@ -1,10 +1,10 @@
-var Admin = (function () {
+var PrivateUsers = (function () {
     "use strict";
 
-    var $adminDemoContainer;
+    var $blinkTextContainer;
 
     function setVars() {
-        $adminDemoContainer = $("#adminDemoContainer");
+        $blinkTextContainer = $("#usersAssetManagerDemoTextContainer");
     }
 
     function getRandomColor() {
@@ -14,14 +14,14 @@ var Admin = (function () {
         }).join("");
     }
 
-    function initAdminPrivateDemo() {
+    function initUsersBlinkingTextDemo() {
 
-        if ( $adminDemoContainer.length === 0 ) {
+        if ( $blinkTextContainer.length === 0 ) {
             return;
         }
 
         setInterval(function () {
-            $adminDemoContainer.css({
+            $blinkTextContainer.css({
                 "color": getRandomColor(),
             });
         }, 2000);
@@ -33,7 +33,7 @@ var Admin = (function () {
 
         this.init = function () {
             setVars();
-            initAdminPrivateDemo();
+            initUsersBlinkingTextDemo();
         };
 
         $(document).ready(
@@ -47,4 +47,4 @@ var Admin = (function () {
 if ( typeof vokuro === "undefined" ) {
     vokuro = {};
 }
-vokuro.admin = new Admin();
+vokuro.privateUsers = new PrivateUsers();
