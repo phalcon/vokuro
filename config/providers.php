@@ -45,6 +45,5 @@ return [
     SecurityProvider::class,
     UrlProvider::class,
     ViewProvider::class,
-    ViewProvider::class,
     AssetsProvider::class,
 ];

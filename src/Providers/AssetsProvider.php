@@ -18,7 +18,6 @@ use Phalcon\Assets\Manager;
 
 class AssetsProvider implements ServiceProviderInterface
 {
-
     protected const VERSION = "1.0.0";
     /**
      * @var string
@@ -32,7 +31,6 @@ class AssetsProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-
         $assetManager = new Manager();
 
         $di->setShared($this->providerName, function () use ($assetManager) {
