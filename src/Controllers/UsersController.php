@@ -28,6 +28,7 @@ class UsersController extends ControllerBase
     public function initialize(): void
     {
         $this->view->setTemplateBefore('private');
+        $this->assets->collection("js")->addJs("/js/admin.js", true, true);
     }
 
     /**
