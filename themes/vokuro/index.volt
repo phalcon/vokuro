@@ -1,4 +1,3 @@
-{% set DI = this.getDi() %}
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 <head>
