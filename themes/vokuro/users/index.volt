@@ -3,7 +3,7 @@
 <div class="mb-5">
     {{ link_to("users/create", "Create Users", "class": "btn btn-primary") }}
 </div>
-<h6 id="adminDemoContainer">Seperated admin javascript has been loaded to private/admin layout</h6>
+<h6 id="usersAssetManagerDemoTextContainer">Separated javascript has been loaded</h6>
 
 {{ flash.output() }}
 

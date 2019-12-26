@@ -46,7 +46,7 @@ class AssetsProvider implements ServiceProviderInterface
                         "crossorigin" => "anonymous"
                     ]
                 )
-                ->addCss('/css/style.css', true, true, [
+                ->addCss('/css/style.css?dc=' . self::VERSION, true, true, [
                     "media" => "screen,projection"
                 ]);
 
