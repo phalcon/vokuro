@@ -48,7 +48,9 @@ class ProfilesController extends ControllerBase
     {
         if ($this->request->isPost()) {
             $query = Criteria::fromInput($this->di, Profiles::class, $this->request->getPost());
-            $this->persistent->searchParams = $query->getParams();
+            $searchparams=$query->getParams(); 
+            unset($searchparams["di"]);
+            $this->persistent->searchParams=$searchparams;
         }
 
         $parameters = [];
