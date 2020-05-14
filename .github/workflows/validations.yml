@@ -1,0 +1,88 @@
+name: "Validations"
+on: [push, pull_request]
+jobs:
+    validate-code-style:
+        name: PSR-12 Code style
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+
+            - name: Validate composer.json and composer.lock
+              run: composer validate
+
+            - name: Get Composer Cache Directory
+              id: composer-cache
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            - name: Cache composer dependencies
+              uses: actions/cache@v1
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-
+
+            - name: Install PHP_CodeSniffer composer package
+              run: composer global require "squizlabs/php_codesniffer=*"
+
+            - name: Validate PSR-12 Code Style
+              run: ~/.composer/vendor/bin/phpcs
+
+    validate-code-static:
+        name: Static Code with PHP ${{ matrix.php-versions }}
+        runs-on: ubuntu-latest
+        env:
+            extensions: mbstring, intl, json, psr, phalcon-4.0.5
+            key: cache-v2.0~14.05.2020
+        needs: validate-code-style
+        strategy:
+            fail-fast: false
+            matrix:
+                php-versions: ['7.2', '7.3', '7.4']
+
+        steps:
+            - name: Checkout the code
+              uses: actions/checkout@v1
+
+            - name: Setup cache environment
+              id: cache-env
+              uses: shivammathur/cache-extensions@v1
+              with:
+                  php-version: ${{ matrix.php-versions }}
+                  extensions: ${{ env.extensions }}
+                  key: ${{ env.key }}
+
+            - name: Cache extensions
+              uses: actions/cache@v1
+              with:
+                  path: ${{ steps.cache-env.outputs.dir }}
+                  key: ${{ steps.cache-env.outputs.key }}
+                  restore-keys: ${{ steps.cache-env.outputs.key }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php-versions }}
+                  extensions: ${{ env.extensions }}
+                  tools: pecl
+
+            - name: Get Composer Cache Directory
+              id: composer-cache
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            - name: Cache composer dependencies
+              uses: actions/cache@v1
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-
+
+            - name: Install Composer dependencies with PHPStan
+              run: composer require --prefer-dist --no-progress --no-suggest --dev phpstan/phpstan
+
+            - name: Run Psalm
+              if: always()
+              run: vendor/bin/psalm --show-info=false
+
+            - name: Run PHPStan
+              if: always()
+              run: vendor/bin/phpstan analyse -l 5 src
