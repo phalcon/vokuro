@@ -67,7 +67,7 @@ class ControllerBase extends Controller
                     ]);
                 } else {
                     $dispatcher->forward([
-                        'controller' => 'user_control',
+                        'controller' => 'index',
                         'action'     => 'index',
                     ]);
                 }
