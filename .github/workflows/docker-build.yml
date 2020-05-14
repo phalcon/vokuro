@@ -9,4 +9,4 @@ jobs:
         steps:
             - uses: actions/checkout@v1
             - name: Build Vokuro image
-              run: docker build -t phalconphp/vokuro:4.0.0 -f resources/Dockerfile .
+              run: docker build -t phalconphp/vokuro:4.0.5 -f resources/Dockerfile .
