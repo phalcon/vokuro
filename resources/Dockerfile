@@ -1,16 +1,16 @@
-# docker build -t phalconphp/vokuro:4.0.0 -f resources/Dockerfile .
+# docker build -t phalconphp/vokuro:4.0.5 -f resources/Dockerfile .
 
 # debian/buster
-FROM php:7.3-cli
+FROM php:7.4-cli
 
-ARG BUILD_ID=1
-ARG VERSION=4.0.0
+ARG BUILD_ID=2
+ARG VERSION=4.0.5
 
 ENV BUILD_ID=$BUILD_ID \
     APP_VERSION=$VERSION \
-    PHALCON_VERSION=4.0.0 \
-    PHALCON_BUILD=848 \
-    PHALCON_BRANCH=nightly \
+    PHALCON_VERSION=4.0.5 \
+    PHALCON_BUILD=923 \
+    PHALCON_BRANCH=stable \
     PHALCON_OS=debian/buster
 
 LABEL build_id="$BUILD_ID" \
@@ -24,7 +24,7 @@ ADD . /code
 WORKDIR /code
 
 RUN export PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH" \
-           PHALCON_PKG="php7.3-phalcon_$PHALCON_VERSION-$PHALCON_BUILD+php7.3_amd64.deb" \
+           PHALCON_PKG="php7.4-phalcon_$PHALCON_VERSION-$PHALCON_BUILD+php7.4_amd64.deb" \
     && curl -sSL \
         "$PHALCON_REPO/packages/$PHALCON_OS/$PHALCON_PKG/download.deb" \
         -o /tmp/phalcon.deb \
@@ -49,5 +49,5 @@ RUN export PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH" \
 
 EXPOSE 80
 
-# docker run -p 80:80 phalconphp/vokuro:4.0.0
+# docker run -p 80:80 phalconphp/vokuro:4.0.5
 CMD ["php", "-S", "0.0.0.0:80", "-t", "public/", ".htrouter.php"]
