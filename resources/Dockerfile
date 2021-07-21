@@ -49,5 +49,5 @@ RUN export PHALCON_REPO="https://packagecloud.io/phalcon/$PHALCON_BRANCH" \
 
 EXPOSE 80
 
-# docker run -p 80:80 phalconphp/vokuro:4.0.5
+# docker run -p 80:80 phalconphp/vokuro:4.1.2
 CMD ["php", "-S", "0.0.0.0:80", "-t", "public/", ".htrouter.php"]
