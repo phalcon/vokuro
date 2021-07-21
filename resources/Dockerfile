@@ -1,17 +1,17 @@
-# docker build -t phalconphp/vokuro:4.0.6 -f resources/Dockerfile .
+# docker build -t phalconphp/vokuro:4.1.2 -f resources/Dockerfile .
 
 # debian/buster
 FROM php:7.4-cli
 
 ARG BUILD_ID=2
-ARG VERSION=4.0.6
+ARG VERSION=4.1.2
 
 ENV BUILD_ID=$BUILD_ID \
     APP_VERSION=$VERSION \
-    PHALCON_VERSION=4.0.6 \
-    PHALCON_BUILD=1070 \
-    PHALCON_BRANCH=nightly \
-    PHALCON_OS=debian/buster
+    PHALCON_VERSION=4.1.2 \
+    PHALCON_BUILD=1221 \
+    PHALCON_BRANCH=stable \
+    PHALCON_OS=debian/stretch
 
 LABEL build_id="$BUILD_ID" \
       version="$VERSION" \
