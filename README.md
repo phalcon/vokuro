@@ -27,10 +27,8 @@ To run this application on your machine, you need at least:
 
 ### Install Vökuró via composer create-project
 
-TODO: change version after next release is launched.
-
 ```bash
-composer create-project phalcon/vokuro /path/to/vokuro-folder "4.0.x-dev" --prefer-dist
+composer create-project phalcon/vokuro /path/to/vokuro-folder "4.1.2" --prefer-dist
 ```
 
 ### Installing Dependencies via Composer
