@@ -16,8 +16,7 @@ db/*.sql
 db/*.sqlite
 db/*.sqlite3
 
-resources/boxfile.yml
-resources/Dockerfile
+docker/Dockerfile
 
 tests/_output/*.*
 

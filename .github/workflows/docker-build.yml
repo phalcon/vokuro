@@ -1,6 +1,6 @@
 name: CI
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
     build:
@@ -9,4 +9,4 @@ jobs:
         steps:
             - uses: actions/checkout@v1
             - name: Build Vokuro image
-              run: docker build -t phalconphp/vokuro:4.0.5 -f resources/Dockerfile .
+              run: docker build -t phalconphp/vokuro:4.1.2 -f docker/Dockerfile .
