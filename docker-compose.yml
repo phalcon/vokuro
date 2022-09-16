@@ -1,0 +1,56 @@
+version: '3'
+services:
+
+  # Application - Vökuró
+  application-8.0:
+    build: docker/8.0
+    container_name: vokuro-app-8.0
+    restart: unless-stopped
+    tty: true
+    working_dir: /code
+    depends_on:
+      - mysql
+    volumes:
+      - ./:/code
+    networks:
+      - vokuro-network
+
+  # Application - REST API 8.1
+  application-8.1:
+    build: docker/8.1
+    container_name: vokuro-app-8.1
+    restart: unless-stopped
+    tty: true
+    working_dir: /code
+    depends_on:
+      - mysql
+    volumes:
+      - ./:/code
+    networks:
+      - vokuro-network
+
+  # Database - Mysql
+  mysql:
+    image: mysql:5.7
+    container_name: vokuro-mysql
+    restart: unless-stopped
+    tty: true
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=phalcon
+      - MYSQL_DATABASE=phalcon_vokuro
+      - MYSQL_PASSWORD=secret
+    volumes:
+      - vokuro-volume:/var/lib/mysql/
+    networks:
+      - vokuro-network
+
+# Network
+networks:
+  vokuro-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  vokuro-volume:
+    driver: local

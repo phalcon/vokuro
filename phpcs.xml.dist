@@ -2,8 +2,9 @@
 <ruleset name="Phalcon">
     <description>Phalcon Coding Standards</description>
     <arg value="-colors"/>
+    <arg value="p"/>
     <arg value="s"/>
-    <rule ref="PSR2">
+    <rule ref="PSR12">
         <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
         <exclude name="Generic.Files.LineLength.TooLong"/>
         <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
