@@ -31,13 +31,13 @@ jobs:
         name: Static Code with PHP ${{ matrix.php-versions }}
         runs-on: ubuntu-latest
         env:
-            extensions: mbstring, intl, json, psr, phalcon-4.0.5
+            extensions: mbstring, intl, json, psr, phalcon-5.0.0RC4
             key: cache-v2.0~14.05.2020
         needs: validate-code-style
         strategy:
             fail-fast: false
             matrix:
-                php-versions: ['7.2', '7.3', '7.4']
+                php-versions: ['7.4', '8.0', '8.1']
 
         steps:
             - name: Checkout the code
@@ -85,4 +85,4 @@ jobs:
 
             - name: Run PHPStan
               if: always()
-              run: vendor/bin/phpstan analyse -l 5 src
+              run: vendor/bin/phpstan analyse -l 5 -a ./vendor/autoload.php src

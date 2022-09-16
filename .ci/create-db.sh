@@ -9,7 +9,7 @@
 
 set -e
 
-: "${DB_NAME:=vokuro}"
+: "${DB_NAME:=phalcon_vokuro}"
 
 case "$DB_ADAPTER" in
   "mysql")
