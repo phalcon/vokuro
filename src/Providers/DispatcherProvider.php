@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
@@ -21,7 +22,7 @@ class DispatcherProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'dispatcher';
+    protected string $providerName = 'dispatcher';
 
     /**
      * @param DiInterface $di
@@ -30,11 +31,14 @@ class DispatcherProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $di->set($this->providerName, function () {
-            $dispatcher = new Dispatcher();
-            $dispatcher->setDefaultNamespace('Vokuro\Controllers');
+        $di->set(
+            $this->providerName,
+            function () {
+                $dispatcher = new Dispatcher();
+                $dispatcher->setDefaultNamespace('Vokuro\Controllers');
 
-            return $dispatcher;
-        });
+                return $dispatcher;
+            }
+        );
     }
 }

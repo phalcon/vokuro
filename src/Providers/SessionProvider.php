@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
@@ -22,7 +23,7 @@ class SessionProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'session';
+    protected string $providerName = 'session';
 
     /**
      * @param DiInterface $di
@@ -32,17 +33,24 @@ class SessionProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var string $savePath */
-        $savePath = $di->getShared('config')->path('application.sessionSavePath');
-        $handler  = new SessionAdapter([
-            'savePath' => $savePath,
-        ]);
+        $savePath = $di->getShared('config')
+                       ->path('application.sessionSavePath')
+        ;
+        $handler  = new SessionAdapter(
+            [
+                'savePath' => $savePath,
+            ]
+        );
 
-        $di->set($this->providerName, function () use ($handler) {
-            $session = new SessionManager();
-            $session->setAdapter($handler);
-            $session->start();
+        $di->set(
+            $this->providerName,
+            function () use ($handler) {
+                $session = new SessionManager();
+                $session->setAdapter($handler);
+                $session->start();
 
-            return $session;
-        });
+                return $session;
+            }
+        );
     }
 }

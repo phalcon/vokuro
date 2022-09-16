@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,10 +9,14 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Controllers;
 
 use Vokuro\Models\Permissions;
 use Vokuro\Models\Profiles;
+
+use const PHP_EOL;
 
 /**
  * View and define permissions for the various profile levels.
@@ -33,7 +36,9 @@ class PermissionsController extends ControllerBase
             if ($profile) {
                 if ($this->request->hasPost('permissions') && $this->request->hasPost('submit')) {
                     // Deletes the current permissions
-                    $profile->getPermissions()->delete();
+                    $profile->getPermissions()
+                            ->delete()
+                    ;
 
                     // Save the new permissions
                     foreach ($this->request->getPost('permissions') as $permission) {
@@ -67,19 +72,17 @@ class PermissionsController extends ControllerBase
             ],
         ]);
 
-        $profilesSelect = $this->tag->select([
-            'profileId',
-            $profiles,
-            'using'      => [
-                'id',
-                'name',
-            ],
-            'useEmpty'   => true,
-            'emptyText'  => '...',
-            'emptyValue' => '',
-            'class'      => 'form-control mr-sm-2',
-        ]);
+        $options = ['class' => 'form-control mr-sm-2'];
+        $select  = $this
+            ->tag
+            ->inputSelect('    ', PHP_EOL, $options)
+            ->addPlaceholder('...', '', [], true)
+        ;
 
-        $this->view->setVar('profilesSelect', $profilesSelect);
+        foreach ($profiles as $profile) {
+            $select->add($profile->name, (string) $profile->id);
+        }
+
+        $this->view->setVar('profilesSelect', $select);
     }
 }

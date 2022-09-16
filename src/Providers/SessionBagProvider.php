@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
@@ -21,7 +22,7 @@ class SessionBagProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'sessionBag';
+    protected string $providerName = 'sessionBag';
 
     /**
      * @param DiInterface $di
@@ -30,8 +31,12 @@ class SessionBagProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $di->set($this->providerName, function () {
-            return new Bag('conditions');
-        });
+        $session = $di->get('session');
+        $di->set(
+            $this->providerName,
+            function () use ($session) {
+                return new Bag($session, 'conditions');
+            }
+        );
     }
 }

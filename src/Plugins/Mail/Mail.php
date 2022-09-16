@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,13 +9,18 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Plugins\Mail;
 
 use Phalcon\Di\Injectable;
 use Phalcon\Mvc\View;
-use Swift_Mailer;
-use Swift_Message as Message;
-use Swift_SmtpTransport as Smtp;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
+
+use function sprintf;
 
 /**
  * Sends e-mails based on pre-defined templates
@@ -33,26 +37,35 @@ class Mail extends Injectable
      *
      * @return int
      */
-    public function send($to, $subject, $name, $params): int
+    public function send($to, $subject, $name, $params): void
     {
         // Settings
         $mailSettings = $this->config->mail;
         $template     = $this->getTemplate($name, $params);
 
+        $mailUsername = $mailSettings->smtp->username;
+        if (true !== empty($mailUsername)) {
+            $mailUsername .= ':' . $mailSettings->smtp->password;
+        }
+
         // Create the message
-        $message = new Message();
+        $message = new Email();
         $message
-            ->setSubject($subject)
-            ->setTo($to)
-            ->setFrom([$mailSettings->fromEmail => $mailSettings->fromName])
-            ->setBody($template, 'text/html');
+            ->subject($subject)
+            ->from(new Address($mailSettings->fromEmail, $mailSettings->fromName))
+            ->to($to)
+            ->text($template)
+        ;
 
-        $transport = new Smtp($mailSettings->smtp->server, $mailSettings->smtp->port, $mailSettings->smtp->security);
-        $transport
-             ->setUsername($mailSettings->smtp->username)
-             ->setPassword($mailSettings->smtp->password);
+        $dsn       = sprintf(
+            'smtp://%s@%s:%s',
+            $mailUsername,
+            $mailSettings->smtp->server,
+            $mailSettings->smtp->port
+        );
+        $transport = Transport::fromDsn($dsn);
 
-        return (new Swift_Mailer($transport))->send($message);
+        (new Mailer($transport))->send($message);
     }
 
     /**

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
@@ -112,7 +113,10 @@ class SessionController extends ControllerBase
 
         if ($this->request->isPost()) {
             // Send emails only is config value is set to true
-            if ($this->getDI()->get('config')->useMail) {
+            if (
+                $this->getDI()
+                     ->get('config')->useMail
+            ) {
                 if ($form->isValid($this->request->getPost()) == false) {
                     foreach ($form->getMessages() as $message) {
                         $this->flash->error($message);

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,12 +9,14 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Models;
 
+use Phalcon\Encryption\Security;
+use Phalcon\Filter\Validation;
+use Phalcon\Filter\Validation\Validator\Uniqueness;
 use Phalcon\Mvc\Model;
-use Phalcon\Security;
-use Phalcon\Validation;
-use Phalcon\Validation\Validator\Uniqueness;
 
 /**
  * All the users registered in the application
@@ -109,7 +110,9 @@ class Users extends Model
             $this->mustChangePassword = 'Y';
 
             /** @var Security $security */
-            $security = $this->getDI()->getShared('security');
+            $security = $this->getDI()
+                             ->getShared('security')
+            ;
             // Use this password as default
             $this->password = $security->hash($tempPassword);
         } else {
@@ -119,7 +122,10 @@ class Users extends Model
 
         // The account must be confirmed via e-mail
         // Only require this if emails are turned on in the config, otherwise account is automatically active
-        if ($this->getDI()->get('config')->useMail) {
+        if (
+            $this->getDI()
+                 ->get('config')->useMail
+        ) {
             $this->active = 'N';
         } else {
             $this->active = 'Y';
@@ -138,14 +144,18 @@ class Users extends Model
     public function afterCreate()
     {
         // Only send the confirmation email if emails are turned on in the config
-        if ($this->getDI()->get('config')->useMail && $this->active == 'N') {
+        if (
+            $this->getDI()
+                 ->get('config')->useMail && $this->active == 'N'
+        ) {
             $emailConfirmation          = new EmailConfirmations();
             $emailConfirmation->usersId = $this->id;
 
             if ($emailConfirmation->save()) {
                 $this->getDI()
-                    ->getFlash()
-                    ->notice('A confirmation mail has been sent to ' . $this->email);
+                     ->getFlash()
+                     ->notice('A confirmation mail has been sent to ' . $this->email)
+                ;
             }
         }
     }

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
@@ -21,7 +22,7 @@ class ModelsMetadataProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'modelsMetadata';
+    protected string $providerName = 'modelsMetadata';
 
     /**
      * @param DiInterface $di
@@ -31,11 +32,18 @@ class ModelsMetadataProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var string $cacheDir */
-        $cacheDir = $di->getShared('config')->path('application.cacheDir');
-        $di->set($this->providerName, function () use ($cacheDir) {
-            return new MetaDataAdapter([
-                'metaDataDir' => $cacheDir . 'metaData/',
-            ]);
-        });
+        $cacheDir = $di->getShared('config')
+                       ->path('application.cacheDir')
+        ;
+        $di->set(
+            $this->providerName,
+            function () use ($cacheDir) {
+                return new MetaDataAdapter(
+                    [
+                        'metaDataDir' => $cacheDir . 'metaData/',
+                    ]
+                );
+            }
+        );
     }
 }

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,13 +9,16 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Providers;
 
-use Phalcon\Config;
+use Phalcon\Config\Config;
 use Phalcon\Db\Adapter\Pdo;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use RuntimeException;
+
 use function Vokuro\root_path;
 
 class DbProvider implements ServiceProviderInterface
@@ -24,14 +26,14 @@ class DbProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'db';
+    protected string $providerName = 'db';
 
     /**
      * Class map of database adapters, indexed by PDO::ATTR_DRIVER_NAME.
      *
      * @var array
      */
-    protected $adapters = [
+    protected array $adapters = [
         'mysql'  => Pdo\Mysql::class,
         'pgsql'  => Pdo\Postgresql::class,
         'sqlite' => Pdo\Sqlite::class,
@@ -47,13 +49,18 @@ class DbProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var Config $config */
-        $config = $di->getShared('config')->get('database');
+        $config = $di->getShared('config')
+                     ->get('database')
+        ;
         $class  = $this->getClass($config);
         $config = $this->createConfig($config);
 
-        $di->set($this->providerName, function () use ($class, $config) {
-            return new $class($config);
-        });
+        $di->set(
+            $this->providerName,
+            function () use ($class, $config) {
+                return new $class($config);
+            }
+        );
     }
 
     /**

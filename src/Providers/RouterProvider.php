@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
@@ -23,7 +24,7 @@ class RouterProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'router';
+    protected string $providerName = 'router';
 
     /**
      * @param DiInterface $di
@@ -37,17 +38,20 @@ class RouterProvider implements ServiceProviderInterface
         /** @var string $basePath */
         $basePath = $application->getRootPath();
 
-        $di->set($this->providerName, function () use ($basePath) {
-            $router = new Router();
+        $di->set(
+            $this->providerName,
+            function () use ($basePath) {
+                $router = new Router();
 
-            $routes = $basePath . '/config/routes.php';
-            if (!file_exists($routes) || !is_readable($routes)) {
-                throw new Exception($routes . ' file does not exist or is not readable.');
+                $routes = $basePath . '/config/routes.php';
+                if (!file_exists($routes) || !is_readable($routes)) {
+                    throw new Exception($routes . ' file does not exist or is not readable.');
+                }
+
+                require_once $routes;
+
+                return $router;
             }
-
-            require_once $routes;
-
-            return $router;
-        });
+        );
     }
 }

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,13 +9,15 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Forms;
 
+use Phalcon\Filter\Validation\Validator\Confirmation;
+use Phalcon\Filter\Validation\Validator\PresenceOf;
+use Phalcon\Filter\Validation\Validator\StringLength;
 use Phalcon\Forms\Element\Password;
 use Phalcon\Forms\Form;
-use Phalcon\Validation\Validator\Confirmation;
-use Phalcon\Validation\Validator\PresenceOf;
-use Phalcon\Validation\Validator\StringLength;
 
 class ChangePasswordForm extends Form
 {

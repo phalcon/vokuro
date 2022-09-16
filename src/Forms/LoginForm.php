@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,17 +9,19 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Forms;
 
+use Phalcon\Filter\Validation\Validator\Email;
+use Phalcon\Filter\Validation\Validator\Identical;
+use Phalcon\Filter\Validation\Validator\PresenceOf;
 use Phalcon\Forms\Element\Check;
 use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Password;
 use Phalcon\Forms\Element\Submit;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Form;
-use Phalcon\Validation\Validator\Email;
-use Phalcon\Validation\Validator\Identical;
-use Phalcon\Validation\Validator\PresenceOf;
 
 class LoginForm extends Form
 {
