@@ -9,16 +9,20 @@
 <form method="post">
     <ul class="nav nav-tabs" id="user-edit-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Basic</a>
+            <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic"
+               aria-selected="true">Basic</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="logins-tab" data-toggle="tab" href="#logins" role="tab" aria-controls="logins" aria-selected="false">Successful Logins</a>
+            <a class="nav-link" id="logins-tab" data-toggle="tab" href="#logins" role="tab" aria-controls="logins"
+               aria-selected="false">Successful Logins</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="password-changes-tab" data-toggle="tab" href="#password-changes" role="tab" aria-controls="password-changes" aria-selected="false">Password Changes</a>
+            <a class="nav-link" id="password-changes-tab" data-toggle="tab" href="#password-changes" role="tab"
+               aria-controls="password-changes" aria-selected="false">Password Changes</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="password-resets-tab" data-toggle="tab" href="#password-resets" role="tab" aria-controls="password-resets" aria-selected="false">Reset Passwords</a>
+            <a class="nav-link" id="password-resets-tab" data-toggle="tab" href="#password-resets" role="tab"
+               aria-controls="password-resets" aria-selected="false">Reset Passwords</a>
         </li>
     </ul>
 

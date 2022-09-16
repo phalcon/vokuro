@@ -3,7 +3,7 @@
 {{ flash.output() }}
 
 <div class="mb-5">
-    {{ link_to("profiles", 'class': 'btn btn-primary', "&larr; Go Back") }}
+    {{ tag.a("profiles", "&larr; Go Back", ['class': 'btn btn-primary']) }}
 </div>
 
 <form method="post">
@@ -23,7 +23,7 @@
 
     <div class="form-group row">
         <div class="col-sm-10">
-            {{ submit_button("Save", "class": "btn btn-success") }}
+            {{ tag.inputSubmit("Save", "Save", ["class": "btn btn-success"]) }}
         </div>
     </div>
 </form>
