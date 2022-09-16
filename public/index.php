@@ -9,6 +9,9 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
+use Dotenv\Dotenv;
 use Vokuro\Application as VokuroApplication;
 
 error_reporting(E_ALL);
@@ -20,7 +23,7 @@ try {
     /**
      * Load .env configurations
      */
-    Dotenv\Dotenv::create($rootPath)->load();
+    (Dotenv::createImmutable($rootPath))->load();
 
     /**
      * Run Vökuró!

@@ -2,32 +2,39 @@
 
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::create(__DIR__);
-$dotenv->load();
+(Dotenv::createImmutable(__DIR__))->load();
 
-return
-[
-    'paths' => [
+$adapter = strtolower($_ENV['DB_ADAPTER'] ?? 'mysql');
+$host    = $_ENV['DB_HOST'] ?? 'localhost';
+$user    = $_ENV['DB_USERNAME'] ?? 'root';
+$pass    = $_ENV['DB_PASSWORD'] ?? '';
+$port    = $_ENV['DB_PORT'] ?? 3306;
+$name    = $_ENV['DB_NAME'] ?? 'phalcon_vokuro';
+
+if ('sqlite' === $adapter) {
+    $name = '%%PHINX_CONFIG_DIR%%/db/' . $name;
+}
+
+return [
+    'paths'         => [
         'migrations' => [
             'Vokuro\\Migrations' => '%%PHINX_CONFIG_DIR%%/db/migrations'
         ],
-        'seeds' => [
+        'seeds'      => [
             'Vokuro\\Seeds' => '%%PHINX_CONFIG_DIR%%/db/seeds',
         ],
     ],
-    'environments' => [
+    'environments'  => [
         'default_migration_table' => 'phinxlog',
-        'default_database' => 'development',
-        'development' => [
-            'adapter' => strtolower(getenv('DB_ADAPTER')),
-            'host' => getenv('DB_HOST'),
-            'name' => strtolower(getenv('DB_ADAPTER')) === 'sqlite' ?
-                '%%PHINX_CONFIG_DIR%%/db/' . getenv('DB_NAME') :
-                getenv('DB_NAME'),
-            'user' => getenv('DB_USERNAME'),
-            'pass' => getenv('DB_PASSWORD'),
-            'port' => getenv('DB_PORT'),
-            'charset' => 'utf8',
+        'default_database'        => 'development',
+        'development'             => [
+            'adapter'   => $adapter,
+            'host'      => $host,
+            'name'      => $name,
+            'user'      => $user,
+            'pass'      => $pass,
+            'port'      => $port,
+            'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
         ],
     ],
