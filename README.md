@@ -28,7 +28,7 @@ To run this application on your machine, you need at least:
 ### Install Vökuró via composer create-project
 
 ```bash
-composer create-project phalcon/vokuro /path/to/vokuro-folder "4.1.2" --prefer-dist
+composer create-project phalcon/vokuro /path/to/vokuro-folder "5.0.0" --prefer-dist
 ```
 
 ### Installing Dependencies via Composer
@@ -68,7 +68,7 @@ If you want something to be improved or you want a new feature please submit a P
 
 ## Sponsors
 
-Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/phalcon#sponsor)]
+Become a sponsor and get your logo on our README on GitHub with a link to your site. [[Become a sponsor](https://opencollective.com/phalcon#sponsor)]
 
 <a href="https://opencollective.com/phalcon/#contributors">
 <img src="https://opencollective.com/phalcon/tiers/sponsors.svg?avatarHeight=48&width=800" alt="sponsors">
