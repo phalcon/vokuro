@@ -69,15 +69,15 @@ jobs:
               if: always()
               run: cp -v ./.ci/.env.ci ./.env
 
-            - name: Run migrations
-              if: always()
-              run: |
-                  vendor/bin/phinx migrate
-
-            - name: Run seeds
-              if: always()
-              run: |
-                  vendor/bin/phinx seed:run
+#            - name: Run migrations
+#              if: always()
+#              run: |
+#                  vendor/bin/phinx migrate
+#
+#            - name: Run seeds
+#              if: always()
+#              run: |
+#                  vendor/bin/phinx seed:run
 
             - name: Run tests
               if: always()
@@ -85,15 +85,15 @@ jobs:
                   sudo php -S 0.0.0.0 -t ./.htrouter.php &
                   vendor/bin/codecept build
                   vendor/bin/codecept run unit --coverage-xml=unit-coverage.xml
-                  vendor/bin/codecept run functional --coverage-xml=functional-coverage.xml
-                  vendor/bin/codecept run acceptance --coverage-xml=acceptance-coverage.xml
+#                  vendor/bin/codecept run functional --coverage-xml=functional-coverage.xml
+#                  vendor/bin/codecept run acceptance --coverage-xml=acceptance-coverage.xml
 
-            - name: Upload to codecov
-              uses: codecov/codecov-action@v3
-              with:
-                  token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-                  directory: ./tests/_output/
-                  files: unit-coverage.xml,functional-coverage.xml,acceptance-coverage.xml
-                  name: codecov-umbrella # optional
-                  fail_ci_if_error: false
-                  verbose: true # optional (default = false)
+#            - name: Upload to codecov
+#              uses: codecov/codecov-action@v3
+#              with:
+#                  token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+#                  directory: ./tests/_output/
+#                  files: unit-coverage.xml,functional-coverage.xml,acceptance-coverage.xml
+#                  name: codecov-umbrella # optional
+#                  fail_ci_if_error: false
+#                  verbose: true # optional (default = false)
