@@ -44,7 +44,7 @@ Run the composer installer:
 ```bash
 cd vokuro
 composer install
-cp .env.example .env
+cp ./.ci/.env.example .env
 vendor/bin/phinx migrate
 vendor/bin/phinx seed:run
 ```
@@ -64,7 +64,7 @@ If you wish to check older versions or newer ones currently under development, p
 
 Phalcon is an open source project and a volunteer effort.
 Vökuró does not have human resources fully dedicated to the maintenance of this software.
-If you want something to be improved or you want a new feature please submit a Pull Request.
+If you want something to be improved, or you want a new feature please submit a Pull Request.
 
 ## Sponsors
 

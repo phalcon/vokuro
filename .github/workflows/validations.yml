@@ -74,6 +74,11 @@ jobs:
               run: |
                   vendor/bin/phinx migrate
 
+            - name: Run seeds
+              if: always()
+              run: |
+                  vendor/bin/phinx seed:run
+
             - name: Run tests
               if: always()
               run: |
