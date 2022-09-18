@@ -35,10 +35,13 @@ class Mail extends Injectable
      * @param string $name
      * @param array  $params
      *
-     * @return int
+     * @return void
      */
-    public function send($to, $subject, $name, $params): void
-    {
+    public function send(
+        array $to,
+        string $subject,
+        string $name, array $params
+    ): void {
         // Settings
         $mailSettings = $this->config->mail;
         $template     = $this->getTemplate($name, $params);
@@ -53,7 +56,7 @@ class Mail extends Injectable
         $message
             ->subject($subject)
             ->from(new Address($mailSettings->fromEmail, $mailSettings->fromName))
-            ->to($to)
+            ->to(...$to)
             ->text($template)
         ;
 
