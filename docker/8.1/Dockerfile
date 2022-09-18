@@ -55,8 +55,8 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 COPY . /code
 
 # Bash script with helper aliases
-COPY ./config/.bashrc /root/.bashrc
-COPY ./config/.bashrc /home/phalcon/.bashrc
+COPY config/.bashrc /root/.bashrc
+COPY config/.bashrc /home/phalcon/.bashrc
 
 # Copy existing application directory permissions
 COPY --chown=phalcon:phalcon . /code
