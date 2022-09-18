@@ -67,7 +67,7 @@ jobs:
 
             - name: Env file
               if: always()
-              run: cp -v ./tests/env.test ./.env
+              run: cp -v .ci/env.ci ./.env
 
             - name: Run migrations
               if: always()
