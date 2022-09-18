@@ -40,7 +40,8 @@ class Mail extends Injectable
     public function send(
         array $to,
         string $subject,
-        string $name, array $params
+        string $name,
+        array $params
     ): void {
         // Settings
         $mailSettings = $this->config->mail;
