@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,9 +9,11 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Providers;
 
-use Phalcon\Config;
+use Phalcon\Config\Config;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\View;
@@ -23,7 +24,7 @@ class ViewProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'view';
+    protected string $providerName = 'view';
 
     /**
      * @param DiInterface $di
@@ -37,22 +38,29 @@ class ViewProvider implements ServiceProviderInterface
         /** @var string $cacheDir */
         $cacheDir = $config->path('application.cacheDir');
 
-        $di->setShared($this->providerName, function () use ($viewsDir, $cacheDir, $di) {
-            $view = new View();
-            $view->setViewsDir($viewsDir);
-            $view->registerEngines([
-                '.volt' => function (View $view) use ($cacheDir, $di) {
-                    $volt = new Volt($view, $di);
-                    $volt->setOptions([
-                        'path'      => $cacheDir . 'volt/',
-                        'separator' => '_',
-                    ]);
+        $di->setShared(
+            $this->providerName,
+            function () use ($viewsDir, $cacheDir, $di) {
+                $view = new View();
+                $view->setViewsDir($viewsDir);
+                $view->registerEngines(
+                    [
+                        '.volt' => function (View $view) use ($cacheDir, $di) {
+                            $volt = new Volt($view, $di);
+                            $volt->setOptions(
+                                [
+                                    'path'      => $cacheDir . 'volt/',
+                                    'separator' => '_',
+                                ]
+                            );
 
-                    return $volt;
-                },
-            ]);
+                            return $volt;
+                        },
+                    ]
+                );
 
-            return $view;
-        });
+                return $view;
+            }
+        );
     }
 }

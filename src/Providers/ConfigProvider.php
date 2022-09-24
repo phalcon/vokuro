@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,9 +9,11 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Providers;
 
-use Phalcon\Config;
+use Phalcon\Config\Config;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Vokuro\Application;
@@ -25,7 +26,7 @@ class ConfigProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'config';
+    protected string $providerName = 'config';
 
     /**
      * @param DiInterface $di
@@ -39,10 +40,13 @@ class ConfigProvider implements ServiceProviderInterface
         /** @var string $rootPath */
         $rootPath = $application->getRootPath();
 
-        $di->setShared($this->providerName, function () use ($rootPath) {
-            $config = include $rootPath . '/config/config.php';
+        $di->setShared(
+            $this->providerName,
+            function () use ($rootPath) {
+                $config = include $rootPath . '/config/config.php';
 
-            return new Config($config);
-        });
+                return new Config($config);
+            }
+        );
     }
 }

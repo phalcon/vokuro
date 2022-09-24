@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,18 +9,20 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Providers;
 
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Url as UrlResolver;
+use Phalcon\Mvc\Url as UrlResolver;
 
 class UrlProvider implements ServiceProviderInterface
 {
     /**
      * @var string
      */
-    protected $providerName = 'url';
+    protected string $providerName = 'url';
 
     /**
      * @param DiInterface $di
@@ -29,13 +30,18 @@ class UrlProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var string $baseUri */
-        $baseUri = $di->getShared('config')->path('application.baseUri');
+        $baseUri = $di->getShared('config')
+                      ->path('application.baseUri')
+        ;
 
-        $di->setShared($this->providerName, function () use ($baseUri) {
-            $url = new UrlResolver();
-            $url->setBaseUri($baseUri);
+        $di->setShared(
+            $this->providerName,
+            function () use ($baseUri) {
+                $url = new UrlResolver();
+                $url->setBaseUri($baseUri);
 
-            return $url;
-        });
+                return $url;
+            }
+        );
     }
 }

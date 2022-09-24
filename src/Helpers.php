@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro;
 
-use Phalcon\Di;
+use Phalcon\Di\Di;
 use Phalcon\Di\DiInterface;
 
 /**
@@ -34,5 +35,11 @@ function root_path(string $prefix = ''): string
     /** @var Application $application */
     $application = container(Application::APPLICATION_PROVIDER);
 
-    return join(DIRECTORY_SEPARATOR, [$application->getRootPath(), ltrim($prefix, DIRECTORY_SEPARATOR)]);
+    return join(
+        DIRECTORY_SEPARATOR,
+        [
+            $application->getRootPath(),
+            ltrim($prefix, DIRECTORY_SEPARATOR)
+        ]
+    );
 }

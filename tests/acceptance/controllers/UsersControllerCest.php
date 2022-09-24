@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Tests\Acceptance\Controllers;
@@ -35,6 +36,7 @@ final class UsersControllerCest
 
     /**
      * @depends login
+     *
      * @param AcceptanceTester $I
      */
     public function testIndex(AcceptanceTester $I): void
@@ -47,6 +49,7 @@ final class UsersControllerCest
 
     /**
      * @depends login
+     *
      * @param AcceptanceTester $I
      */
     public function testSearch(AcceptanceTester $I): void
@@ -59,6 +62,7 @@ final class UsersControllerCest
 
     /**
      * @depends login
+     *
      * @param AcceptanceTester $I
      */
     public function testCreate(AcceptanceTester $I): void
@@ -71,6 +75,7 @@ final class UsersControllerCest
 
     /**
      * @depends login
+     *
      * @param AcceptanceTester $I
      */
     public function testEdit(AcceptanceTester $I): void
@@ -83,6 +88,7 @@ final class UsersControllerCest
 
     /**
      * @depends login
+     *
      * @param AcceptanceTester $I
      */
     public function testDelete(AcceptanceTester $I): void
@@ -96,6 +102,7 @@ final class UsersControllerCest
 
     /**
      * @depends login
+     *
      * @param AcceptanceTester $I
      */
     public function testChangePassword(AcceptanceTester $I): void

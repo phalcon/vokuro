@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
@@ -47,7 +48,7 @@ class ProfilesController extends ControllerBase
     public function searchAction()
     {
         if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, Profiles::class, $this->request->getPost());
+            $query        = Criteria::fromInput($this->di, Profiles::class, $this->request->getPost());
             $searchparams = $query->getParams();
             unset($searchparams['di']);
             $this->persistent->searchParams = $searchparams;
@@ -68,10 +69,10 @@ class ProfilesController extends ControllerBase
         }
 
         $paginator = new Paginator([
-            'model' => Profiles::class,
+            'model'      => Profiles::class,
             'parameters' => $parameters,
-            'limit' => 10,
-            'page' => $this->request->getQuery('page', 'int', 1),
+            'limit'      => 10,
+            'page'       => $this->request->getQuery('page', 'int', 1),
         ]);
 
         $this->view->setVar('page', $paginator->paginate());
@@ -84,13 +85,13 @@ class ProfilesController extends ControllerBase
     {
         if ($this->request->isPost()) {
             $profile = new Profiles([
-                'name' => $this->request->getPost('name', 'striptags'),
+                'name'   => $this->request->getPost('name', 'striptags'),
                 'active' => $this->request->getPost('active'),
             ]);
 
             if (!$profile->save()) {
                 foreach ($profile->getMessages() as $message) {
-                    $this->flash->error((string)$message);
+                    $this->flash->error((string) $message);
                 }
             } else {
                 $this->flash->success("Profile was created successfully");
@@ -117,13 +118,13 @@ class ProfilesController extends ControllerBase
 
         if ($this->request->isPost()) {
             $profile->assign([
-                'name' => $this->request->getPost('name', 'striptags'),
+                'name'   => $this->request->getPost('name', 'striptags'),
                 'active' => $this->request->getPost('active'),
             ]);
 
             if (!$profile->save()) {
                 foreach ($profile->getMessages() as $message) {
-                    $this->flash->error((string)$message);
+                    $this->flash->error((string) $message);
                 }
             } else {
                 $this->flash->success("Profile was updated successfully");
@@ -131,7 +132,7 @@ class ProfilesController extends ControllerBase
         }
 
         $this->view->setVars([
-            'form' => new ProfilesForm(null, ['edit' => true]),
+            'form'    => new ProfilesForm(null, ['edit' => true]),
             'profile' => $profile,
         ]);
     }
@@ -154,7 +155,7 @@ class ProfilesController extends ControllerBase
 
         if (!$profile->delete()) {
             foreach ($profile->getMessages() as $message) {
-                $this->flash->error((string)$message);
+                $this->flash->error((string) $message);
             }
         } else {
             $this->flash->success("Profile was deleted");

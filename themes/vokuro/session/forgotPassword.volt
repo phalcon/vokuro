@@ -11,6 +11,6 @@
     {{ form.render('Send') }}
 </form>
 
-<hr />
+<hr/>
 
 {{ link_to('session/login', "&larr; Back to Login") }}

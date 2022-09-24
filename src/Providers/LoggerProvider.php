@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,13 +9,16 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Providers;
 
-use Phalcon\Config;
+use Phalcon\Config\Config;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Logger\Adapter\Stream as FileLogger;
-use Phalcon\Logger\Formatter\Line as FormatterLine;
+use Phalcon\Logger\Adapter\Stream;
+use Phalcon\Logger\Formatter\Line;
+use Phalcon\Logger\Logger;
 
 /**
  * Logger service
@@ -36,18 +38,24 @@ class LoggerProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         /** @var Config $loggerConfigs */
-        $loggerConfigs = $di->getShared('config')->get('logger');
+        $loggerConfigs = $di->getShared('config')
+                            ->get('logger')
+        ;
 
-        $di->set($this->providerName, function () use ($loggerConfigs) {
-            $filename = trim($loggerConfigs->get('filename'), '\\/');
-            $path     = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
+        $di->set(
+            $this->providerName,
+            function () use ($loggerConfigs) {
+                $filename  = trim($loggerConfigs->get('filename'), '\\/');
+                $path      = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
+                $adapter   = new Stream($path . $filename);
+                $formatter = new Line(
+                    $loggerConfigs->get('format'),
+                    $loggerConfigs->get('date')
+                );
+                $adapter->setFormatter($formatter);
 
-            $formatter = new FormatterLine($loggerConfigs->get('format'), $loggerConfigs->get('date'));
-            $logger    = new FileLogger($path . $filename);
-
-            $logger->setFormatter($formatter);
-
-            return $logger;
-        });
+                return new Logger('vokuro-logger', ['main' => $adapter]);
+            }
+        );
     }
 }

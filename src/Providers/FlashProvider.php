@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,9 +9,10 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Providers;
 
-use Phalcon\Escaper;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Flash\Direct as Flash;
@@ -22,7 +22,7 @@ class FlashProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'flash';
+    protected string $providerName = 'flash';
 
     /**
      * @param DiInterface $di
@@ -31,18 +31,23 @@ class FlashProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $di->set($this->providerName, function () {
-            $escaper = new Escaper();
-            $flash = new Flash($escaper);
-            $flash->setImplicitFlush(false);
-            $flash->setCssClasses([
-                'error'   => 'alert alert-danger',
-                'success' => 'alert alert-success',
-                'notice'  => 'alert alert-info',
-                'warning' => 'alert alert-warning',
-            ]);
+        $escaper = $di->getShared('escaper');
+        $di->set(
+            $this->providerName,
+            function () use ($escaper) {
+                $flash = new Flash($escaper);
+                $flash->setImplicitFlush(false);
+                $flash->setCssClasses(
+                    [
+                        'error'   => 'alert alert-danger',
+                        'success' => 'alert alert-success',
+                        'notice'  => 'alert alert-info',
+                        'warning' => 'alert alert-warning',
+                    ]
+                );
 
-            return $flash;
-        });
+                return $flash;
+            }
+        );
     }
 }

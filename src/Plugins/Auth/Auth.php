@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Plugins\Auth;
 
@@ -163,8 +164,12 @@ class Auth extends Injectable
      */
     public function loginWithRememberMe()
     {
-        $userId      = $this->cookies->get('RMU')->getValue();
-        $cookieToken = $this->cookies->get('RMT')->getValue();
+        $userId      = $this->cookies->get('RMU')
+                                     ->getValue()
+        ;
+        $cookieToken = $this->cookies->get('RMT')
+                                     ->getValue()
+        ;
 
         $user = Users::findFirstById($userId);
         if ($user) {
@@ -201,8 +206,12 @@ class Auth extends Injectable
             }
         }
 
-        $this->cookies->get('RMU')->delete();
-        $this->cookies->get('RMT')->delete();
+        $this->cookies->get('RMU')
+                      ->delete()
+        ;
+        $this->cookies->get('RMT')
+                      ->delete()
+        ;
 
         return $this->response->redirect('session/login');
     }
@@ -256,17 +265,23 @@ class Auth extends Injectable
     public function remove()
     {
         if ($this->cookies->has('RMU')) {
-            $this->cookies->get('RMU')->delete();
+            $this->cookies->get('RMU')
+                          ->delete()
+            ;
         }
         if ($this->cookies->has('RMT')) {
-            $token = $this->cookies->get('RMT')->getValue();
+            $token = $this->cookies->get('RMT')
+                                   ->getValue()
+            ;
 
             $userId = $this->findFirstByToken($token);
             if ($userId) {
                 $this->deleteToken($userId);
             }
 
-            $this->cookies->get('RMT')->delete();
+            $this->cookies->get('RMT')
+                          ->delete()
+            ;
         }
 
         $this->session->remove('auth-identity');

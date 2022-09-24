@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Tests\Functional\Forms;
@@ -8,7 +9,7 @@ use Vokuro\Forms\ForgotPasswordForm;
 
 final class ForgotPasswordFormTest extends Unit
 {
-    const EMAIL_KEY = 'email';
+    public const EMAIL_KEY = 'email';
 
     /**
      * @return array
@@ -27,13 +28,13 @@ final class ForgotPasswordFormTest extends Unit
      * @dataProvider dataProvider
      *
      * @param array $data
-     * @param int $errorsCount
-     * @param bool $expected
+     * @param int   $errorsCount
+     * @param bool  $expected
      */
     public function testValidations(array $data, int $errorsCount, bool $expected): void
     {
-        $form = new ForgotPasswordForm();
-        $isValid = $form->isValid($data);
+        $form     = new ForgotPasswordForm();
+        $isValid  = $form->isValid($data);
         $messages = $form->getMessages();
 
         $this->assertEquals($expected, $isValid);

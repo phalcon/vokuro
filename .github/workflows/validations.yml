@@ -1,88 +1,99 @@
-name: "Validations"
+name: Testing Suite
+
 on: [push, pull_request]
+
+env:
+    DB_HOST: '127.0.0.1'
+
 jobs:
-    validate-code-style:
-        name: PSR-12 Code style
+    run:
         runs-on: ubuntu-latest
+        name: Workflow - PHP-${{ matrix.php }}
+
+        services:
+            mysql:
+                image: mysql:5.7
+                ports:
+                    - "3306:3306"
+                env:
+                    MYSQL_ROOT_PASSWORD: secret
+                    MYSQL_USER: phalcon
+                    MYSQL_DATABASE: vokuro
+                    MYSQL_PASSWORD: secret
+
+        strategy:
+            fail-fast: false
+            matrix:
+                php: ['8.0', '8.1']
+
         steps:
             - uses: actions/checkout@v1
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  tools: pecl
+                  extensions: mbstring, intl, json, phalcon-5.0.1
+                  coverage: xdebug
+
+            - name: Init Database
+              run: |
+                  mysql -uroot -h127.0.0.1 -psecret -e 'CREATE DATABASE IF NOT EXISTS `vokuro`;'
 
             - name: Validate composer.json and composer.lock
               run: composer validate
 
-            - name: Get Composer Cache Directory
+            - name: Get composer cache directory
               id: composer-cache
               run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-            - name: Cache composer dependencies
-              uses: actions/cache@v1
+            - name: Cache dependencies
+              uses: actions/cache@v2
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
-                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                  restore-keys: ${{ runner.os }}-composer-
+                  key: ${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ matrix.php }}-composer-
 
-            - name: Install PHP_CodeSniffer composer package
-              run: composer global require "squizlabs/php_codesniffer=*"
+            - name: Install Composer dependencies
+              run: composer install --prefer-dist --no-progress --no-suggest
 
-            - name: Validate PSR-12 Code Style
-              run: ~/.composer/vendor/bin/phpcs
-
-    validate-code-static:
-        name: Static Code with PHP ${{ matrix.php-versions }}
-        runs-on: ubuntu-latest
-        env:
-            extensions: mbstring, intl, json, psr, phalcon-4.0.5
-            key: cache-v2.0~14.05.2020
-        needs: validate-code-style
-        strategy:
-            fail-fast: false
-            matrix:
-                php-versions: ['7.2', '7.3', '7.4']
-
-        steps:
-            - name: Checkout the code
-              uses: actions/checkout@v1
-
-            - name: Setup cache environment
-              id: cache-env
-              uses: shivammathur/cache-extensions@v1
-              with:
-                  php-version: ${{ matrix.php-versions }}
-                  extensions: ${{ env.extensions }}
-                  key: ${{ env.key }}
-
-            - name: Cache extensions
-              uses: actions/cache@v1
-              with:
-                  path: ${{ steps.cache-env.outputs.dir }}
-                  key: ${{ steps.cache-env.outputs.key }}
-                  restore-keys: ${{ steps.cache-env.outputs.key }}
-
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ matrix.php-versions }}
-                  extensions: ${{ env.extensions }}
-                  tools: pecl
-
-            - name: Get Composer Cache Directory
-              id: composer-cache
-              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-            - name: Cache composer dependencies
-              uses: actions/cache@v1
-              with:
-                  path: ${{ steps.composer-cache.outputs.dir }}
-                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                  restore-keys: ${{ runner.os }}-composer-
-
-            - name: Install Composer dependencies with PHPStan
-              run: composer require --prefer-dist --no-progress --no-suggest --dev phpstan/phpstan
+            - name: Run PHPCS
+              if: always()
+              run: vendor/bin/phpcs
 
             - name: Run Psalm
               if: always()
               run: vendor/bin/psalm --show-info=false
 
-            - name: Run PHPStan
+            - name: Env file
               if: always()
-              run: vendor/bin/phpstan analyse -l 5 src
+              run: cp -v ./.ci/.env.ci ./.env
+
+#            - name: Run migrations
+#              if: always()
+#              run: |
+#                  vendor/bin/phinx migrate
+#
+#            - name: Run seeds
+#              if: always()
+#              run: |
+#                  vendor/bin/phinx seed:run
+
+            - name: Run tests
+              if: always()
+              run: |
+                  sudo php -S 0.0.0.0 -t ./.htrouter.php &
+                  vendor/bin/codecept build
+                  vendor/bin/codecept run unit --coverage-xml=unit-coverage.xml
+#                  vendor/bin/codecept run functional --coverage-xml=functional-coverage.xml
+#                  vendor/bin/codecept run acceptance --coverage-xml=acceptance-coverage.xml
+
+#            - name: Upload to codecov
+#              uses: codecov/codecov-action@v3
+#              with:
+#                  token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+#                  directory: ./tests/_output/
+#                  files: unit-coverage.xml,functional-coverage.xml,acceptance-coverage.xml
+#                  name: codecov-umbrella # optional
+#                  fail_ci_if_error: false
+#                  verbose: true # optional (default = false)

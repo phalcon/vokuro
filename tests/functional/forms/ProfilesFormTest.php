@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Tests\Functional\Forms;
@@ -8,7 +9,7 @@ use Vokuro\Forms\ProfilesForm;
 
 final class ProfilesFormTest extends Unit
 {
-    const NAME_KEY = 'name';
+    public const NAME_KEY = 'name';
 
     /**
      * @return array
@@ -26,13 +27,13 @@ final class ProfilesFormTest extends Unit
      * @dataProvider dataProvider
      *
      * @param array $data
-     * @param int $errorsCount
-     * @param bool $expected
+     * @param int   $errorsCount
+     * @param bool  $expected
      */
     public function testValidations(array $data, int $errorsCount, bool $expected): void
     {
-        $form = new ProfilesForm();
-        $isValid = $form->isValid($data);
+        $form     = new ProfilesForm();
+        $isValid  = $form->isValid($data);
         $messages = $form->getMessages();
 
         $this->assertEquals($expected, $isValid);

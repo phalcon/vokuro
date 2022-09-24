@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
@@ -22,7 +23,7 @@ class AclProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'acl';
+    protected string $providerName = 'acl';
 
     /**
      * @param DiInterface $di
@@ -36,20 +37,23 @@ class AclProvider implements ServiceProviderInterface
         /** @var string $rootPath */
         $rootPath = $application->getRootPath();
 
-        $di->setShared($this->providerName, function () use ($rootPath) {
-            $filename         = $rootPath . '/config/acl.php';
-            $privateResources = [];
-            if (is_readable($filename)) {
-                $privateResources = include $filename;
-                if (!empty($privateResources['private'])) {
-                    $privateResources = $privateResources['private'];
+        $di->setShared(
+            $this->providerName,
+            function () use ($rootPath) {
+                $filename         = $rootPath . '/config/acl.php';
+                $privateResources = [];
+                if (is_readable($filename)) {
+                    $privateResources = include $filename;
+                    if (!empty($privateResources['private'])) {
+                        $privateResources = $privateResources['private'];
+                    }
                 }
+
+                $acl = new Acl();
+                $acl->addPrivateResources($privateResources);
+
+                return $acl;
             }
-
-            $acl = new Acl();
-            $acl->addPrivateResources($privateResources);
-
-            return $acl;
-        });
+        );
     }
 }

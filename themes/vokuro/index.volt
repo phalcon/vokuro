@@ -6,8 +6,8 @@
     {{ assets.outputCss('css') }}
 </head>
 <body class="d-flex flex-column h-100">
-    {{ content() }}
+{{ content() }}
 
-    {{ assets.outputJs('js') }}
+{{ assets.outputJs('js') }}
 </body>
 </html>
