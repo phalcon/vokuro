@@ -8,7 +8,7 @@ LABEL vendor="Phalcon" \
       maintainer="Phalcon Team <team@phalcon.io>" \
       description="The PHP image to test the Vökuró example concepts"
 
-ENV PHALCON_VERSION="5.0.0RC4" \
+ENV PHALCON_VERSION="5.0.1" \
     PHP_VERSION="8.0"
 
 # Update

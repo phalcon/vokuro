@@ -33,7 +33,7 @@ jobs:
               with:
                   php-version: ${{ matrix.php }}
                   tools: pecl
-                  extensions: mbstring, intl, json, phalcon-5.0.0RC4
+                  extensions: mbstring, intl, json, phalcon-5.0.1
                   coverage: xdebug
 
             - name: Init Database
