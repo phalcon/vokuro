@@ -16,8 +16,8 @@ use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Select;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Form;
-use Phalcon\Validation\Validator\Email;
-use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Filter\Validation\Validator\Email;
+use Phalcon\Filter\Validation\Validator\PresenceOf;
 use Vokuro\Models\Profiles;
 
 class UsersForm extends Form
