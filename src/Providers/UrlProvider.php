@@ -14,7 +14,7 @@ namespace Vokuro\Providers;
 
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Url as UrlResolver;
+use Phalcon\Mvc\Url as UrlResolver;
 
 class UrlProvider implements ServiceProviderInterface
 {
