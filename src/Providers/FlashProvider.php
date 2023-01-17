@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
-use Phalcon\Escaper;
+use Phalcon\Html\Escaper;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Flash\Direct as Flash;
