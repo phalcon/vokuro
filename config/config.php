@@ -10,7 +10,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-use Phalcon\Logger;
+use Phalcon\Logger\Logger;
 use function Vokuro\root_path;
 
 return [
