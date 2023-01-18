@@ -14,7 +14,8 @@ namespace Vokuro\Controllers;
 
 use Vokuro\Models\Permissions;
 use Vokuro\Models\Profiles;
-
+use Phalcon\Html\Escaper;
+use Phalcon\Html\Helper\Input\Select;
 /**
  * View and define permissions for the various profile levels.
  */
@@ -29,6 +30,7 @@ class PermissionsController extends ControllerBase
         $this->view->setTemplateBefore('private');
 
         if ($this->request->isPost()) {
+           
             $profile = Profiles::findFirstById($this->request->getPost('profileId'));
             if ($profile) {
                 if ($this->request->hasPost('permissions') && $this->request->hasPost('submit')) {
@@ -67,18 +69,41 @@ class PermissionsController extends ControllerBase
             ],
         ]);
 
-        $profilesSelect = $this->tag->select([
-            'profileId',
-            $profiles,
-            'using'      => [
-                'id',
-                'name',
-            ],
-            'useEmpty'   => true,
-            'emptyText'  => '...',
-            'emptyValue' => '',
-            'class'      => 'form-control mr-sm-2',
-        ]);
+        // $profilesSelect = $this->tag->select([
+        //     'profileId',
+        //     $profiles,
+        //     'using'      => [
+        //         'id',
+        //         'name',
+        //     ],
+        //     'useEmpty'   => true,
+        //     'emptyText'  => '...',
+        //     'emptyValue' => '',
+        //     'class'      => 'form-control mr-sm-2',
+        // ]);
+
+        //SEA MAN v5 edit
+        $escaper = new Escaper();
+        $helper  = new Select($escaper);
+        
+        $options = [
+            'id' => 'profileId',
+            'name' => 'profileId'
+        ];
+         
+        $profilesSelect = $helper('    ', PHP_EOL, $options);
+        $profilesSelect
+            ->addPlaceholder(
+                '...',
+                "0",
+                [],
+                true,
+            )
+        ;
+
+        foreach ($profiles as $profile) {
+            $profilesSelect->add($profile->name, strval($profile->id));
+        }        
 
         $this->view->setVar('profilesSelect', $profilesSelect);
     }
