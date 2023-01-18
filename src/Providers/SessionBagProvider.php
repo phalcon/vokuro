@@ -31,7 +31,7 @@ class SessionBagProvider implements ServiceProviderInterface
     public function register(DiInterface $di): void
     {
         $di->set($this->providerName, function () {
-            return new Bag('conditions');
+            return new Bag($this->getShared('session'), 'conditions');
         });
     }
 }
