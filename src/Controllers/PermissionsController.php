@@ -16,6 +16,7 @@ use Vokuro\Models\Permissions;
 use Vokuro\Models\Profiles;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\Helper\Input\Select;
+
 /**
  * View and define permissions for the various profile levels.
  */
@@ -30,7 +31,6 @@ class PermissionsController extends ControllerBase
         $this->view->setTemplateBefore('private');
 
         if ($this->request->isPost()) {
-           
             $profile = Profiles::findFirstById($this->request->getPost('profileId'));
             if ($profile) {
                 if ($this->request->hasPost('permissions') && $this->request->hasPost('submit')) {
@@ -85,12 +85,13 @@ class PermissionsController extends ControllerBase
                 "0",
                 [],
                 true,
-            ) ->selected(strval($profile->id))
+            )
+            ->selected(strval($profile->id))
         ;
 
         foreach ($profiles as $profile) {
             $profilesSelect->add($profile->name, strval($profile->id));
-        }        
+        }
 
         $this->view->setVar('profilesSelect', $profilesSelect);
     }
