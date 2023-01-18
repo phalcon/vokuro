@@ -69,26 +69,13 @@ class PermissionsController extends ControllerBase
             ],
         ]);
 
-        // $profilesSelect = $this->tag->select([
-        //     'profileId',
-        //     $profiles,
-        //     'using'      => [
-        //         'id',
-        //         'name',
-        //     ],
-        //     'useEmpty'   => true,
-        //     'emptyText'  => '...',
-        //     'emptyValue' => '',
-        //     'class'      => 'form-control mr-sm-2',
-        // ]);
-
-        //SEA MAN v5 edit
         $escaper = new Escaper();
         $helper  = new Select($escaper);
         
         $options = [
             'id' => 'profileId',
-            'name' => 'profileId'
+            'name' => 'profileId',
+            'class' => 'form-control mr-sm-2'
         ];
          
         $profilesSelect = $helper('    ', PHP_EOL, $options);
@@ -98,7 +85,7 @@ class PermissionsController extends ControllerBase
                 "0",
                 [],
                 true,
-            )
+            ) ->selected(strval($profile->id))
         ;
 
         foreach ($profiles as $profile) {
