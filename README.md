@@ -20,7 +20,7 @@ Thanks.
 To run this application on your machine, you need at least:
 
 * PHP >= 7.2
-* Phalcon >= 5.1.2
+* Phalcon >= 5.1.4
 * MySQL >= 5.5
 * Apache Web Server with `mod_rewrite enabled`, and `AllowOverride Options` (or `All`) in your `httpd.conf` or Nginx Web Server
 * Latest [Phalcon Framework](https://github.com/phalcon/cphalcon) extension installed/enabled
