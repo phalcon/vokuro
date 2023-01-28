@@ -29,7 +29,7 @@ extensions:
 
 # Get params from .env file
 params:
-    - tests/.env.test
+    - .env
 
 error_level: "E_ALL"
 
