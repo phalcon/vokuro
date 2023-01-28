@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Plugins\Acl;
 
@@ -25,7 +26,7 @@ use Vokuro\Models\Profiles;
  */
 class Acl extends Injectable
 {
-    const APC_CACHE_VARIABLE_KEY = 'vokuro-acl';
+    public const APC_CACHE_VARIABLE_KEY = 'vokuro-acl';
 
     /**
      * The ACL Object
@@ -39,7 +40,7 @@ class Acl extends Injectable
      *
      * @var string
      */
-    private $filePath;
+    private $filePath = '';
 
     /**
      * Define the resources that are considered "private". These controller =>
@@ -88,7 +89,9 @@ class Acl extends Injectable
      */
     public function isAllowed($profile, $controller, $action): bool
     {
-        return $this->getAcl()->isAllowed($profile, $controller, $action);
+        return $this->getAcl()
+                    ->isAllowed($profile, $controller, $action)
+        ;
     }
 
     /**
@@ -232,26 +235,25 @@ class Acl extends Injectable
     {
         if (true === empty($this->filePath)) {
             $this->filePath = rtrim($this->config->application->cacheDir, '\\/') . '/acl/data.txt';
-        
-
-            return $this->filePath;
         }
+
+        return $this->filePath;
+    }
 
     /**
      * Adds an array of private resources to the ACL object.
      *
      * @param array $resources
      */
-        public function addPrivateResources(array $resources)
-        {
-            if (empty($resources)) {
-                return;
-            }
+    public function addPrivateResources(array $resources)
+    {
+        if (empty($resources)) {
+            return;
+        }
 
-            $this->privateResources = array_merge($this->privateResources, $resources);
-            if (is_object($this->acl)) {
-                $this->acl = $this->rebuild();
-            }
+        $this->privateResources = array_merge($this->privateResources, $resources);
+        if (is_object($this->acl)) {
+            $this->acl = $this->rebuild();
         }
     }
 }
