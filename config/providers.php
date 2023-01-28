@@ -23,8 +23,8 @@ use Vokuro\Providers\MailProvider;
 use Vokuro\Providers\ModelsMetadataProvider;
 use Vokuro\Providers\RouterProvider;
 use Vokuro\Providers\SecurityProvider;
-use Vokuro\Providers\SessionBagProvider;
 use Vokuro\Providers\SessionProvider;
+use Vokuro\Providers\SessionBagProvider;
 use Vokuro\Providers\UrlProvider;
 use Vokuro\Providers\ViewProvider;
 use Vokuro\Providers\AssetsProvider;
@@ -41,8 +41,8 @@ return [
     MailProvider::class,
     ModelsMetadataProvider::class,
     RouterProvider::class,
-    SessionBagProvider::class,
     SessionProvider::class,
+    SessionBagProvider::class,
     SecurityProvider::class,
     UrlProvider::class,
     ViewProvider::class,
