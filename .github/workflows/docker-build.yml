@@ -5,8 +5,10 @@ on: [push, pull_request]
 jobs:
     build:
         runs-on: ubuntu-latest
-
         steps:
             - uses: actions/checkout@v1
-            - name: Build Vokuro image
-              run: docker build -t phalconphp/vokuro:4.1.2 -f docker/Dockerfile .
+            - name: Build Vokuro image 8.0
+              run: docker build -t phalconphp/vokuro:5.0.0-8.0 -f docker/8.0/Dockerfile .
+
+            - name: Build Vokuro image 8.1
+              run: docker build -t phalconphp/vokuro:5.0.0-8.1 -f docker/8.1/Dockerfile .
