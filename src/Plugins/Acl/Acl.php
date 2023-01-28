@@ -234,23 +234,24 @@ class Acl extends Injectable
             $this->filePath = rtrim($this->config->application->cacheDir, '\\/') . '/acl/data.txt';
         
 
-        return $this->filePath;
-    }
+            return $this->filePath;
+        }
 
     /**
      * Adds an array of private resources to the ACL object.
      *
      * @param array $resources
      */
-    public function addPrivateResources(array $resources)
-    {
-        if (empty($resources)) {
-            return;
-        }
+        public function addPrivateResources(array $resources)
+        {
+            if (empty($resources)) {
+                return;
+            }
 
-        $this->privateResources = array_merge($this->privateResources, $resources);
-        if (is_object($this->acl)) {
-            $this->acl = $this->rebuild();
+            $this->privateResources = array_merge($this->privateResources, $resources);
+            if (is_object($this->acl)) {
+                $this->acl = $this->rebuild();
+            }
         }
     }
 }
