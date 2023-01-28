@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,12 +9,14 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Controllers;
 
 use Vokuro\Models\Permissions;
 use Vokuro\Models\Profiles;
-use Phalcon\Html\Escaper;
-use Phalcon\Html\Helper\Input\Select;
+
+use const PHP_EOL;
 
 /**
  * View and define permissions for the various profile levels.
@@ -30,12 +31,17 @@ class PermissionsController extends ControllerBase
     {
         $this->view->setTemplateBefore('private');
 
+        //default select option value
+        $selectedOption = 0;
         if ($this->request->isPost()) {
-            $profile = Profiles::findFirstById($this->request->getPost('profileId'));
+            $selectedOption = $this->request->getPost('profileId');
+            $profile = Profiles::findFirstById($selectedOption);
             if ($profile) {
                 if ($this->request->hasPost('permissions') && $this->request->hasPost('submit')) {
                     // Deletes the current permissions
-                    $profile->getPermissions()->delete();
+                    $profile->getPermissions()
+                            ->delete()
+                    ;
 
                     // Save the new permissions
                     foreach ($this->request->getPost('permissions') as $permission) {
@@ -69,30 +75,23 @@ class PermissionsController extends ControllerBase
             ],
         ]);
 
-        $escaper = new Escaper();
-        $helper  = new Select($escaper);
-        
         $options = [
             'id' => 'profileId',
             'name' => 'profileId',
             'class' => 'form-control mr-sm-2'
         ];
-         
-        $profilesSelect = $helper('    ', PHP_EOL, $options);
-        $profilesSelect
-            ->addPlaceholder(
-                '...',
-                "0",
-                [],
-                true,
-            )
-            ->selected(strval($profile->id))
+
+        $select  = $this
+            ->tag
+            ->inputSelect('    ', PHP_EOL, $options)
+            ->addPlaceholder('...', '', [], true)
+            ->selected((string) $selectedOption)
         ;
 
         foreach ($profiles as $profile) {
-            $profilesSelect->add($profile->name, strval($profile->id));
+            $select->add($profile->name, (string) $profile->id);
         }
 
-        $this->view->setVar('profilesSelect', $profilesSelect);
+        $this->view->setVar('profilesSelect', $select);
     }
 }
