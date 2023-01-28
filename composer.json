@@ -25,21 +25,21 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-openssl": "*",
-        "ext-phalcon": ">=5.1.4",
-        "robmorgan/phinx": "^0.11.1",
-        "swiftmailer/swiftmailer": "^6.2",
-        "vlucas/phpdotenv": "^3.6"
+        "ext-phalcon": "~5.0.0",
+        "robmorgan/phinx": "^0.12.12",
+        "symfony/mailer": "^6.0",
+        "vlucas/phpdotenv": "^5.4"
     },
     "require-dev": {
-        "codeception/codeception": "^4.1.6",
-        "phalcon/ide-stubs": "5.1.4",
-        "phpunit/phpunit": "^8.4",
-        "squizlabs/php_codesniffer": "3.5.5",
-        "vimeo/psalm": "^3.7",
-        "codeception/module-phpbrowser": "^1.0",
-        "codeception/module-asserts": "^1.2"
+        "codeception/codeception": "^5.0",
+        "codeception/module-asserts": "^3.0",
+        "codeception/module-phpbrowser": "^3.0",
+        "phalcon/ide-stubs": "^v5.0.1",
+        "squizlabs/php_codesniffer": "^3.7",
+        "vimeo/psalm": "^4.27",
+        "phpstan/phpstan": "^1.8"
     },
     "suggest": {
         "ext-apc": "Needed to support caching ACL"
@@ -56,7 +56,6 @@
         "exclude": [
             "/.ci",
             ".dockerignore",
-            ".travis.yml",
             "CODE_OF_CONDUCT.md",
             "CONTRIBUTING.md"
         ]
