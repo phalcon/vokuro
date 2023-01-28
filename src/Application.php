@@ -67,14 +67,17 @@ class Application
      */
     public function run(): string
     {
-        $baseUri = $this->di->getShared('url')->getBaseUri();
-        $position = strpos($_SERVER['REQUEST_URI'], $baseUri) + strlen($baseUri);
-        $uri = '/' . substr($_SERVER['REQUEST_URI'], $position);
+        $baseUri  = $this->di->getShared('url')
+                             ->getBaseUri()
+        ;
+        $uri      = $_SERVER['REQUEST_URI'] ?? '/';
+        $position = (int) strpos($uri, $baseUri) + strlen($baseUri);
+        $uri      = '/' . substr($uri, $position);
 
         /** @var ResponseInterface $response */
         $response = $this->app->handle($uri);
 
-        return (string)$response->getContent();
+        return (string) $response->getContent();
     }
 
     /**
