@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro;
 
@@ -24,24 +25,24 @@ use Phalcon\Mvc\Application as MvcApplication;
  */
 class Application
 {
-    const APPLICATION_PROVIDER = 'bootstrap';
+    public const APPLICATION_PROVIDER = 'bootstrap';
 
     /**
      * @var MvcApplication
      */
-    protected $app;
+    protected MvcApplication $app;
 
     /**
      * @var DiInterface
      */
-    protected $di;
+    protected DiInterface $di;
 
     /**
      * Project root path
      *
      * @var string
      */
-    protected $rootPath;
+    protected string $rootPath;
 
     /**
      * @param string $rootPath
@@ -50,8 +51,8 @@ class Application
      */
     public function __construct(string $rootPath)
     {
-        $this->di = new FactoryDefault();
-        $this->app = $this->createApplication();
+        $this->di       = new FactoryDefault();
+        $this->app      = $this->createApplication();
         $this->rootPath = $rootPath;
 
         $this->di->setShared(self::APPLICATION_PROVIDER, $this);
@@ -111,7 +112,7 @@ class Application
         $providers = include_once $filename;
         foreach ($providers as $providerClass) {
             /** @var ServiceProviderInterface $provider */
-            $provider = new $providerClass;
+            $provider = new $providerClass();
             $provider->register($this->di);
         }
     }
