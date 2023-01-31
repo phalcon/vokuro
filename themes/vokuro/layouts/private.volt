@@ -38,10 +38,10 @@
                     {{ auth.getName() }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    {{ tag.a('users/changePassword', 'Change Password', ['class': 'dropdown-item']) }}
+                    {{ tag.a(url('users/changePassword'), 'Change Password', ['class': 'dropdown-item']) }}
                 </div>
             </li>
-            <li class="nav-item">{{ tag.a('session/logout', 'Logout', ['class': 'nav-link']) }}</li>
+            <li class="nav-item">{{ tag.a(url('session/logout'), 'Logout', ['class': 'nav-link']) }}</li>
         </ul>
     </div>
 </nav>
