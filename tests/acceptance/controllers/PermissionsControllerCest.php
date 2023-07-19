@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Tests\Acceptance\Controllers;
@@ -29,6 +30,7 @@ final class PermissionsControllerCest
 
     /**
      * @depends login
+     *
      * @param AcceptanceTester $I
      */
     public function testIndex(AcceptanceTester $I): void

@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
-use Phalcon\Config;
+use Phalcon\Config\Config;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Logger\Adapter\Stream as FileLogger;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
+use Phalcon\Logger\Logger;
 
 /**
  * Logger service
@@ -39,13 +40,20 @@ class LoggerProvider implements ServiceProviderInterface
         $loggerConfigs = $di->getShared('config')->get('logger');
 
         $di->set($this->providerName, function () use ($loggerConfigs) {
-            $filename = trim($loggerConfigs->get('filename'), '\\/');
-            $path     = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
 
-            $formatter = new FormatterLine($loggerConfigs->get('format'), $loggerConfigs->get('date'));
-            $logger    = new FileLogger($path . $filename);
+            $loggerAdapter = new FileLogger($loggerConfigs->get('path') . $loggerConfigs->get('filename'));
 
-            $logger->setFormatter($formatter);
+            $loggerFormatter = new FormatterLine($loggerConfigs->get('format'), $loggerConfigs->get('date'));
+            $loggerAdapter->setFormatter($loggerFormatter);
+           
+            $logger  = new Logger(
+                'messages',
+                [
+                    'main' => $loggerAdapter,
+                ]
+            );
+
+            $logger->setLogLevel($loggerConfigs->get('logLevel'));
 
             return $logger;
         });

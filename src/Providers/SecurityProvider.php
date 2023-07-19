@@ -14,7 +14,7 @@ namespace Vokuro\Providers;
 
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Security;
+use Phalcon\Encryption\Security;
 
 class SecurityProvider implements ServiceProviderInterface
 {

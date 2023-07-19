@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,44 +9,47 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-use Phalcon\Logger;
+declare(strict_types=1);
+
+use Phalcon\Logger\Enum;
+
 use function Vokuro\root_path;
 
 return [
     'database'    => [
-        'adapter'  => getenv('DB_ADAPTER'),
-        'host'     => getenv('DB_HOST'),
-        'port'     => getenv('DB_PORT'),
-        'username' => getenv('DB_USERNAME'),
-        'password' => getenv('DB_PASSWORD'),
-        'dbname'   => getenv('DB_NAME'),
+        'adapter'  => $_ENV['DB_ADAPTER'] ?? 'mysql',
+        'host'     => $_ENV['DB_HOST'] ?? '127.0.0.1',
+        'port'     => $_ENV['DB_PORT'] ?? 3306,
+        'username' => $_ENV['DB_USERNAME'] ?? 'root',
+        'password' => $_ENV['DB_PASSWORD'] ?? 'secret',
+        'dbname'   => $_ENV['DB_NAME'] ?? 'phalcon_vokuro',
     ],
     'application' => [
-        'baseUri'         => getenv('APP_BASE_URI'),
-        'publicUrl'       => getenv('APP_PUBLIC_URL'),
-        'cryptSalt'       => getenv('APP_CRYPT_SALT'),
+        'baseUri'         => $_ENV['APP_BASE_URI'] ?? '/',
+        'publicUrl'       => $_ENV['APP_PUBLIC_URL'] ?? 'https://vokuro.phalcon.ld',
+        'cryptSalt'       => $_ENV['APP_CRYPT_SALT'] ?? '',
         'viewsDir'        => root_path('themes/vokuro/'),
         'cacheDir'        => root_path('var/cache/'),
         'sessionSavePath' => root_path('var/cache/session/'),
     ],
     'mail'        => [
-        'fromName'  => getenv('MAIL_FROM_NAME'),
-        'fromEmail' => getenv('MAIL_FROM_EMAIL'),
+        'fromName'  => $_ENV['MAIL_FROM_NAME'] ?? 'Vokuro Mailer',
+        'fromEmail' => $_ENV['MAIL_FROM_EMAIL'] ?? 'vokuro@localhost',
         'smtp'      => [
-            'server'   => getenv('MAIL_SMTP_SERVER'),
-            'port'     => getenv('MAIL_SMTP_PORT'),
-            'security' => getenv('MAIL_SMTP_SECURITY'),
-            'username' => getenv('MAIL_SMTP_USERNAME'),
-            'password' => getenv('MAIL_SMTP_PASSWORD'),
+            'server'   => $_ENV['MAIL_SMTP_SERVER'] ?? 'localhost',
+            'port'     => $_ENV['MAIL_SMTP_PORT'] ?? 25,
+            'security' => $_ENV['MAIL_SMTP_SECURITY'] ?? '',
+            'username' => $_ENV['MAIL_SMTP_USERNAME'] ?? '',
+            'password' => $_ENV['MAIL_SMTP_PASSWORD'] ?? '',
         ],
     ],
     'logger'      => [
         'path'     => root_path('var/logs/'),
-        'format'   => '%date% [%type%] %message%',
+        'format'   => '%date% [%level%] %message%',
         'date'     => 'D j H:i:s',
-        'logLevel' => Logger::DEBUG,
+        'logLevel' => Enum::DEBUG,
         'filename' => 'application.log',
     ],
-    // Set to false to disable sending emails (for use in test environment)
+    // Set to false, to disable sending emails (for use in test environment)
     'useMail'     => true,
 ];

@@ -19,8 +19,8 @@ Thanks.
 
 To run this application on your machine, you need at least:
 
-* PHP >= 7.2
-* Phalcon >= 4.0
+* PHP >= 7.4
+* Phalcon >= 5.0
 * MySQL >= 5.5
 * Apache Web Server with `mod_rewrite enabled`, and `AllowOverride Options` (or `All`) in your `httpd.conf` or Nginx Web Server
 * Latest [Phalcon Framework](https://github.com/phalcon/cphalcon) extension installed/enabled
@@ -28,7 +28,7 @@ To run this application on your machine, you need at least:
 ### Install Vökuró via composer create-project
 
 ```bash
-composer create-project phalcon/vokuro /path/to/vokuro-folder "4.1.2" --prefer-dist
+composer create-project phalcon/vokuro /path/to/vokuro-folder "5.0.0" --prefer-dist
 ```
 
 ### Installing Dependencies via Composer
@@ -44,7 +44,7 @@ Run the composer installer:
 ```bash
 cd vokuro
 composer install
-cp .env.example .env
+cp ./.ci/.env.example .env
 vendor/bin/phinx migrate
 vendor/bin/phinx seed:run
 ```
@@ -64,11 +64,11 @@ If you wish to check older versions or newer ones currently under development, p
 
 Phalcon is an open source project and a volunteer effort.
 Vökuró does not have human resources fully dedicated to the maintenance of this software.
-If you want something to be improved or you want a new feature please submit a Pull Request.
+If you want something to be improved, or you want a new feature please submit a Pull Request.
 
 ## Sponsors
 
-Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/phalcon#sponsor)]
+Become a sponsor and get your logo on our README on GitHub with a link to your site. [[Become a sponsor](https://opencollective.com/phalcon#sponsor)]
 
 <a href="https://opencollective.com/phalcon/#contributors">
 <img src="https://opencollective.com/phalcon/tiers/sponsors.svg?avatarHeight=48&width=800" alt="sponsors">

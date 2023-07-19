@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,19 +9,22 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Providers;
 
+use Phalcon\Assets\Manager;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Assets\Manager;
+use Phalcon\Html\TagFactory;
 
 class AssetsProvider implements ServiceProviderInterface
 {
-    protected const VERSION = "1.0.0";
+    protected const VERSION = '1.0.0';
     /**
      * @var string
      */
-    protected $providerName = 'assets';
+    protected string $providerName = 'assets';
 
     /**
      * @param DiInterface $di
@@ -31,41 +33,52 @@ class AssetsProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $assetManager = new Manager();
+        /** @var TagFactory $tagFactory */
+        $tagFactory = $di->getShared('tag');
 
-        $di->setShared($this->providerName, function () use ($assetManager) {
+        $di->setShared(
+            $this->providerName,
+            function () use ($tagFactory) {
+                $assetManager = new Manager($tagFactory);
+                $assetManager->collection('css')
+                             ->addCss(
+                                 '//cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css?dc=' . self::VERSION,
+                                 false,
+                                 false,
+                                 [
+                                     'media'       => 'screen,projection',
+                                     'integrity'   => 'sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N',
+                                     'crossorigin' => 'anonymous'
+                                 ]
+                             )
+                             ->addCss('/css/style.css?dc=' . self::VERSION, true, true, [
+                                 'media' => 'screen,projection'
+                             ])
+                ;
 
-            $assetManager->collection('css')
-                ->addCss(
-                    '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css?dc=' . self::VERSION,
-                    false,
-                    false,
-                    [
-                        "media"       => "screen,projection",
-                        "integrity"   => "sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T",
-                        "crossorigin" => "anonymous"
-                    ]
-                )
-                ->addCss('/css/style.css?dc=' . self::VERSION, true, true, [
-                    "media" => "screen,projection"
-                ]);
+                $assetManager->collection('js')
+                             ->addJs(
+                                 '//code.jquery.com/jquery-3.6.1.slim.min.js?dc=' . self::VERSION,
+                                 false,
+                                 true,
+                                 [
+                                     'integrity'   => 'sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=',
+                                     'crossorigin' => 'anonymous'
+                                 ]
+                             )
+                             ->addJs(
+                                 '//cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js?dc=' . self::VERSION,
+                                 false,
+                                 true,
+                                 [
+                                     'integrity'   => 'sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+',
+                                     'crossorigin' => 'anonymous'
+                                 ]
+                             )
+                ;
 
-            $assetManager->collection('js')
-                ->addJs('//code.jquery.com/jquery-3.3.1.slim.min.js?dc=' . self::VERSION, false, true, [
-                    "integrity"   => "sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo",
-                    "crossorigin" => "anonymous"
-                ])
-                ->addJs(
-                    '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js?dc=' . self::VERSION,
-                    false,
-                    true,
-                    [
-                        "integrity"   => "sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM",
-                        "crossorigin" => "anonymous"
-                    ]
-                );
-
-            return $assetManager;
-        });
+                return $assetManager;
+            }
+        );
     }
 }
