@@ -27,7 +27,7 @@
     "require": {
         "php": ">=7.4",
         "ext-openssl": "*",
-        "ext-phalcon": "~5.0.0",
+        "ext-phalcon": "^5.0.0",
         "robmorgan/phinx": "^0.12.12",
         "symfony/mailer": "^6.0",
         "vlucas/phpdotenv": "^5.4"
