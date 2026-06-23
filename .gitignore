@@ -9,3 +9,5 @@ composer.lock
 vendor/
 .env
 boxfile.yml
+/var/*.sqlite
+/var/*.sqlite3

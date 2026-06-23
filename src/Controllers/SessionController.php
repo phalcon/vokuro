@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
@@ -25,84 +26,6 @@ use Vokuro\Plugins\Auth\Exception as AuthException;
  */
 class SessionController extends ControllerBase
 {
-    /**
-     * Default action. Set the public layout (layouts/public.volt)
-     */
-    public function initialize(): void
-    {
-        $this->view->setTemplateBefore('public');
-    }
-
-    public function indexAction(): void
-    {
-    }
-
-    /**
-     * Allow a user to signup to the system
-     */
-    public function signupAction()
-    {
-        $form = new SignUpForm();
-
-        if ($this->request->isPost()) {
-            if ($form->isValid($this->request->getPost())) {
-                $user = new Users([
-                    'name'       => $this->request->getPost('name', 'striptags'),
-                    'email'      => $this->request->getPost('email'),
-                    'password'   => $this->security->hash($this->request->getPost('password')),
-                    'profilesId' => 2,
-                ]);
-
-                if ($user->save()) {
-                    return $this->dispatcher->forward([
-                        'controller' => 'index',
-                        'action'     => 'index',
-                    ]);
-                }
-
-                foreach ($user->getMessages() as $message) {
-                    $this->flash->error((string) $message);
-                }
-            }
-        }
-
-        $this->view->setVar('form', $form);
-    }
-
-    /**
-     * Starts a session in the admin backend
-     */
-    public function loginAction()
-    {
-        $form = new LoginForm();
-
-        try {
-            if (!$this->request->isPost()) {
-                if ($this->auth->hasRememberMe()) {
-                    return $this->auth->loginWithRememberMe();
-                }
-            } else {
-                if ($form->isValid($this->request->getPost()) == false) {
-                    foreach ($form->getMessages() as $message) {
-                        $this->flash->error((string) $message);
-                    }
-                } else {
-                    $this->auth->check([
-                        'email'    => $this->request->getPost('email'),
-                        'password' => $this->request->getPost('password'),
-                        'remember' => $this->request->getPost('remember'),
-                    ]);
-
-                    return $this->response->redirect('users');
-                }
-            }
-        } catch (AuthException $e) {
-            $this->flash->error($e->getMessage());
-        }
-
-        $this->view->setVar('form', $form);
-    }
-
     /**
      * Shows the forgot password form
      */
@@ -143,6 +66,51 @@ class SessionController extends ControllerBase
         $this->view->setVar('form', $form);
     }
 
+    public function indexAction(): void
+    {
+    }
+    /**
+     * Default action. Set the public layout (layouts/public.volt)
+     */
+    public function initialize(): void
+    {
+        $this->view->setTemplateBefore('auth');
+    }
+
+    /**
+     * Starts a session in the admin backend
+     */
+    public function loginAction()
+    {
+        $form = new LoginForm();
+
+        try {
+            if (!$this->request->isPost()) {
+                if ($this->auth->hasRememberMe()) {
+                    return $this->auth->loginWithRememberMe();
+                }
+            } else {
+                if ($form->isValid($this->request->getPost()) == false) {
+                    foreach ($form->getMessages() as $message) {
+                        $this->flash->error((string) $message);
+                    }
+                } else {
+                    $this->auth->check([
+                        'email'    => $this->request->getPost('email'),
+                        'password' => $this->request->getPost('password'),
+                        'remember' => $this->request->getPost('remember'),
+                    ]);
+
+                    return $this->response->redirect('users');
+                }
+            }
+        } catch (AuthException $e) {
+            $this->flash->error($e->getMessage());
+        }
+
+        $this->view->setVar('form', $form);
+    }
+
     /**
      * Closes the session
      */
@@ -151,5 +119,39 @@ class SessionController extends ControllerBase
         $this->auth->remove();
 
         return $this->response->redirect('index');
+    }
+
+    /**
+     * Allow a user to signup to the system
+     */
+    public function signupAction()
+    {
+        $form = new SignUpForm();
+
+        if ($this->request->isPost()) {
+            if ($form->isValid($this->request->getPost())) {
+                $user = new Users([
+                    'name'       => $this->request->getPost('name', 'striptags'),
+                    'email'      => $this->request->getPost('email'),
+                    'password'   => $this->security->hash($this->request->getPost('password')),
+                    'profilesId' => 2,
+                ]);
+
+                if ($user->save()) {
+                    $this->dispatcher->forward([
+                        'controller' => 'index',
+                        'action'     => 'index',
+                    ]);
+
+                    return;
+                }
+
+                foreach ($user->getMessages() as $message) {
+                    $this->flash->error((string) $message);
+                }
+            }
+        }
+
+        $this->view->setVar('form', $form);
     }
 }

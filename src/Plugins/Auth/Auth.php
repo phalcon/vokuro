@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Plugins\Auth;
 
@@ -25,6 +26,28 @@ use Vokuro\Models\Users;
  */
 class Auth extends Injectable
 {
+    /**
+     * Auths the user by his/her id
+     *
+     * @param int $id
+     *
+     * @throws Exception
+     */
+    public function authUserById($id)
+    {
+        $user = Users::findFirstById($id);
+        if ($user == false) {
+            throw new Exception('The user does not exist');
+        }
+
+        $this->checkUserFlags($user);
+
+        $this->session->set('auth-identity', [
+            'id'      => $user->id,
+            'name'    => $user->name,
+            'profile' => $user->profile->name,
+        ]);
+    }
     /**
      * Checks the user credentials
      *
@@ -66,59 +89,24 @@ class Auth extends Injectable
     }
 
     /**
-     * Creates the remember me environment settings the related cookies and
-     * generating tokens
+     * Checks if the user is banned/inactive/suspended
      *
      * @param Users $user
      *
      * @throws Exception
      */
-    public function saveSuccessLogin($user)
+    public function checkUserFlags(Users $user)
     {
-        $successLogin            = new SuccessLogins();
-        $successLogin->usersId   = $user->id;
-        $successLogin->ipAddress = $this->request->getClientAddress();
-        $successLogin->userAgent = $this->request->getUserAgent();
-        if (!$successLogin->save()) {
-            $messages = $successLogin->getMessages();
-            throw new Exception($messages[0]);
+        if ($user->active != 'Y') {
+            throw new Exception('The user is inactive');
         }
-    }
 
-    /**
-     * Implements login throttling
-     * Reduces the effectiveness of brute force attacks
-     *
-     * @param int $userId
-     */
-    public function registerUserThrottling($userId)
-    {
-        $failedLogin            = new FailedLogins();
-        $failedLogin->usersId   = $userId;
-        $failedLogin->ipAddress = $this->request->getClientAddress();
-        $failedLogin->attempted = time();
-        $failedLogin->save();
+        if ($user->banned != 'N') {
+            throw new Exception('The user is banned');
+        }
 
-        $attempts = FailedLogins::count([
-            'ipAddress = ?0 AND attempted >= ?1',
-            'bind' => [
-                $this->request->getClientAddress(),
-                time() - 3600 * 6,
-            ],
-        ]);
-
-        switch ($attempts) {
-            case 1:
-            case 2:
-                // no delay
-                break;
-            case 3:
-            case 4:
-                sleep(2);
-                break;
-            default:
-                sleep(4);
-                break;
+        if ($user->suspended != 'N') {
+            throw new Exception('The user is suspended');
         }
     }
 
@@ -143,6 +131,87 @@ class Auth extends Injectable
             $this->cookies->set('RMU', $user->id, $expire);
             $this->cookies->set('RMT', $token, $expire);
         }
+    }
+
+    /**
+     * Delete the current user token in session
+     *
+     * @param int $userId
+     */
+    public function deleteToken(int $userId): void
+    {
+        $user = RememberTokens::find([
+            'conditions' => 'usersId = :userId:',
+            'bind'       => [
+                'userId' => $userId,
+            ],
+        ]);
+
+        if ($user) {
+            $user->delete();
+        }
+    }
+
+    /**
+     * Returns the current token user
+     *
+     * @param string $token
+     *
+     * @return int|null
+     */
+    public function findFirstByToken($token)
+    {
+        $userToken = RememberTokens::findFirst([
+            'conditions' => 'token = :token:',
+            'bind'       => [
+                'token' => $token,
+            ],
+        ]);
+
+        return $userToken ? $userToken->usersId : null;
+    }
+
+    /**
+     * Returns the current identity
+     *
+     * @return array|null
+     */
+    public function getIdentity()
+    {
+        return $this->session->get('auth-identity');
+    }
+
+    /**
+     * Returns the current identity
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        $identity = $this->session->get('auth-identity');
+        return $identity['name'];
+    }
+
+    /**
+     * Get the entity related to user in the active identity
+     *
+     * @return Users
+     * @throws Exception
+     */
+    public function getUser()
+    {
+        $identity = $this->session->get('auth-identity');
+
+        if (!isset($identity['id'])) {
+            throw new Exception('Session was broken. Try to re-login');
+        }
+
+        $user = Users::findFirstById($identity['id']);
+        if ($user == false) {
+            throw new Exception('The user does not exist');
+        }
+
+        return $user;
     }
 
     /**
@@ -208,46 +277,40 @@ class Auth extends Injectable
     }
 
     /**
-     * Checks if the user is banned/inactive/suspended
+     * Implements login throttling
+     * Reduces the effectiveness of brute force attacks
      *
-     * @param Users $user
-     *
-     * @throws Exception
+     * @param int $userId
      */
-    public function checkUserFlags(Users $user)
+    public function registerUserThrottling($userId)
     {
-        if ($user->active != 'Y') {
-            throw new Exception('The user is inactive');
+        $failedLogin            = new FailedLogins();
+        $failedLogin->usersId   = $userId;
+        $failedLogin->ipAddress = $this->request->getClientAddress();
+        $failedLogin->attempted = time();
+        $failedLogin->save();
+
+        $attempts = FailedLogins::count([
+            'ipAddress = ?0 AND attempted >= ?1',
+            'bind' => [
+                $this->request->getClientAddress(),
+                time() - 3600 * 6,
+            ],
+        ]);
+
+        switch ($attempts) {
+            case 1:
+            case 2:
+                // no delay
+                break;
+            case 3:
+            case 4:
+                sleep(2);
+                break;
+            default:
+                sleep(4);
+                break;
         }
-
-        if ($user->banned != 'N') {
-            throw new Exception('The user is banned');
-        }
-
-        if ($user->suspended != 'N') {
-            throw new Exception('The user is suspended');
-        }
-    }
-
-    /**
-     * Returns the current identity
-     *
-     * @return array|null
-     */
-    public function getIdentity()
-    {
-        return $this->session->get('auth-identity');
-    }
-
-    /**
-     * Returns the current identity
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        $identity = $this->session->get('auth-identity');
-        return $identity['name'];
     }
 
     /**
@@ -273,85 +336,22 @@ class Auth extends Injectable
     }
 
     /**
-     * Auths the user by his/her id
+     * Creates the remember me environment settings the related cookies and
+     * generating tokens
      *
-     * @param int $id
+     * @param Users $user
      *
      * @throws Exception
      */
-    public function authUserById($id)
+    public function saveSuccessLogin($user)
     {
-        $user = Users::findFirstById($id);
-        if ($user == false) {
-            throw new Exception('The user does not exist');
-        }
-
-        $this->checkUserFlags($user);
-
-        $this->session->set('auth-identity', [
-            'id'      => $user->id,
-            'name'    => $user->name,
-            'profile' => $user->profile->name,
-        ]);
-    }
-
-    /**
-     * Get the entity related to user in the active identity
-     *
-     * @return Users
-     * @throws Exception
-     */
-    public function getUser()
-    {
-        $identity = $this->session->get('auth-identity');
-
-        if (!isset($identity['id'])) {
-            throw new Exception('Session was broken. Try to re-login');
-        }
-
-        $user = Users::findFirstById($identity['id']);
-        if ($user == false) {
-            throw new Exception('The user does not exist');
-        }
-
-        return $user;
-    }
-
-    /**
-     * Returns the current token user
-     *
-     * @param string $token
-     *
-     * @return int|null
-     */
-    public function findFirstByToken($token)
-    {
-        $userToken = RememberTokens::findFirst([
-            'conditions' => 'token = :token:',
-            'bind'       => [
-                'token' => $token,
-            ],
-        ]);
-
-        return $userToken ? $userToken->usersId : null;
-    }
-
-    /**
-     * Delete the current user token in session
-     *
-     * @param int $userId
-     */
-    public function deleteToken(int $userId): void
-    {
-        $user = RememberTokens::find([
-            'conditions' => 'usersId = :userId:',
-            'bind'       => [
-                'userId' => $userId,
-            ],
-        ]);
-
-        if ($user) {
-            $user->delete();
+        $successLogin            = new SuccessLogins();
+        $successLogin->usersId   = $user->id;
+        $successLogin->ipAddress = $this->request->getClientAddress();
+        $successLogin->userAgent = $this->request->getUserAgent();
+        if (!$successLogin->save()) {
+            $messages = $successLogin->getMessages();
+            throw new Exception($messages[0]);
         }
     }
 }

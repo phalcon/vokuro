@@ -1,86 +1,93 @@
 # Vökuró
 
-[![Discord](https://img.shields.io/discord/310910488152375297?label=Discord)](http://phalcon.io/discord)
-[![Build Status](https://travis-ci.org/phalcon/vokuro.svg?branch=master)](https://travis-ci.org/phalcon/vokuro)
+[![Discord](https://img.shields.io/discord/310910488152375297?label=Discord)](https://phalcon.io/discord)
 [![Phalcon Backers](https://img.shields.io/badge/phalcon-backers-99ddc0.svg)](https://github.com/phalcon/cphalcon/blob/master/BACKERS.md)
-[![OpenCollective](https://opencollective.com/phalcon/backers/badge.svg)](#backers)
-[![OpenCollective](https://opencollective.com/phalcon/sponsors/badge.svg)](#sponsors)
 
-This is a sample application for the [Phalcon Framework](https://github.com/phalcon/cphalcon).
-We expect to implement as many features as possible to showcase the framework and its potential.
+Vökuró is the sample application for the [Phalcon Framework](https://github.com/phalcon/cphalcon).
+It showcases authentication, ACL-based permissions, user/profile management, forms,
+mailing and more.
 
-Please write us if you have any feedback.
+It runs on **Phalcon v5** (the C extension, default) and on **Phalcon v6**
+(the `phalcon/phalcon` package, currently alpha) from the same source.
 
-Thanks.
+## Requirements
 
-## Get Started
+* PHP 8.1 – 8.5
+* MySQL 8.0 (provided by the Docker stack)
+* Docker + Docker Compose (recommended), or a local PHP with the Phalcon extension
+  (see [docs/installation.md](docs/installation.md))
 
-### Requirements
-
-To run this application on your machine, you need at least:
-
-* PHP >= 7.2
-* Phalcon >= 4.0
-* MySQL >= 5.5
-* Apache Web Server with `mod_rewrite enabled`, and `AllowOverride Options` (or `All`) in your `httpd.conf` or Nginx Web Server
-* Latest [Phalcon Framework](https://github.com/phalcon/cphalcon) extension installed/enabled
-
-### Install Vökuró via composer create-project
+## Quick start (Docker)
 
 ```bash
-composer create-project phalcon/vokuro /path/to/vokuro-folder "4.1.2" --prefer-dist
-```
-
-### Installing Dependencies via Composer
-
-Vökuró's dependencies must be installed using Composer. Install composer in a common location or in your project:
-
-```bash
-curl -s http://getcomposer.org/installer | php
-```
-
-Run the composer installer:
-
-```bash
-cd vokuro
-composer install
 cp .env.example .env
-vendor/bin/phinx migrate
-vendor/bin/phinx seed:run
+docker compose up -d --build
 ```
 
-**NOTE** After the installation, please ensure that the following folders have write permissions set:
-- `var/cache/acl`
-- `var/cache/metaData`
-- `var/cache/session`
-- `var/cache/volt`
+Then open:
 
-## NOTE
+* Application: <http://localhost:8080>
+* Mailpit (captured e-mails): <http://localhost:8025>
 
-The master branch will always contain the latest stable version.
-If you wish to check older versions or newer ones currently under development, please switch to the relevant branch.
+The container waits for MySQL, runs the migrations and seeds, then serves the app.
+Log in with one of the seeded accounts, e.g. `sarah.connor@skynet.dev` / `password1`.
 
-## Improving this Sample
+### Choosing the Phalcon version
 
-Phalcon is an open source project and a volunteer effort.
-Vökuró does not have human resources fully dedicated to the maintenance of this software.
-If you want something to be improved or you want a new feature please submit a Pull Request.
+```bash
+docker compose up -d --build                      # v5 (C extension, default)
+PHALCON_VARIANT=v6 docker compose up -d --build   # v6 (phalcon/phalcon, alpha)
+```
 
-## Sponsors
+The two are mutually exclusive: the v5 image installs the C extension, the v6 image
+installs the pure-PHP package instead.
 
-Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/phalcon#sponsor)]
+## Composer scripts
 
-<a href="https://opencollective.com/phalcon/#contributors">
-<img src="https://opencollective.com/phalcon/tiers/sponsors.svg?avatarHeight=48&width=800" alt="sponsors">
-</a>
+Run them inside the container, e.g. `docker compose exec app composer cs`:
 
-## Backers
+| Script | Description |
+| --- | --- |
+| `composer cs` | PHP_CodeSniffer (PSR-12) |
+| `composer cs-fix` | Auto-fix coding standard issues (phpcbf) |
+| `composer cs-fixer` | PHP CS Fixer (dry-run) |
+| `composer cs-fixer-fix` | Apply PHP CS Fixer |
+| `composer analyze` | PHPStan static analysis |
+| `composer test-unit` | Unit test suite |
+| `composer test-functional` | Functional test suite |
+| `composer test-acceptance` | Acceptance test suite |
+| `composer test` | All Codeception suites |
+| `composer migrate` | Run database migrations (Phinx) |
+| `composer seed` | Seed the database |
 
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/phalcon#backer)]
+> `composer analyze` resolves Phalcon classes from the `phalcon/phalcon` (v6) source,
+> so run it where the v5 C extension is **not** loaded (the CI `quality` job, or a plain
+> host). The coding-standard and test scripts are unaffected.
 
-<a href="https://opencollective.com/phalcon/#contributors">
-<img src="https://opencollective.com/phalcon/tiers/backers.svg?avatarHeight=48&width=800&height=200" alt="backers">
-</a>
+## Updating Phalcon
+
+* **v5** - bump `PHALCON_V5_CONSTRAINT` in `resources/docker/Dockerfile` and rebuild:
+  `docker compose build app`. PIE compiles the C extension from source (this is the only
+  way to update a C extension).
+* **v6** - `docker compose exec app composer update phalcon/phalcon` (no rebuild).
+  Dependabot opens the bump PR automatically.
+
+## Project layout
+
+Follows the [PDS skeleton](https://github.com/php-pds/skeleton):
+
+```
+bin/        executables (docker entrypoint, wait-for-db)
+config/     application configuration
+design/     static HTML snapshot of every screen (for design work)
+docs/       documentation
+public/     web server root
+resources/  tooling configs, docker, phinx, migrations, seeds, codeception
+src/        application source
+tests/      Codeception suites
+themes/     Volt views
+var/        runtime cache and logs
+```
 
 ## License
 

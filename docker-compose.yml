@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: resources/docker/Dockerfile
+      args:
+        PHP_VERSION: ${PHP_VERSION:-8.5}
+        PHALCON_VARIANT: ${PHALCON_VARIANT:-v5}
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    container_name: ${PROJECT_PREFIX:-vokuro}-app
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    volumes:
+      - .:/app
+      - vendor:/app/vendor
+    env_file: .env
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+
+  mysql:
+    image: mysql:8.0
+    container_name: ${PROJECT_PREFIX:-vokuro}-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_DATABASE: ${DB_NAME:-vokuro}
+    ports:
+      - "${DB_PORT_HOST:-3306}:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_PASSWORD:-secret}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: ${PROJECT_PREFIX:-vokuro}-mailpit
+    ports:
+      - "${MAILPIT_HTTP:-8025}:8025"
+
+volumes:
+  vendor:
+  mysqldata:

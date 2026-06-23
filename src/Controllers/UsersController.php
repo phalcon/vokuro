@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
@@ -25,44 +26,40 @@ use Vokuro\Models\Users;
  */
 class UsersController extends ControllerBase
 {
-    public function initialize(): void
-    {
-        $this->view->setTemplateBefore('private');
-    }
-
     /**
-     * Default action, shows the search form
+     * Users must use this action to change its password
      */
-    public function indexAction(): void
+    public function changePasswordAction(): void
     {
-        $this->view->setVar('form', new UsersForm());
-        $this->assets->collection("js")->addJs("/js/privateUsers.js", true, true);
-    }
+        $form = new ChangePasswordForm();
 
-    /**
-     * Searches for users
-     */
-    public function searchAction(): void
-    {
-        $builder = Criteria::fromInput($this->getDI(), Users::class, $this->request->getQuery());
+        if ($this->request->isPost()) {
+            if (!$form->isValid($this->request->getPost())) {
+                foreach ($form->getMessages() as $message) {
+                    $this->flash->error((string) $message);
+                }
+            } else {
+                $user = $this->auth->getUser();
 
-        $count = Users::count($builder->getParams());
-        if ($count === 0) {
-            $this->flash->notice('The search did not find any users');
-            $this->dispatcher->forward([
-                'action' => 'index',
-            ]);
+                $user->password           = $this->security->hash($this->request->getPost('password'));
+                $user->mustChangePassword = 'N';
 
-            return;
+                $passwordChange            = new PasswordChanges();
+                $passwordChange->user      = $user;
+                $passwordChange->ipAddress = $this->request->getClientAddress();
+                $passwordChange->userAgent = $this->request->getUserAgent();
+
+                if (!$passwordChange->save()) {
+                    foreach ($passwordChange->getMessages() as $message) {
+                        $this->flash->error((string) $message);
+                    }
+                } else {
+                    $this->flash->success('Your password was successfully changed');
+                }
+            }
         }
 
-        $paginator = new Paginator([
-            'builder'  => $builder->createBuilder(),
-            'limit' => 10,
-            'page'  => $this->request->getQuery('page', 'int', 1),
-        ]);
-
-        $this->view->setVar('page', $paginator->paginate());
+        $this->view->setVar('form', $form);
     }
 
     /**
@@ -95,6 +92,35 @@ class UsersController extends ControllerBase
         }
 
         $this->view->setVar('form', $form);
+    }
+
+    /**
+     * Deletes a User
+     *
+     * @param int $id
+     */
+    public function deleteAction($id)
+    {
+        $user = Users::findFirstById($id);
+        if (!$user) {
+            $this->flash->error('User was not found.');
+
+            return $this->dispatcher->forward([
+                'action' => 'index',
+            ]);
+        }
+
+        if (!$user->delete()) {
+            foreach ($user->getMessages() as $message) {
+                $this->flash->error((string) $message);
+            }
+        } else {
+            $this->flash->success('User was deleted.');
+        }
+
+        return $this->dispatcher->forward([
+            'action' => 'index',
+        ]);
     }
 
     /**
@@ -149,67 +175,48 @@ class UsersController extends ControllerBase
     }
 
     /**
-     * Deletes a User
-     *
-     * @param int $id
+     * Default action, shows the search form
      */
-    public function deleteAction($id)
+    public function indexAction(): void
     {
-        $user = Users::findFirstById($id);
-        if (!$user) {
-            $this->flash->error('User was not found.');
+        $this->view->setVar('form', new UsersForm());
 
-            return $this->dispatcher->forward([
-                'action' => 'index',
-            ]);
-        }
-
-        if (!$user->delete()) {
-            foreach ($user->getMessages() as $message) {
-                $this->flash->error((string) $message);
-            }
-        } else {
-            $this->flash->success('User was deleted.');
-        }
-
-        return $this->dispatcher->forward([
-            'action' => 'index',
+        $paginator = new Paginator([
+            'builder' => Criteria::fromInput($this->getDI(), Users::class, [])->createBuilder(),
+            'limit'   => 10,
+            'page'    => $this->request->getQuery('page', 'int', 1),
         ]);
+
+        $this->view->setVar('page', $paginator->paginate());
+    }
+    public function initialize(): void
+    {
+        $this->view->setTemplateBefore('private');
     }
 
     /**
-     * Users must use this action to change its password
+     * Searches for users
      */
-    public function changePasswordAction(): void
+    public function searchAction(): void
     {
-        $form = new ChangePasswordForm();
+        $builder = Criteria::fromInput($this->getDI(), Users::class, $this->request->getQuery());
 
-        if ($this->request->isPost()) {
-            if (!$form->isValid($this->request->getPost())) {
-                foreach ($form->getMessages() as $message) {
-                    $this->flash->error((string) $message);
-                }
-            } else {
-                $user = $this->auth->getUser();
+        $count = Users::count($builder->getParams());
+        if ($count === 0) {
+            $this->flash->notice('The search did not find any users');
+            $this->dispatcher->forward([
+                'action' => 'index',
+            ]);
 
-                $user->password           = $this->security->hash($this->request->getPost('password'));
-                $user->mustChangePassword = 'N';
-
-                $passwordChange            = new PasswordChanges();
-                $passwordChange->user      = $user;
-                $passwordChange->ipAddress = $this->request->getClientAddress();
-                $passwordChange->userAgent = $this->request->getUserAgent();
-
-                if (!$passwordChange->save()) {
-                    foreach ($passwordChange->getMessages() as $message) {
-                        $this->flash->error((string) $message);
-                    }
-                } else {
-                    $this->flash->success('Your password was successfully changed');
-                }
-            }
+            return;
         }
 
-        $this->view->setVar('form', $form);
+        $paginator = new Paginator([
+            'builder'  => $builder->createBuilder(),
+            'limit' => 10,
+            'page'  => $this->request->getQuery('page', 'int', 1),
+        ]);
+
+        $this->view->setVar('page', $paginator->paginate());
     }
 }

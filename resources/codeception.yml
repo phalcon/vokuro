@@ -1,0 +1,20 @@
+paths:
+    tests: ../tests
+    output: ../tests/_output
+    data: ../tests/_data
+    support: ../tests/_support
+    envs: ../tests/_envs
+
+actor_suffix: Tester
+
+settings:
+    memory_limit: 1024M
+
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
+
+params:
+    - ../tests/.env.test
+
+error_level: "E_ALL"

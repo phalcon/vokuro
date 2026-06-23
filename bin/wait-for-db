@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+host="${DB_HOST:-mysql}"
+port="${DB_PORT:-3306}"
+
+echo "Waiting for database at ${host}:${port} ..."
+for _ in $(seq 1 60); do
+    if mysqladmin ping -h "${host}" -P "${port}" --silent 2>/dev/null; then
+        echo "Database is up."
+        exit 0
+    fi
+    sleep 2
+done
+
+echo "Database did not become ready in time." >&2
+exit 1

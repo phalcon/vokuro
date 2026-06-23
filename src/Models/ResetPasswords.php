@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Models;
 
@@ -23,16 +24,6 @@ use Phalcon\Mvc\Model;
 class ResetPasswords extends Model
 {
     /**
-     * @var integer
-     */
-    public $id;
-
-    /**
-     * @var integer
-     */
-    public $usersId;
-
-    /**
      * @var string
      */
     public $code;
@@ -41,6 +32,10 @@ class ResetPasswords extends Model
      * @var integer
      */
     public $createdAt;
+    /**
+     * @var integer
+     */
+    public $id;
 
     /**
      * @var integer
@@ -52,11 +47,24 @@ class ResetPasswords extends Model
      */
     public $reset;
 
-    public function initialize()
+    /**
+     * @var integer
+     */
+    public $usersId;
+
+    /**
+     * Send an e-mail to users allowing him/her to reset his/her password
+     */
+    public function afterCreate()
     {
-        $this->belongsTo('usersId', Users::class, 'id', [
-            'alias' => 'user',
-        ]);
+        $this->getDI()
+             ->getMail()
+             ->send([
+                 $this->user->email => $this->user->name,
+             ], "Reset your password", 'reset', [
+                 'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email,
+             ])
+        ;
     }
 
     /**
@@ -83,18 +91,10 @@ class ResetPasswords extends Model
         $this->modifiedAt = time();
     }
 
-    /**
-     * Send an e-mail to users allowing him/her to reset his/her password
-     */
-    public function afterCreate()
+    public function initialize()
     {
-        $this->getDI()
-             ->getMail()
-             ->send([
-                 $this->user->email => $this->user->name,
-             ], "Reset your password", 'reset', [
-                 'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email,
-             ])
-        ;
+        $this->belongsTo('usersId', Users::class, 'id', [
+            'alias' => 'user',
+        ]);
     }
 }

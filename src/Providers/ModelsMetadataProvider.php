@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,11 +9,13 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Providers;
 
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Mvc\Model\Metadata\Stream as MetaDataAdapter;
+use Phalcon\Mvc\Model\MetaData\Stream as MetaDataAdapter;
 
 class ModelsMetadataProvider implements ServiceProviderInterface
 {

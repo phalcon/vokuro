@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Models;
 
@@ -27,11 +28,6 @@ class SuccessLogins extends Model
     public $id;
 
     /**
-     * @var integer
-     */
-    public $usersId;
-
-    /**
      * @var string
      */
     public $ipAddress;
@@ -40,6 +36,11 @@ class SuccessLogins extends Model
      * @var string
      */
     public $userAgent;
+
+    /**
+     * @var integer
+     */
+    public $usersId;
 
     public function initialize()
     {

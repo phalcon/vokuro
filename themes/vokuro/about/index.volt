@@ -1,8 +1,11 @@
-<h2 class="mt-5">About this Demo</h2>
+<div class="page-head">
+    <h1>About this demo</h1>
+</div>
 
-<div>
-    This is a sample application for the <a href="https://phalcon.io">Phalcon Framework</a>. We expect to implement as many features
-    as possible to show how the framework works and its potential. Please write us if you have any
-    feedback or comments. Feel free to clone the code of this application <a href="https://github.com/phalcon/vokuro">here</a>.
+<div class="card">
+    This is a sample application for the <a href="https://phalcon.io">Phalcon Framework</a>.
+    We expect to implement as many features as possible to show how the framework works and
+    its potential. Please write us if you have any feedback or comments. Feel free to clone
+    the code of this application <a href="https://github.com/phalcon/vokuro">here</a>.
     The purpose of this application is merely academic. Thanks!
 </div>

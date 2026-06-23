@@ -1,0 +1,20 @@
+parameters:
+    paths:
+        - ../src
+        - ../config
+        - ../public/index.php
+        - migrations
+        - seeds
+    level: 1
+    reportUnmatchedIgnoredErrors: false
+    tmpDir: ../tests/_output
+    bootstrapFiles:
+        - ../vendor/autoload.php
+    ignoreErrors:
+        # Phalcon models expose magic static finders (findFirstBy<Field>, findBy<Field>)
+        - '#Call to an undefined static method Vokuro\\Models\\[A-Za-z]+::(find|findFirst)By[A-Za-z]+\(\)#'
+        # config/routes.php receives $router from the including RouterProvider scope
+        - '#Variable \$router might not be defined#'
+        # MetaData\Stream: v6 source / autoloading needs lowercase 'Metadata'; the loaded v5
+        # extension reports 'MetaData'. Both resolve at runtime (class names are case-insensitive).
+        - '#Class Phalcon\\Mvc\\Model\\MetaData\\Stream referenced with incorrect case#'

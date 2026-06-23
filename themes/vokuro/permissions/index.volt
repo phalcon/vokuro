@@ -1,40 +1,41 @@
-<h1 class="mt-3">Manage Permissions</h1>
+<div class="page-head">
+    <h1>Manage Permissions</h1>
+</div>
 
-<form method="post" class="mt-3 mb-5">
-    <div class="form-group">
-        <label for="id">Profile</label>
-        {{ profilesSelect }}
-    </div>
+<div class="card">
+    <form method="post">
+        <div class="field">
+            <label for="profileId">Profile</label>
+            {{ profilesSelect }}
+        </div>
 
-    {{ submit_button('Search', 'class': 'btn btn-primary', 'name' : 'search') }}
+        {{ tag.inputSubmit('search', 'Search', ['class': 'btn']) }}
 
-    {% if request.isPost() and profile %}
-    <hr />
-    <div class="mt-3 mb-5">
+        {% if request.isPost() and profile %}
+        <hr>
         {% for resource, actions in acl.getResources() %}
             <h3>{{ resource }}</h3>
-
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th class="td-width-5"></th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for action in actions %}
-                    <tr>
-                        <td class="text-center">
-                            <input type="checkbox" name="permissions[]" value="{{ resource ~ '.' ~ action }}" {% if permissions[resource ~ '.' ~ action] is defined %} checked="checked" {% endif %}>
-                        </td>
-                        <td>{{ acl.getActionDescription(action) ~ ' ' ~ resource }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div class="data-table table-scroll">
+                <table>
+                    <thead><tr><th></th><th>Description</th></tr></thead>
+                    <tbody>
+                    {% for action in actions %}
+                        <tr>
+                            <td>
+                                <input type="checkbox"
+                                       name="permissions[]"
+                                       value="{{ resource ~ '.' ~ action }}"
+                                    {% if permissions[resource ~ '.' ~ action] is defined %} checked="checked"{% endif %}>
+                            </td>
+                            <td>{{ acl.getActionDescription(action) ~ ' ' ~ resource }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% endfor %}
 
-        {{ submit_button('Submit', 'class': 'btn btn-primary', 'name':'submit') }}
-    </div>
-    {% endif %}
-</form>
+        {{ tag.inputSubmit('submit', 'Submit', ['class': 'btn']) }}
+        {% endif %}
+    </form>
+</div>

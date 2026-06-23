@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Tests\Functional\Forms;
@@ -8,7 +9,7 @@ use Vokuro\Forms\ProfilesForm;
 
 final class ProfilesFormTest extends Unit
 {
-    const NAME_KEY = 'name';
+    private const NAME_KEY = 'name';
 
     /**
      * @return array

@@ -7,12 +7,13 @@
                 Password</h2>
 
             <p style="font-size: 13px;line-height:24px;font-family:'HelveticaNeue','Helvetica Neue',Helvetica,Arial,sans-serif;">
-                To reset the password for the Vökuró account associated with your email, click on the button below. If you
-                don't want to reset your password, please disregard this email.
+                To reset the password for the Vökuró account associated with
+                your email, click on the button below. If you don't want to
+                reset your password, please disregard this email.
 
                 <br>
                 <br>
-                <a style="background:#E86537;color:#fff;padding:10px" href="http://{{ publicUrl }}{{ resetUrl }}">Reset</a>
+                <a style="background:#678a6f;color:#fff;padding:10px;text-decoration:none;border-radius:6px" href="http://{{ publicUrl }}{{ resetUrl }}">Reset</a>
 
                 <br>
                 <br>

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Tests\Functional\Forms;
@@ -8,13 +9,14 @@ use Phalcon\Di;
 use Phalcon\Di\FactoryDefault;
 use Vokuro\Forms\LoginForm;
 use Vokuro\Providers\SecurityProvider;
+
 use function Vokuro\container;
 
 final class LoginFormTest extends Unit
 {
-    const EMAIL_KEY = 'email';
-    const PASS_KEY = 'password';
-    const CSRF_KEY = 'csrf';
+    private const CSRF_KEY = 'csrf';
+    private const EMAIL_KEY = 'email';
+    private const PASS_KEY = 'password';
 
     /**
      * @return array
@@ -27,7 +29,7 @@ final class LoginFormTest extends Unit
 
         $emptyData = [];
         $incorrectCsrfData = [
-            self::EMAIL_KEY => 'bob@phalcon.io',
+            self::EMAIL_KEY => 'sarah.connor@skynet.dev',
             self::PASS_KEY => 'password1',
             self::CSRF_KEY => 'invalid',
         ];

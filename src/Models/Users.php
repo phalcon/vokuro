@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,12 +9,14 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Models;
 
+use Phalcon\Encryption\Security;
+use Phalcon\Filter\Validation;
+use Phalcon\Filter\Validation\Validator\Uniqueness;
 use Phalcon\Mvc\Model;
-use Phalcon\Security;
-use Phalcon\Validation;
-use Phalcon\Validation\Validator\Uniqueness;
 
 /**
  * All the users registered in the application
@@ -23,34 +24,9 @@ use Phalcon\Validation\Validator\Uniqueness;
 class Users extends Model
 {
     /**
-     * @var integer
-     */
-    public $id;
-
-    /**
      * @var string
      */
-    public $name;
-
-    /**
-     * @var string
-     */
-    public $email;
-
-    /**
-     * @var string
-     */
-    public $password;
-
-    /**
-     * @var string
-     */
-    public $mustChangePassword;
-
-    /**
-     * @var string
-     */
-    public $profilesId;
+    public $active;
 
     /**
      * @var string
@@ -60,40 +36,53 @@ class Users extends Model
     /**
      * @var string
      */
-    public $suspended;
+    public $email;
+    /**
+     * @var integer
+     */
+    public $id;
 
     /**
      * @var string
      */
-    public $active;
+    public $mustChangePassword;
 
-    public function initialize()
+    /**
+     * @var string
+     */
+    public $name;
+
+    /**
+     * @var string
+     */
+    public $password;
+
+    /**
+     * @var string
+     */
+    public $profilesId;
+
+    /**
+     * @var string
+     */
+    public $suspended;
+
+    /**
+     * Send a confirmation e-mail to the user if the account is not active
+     */
+    public function afterCreate()
     {
-        $this->hasOne('profilesId', Profiles::class, 'id', [
-            'alias'    => 'profile',
-            'reusable' => true,
-        ]);
+        // Only send the confirmation email if emails are turned on in the config
+        if ($this->getDI()->get('config')->useMail && $this->active == 'N') {
+            $emailConfirmation          = new EmailConfirmations();
+            $emailConfirmation->usersId = $this->id;
 
-        $this->hasMany('id', SuccessLogins::class, 'usersId', [
-            'alias'      => 'successLogins',
-            'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system',
-            ],
-        ]);
-
-        $this->hasMany('id', PasswordChanges::class, 'usersId', [
-            'alias'      => 'passwordChanges',
-            'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system',
-            ],
-        ]);
-
-        $this->hasMany('id', ResetPasswords::class, 'usersId', [
-            'alias'      => 'resetPasswords',
-            'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system',
-            ],
-        ]);
+            if ($emailConfirmation->save()) {
+                $this->getDI()
+                    ->getFlash()
+                    ->notice('A confirmation mail has been sent to ' . $this->email);
+            }
+        }
     }
 
     /**
@@ -132,22 +121,33 @@ class Users extends Model
         $this->banned = 'N';
     }
 
-    /**
-     * Send a confirmation e-mail to the user if the account is not active
-     */
-    public function afterCreate()
+    public function initialize()
     {
-        // Only send the confirmation email if emails are turned on in the config
-        if ($this->getDI()->get('config')->useMail && $this->active == 'N') {
-            $emailConfirmation          = new EmailConfirmations();
-            $emailConfirmation->usersId = $this->id;
+        $this->hasOne('profilesId', Profiles::class, 'id', [
+            'alias'    => 'profile',
+            'reusable' => true,
+        ]);
 
-            if ($emailConfirmation->save()) {
-                $this->getDI()
-                    ->getFlash()
-                    ->notice('A confirmation mail has been sent to ' . $this->email);
-            }
-        }
+        $this->hasMany('id', SuccessLogins::class, 'usersId', [
+            'alias'      => 'successLogins',
+            'foreignKey' => [
+                'message' => 'User cannot be deleted because he/she has activity in the system',
+            ],
+        ]);
+
+        $this->hasMany('id', PasswordChanges::class, 'usersId', [
+            'alias'      => 'passwordChanges',
+            'foreignKey' => [
+                'message' => 'User cannot be deleted because he/she has activity in the system',
+            ],
+        ]);
+
+        $this->hasMany('id', ResetPasswords::class, 'usersId', [
+            'alias'      => 'resetPasswords',
+            'foreignKey' => [
+                'message' => 'User cannot be deleted because he/she has activity in the system',
+            ],
+        ]);
     }
 
     /**

@@ -3,52 +3,35 @@
     'About': 'about'
 ] -%}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    {{ link_to(null, 'class': 'navbar-brand', 'Vökuró') }}
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+<div class="topbar">
+    <div class="inner">
+        {{ tag.aRaw(url(''), tag.img('/img/phalcon.svg', ['alt': '']) ~ ' Vökuró', ['class': 'brand']) }}
+        <button class="nav-toggle" data-nav-toggle type="button" aria-label="Menu">&#9776;</button>
+        <nav>
             {%- for key, value in menus %}
-                {% if value == dispatcher.getControllerName() %}
-                <li class="nav-item active">
-                    {{ link_to(value, 'class': 'nav-link', key) }}
-                </li>
-                {% else %}
-                <li class="nav-item">{{ link_to(value, 'class': 'nav-link', key) }}</li>
-                {% endif %}
+                {{ tag.a(url(value), key, ['class': (value == dispatcher.getControllerName() ? 'is-active' : '')]) }}
             {%- endfor -%}
-        </ul>
 
-        <ul class="navbar-nav my-2 my-lg-0">
-        {%- if logged_in is defined and not(logged_in is empty) -%}
-            <li class="nav-item">{{ link_to('users', 'class': 'nav-link', 'Users Panel') }}</li>
-            <li class="nav-item">{{ link_to('session/logout', 'class': 'nav-link', 'Logout') }}</li>
-        {% else %}
-            <li class="nav-item">{{ link_to('session/login', 'class': 'nav-link', 'Login') }}</li>
-        {% endif %}
-        </ul>
+            {%- if logged_in is defined and not(logged_in is empty) -%}
+                {{ tag.a(url('users'), 'Users') }}
+                {{ tag.a(url('profiles'), 'Profiles') }}
+                {{ tag.a(url('permissions'), 'Permissions') }}
+                {{ tag.a(url('session/logout'), 'Logout', ['class': 'btn btn-sm']) }}
+            {% else %}
+                {{ tag.a(url('session/login'), 'Login') }}
+                {{ tag.a(url('session/signup'), 'Sign up', ['class': 'btn btn-sm']) }}
+            {% endif %}
+        </nav>
     </div>
-</nav>
+</div>
 
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        {{ content() }}
-    </div>
+<main class="container">
+    {{ content() }}
 </main>
 
-<footer class="footer mt-auto py-3">
-    <div class="container">
-        <span class="text-muted">
-            Made with love by the Phalcon Team
-
-            {{ link_to("privacy", "Privacy Policy") }}
-            {{ link_to("terms", "Terms") }}
-
-            © {{ date("Y") }} Phalcon Team.
-        </span>
-    </div>
+<footer class="footer">
+    Made with love by the Phalcon Team &middot;
+    {{ tag.a(url('privacy'), 'Privacy Policy') }} &middot;
+    {{ tag.a(url('terms'), 'Terms') }} &middot;
+    &copy; {{ date('Y') }} Phalcon Team.
 </footer>

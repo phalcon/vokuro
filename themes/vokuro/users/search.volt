@@ -1,59 +1,52 @@
-<h1 class="mt-3">Found users</h1>
-
-<div class="btn-group mb-5" role="group">
-    {{ link_to("users/index", "&larr; Go Back", "class": "btn btn-warning") }}
-    {{ link_to("users/create", "Create users", "class": "btn btn-primary") }}
+<div class="page-head">
+    <h1>Found users</h1>
 </div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Profile</th>
-        <th>Banned?</th>
-        <th>Suspended?</th>
-        <th>Confirmed?</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for user in page.items %}
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.profile.name }}</td>
-            <td>{{ user.banned == 'Y' ? 'Yes' : 'No' }}</td>
-            <td>{{ user.suspended == 'Y' ? 'Yes' : 'No' }}</td>
-            <td>{{ user.active == 'Y' ? 'Yes' : 'No' }}</td>
-            <td class="td-width-12">{{ link_to("users/edit/" ~ user.id, '<i class="icon-pencil"></i> Edit', "class": "btn btn-sm btn-outline-warning") }}</td>
-            <td class="td-width-12">{{ link_to("users/delete/" ~ user.id, '<i class="icon-remove"></i> Delete', "class": "btn btn-sm btn-outline-danger") }}</td>
-        </tr>
-    {% else %}
-        <tr>
-            <td colspan="10">
-                No users are recorded
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot>
-    <tr>
-        <td colspan="10" class="text-right">
-            <div class="btn-group" role="group">
-                {{ link_to("users/search", '<i class="icon-fast-backward"></i> First', "class": "btn btn-secondary") }}
-                {{ link_to("users/search?page=" ~ page.previous, '<i class="icon-step-backward"></i> Previous', "class": "btn btn-secondary") }}
-                {{ link_to("users/search?page=" ~ page.next, '<i class="icon-step-forward"></i> Next', "class": "btn btn-secondary") }}
-                {{ link_to("users/search?page=" ~ page.last, '<i class="icon-fast-forward"></i> Last', "class": "btn btn-secondary") }}
-            </div>
+<div class="actions">
+    {{ tag.aRaw(url('users/index'), '&larr; Go Back', ['class': 'btn-ghost btn']) }}
+    {{ tag.a(url('users/create'), 'Create users', ['class': 'btn']) }}
+</div>
 
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-secondary" disabled>{{ page.current }}</button>
-                <button type="button" class="btn btn-secondary" disabled>/</button>
-                <button type="button" class="btn btn-secondary" disabled>{{ page.last }}</button>
-            </div>
-        </td>
-    </tr>
-    </tfoot>
-</table>
+<div class="data-table table-scroll">
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Profile</th>
+            <th>Banned?</th>
+            <th>Suspended?</th>
+            <th>Confirmed?</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in page.items %}
+            <tr>
+                <td class="id">{{ user.id }}</td>
+                <td class="name">{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.profile.name }}</td>
+                <td>{{ user.banned == 'Y' ? '<span class="pill pill-warn">Yes</span>' : '<span class="pill pill-ok">No</span>' }}</td>
+                <td>{{ user.suspended == 'Y' ? '<span class="pill pill-warn">Yes</span>' : '<span class="pill pill-ok">No</span>' }}</td>
+                <td>{{ user.active == 'Y' ? '<span class="pill pill-ok">Yes</span>' : '<span class="pill pill-warn">No</span>' }}</td>
+                <td>{{ tag.a(url('users/edit/' ~ user.id), 'Edit', ['class': 'btn-sm btn-ghost btn']) }}</td>
+                <td>{{ tag.a(url('users/delete/' ~ user.id), 'Delete', ['class': 'btn-sm btn-danger btn']) }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">No users are recorded</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="actions">
+    {{ tag.a(url('users/search'), 'First', ['class': 'btn-sm btn-ghost btn']) }}
+    {{ tag.a(url('users/search?page=' ~ page.previous), 'Previous', ['class': 'btn-sm btn-ghost btn']) }}
+    {{ tag.a(url('users/search?page=' ~ page.next), 'Next', ['class': 'btn-sm btn-ghost btn']) }}
+    {{ tag.a(url('users/search?page=' ~ page.last), 'Last', ['class': 'btn-sm btn-ghost btn']) }}
+</div>

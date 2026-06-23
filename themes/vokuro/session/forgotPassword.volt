@@ -1,16 +1,16 @@
-<h1 class="mt-3">Forgot Password?</h1>
+<h1>Forgot Password?</h1>
+<p>Enter your email and we'll send a reset link.</p>
 
 {{ flash.output() }}
 
 <form method="post">
-    <div class="form-group">
+    <div class="field">
         <label for="forgot-email-input">Email address</label>
-        {{ form.render('email', ['class': 'form-control', 'id': 'forgot-email-input', 'placeholder': 'Enter email']) }}
+        {{ form.render('email', ['class': 'input', 'id': 'forgot-email-input', 'placeholder': 'Enter email']) }}
     </div>
 
-    {{ form.render('Send') }}
+    {{ form.render('Send', ['class': 'btn']) }}
 </form>
 
-<hr />
-
-{{ link_to('session/login', "&larr; Back to Login") }}
+<hr>
+{{ tag.aRaw(url('session/login'), '&larr; Back to Login') }}

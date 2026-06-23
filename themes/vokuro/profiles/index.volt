@@ -1,21 +1,48 @@
-<h1 class="mt-3">Search profiles</h1>
+<div class="page-head">
+    <h1>Profiles</h1>
+    <p>Group permissions into reusable profiles.</p>
+</div>
+
+<div class="actions">
+    {{ tag.a(url('profiles/create'), 'Create Profiles', ['class': 'btn']) }}
+</div>
 
 {{ flash.output() }}
 
-<div class="mb-5">
-    {{ link_to("profiles/create", "<i class='icon-plus-sign'></i> Create Profiles", "class": "btn btn-primary") }}
+<div class="card">
+    <h3>Search profiles</h3>
+    <form method="post" action="{{ url('profiles/search') }}">
+        <div class="toolbar">
+            {{ form.render('id', ['class': 'input', 'placeholder': 'Id']) }}
+            {{ form.render('name', ['class': 'input', 'placeholder': 'Name']) }}
+            {{ tag.button('Search', ['type': 'submit', 'class': 'btn']) }}
+        </div>
+    </form>
 </div>
 
-<form method="post" class="form-inline" action="{{ url("profiles/search") }}">
-    <div class="form-group">
-        <label for="id" class="sr-only">Id</label>
-        {{ form.render('id', ['class': 'form-control mr-sm-2', 'placeholder': 'Id']) }}
-    </div>
+<div class="data-table table-scroll">
+    <table>
+        <thead>
+        <tr><th>Id</th><th>Name</th><th>Active?</th><th></th><th></th></tr>
+        </thead>
+        <tbody>
+        {% for profile in page.items %}
+            <tr>
+                <td class="id">{{ profile.id }}</td>
+                <td class="name">{{ profile.name }}</td>
+                <td>{{ profile.active == 'Y' ? '<span class="pill pill-ok">Yes</span>' : '<span class="pill pill-warn">No</span>' }}</td>
+                <td>{{ tag.a(url('profiles/edit/' ~ profile.id), 'Edit', ['class': 'btn-sm btn-ghost btn']) }}</td>
+                <td>{{ tag.a(url('profiles/delete/' ~ profile.id), 'Delete', ['class': 'btn-sm btn-danger btn']) }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5">No profiles are recorded</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-    <div class="form-group">
-        <label for="name" class="sr-only">Name</label>
-        {{ form.render('name', ['class': 'form-control mr-sm-2', 'placeholder': 'Name']) }}
-    </div>
-
-    {{ submit_button("Search", "class": "btn btn-primary") }}
-</form>
+<div class="actions">
+    {{ tag.a(url('profiles?page=' ~ page.previous), 'Previous', ['class': 'btn-sm btn-ghost btn']) }}
+    <span class="btn-sm btn-ghost btn">{{ page.current }} / {{ page.last }}</span>
+    {{ tag.a(url('profiles?page=' ~ page.next), 'Next', ['class': 'btn-sm btn-ghost btn']) }}
+</div>

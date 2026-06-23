@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
@@ -67,18 +68,20 @@ class PermissionsController extends ControllerBase
             ],
         ]);
 
-        $profilesSelect = $this->tag->select([
-            'profileId',
-            $profiles,
-            'using'      => [
-                'id',
-                'name',
-            ],
-            'useEmpty'   => true,
-            'emptyText'  => '...',
-            'emptyValue' => '',
-            'class'      => 'form-control mr-sm-2',
+        $selected = (string) $this->request->getPost('profileId', null, '');
+
+        $select = $this->tag->inputSelect('', '', [
+            'name'  => 'profileId',
+            'class' => 'select',
         ]);
+        $select->selected($selected)
+            ->addPlaceholder('...', '');
+
+        foreach ($profiles as $profile) {
+            $select->add((string) $profile->name, (string) $profile->id);
+        }
+
+        $profilesSelect = (string) $select;
 
         $this->view->setVar('profilesSelect', $profilesSelect);
     }

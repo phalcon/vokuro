@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Tests\Functional\Forms;
@@ -8,8 +9,8 @@ use Vokuro\Forms\ChangePasswordForm;
 
 final class ChangePasswordFormTest extends Unit
 {
-    const PASS_KEY = 'password';
-    const CONFIRM_PASS_KEY = 'confirmPassword';
+    private const CONFIRM_PASS_KEY = 'confirmPassword';
+    private const PASS_KEY = 'password';
 
     /**
      * @return array

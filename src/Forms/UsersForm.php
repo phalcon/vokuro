@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,14 +9,16 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Forms;
 
+use Phalcon\Filter\Validation\Validator\Email;
+use Phalcon\Filter\Validation\Validator\PresenceOf;
 use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Select;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Form;
-use Phalcon\Validation\Validator\Email;
-use Phalcon\Validation\Validator\PresenceOf;
 use Vokuro\Models\Profiles;
 
 class UsersForm extends Form

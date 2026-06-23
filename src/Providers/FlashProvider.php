@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,12 +9,14 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Providers;
 
-use Phalcon\Escaper;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Flash\Direct as Flash;
+use Phalcon\Html\Escaper;
 
 class FlashProvider implements ServiceProviderInterface
 {
@@ -36,10 +37,10 @@ class FlashProvider implements ServiceProviderInterface
             $flash = new Flash($escaper);
             $flash->setImplicitFlush(false);
             $flash->setCssClasses([
-                'error'   => 'alert alert-danger',
-                'success' => 'alert alert-success',
-                'notice'  => 'alert alert-info',
-                'warning' => 'alert alert-warning',
+                'error'   => 'flash flash-error',
+                'success' => 'flash flash-success',
+                'notice'  => 'flash flash-notice',
+                'warning' => 'flash flash-warning',
             ]);
 
             return $flash;
