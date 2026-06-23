@@ -1,64 +1,64 @@
 {
     "name": "phalcon/vokuro",
-    "type": "library",
+    "type": "project",
     "description": "This is a sample application for the Phalcon PHP Framework",
-    "keywords": [
-        "phalcon",
-        "framework",
-        "sample app",
-        "vokuro"
-    ],
+    "keywords": ["phalcon", "framework", "sample app", "vokuro"],
     "homepage": "https://phalcon.io",
     "license": "BSD-3-Clause",
     "authors": [
-        {
-            "name": "Mark Garrett",
-            "email": "mark@moderndeveloperllc.com"
-        },
-        {
-            "name": "Anton Vasiliev",
-            "homepage": "https://github.com/Jeckerson"
-        },
-        {
-            "name": "Contributors",
-            "homepage": "https://github.com/phalcon/vokuro/graphs/contributors"
-        }
+        { "name": "Mark Garrett", "email": "mark@moderndeveloperllc.com" },
+        { "name": "Anton Vasiliev", "homepage": "https://github.com/Jeckerson" },
+        { "name": "Contributors", "homepage": "https://github.com/phalcon/vokuro/graphs/contributors" }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=8.1",
         "ext-openssl": "*",
-        "ext-phalcon": "~4.0.0",
-        "robmorgan/phinx": "^0.11.1",
-        "swiftmailer/swiftmailer": "^6.2",
-        "vlucas/phpdotenv": "^3.6"
+        "robmorgan/phinx": "^0.16",
+        "symfony/mailer": "^6.4",
+        "vlucas/phpdotenv": "^5.6"
     },
     "require-dev": {
-        "codeception/codeception": "^4.1.6",
-        "phalcon/ide-stubs": "4.0.6",
-        "phpunit/phpunit": "^8.4",
-        "squizlabs/php_codesniffer": "3.5.5",
-        "vimeo/psalm": "^3.7",
-        "codeception/module-phpbrowser": "^1.0",
-        "codeception/module-asserts": "^1.2"
+        "codeception/codeception": "^5.0",
+        "codeception/module-asserts": "^3.0",
+        "codeception/module-phpbrowser": "^3.0",
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "pds/composer-script-names": "^1.0",
+        "pds/skeleton": "^1.0",
+        "phalcon/phalcon": "^6.0@alpha",
+        "phalcon/phql": "1.0.x-dev",
+        "phalcon/volt": "1.0.x-dev",
+        "phpstan/phpstan": "^2.2",
+        "squizlabs/php_codesniffer": "^4.0"
     },
     "suggest": {
-        "ext-apc": "Needed to support caching ACL"
+        "ext-apcu": "Needed to support caching ACL",
+        "ext-phalcon": "Install the Phalcon v5 C extension to run on v5 (the default); alternatively run on v6 via the phalcon/phalcon package — see the Dockerfile PHALCON_VARIANT build arg and the README."
     },
     "autoload": {
-        "psr-4": {
-            "Vokuro\\": "src/"
-        },
-        "files": [
-            "src/Helpers.php"
-        ]
+        "psr-4": { "Vokuro\\": "src/" },
+        "files": ["src/Helpers.php"]
+    },
+    "autoload-dev": {
+        "psr-4": { "Vokuro\\Tests\\": "tests/" }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {}
+    },
+    "scripts": {
+        "analyze": "phpstan analyse -c resources/phpstan.neon --memory-limit 1024M",
+        "cs": "phpcs --standard=resources/phpcs.xml",
+        "cs-fix": "phpcbf --standard=resources/phpcs.xml",
+        "cs-fixer": "php-cs-fixer fix --config=resources/php-cs-fixer.php --dry-run --diff",
+        "cs-fixer-fix": "php-cs-fixer fix --config=resources/php-cs-fixer.php",
+        "test": "codecept run -c resources/codeception.yml",
+        "test-unit": "codecept run unit -c resources/codeception.yml",
+        "test-functional": "codecept run functional -c resources/codeception.yml",
+        "test-acceptance": "codecept run acceptance -c resources/codeception.yml",
+        "migrate": "phinx migrate -c resources/phinx.php",
+        "seed": "phinx seed:run -c resources/phinx.php"
     },
     "archive": {
-        "exclude": [
-            "/.ci",
-            ".dockerignore",
-            ".travis.yml",
-            "CODE_OF_CONDUCT.md",
-            "CONTRIBUTING.md"
-        ]
+        "exclude": ["/.ci", ".dockerignore", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "/design"]
     }
 }
