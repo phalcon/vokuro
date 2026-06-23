@@ -1,31 +1,57 @@
-<h1 class="mt-3">Search users</h1>
-
-<div class="mb-5">
-    {{ link_to("users/create", "Create Users", "class": "btn btn-primary") }}
+<div class="page-head">
+    <h1>Users</h1>
+    <p>Manage who can access Vökuró.</p>
 </div>
-<h6 id="usersAssetManagerDemoTextContainer">Separated javascript has been loaded</h6>
+
+<div class="actions">
+    {{ link_to('users/create', 'class': 'btn', 'Create Users') }}
+</div>
 
 {{ flash.output() }}
 
-<form class="form-inline" method="get" action="{{ url("users/search") }}">
-    <div class="form-group">
-        <label for="id" class="sr-only">Id</label>
-        {{ form.render('id', ['class': 'form-control mr-sm-2', 'placeholder': 'Id']) }}
-    </div>
+<div class="card">
+    <h3>Search users</h3>
+    <form method="get" action="{{ url('users/search') }}">
+        <div class="toolbar">
+            {{ form.render('id', ['class': 'input', 'placeholder': 'Id']) }}
+            {{ form.render('name', ['class': 'input', 'placeholder': 'Name']) }}
+            {{ form.render('email', ['class': 'input', 'placeholder': 'Email']) }}
+            {{ form.render('profilesId', ['class': 'select']) }}
+            <button type="submit" class="btn">Search</button>
+        </div>
+    </form>
+</div>
 
-    <div class="form-group">
-        <label for="name" class="sr-only">Name</label>
-        {{ form.render('name', ['class': 'form-control mr-sm-2', 'placeholder': 'Name']) }}
-    </div>
+<div class="data-table table-scroll">
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th><th>Name</th><th>Email</th><th>Profile</th>
+            <th>Banned?</th><th>Suspended?</th><th>Confirmed?</th><th></th><th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in page.items %}
+            <tr>
+                <td class="id">{{ user.id }}</td>
+                <td class="name">{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.profile.name }}</td>
+                <td>{{ user.banned == 'Y' ? '<span class="pill pill-warn">Yes</span>' : '<span class="pill pill-ok">No</span>' }}</td>
+                <td>{{ user.suspended == 'Y' ? '<span class="pill pill-warn">Yes</span>' : '<span class="pill pill-ok">No</span>' }}</td>
+                <td>{{ user.active == 'Y' ? '<span class="pill pill-ok">Yes</span>' : '<span class="pill pill-warn">No</span>' }}</td>
+                <td>{{ link_to('users/edit/' ~ user.id, 'class': 'btn-sm btn-ghost btn', 'Edit') }}</td>
+                <td>{{ link_to('users/delete/' ~ user.id, 'class': 'btn-sm btn-danger btn', 'Delete') }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="9">No users are recorded</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-    <div class="form-group">
-        <label for="email" class="sr-only">Email</label>
-        {{ form.render('email', ['class': 'form-control mr-sm-2']) }}
-    </div>
-
-    <div class="form-group">
-        {{ form.render('profilesId', ['class': 'form-control mr-sm-2']) }}
-    </div>
-
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
+<div class="actions">
+    {{ link_to('users?page=' ~ page.previous, 'class': 'btn-sm btn-ghost btn', 'Previous') }}
+    <span class="btn-sm btn-ghost btn">{{ page.current }} / {{ page.last }}</span>
+    {{ link_to('users?page=' ~ page.next, 'class': 'btn-sm btn-ghost btn', 'Next') }}
+</div>

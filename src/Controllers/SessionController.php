@@ -74,7 +74,7 @@ class SessionController extends ControllerBase
      */
     public function initialize(): void
     {
-        $this->view->setTemplateBefore('public');
+        $this->view->setTemplateBefore('auth');
     }
 
     /**

@@ -30,7 +30,7 @@ Then open:
 * Mailpit (captured e-mails): <http://localhost:8025>
 
 The container waits for MySQL, runs the migrations and seeds, then serves the app.
-Log in with one of the seeded accounts, e.g. `bob@phalcon.io` / `password1`.
+Log in with one of the seeded accounts, e.g. `sarah.connor@skynet.dev` / `password1`.
 
 ### Choosing the Phalcon version
 

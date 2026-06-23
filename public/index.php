@@ -27,6 +27,13 @@ try {
      */
     echo (new VokuroApplication($rootPath))->run();
 } catch (Exception $e) {
+    /**
+     * BE VERY CAREFUL WITH THIS CODE - IT IS A SAMPLE NOT PRODUCTION CODE
+     *
+     * Exceptions can carry sensitive information such as database credentials.
+     *
+     * !!! DO NOT USE THE CODE BELOW IN PRODUCTION !!!
+     */
     echo $e->getMessage(), '<br>';
     echo nl2br(htmlentities($e->getTraceAsString()));
 }

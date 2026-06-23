@@ -12,7 +12,7 @@
 
                 <br>
                 <br>
-                <a style="background:#E86537;color:#fff;padding:10px" href="http://{{ publicUrl }}{{ resetUrl }}">Reset</a>
+                <a style="background:#678a6f;color:#fff;padding:10px;text-decoration:none;border-radius:6px" href="http://{{ publicUrl }}{{ resetUrl }}">Reset</a>
 
                 <br>
                 <br>

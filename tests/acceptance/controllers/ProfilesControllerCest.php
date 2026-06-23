@@ -20,7 +20,7 @@ final class ProfilesControllerCest
     {
         $I->amOnPage('/session/login');
         $I->see('Log In');
-        $I->fillField('email', 'bob@phalcon.io');
+        $I->fillField('email', 'sarah.connor@skynet.dev');
         $I->fillField('password', 'password1');
         $I->click('//form/*[@type="submit"]');
         $I->see('Search users');
@@ -53,11 +53,13 @@ final class ProfilesControllerCest
         $I->see('Found profiles');
         $I->see('Administrators');
 
-        $I->click('//a[@href="/profiles/delete/1"]');
+        // Profile 3 (Read-Only) has no users assigned, so it can be deleted
+        // (profiles with users are protected by the model's foreign key).
+        $I->click('//a[@href="/profiles/delete/3"]');
 
         $I->amOnPage('/profiles');
         $I->see('Search');
-        $I->cantSee('Administrators');
+        $I->cantSee('Read-Only');
     }
 
     /**

@@ -76,7 +76,7 @@ class PermissionsController extends ControllerBase
                 . htmlspecialchars((string) $profile->name, ENT_QUOTES) . '</option>';
         }
 
-        $profilesSelect = '<select name="profileId" class="form-control mr-sm-2">'
+        $profilesSelect = '<select name="profileId" class="select">'
             . $options
             . '</select>';
 

@@ -17,7 +17,7 @@ final class UsersControllerCest
     {
         $I->amOnPage('/session/login');
         $I->see('Log In');
-        $I->fillField('email', 'bob@phalcon.io');
+        $I->fillField('email', 'sarah.connor@skynet.dev');
         $I->fillField('password', 'password1');
         $I->click('//form/*[@type="submit"]');
         $I->see('Search users');

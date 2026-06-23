@@ -29,7 +29,7 @@ final class LoginFormTest extends Unit
 
         $emptyData = [];
         $incorrectCsrfData = [
-            self::EMAIL_KEY => 'bob@phalcon.io',
+            self::EMAIL_KEY => 'sarah.connor@skynet.dev',
             self::PASS_KEY => 'password1',
             self::CSRF_KEY => 'invalid',
         ];

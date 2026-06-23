@@ -1,29 +1,25 @@
-<h1 class="mt-3">Create a Profile</h1>
+<div class="page-head">
+    <h1>Create a Profile</h1>
+</div>
 
 {{ flash.output() }}
 
-<div class="mb-5">
-    {{ link_to("profiles", 'class': 'btn btn-primary', "&larr; Go Back") }}
+<div class="actions">
+    {{ link_to('profiles', 'class': 'btn-ghost btn', '&larr; Go Back') }}
 </div>
 
-<form method="post">
-    <div class="form-group row">
-        {{ form.label('name', ['class': 'col-sm-2 col-form-label']) }}
-        <div class="col-sm-10">
-            {{ form.render('name', ['class': 'form-control', 'placeholder': 'Name']) }}
+<div class="card">
+    <form method="post">
+        <div class="field">
+            {{ form.label('name') }}
+            {{ form.render('name', ['class': 'input', 'placeholder': 'Name']) }}
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label for="active" class="col-sm-2 col-form-label">Active?</label>
-        <div class="col-sm-10">
-            {{ form.render('active', ['class': 'form-control', 'placeholder': 'Active?']) }}
+        <div class="field">
+            <label for="active">Active?</label>
+            {{ form.render('active', ['class': 'select']) }}
         </div>
-    </div>
 
-    <div class="form-group row">
-        <div class="col-sm-10">
-            {{ submit_button("Save", "class": "btn btn-success") }}
-        </div>
-    </div>
-</form>
+        {{ submit_button("Save", "class": "btn") }}
+    </form>
+</div>

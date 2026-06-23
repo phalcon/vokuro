@@ -56,7 +56,7 @@ php -S localhost:8080 -t public .htrouter.php
 ```
 
 Open <http://localhost:8080> and log in with a seeded account, e.g.
-`bob@phalcon.io` / `password1`.
+`sarah.connor@skynet.dev` / `password1`.
 
 ## Quality and tests
 

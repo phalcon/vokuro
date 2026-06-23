@@ -119,6 +119,15 @@ class ProfilesController extends ControllerBase
     {
         $this->persistent->conditions = null;
         $this->view->setVar('form', new ProfilesForm(null));
+
+        $paginator = new Paginator([
+            'model'      => Profiles::class,
+            'parameters' => [],
+            'limit'      => 10,
+            'page'       => $this->request->getQuery('page', 'int', 1),
+        ]);
+
+        $this->view->setVar('page', $paginator->paginate());
     }
     /**
      * Default action. Set the private (authenticated) layout
