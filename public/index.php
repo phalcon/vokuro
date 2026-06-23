@@ -20,7 +20,7 @@ try {
     /**
      * Load .env configurations
      */
-    Dotenv\Dotenv::createImmutable($rootPath)->safeLoad();
+    Dotenv\Dotenv::createUnsafeImmutable($rootPath)->safeLoad();
 
     /**
      * Run Vökuró!
