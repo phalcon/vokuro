@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,11 +9,15 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Vokuro\Providers;
 
+use Phalcon\Assets\Manager;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Assets\Manager;
+use Phalcon\Html\Escaper;
+use Phalcon\Html\TagFactory;
 
 class AssetsProvider implements ServiceProviderInterface
 {
@@ -31,7 +34,7 @@ class AssetsProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $assetManager = new Manager();
+        $assetManager = new Manager(new TagFactory(new Escaper()));
 
         $di->setShared($this->providerName, function () use ($assetManager) {
 

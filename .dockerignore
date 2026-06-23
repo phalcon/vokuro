@@ -12,13 +12,12 @@
 *.md
 *.txt
 
-db/*.sql
-db/*.sqlite
-db/*.sqlite3
+vendor
+composer.lock
+design
 
-docker/Dockerfile
-
+var/*.sqlite
+var/*.sqlite3
 tests/_output/*.*
-
 var/cache/*/*.*
 var/logs/*.*

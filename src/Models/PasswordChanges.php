@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Models;
 
@@ -24,13 +25,12 @@ class PasswordChanges extends Model
      *
      * @var integer
      */
-    public $id;
-
+    public $createdAt;
     /**
      *
      * @var integer
      */
-    public $usersId;
+    public $id;
 
     /**
      *
@@ -48,14 +48,7 @@ class PasswordChanges extends Model
      *
      * @var integer
      */
-    public $createdAt;
-
-    public function initialize()
-    {
-        $this->belongsTo('usersId', Users::class, 'id', [
-            'alias' => 'user',
-        ]);
-    }
+    public $usersId;
 
     /**
      * Before create the user assign a password
@@ -64,5 +57,12 @@ class PasswordChanges extends Model
     {
         // Timestamp the confirmation
         $this->createdAt = time();
+    }
+
+    public function initialize()
+    {
+        $this->belongsTo('usersId', Users::class, 'id', [
+            'alias' => 'user',
+        ]);
     }
 }

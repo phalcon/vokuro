@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
@@ -23,60 +24,6 @@ use Vokuro\Models\Profiles;
  */
 class ProfilesController extends ControllerBase
 {
-    /**
-     * Default action. Set the private (authenticated) layout
-     * (layouts/private.volt)
-     */
-    public function initialize(): void
-    {
-        $this->view->setTemplateBefore('private');
-    }
-
-    /**
-     * Default action, shows the search form
-     */
-    public function indexAction(): void
-    {
-        $this->persistent->conditions = null;
-        $this->view->setVar('form', new ProfilesForm(null));
-    }
-
-    /**
-     * Searches for profiles
-     */
-    public function searchAction()
-    {
-        if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, Profiles::class, $this->request->getPost());
-            $searchparams = $query->getParams();
-            unset($searchparams['di']);
-            $this->persistent->searchParams = $searchparams;
-        }
-
-        $parameters = [];
-        if ($this->persistent->searchParams) {
-            $parameters = $this->persistent->searchParams;
-        }
-
-        $profiles = Profiles::find($parameters);
-        if (count($profiles) == 0) {
-            $this->flash->notice("The search did not find any profiles");
-
-            return $this->dispatcher->forward([
-                "action" => "index",
-            ]);
-        }
-
-        $paginator = new Paginator([
-            'model' => Profiles::class,
-            'parameters' => $parameters,
-            'limit' => 10,
-            'page' => $this->request->getQuery('page', 'int', 1),
-        ]);
-
-        $this->view->setVar('page', $paginator->paginate());
-    }
-
     /**
      * Creates a new Profile
      */
@@ -98,6 +45,35 @@ class ProfilesController extends ControllerBase
         }
 
         $this->view->setVar('form', new ProfilesForm(null));
+    }
+
+    /**
+     * Deletes a Profile
+     *
+     * @param int $id
+     */
+    public function deleteAction($id)
+    {
+        $profile = Profiles::findFirstById($id);
+        if (!$profile) {
+            $this->flash->error("Profile was not found");
+
+            return $this->dispatcher->forward([
+                'action' => 'index',
+            ]);
+        }
+
+        if (!$profile->delete()) {
+            foreach ($profile->getMessages() as $message) {
+                $this->flash->error((string)$message);
+            }
+        } else {
+            $this->flash->success("Profile was deleted");
+        }
+
+        return $this->dispatcher->forward([
+            'action' => 'index',
+        ]);
     }
 
     /**
@@ -137,31 +113,55 @@ class ProfilesController extends ControllerBase
     }
 
     /**
-     * Deletes a Profile
-     *
-     * @param int $id
+     * Default action, shows the search form
      */
-    public function deleteAction($id)
+    public function indexAction(): void
     {
-        $profile = Profiles::findFirstById($id);
-        if (!$profile) {
-            $this->flash->error("Profile was not found");
+        $this->persistent->conditions = null;
+        $this->view->setVar('form', new ProfilesForm(null));
+    }
+    /**
+     * Default action. Set the private (authenticated) layout
+     * (layouts/private.volt)
+     */
+    public function initialize(): void
+    {
+        $this->view->setTemplateBefore('private');
+    }
+
+    /**
+     * Searches for profiles
+     */
+    public function searchAction()
+    {
+        if ($this->request->isPost()) {
+            $query = Criteria::fromInput($this->di, Profiles::class, $this->request->getPost());
+            $searchparams = $query->getParams();
+            unset($searchparams['di']);
+            $this->persistent->searchParams = $searchparams;
+        }
+
+        $parameters = [];
+        if ($this->persistent->searchParams) {
+            $parameters = $this->persistent->searchParams;
+        }
+
+        $profiles = Profiles::find($parameters);
+        if (count($profiles) == 0) {
+            $this->flash->notice("The search did not find any profiles");
 
             return $this->dispatcher->forward([
-                'action' => 'index',
+                "action" => "index",
             ]);
         }
 
-        if (!$profile->delete()) {
-            foreach ($profile->getMessages() as $message) {
-                $this->flash->error((string)$message);
-            }
-        } else {
-            $this->flash->success("Profile was deleted");
-        }
-
-        return $this->dispatcher->forward([
-            'action' => 'index',
+        $paginator = new Paginator([
+            'model' => Profiles::class,
+            'parameters' => $parameters,
+            'limit' => 10,
+            'page' => $this->request->getQuery('page', 'int', 1),
         ]);
+
+        $this->view->setVar('page', $paginator->paginate());
     }
 }

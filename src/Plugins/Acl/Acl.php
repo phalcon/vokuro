@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Plugins\Acl;
 
@@ -25,7 +26,7 @@ use Vokuro\Models\Profiles;
  */
 class Acl extends Injectable
 {
-    const APC_CACHE_VARIABLE_KEY = 'vokuro-acl';
+    private const APC_CACHE_VARIABLE_KEY = 'vokuro-acl';
 
     /**
      * The ACL Object
@@ -33,21 +34,6 @@ class Acl extends Injectable
      * @var AbstractAdapter|mixed
      */
     private $acl;
-
-    /**
-     * The file path of the ACL cache file.
-     *
-     * @var string
-     */
-    private $filePath;
-
-    /**
-     * Define the resources that are considered "private". These controller =>
-     * actions require authentication.
-     *
-     * @var array
-     */
-    private $privateResources = [];
 
     /**
      * Human-readable descriptions of the actions used in
@@ -65,30 +51,35 @@ class Acl extends Injectable
     ];
 
     /**
-     * Checks if a controller is private or not
+     * The file path of the ACL cache file.
      *
-     * @param string $controllerName
-     *
-     * @return boolean
+     * @var string
      */
-    public function isPrivate($controllerName): bool
-    {
-        $controllerName = strtolower($controllerName);
-        return isset($this->privateResources[$controllerName]);
-    }
+    private $filePath;
 
     /**
-     * Checks if the current profile is allowed to access a resource
+     * Define the resources that are considered "private". These controller =>
+     * actions require authentication.
      *
-     * @param string $profile
-     * @param string $controller
-     * @param string $action
-     *
-     * @return boolean
+     * @var array
      */
-    public function isAllowed($profile, $controller, $action): bool
+    private $privateResources = [];
+
+    /**
+     * Adds an array of private resources to the ACL object.
+     *
+     * @param array $resources
+     */
+    public function addPrivateResources(array $resources)
     {
-        return $this->getAcl()->isAllowed($profile, $controller, $action);
+        if (empty($resources)) {
+            return;
+        }
+
+        $this->privateResources = array_merge($this->privateResources, $resources);
+        if (is_object($this->acl)) {
+            $this->acl = $this->rebuild();
+        }
     }
 
     /**
@@ -134,6 +125,18 @@ class Acl extends Injectable
     }
 
     /**
+     * Returns the action description according to its simplified name
+     *
+     * @param string $action
+     *
+     * @return string
+     */
+    public function getActionDescription($action): string
+    {
+        return $this->actionDescriptions[$action] ?? $action;
+    }
+
+    /**
      * Returns the permissions assigned to a profile
      *
      * @param Profiles $profile
@@ -161,15 +164,30 @@ class Acl extends Injectable
     }
 
     /**
-     * Returns the action description according to its simplified name
+     * Checks if the current profile is allowed to access a resource
      *
+     * @param string $profile
+     * @param string $controller
      * @param string $action
      *
-     * @return string
+     * @return boolean
      */
-    public function getActionDescription($action): string
+    public function isAllowed($profile, $controller, $action): bool
     {
-        return $this->actionDescriptions[$action] ?? $action;
+        return $this->getAcl()->isAllowed($profile, $controller, $action);
+    }
+
+    /**
+     * Checks if a controller is private or not
+     *
+     * @param string $controllerName
+     *
+     * @return boolean
+     */
+    public function isPrivate($controllerName): bool
+    {
+        $controllerName = strtolower($controllerName);
+        return isset($this->privateResources[$controllerName]);
     }
 
     /**
@@ -235,22 +253,5 @@ class Acl extends Injectable
         }
 
         return $this->filePath;
-    }
-
-    /**
-     * Adds an array of private resources to the ACL object.
-     *
-     * @param array $resources
-     */
-    public function addPrivateResources(array $resources)
-    {
-        if (empty($resources)) {
-            return;
-        }
-
-        $this->privateResources = array_merge($this->privateResources, $resources);
-        if (is_object($this->acl)) {
-            $this->acl = $this->rebuild();
-        }
     }
 }

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,7 +9,10 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 use Vokuro\Providers\AclProvider;
+use Vokuro\Providers\AssetsProvider;
 use Vokuro\Providers\AuthProvider;
 use Vokuro\Providers\ConfigProvider;
 use Vokuro\Providers\CryptProvider;
@@ -26,7 +28,6 @@ use Vokuro\Providers\SessionBagProvider;
 use Vokuro\Providers\SessionProvider;
 use Vokuro\Providers\UrlProvider;
 use Vokuro\Providers\ViewProvider;
-use Vokuro\Providers\AssetsProvider;
 
 return [
     AclProvider::class,

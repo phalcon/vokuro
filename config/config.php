@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -10,7 +9,10 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-use Phalcon\Logger;
+declare(strict_types=1);
+
+use Phalcon\Logger\Enum as Logger;
+
 use function Vokuro\root_path;
 
 return [

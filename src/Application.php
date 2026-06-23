@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro;
 
@@ -24,7 +25,7 @@ use Phalcon\Mvc\Application as MvcApplication;
  */
 class Application
 {
-    const APPLICATION_PROVIDER = 'bootstrap';
+    public const APPLICATION_PROVIDER = 'bootstrap';
 
     /**
      * @var MvcApplication
@@ -60,6 +61,16 @@ class Application
     }
 
     /**
+     * Get Project root path
+     *
+     * @return string
+     */
+    public function getRootPath(): string
+    {
+        return $this->rootPath;
+    }
+
+    /**
      * Run Vökuró Application
      *
      * @return string
@@ -75,16 +86,6 @@ class Application
         $response = $this->app->handle($uri);
 
         return (string)$response->getContent();
-    }
-
-    /**
-     * Get Project root path
-     *
-     * @return string
-     */
-    public function getRootPath(): string
-    {
-        return $this->rootPath;
     }
 
     /**
@@ -108,7 +109,7 @@ class Application
         $providers = include_once $filename;
         foreach ($providers as $providerClass) {
             /** @var ServiceProviderInterface $provider */
-            $provider = new $providerClass;
+            $provider = new $providerClass();
             $provider->register($this->di);
         }
     }

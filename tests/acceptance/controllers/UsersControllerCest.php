@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Tests\Acceptance\Controllers;
@@ -25,36 +26,15 @@ final class UsersControllerCest
     }
 
     /**
-     * @param AcceptanceTester $I
-     */
-    public function testIndexAsGuest(AcceptanceTester $I): void
-    {
-        $I->amOnPage('/users');
-        $I->see('You don\'t have access to this module: private');
-    }
-
-    /**
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testIndex(AcceptanceTester $I): void
+    public function testChangePassword(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
-        $I->amOnPage('/users');
-        $I->see('Search users');
-    }
-
-    /**
-     * @depends login
-     * @param AcceptanceTester $I
-     */
-    public function testSearch(AcceptanceTester $I): void
-    {
-        $I->setCookie('PHPSESSID', $this->cookie);
-
-        $I->amOnPage('/users/search');
-        $I->see('Found users');
+        $I->amOnPage('/users/changePassword');
+        $I->see('Change Password');
     }
 
     /**
@@ -67,18 +47,6 @@ final class UsersControllerCest
 
         $I->amOnPage('/users/create');
         $I->see('Create a User');
-    }
-
-    /**
-     * @depends login
-     * @param AcceptanceTester $I
-     */
-    public function testEdit(AcceptanceTester $I): void
-    {
-        $I->setCookie('PHPSESSID', $this->cookie);
-
-        $I->amOnPage('/users/edit/1');
-        $I->see('Edit users');
     }
 
     /**
@@ -98,11 +66,44 @@ final class UsersControllerCest
      * @depends login
      * @param AcceptanceTester $I
      */
-    public function testChangePassword(AcceptanceTester $I): void
+    public function testEdit(AcceptanceTester $I): void
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
-        $I->amOnPage('/users/changePassword');
-        $I->see('Change Password');
+        $I->amOnPage('/users/edit/1');
+        $I->see('Edit users');
+    }
+
+    /**
+     * @depends login
+     * @param AcceptanceTester $I
+     */
+    public function testIndex(AcceptanceTester $I): void
+    {
+        $I->setCookie('PHPSESSID', $this->cookie);
+
+        $I->amOnPage('/users');
+        $I->see('Search users');
+    }
+
+    /**
+     * @param AcceptanceTester $I
+     */
+    public function testIndexAsGuest(AcceptanceTester $I): void
+    {
+        $I->amOnPage('/users');
+        $I->see('You don\'t have access to this module: private');
+    }
+
+    /**
+     * @depends login
+     * @param AcceptanceTester $I
+     */
+    public function testSearch(AcceptanceTester $I): void
+    {
+        $I->setCookie('PHPSESSID', $this->cookie);
+
+        $I->amOnPage('/users/search');
+        $I->see('Found users');
     }
 }

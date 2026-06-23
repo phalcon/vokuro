@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Tests\Functional\Forms;
@@ -8,7 +9,7 @@ use Vokuro\Forms\ForgotPasswordForm;
 
 final class ForgotPasswordFormTest extends Unit
 {
-    const EMAIL_KEY = 'email';
+    private const EMAIL_KEY = 'email';
 
     /**
      * @return array

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Models;
 
@@ -24,6 +25,20 @@ use Phalcon\Mvc\Model;
 class EmailConfirmations extends Model
 {
     /**
+     * @var string
+     */
+    public $code;
+
+    /**
+     * @var string
+     */
+    public $confirmed;
+
+    /**
+     * @var integer
+     */
+    public $createdAt;
+    /**
      * @var integer
      */
     public $id;
@@ -31,33 +46,26 @@ class EmailConfirmations extends Model
     /**
      * @var integer
      */
-    public $usersId;
-
-    /**
-     * @var string
-     */
-    public $code;
-
-    /**
-     * @var integer
-     */
-    public $createdAt;
-
-    /**
-     * @var integer
-     */
     public $modifiedAt;
 
     /**
-     * @var string
+     * @var integer
      */
-    public $confirmed;
+    public $usersId;
 
-    public function initialize()
+    /**
+     * Send a confirmation e-mail to the user after create the account
+     */
+    public function afterCreate()
     {
-        $this->belongsTo('usersId', Users::class, 'id', [
-            'alias' => 'user',
-        ]);
+        $this->getDI()
+             ->getMail()
+             ->send([
+                 $this->user->email => $this->user->name,
+             ], "Please confirm your email", 'confirmation', [
+                 'confirmUrl' => '/confirm/' . $this->code . '/' . $this->user->email,
+             ])
+        ;
     }
 
     /**
@@ -84,18 +92,10 @@ class EmailConfirmations extends Model
         $this->modifiedAt = time();
     }
 
-    /**
-     * Send a confirmation e-mail to the user after create the account
-     */
-    public function afterCreate()
+    public function initialize()
     {
-        $this->getDI()
-             ->getMail()
-             ->send([
-                 $this->user->email => $this->user->name,
-             ], "Please confirm your email", 'confirmation', [
-                 'confirmUrl' => '/confirm/' . $this->code . '/' . $this->user->email,
-             ])
-        ;
+        $this->belongsTo('usersId', Users::class, 'id', [
+            'alias' => 'user',
+        ]);
     }
 }

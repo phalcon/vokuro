@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Vökuró.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
@@ -22,13 +23,6 @@ use Vokuro\Models\Users;
  */
 class UserControlController extends ControllerBase
 {
-    public function initialize(): void
-    {
-        if ($this->session->has('auth-identity')) {
-            $this->view->setTemplateBefore('private');
-        }
-    }
-
     /**
      * Confirms an e-mail, if the user must change their password then changes
      * it
@@ -107,6 +101,12 @@ class UserControlController extends ControllerBase
             'controller' => 'users',
             'action'     => 'index',
         ]);
+    }
+    public function initialize(): void
+    {
+        if ($this->session->has('auth-identity')) {
+            $this->view->setTemplateBefore('private');
+        }
     }
 
     public function resetPasswordAction()
