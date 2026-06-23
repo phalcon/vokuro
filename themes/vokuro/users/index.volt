@@ -4,7 +4,7 @@
 </div>
 
 <div class="actions">
-    {{ link_to('users/create', 'class': 'btn', 'Create Users') }}
+    {{ tag.a(url('users/create'), 'Create Users', ['class': 'btn']) }}
 </div>
 
 {{ flash.output() }}
@@ -17,7 +17,7 @@
             {{ form.render('name', ['class': 'input', 'placeholder': 'Name']) }}
             {{ form.render('email', ['class': 'input', 'placeholder': 'Email']) }}
             {{ form.render('profilesId', ['class': 'select']) }}
-            <button type="submit" class="btn">Search</button>
+            {{ tag.button('Search', ['type': 'submit', 'class': 'btn']) }}
         </div>
     </form>
 </div>
@@ -40,8 +40,8 @@
                 <td>{{ user.banned == 'Y' ? '<span class="pill pill-warn">Yes</span>' : '<span class="pill pill-ok">No</span>' }}</td>
                 <td>{{ user.suspended == 'Y' ? '<span class="pill pill-warn">Yes</span>' : '<span class="pill pill-ok">No</span>' }}</td>
                 <td>{{ user.active == 'Y' ? '<span class="pill pill-ok">Yes</span>' : '<span class="pill pill-warn">No</span>' }}</td>
-                <td>{{ link_to('users/edit/' ~ user.id, 'class': 'btn-sm btn-ghost btn', 'Edit') }}</td>
-                <td>{{ link_to('users/delete/' ~ user.id, 'class': 'btn-sm btn-danger btn', 'Delete') }}</td>
+                <td>{{ tag.a(url('users/edit/' ~ user.id), 'Edit', ['class': 'btn-sm btn-ghost btn']) }}</td>
+                <td>{{ tag.a(url('users/delete/' ~ user.id), 'Delete', ['class': 'btn-sm btn-danger btn']) }}</td>
             </tr>
         {% else %}
             <tr><td colspan="9">No users are recorded</td></tr>
@@ -51,7 +51,7 @@
 </div>
 
 <div class="actions">
-    {{ link_to('users?page=' ~ page.previous, 'class': 'btn-sm btn-ghost btn', 'Previous') }}
+    {{ tag.a(url('users?page=' ~ page.previous), 'Previous', ['class': 'btn-sm btn-ghost btn']) }}
     <span class="btn-sm btn-ghost btn">{{ page.current }} / {{ page.last }}</span>
-    {{ link_to('users?page=' ~ page.next, 'class': 'btn-sm btn-ghost btn', 'Next') }}
+    {{ tag.a(url('users?page=' ~ page.next), 'Next', ['class': 'btn-sm btn-ghost btn']) }}
 </div>

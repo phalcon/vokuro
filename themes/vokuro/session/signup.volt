@@ -41,4 +41,4 @@
 </form>
 
 <hr>
-{{ link_to('session/login', "&larr; Back to Login") }}
+{{ tag.aRaw(url('session/login'), '&larr; Back to Login') }}

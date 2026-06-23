@@ -3,8 +3,8 @@
 </div>
 
 <div class="actions">
-    {{ link_to('profiles/index', 'class': 'btn-ghost btn', '&larr; Go Back') }}
-    {{ link_to('profiles/create', 'class': 'btn', 'Create profiles') }}
+    {{ tag.aRaw(url('profiles/index'), '&larr; Go Back', ['class': 'btn-ghost btn']) }}
+    {{ tag.a(url('profiles/create'), 'Create profiles', ['class': 'btn']) }}
 </div>
 
 <div class="data-table table-scroll">
@@ -18,8 +18,8 @@
                 <td class="id">{{ profile.id }}</td>
                 <td class="name">{{ profile.name }}</td>
                 <td>{{ profile.active == 'Y' ? '<span class="pill pill-ok">Yes</span>' : '<span class="pill pill-warn">No</span>' }}</td>
-                <td>{{ link_to('profiles/edit/' ~ profile.id, 'class': 'btn-sm btn-ghost btn', 'Edit') }}</td>
-                <td>{{ link_to('profiles/delete/' ~ profile.id, 'class': 'btn-sm btn-danger btn', 'Delete') }}</td>
+                <td>{{ tag.a(url('profiles/edit/' ~ profile.id), 'Edit', ['class': 'btn-sm btn-ghost btn']) }}</td>
+                <td>{{ tag.a(url('profiles/delete/' ~ profile.id), 'Delete', ['class': 'btn-sm btn-danger btn']) }}</td>
             </tr>
         {% else %}
             <tr><td colspan="5">No profiles are recorded</td></tr>
@@ -29,8 +29,8 @@
 </div>
 
 <div class="actions">
-    {{ link_to('profiles/search', 'class': 'btn-sm btn-ghost btn', 'First') }}
-    {{ link_to('profiles/search?page=' ~ page.previous, 'class': 'btn-sm btn-ghost btn', 'Previous') }}
-    {{ link_to('profiles/search?page=' ~ page.next, 'class': 'btn-sm btn-ghost btn', 'Next') }}
-    {{ link_to('profiles/search?page=' ~ page.last, 'class': 'btn-sm btn-ghost btn', 'Last') }}
+    {{ tag.a(url('profiles/search'), 'First', ['class': 'btn-sm btn-ghost btn']) }}
+    {{ tag.a(url('profiles/search?page=' ~ page.previous), 'Previous', ['class': 'btn-sm btn-ghost btn']) }}
+    {{ tag.a(url('profiles/search?page=' ~ page.next), 'Next', ['class': 'btn-sm btn-ghost btn']) }}
+    {{ tag.a(url('profiles/search?page=' ~ page.last), 'Last', ['class': 'btn-sm btn-ghost btn']) }}
 </div>

@@ -3,8 +3,8 @@
 </div>
 
 <div class="actions">
-    {{ link_to('users/index', 'class': 'btn-ghost btn', '&larr; Go Back') }}
-    {{ link_to('users/create', 'class': 'btn', 'Create users') }}
+    {{ tag.aRaw(url('users/index'), '&larr; Go Back', ['class': 'btn-ghost btn']) }}
+    {{ tag.a(url('users/create'), 'Create users', ['class': 'btn']) }}
 </div>
 
 <div class="data-table table-scroll">
@@ -32,8 +32,8 @@
                 <td>{{ user.banned == 'Y' ? '<span class="pill pill-warn">Yes</span>' : '<span class="pill pill-ok">No</span>' }}</td>
                 <td>{{ user.suspended == 'Y' ? '<span class="pill pill-warn">Yes</span>' : '<span class="pill pill-ok">No</span>' }}</td>
                 <td>{{ user.active == 'Y' ? '<span class="pill pill-ok">Yes</span>' : '<span class="pill pill-warn">No</span>' }}</td>
-                <td>{{ link_to('users/edit/' ~ user.id, 'class': 'btn-sm btn-ghost btn', 'Edit') }}</td>
-                <td>{{ link_to('users/delete/' ~ user.id, 'class': 'btn-sm btn-danger btn', 'Delete') }}</td>
+                <td>{{ tag.a(url('users/edit/' ~ user.id), 'Edit', ['class': 'btn-sm btn-ghost btn']) }}</td>
+                <td>{{ tag.a(url('users/delete/' ~ user.id), 'Delete', ['class': 'btn-sm btn-danger btn']) }}</td>
             </tr>
         {% else %}
             <tr>
@@ -45,8 +45,8 @@
 </div>
 
 <div class="actions">
-    {{ link_to('users/search', 'class': 'btn-sm btn-ghost btn', 'First') }}
-    {{ link_to('users/search?page=' ~ page.previous, 'class': 'btn-sm btn-ghost btn', 'Previous') }}
-    {{ link_to('users/search?page=' ~ page.next, 'class': 'btn-sm btn-ghost btn', 'Next') }}
-    {{ link_to('users/search?page=' ~ page.last, 'class': 'btn-sm btn-ghost btn', 'Last') }}
+    {{ tag.a(url('users/search'), 'First', ['class': 'btn-sm btn-ghost btn']) }}
+    {{ tag.a(url('users/search?page=' ~ page.previous), 'Previous', ['class': 'btn-sm btn-ghost btn']) }}
+    {{ tag.a(url('users/search?page=' ~ page.next), 'Next', ['class': 'btn-sm btn-ghost btn']) }}
+    {{ tag.a(url('users/search?page=' ~ page.last), 'Last', ['class': 'btn-sm btn-ghost btn']) }}
 </div>

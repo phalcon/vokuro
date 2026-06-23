@@ -3,7 +3,7 @@
 </div>
 
 <div class="actions">
-    {{ link_to('users', 'class': 'btn-ghost btn', '&larr; Go Back') }}
+    {{ tag.aRaw(url('users'), '&larr; Go Back', ['class': 'btn-ghost btn']) }}
 </div>
 
 {{ flash.output() }}
@@ -25,6 +25,6 @@
             {{ form.render('profilesId', ['class': 'select']) }}
         </div>
 
-        {{ submit_button("Save", "class": "btn") }}
+        {{ tag.inputSubmit('save', 'Save', ['class': 'btn']) }}
     </form>
 </div>

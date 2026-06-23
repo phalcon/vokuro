@@ -25,5 +25,5 @@
 </form>
 
 <hr>
-<p>{{ link_to('session/forgotPassword', 'Forgot my password') }}</p>
-<p>{{ link_to('session/signup', 'Sign up') }}</p>
+<p>{{ tag.a(url('session/forgotPassword'), 'Forgot my password') }}</p>
+<p>{{ tag.a(url('session/signup'), 'Sign up') }}</p>

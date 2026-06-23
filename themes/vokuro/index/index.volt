@@ -2,8 +2,11 @@
 
 <header class="hero">
     <h1>Welcome!</h1>
-    <p>A sample application secured by the Phalcon Framework — manage users, profiles and permissions in one place.</p>
-    <p>{{ link_to('session/signup', 'class': 'btn btn-green', 'Create an account') }}</p>
+    <p>
+        A sample application secured by the Phalcon Framework - manage users,
+        profiles and permissions in one place.
+    </p>
+    <p>{{ tag.a(url('session/signup'), 'Create an account', ['class': 'btn btn-green']) }}</p>
 </header>
 
 <div class="feature-grid">

@@ -16,6 +16,6 @@
             {{ form.render('confirmPassword', ['class': 'input', 'placeholder': 'Confirm Password']) }}
         </div>
 
-        {{ submit_button("Change Password", "class": "btn") }}
+        {{ tag.inputSubmit('save', 'Change Password', ['class': 'btn']) }}
     </form>
 </div>

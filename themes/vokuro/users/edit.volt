@@ -3,7 +3,7 @@
 </div>
 
 <div class="actions">
-    {{ link_to('users/index', 'class': 'btn-ghost btn', '&larr; Go Back') }}
+    {{ tag.aRaw(url('users/index'), '&larr; Go Back', ['class': 'btn-ghost btn']) }}
 </div>
 
 {{ flash.output() }}
@@ -18,7 +18,7 @@
         <div class="field"><label>Banned?</label>{{ form.render('banned', ['class': 'select']) }}</div>
         <div class="field"><label>Confirmed?</label>{{ form.render('active', ['class': 'select']) }}</div>
         {{ form.render("id") }}
-        {{ submit_button("Save", "class": "btn") }}
+        {{ tag.inputSubmit('save', 'Save', ['class': 'btn']) }}
     </div>
 </form>
 

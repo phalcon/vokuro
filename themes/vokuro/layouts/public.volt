@@ -5,21 +5,21 @@
 
 <div class="topbar">
     <div class="inner">
-        {{ link_to(null, 'class': 'brand', '<img src="/img/phalcon.svg" alt=""> Vökuró') }}
+        {{ tag.aRaw(url(''), tag.img('/img/phalcon.svg', ['alt': '']) ~ ' Vökuró', ['class': 'brand']) }}
         <button class="nav-toggle" data-nav-toggle type="button" aria-label="Menu">&#9776;</button>
         <nav>
             {%- for key, value in menus %}
-                {{ link_to(value, 'class': value == dispatcher.getControllerName() ? 'is-active' : '', key) }}
+                {{ tag.a(url(value), key, ['class': (value == dispatcher.getControllerName() ? 'is-active' : '')]) }}
             {%- endfor -%}
 
             {%- if logged_in is defined and not(logged_in is empty) -%}
-                {{ link_to('users', 'Users') }}
-                {{ link_to('profiles', 'Profiles') }}
-                {{ link_to('permissions', 'Permissions') }}
-                {{ link_to('session/logout', 'class': 'btn btn-sm', 'Logout') }}
+                {{ tag.a(url('users'), 'Users') }}
+                {{ tag.a(url('profiles'), 'Profiles') }}
+                {{ tag.a(url('permissions'), 'Permissions') }}
+                {{ tag.a(url('session/logout'), 'Logout', ['class': 'btn btn-sm']) }}
             {% else %}
-                {{ link_to('session/login', 'Login') }}
-                {{ link_to('session/signup', 'class': 'btn btn-sm', 'Sign up') }}
+                {{ tag.a(url('session/login'), 'Login') }}
+                {{ tag.a(url('session/signup'), 'Sign up', ['class': 'btn btn-sm']) }}
             {% endif %}
         </nav>
     </div>
@@ -31,7 +31,7 @@
 
 <footer class="footer">
     Made with love by the Phalcon Team &middot;
-    {{ link_to('privacy', 'Privacy Policy') }} &middot;
-    {{ link_to('terms', 'Terms') }} &middot;
+    {{ tag.a(url('privacy'), 'Privacy Policy') }} &middot;
+    {{ tag.a(url('terms'), 'Terms') }} &middot;
     &copy; {{ date('Y') }} Phalcon Team.
 </footer>

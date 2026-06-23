@@ -4,7 +4,7 @@
 </div>
 
 <div class="actions">
-    {{ link_to('profiles/create', 'class': 'btn', 'Create Profiles') }}
+    {{ tag.a(url('profiles/create'), 'Create Profiles', ['class': 'btn']) }}
 </div>
 
 {{ flash.output() }}
@@ -15,7 +15,7 @@
         <div class="toolbar">
             {{ form.render('id', ['class': 'input', 'placeholder': 'Id']) }}
             {{ form.render('name', ['class': 'input', 'placeholder': 'Name']) }}
-            <button type="submit" class="btn">Search</button>
+            {{ tag.button('Search', ['type': 'submit', 'class': 'btn']) }}
         </div>
     </form>
 </div>
@@ -31,8 +31,8 @@
                 <td class="id">{{ profile.id }}</td>
                 <td class="name">{{ profile.name }}</td>
                 <td>{{ profile.active == 'Y' ? '<span class="pill pill-ok">Yes</span>' : '<span class="pill pill-warn">No</span>' }}</td>
-                <td>{{ link_to('profiles/edit/' ~ profile.id, 'class': 'btn-sm btn-ghost btn', 'Edit') }}</td>
-                <td>{{ link_to('profiles/delete/' ~ profile.id, 'class': 'btn-sm btn-danger btn', 'Delete') }}</td>
+                <td>{{ tag.a(url('profiles/edit/' ~ profile.id), 'Edit', ['class': 'btn-sm btn-ghost btn']) }}</td>
+                <td>{{ tag.a(url('profiles/delete/' ~ profile.id), 'Delete', ['class': 'btn-sm btn-danger btn']) }}</td>
             </tr>
         {% else %}
             <tr><td colspan="5">No profiles are recorded</td></tr>
@@ -42,7 +42,7 @@
 </div>
 
 <div class="actions">
-    {{ link_to('profiles?page=' ~ page.previous, 'class': 'btn-sm btn-ghost btn', 'Previous') }}
+    {{ tag.a(url('profiles?page=' ~ page.previous), 'Previous', ['class': 'btn-sm btn-ghost btn']) }}
     <span class="btn-sm btn-ghost btn">{{ page.current }} / {{ page.last }}</span>
-    {{ link_to('profiles?page=' ~ page.next, 'class': 'btn-sm btn-ghost btn', 'Next') }}
+    {{ tag.a(url('profiles?page=' ~ page.next), 'Next', ['class': 'btn-sm btn-ghost btn']) }}
 </div>

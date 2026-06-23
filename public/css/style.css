@@ -76,6 +76,7 @@ textarea.input{height:auto;padding:12px 14px;}
 .topbar nav{display:flex;align-items:center;gap:8px;}
 .topbar nav a{color:var(--vk-body);padding:8px 12px;border-radius:8px;}
 .topbar nav a.is-active{color:var(--vk-ink);font-weight:700;}
+.topbar nav a.btn{color:#fff;}
 .footer{border-top:1px solid #e7ece5;color:var(--vk-muted);font-size:13px;text-align:center;padding:24px;}
 .hero{background:var(--vk-rail);color:#fff;border-radius:16px;padding:48px 40px;margin-bottom:28px;}
 .hero h1{color:#fff;font-size:34px;font-weight:800;}

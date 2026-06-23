@@ -9,7 +9,7 @@
             {{ profilesSelect }}
         </div>
 
-        {{ submit_button('Search', 'class': 'btn', 'name': 'search') }}
+        {{ tag.inputSubmit('search', 'Search', ['class': 'btn']) }}
 
         {% if request.isPost() and profile %}
         <hr>
@@ -22,7 +22,10 @@
                     {% for action in actions %}
                         <tr>
                             <td>
-                                <input type="checkbox" name="permissions[]" value="{{ resource ~ '.' ~ action }}" {% if permissions[resource ~ '.' ~ action] is defined %} checked="checked" {% endif %}>
+                                <input type="checkbox"
+                                       name="permissions[]"
+                                       value="{{ resource ~ '.' ~ action }}"
+                                    {% if permissions[resource ~ '.' ~ action] is defined %} checked="checked"{% endif %}>
                             </td>
                             <td>{{ acl.getActionDescription(action) ~ ' ' ~ resource }}</td>
                         </tr>
@@ -32,7 +35,7 @@
             </div>
         {% endfor %}
 
-        {{ submit_button('Submit', 'class': 'btn', 'name': 'submit') }}
+        {{ tag.inputSubmit('submit', 'Submit', ['class': 'btn']) }}
         {% endif %}
     </form>
 </div>
