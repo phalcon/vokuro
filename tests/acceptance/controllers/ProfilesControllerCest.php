@@ -48,18 +48,23 @@ final class ProfilesControllerCest
     {
         $I->setCookie('PHPSESSID', $this->cookie);
 
-        $I->amOnPage('/profiles');
-        $I->click('Search');
-        $I->see('Found profiles');
-        $I->see('Administrators');
+        // Provision a throwaway profile so the test is self-contained and
+        // repeatable: it creates and removes its own record instead of
+        // consuming seeded data (profiles with users cannot be deleted anyway).
+        $I->amOnPage('/profiles/create');
+        $I->fillField('name', 'Delete Me');
+        $I->selectOption('active', 'Yes');
+        $I->click('Save');
+        $I->see('Profile was created successfully');
 
-        // Profile 3 (Read-Only) has no users assigned, so it can be deleted
-        // (profiles with users are protected by the model's foreign key).
-        $I->click('//a[@href="/profiles/delete/3"]');
-
+        // It has no users assigned, so it can be deleted.
         $I->amOnPage('/profiles');
-        $I->see('Search');
-        $I->cantSee('Read-Only');
+        $I->see('Delete Me');
+        $I->click('Delete', '//tr[td[contains(., "Delete Me")]]');
+
+        // The record is gone and the seeded profiles are untouched.
+        $I->amOnPage('/profiles');
+        $I->cantSee('Delete Me');
     }
 
     /**

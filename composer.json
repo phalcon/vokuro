@@ -32,7 +32,7 @@
     },
     "suggest": {
         "ext-apcu": "Needed to support caching ACL",
-        "ext-phalcon": "Install the Phalcon v5 C extension to run on v5 (the default); alternatively run on v6 via the phalcon/phalcon package — see the Dockerfile PHALCON_VARIANT build arg and the README."
+        "ext-phalcon": "Install the Phalcon v5 C extension to run on v5 (the default); alternatively run on v6 via the phalcon/phalcon package - see the Dockerfile PHALCON_VARIANT build arg and the README."
     },
     "autoload": {
         "psr-4": { "Vokuro\\": "src/" },

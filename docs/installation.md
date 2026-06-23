@@ -6,7 +6,7 @@ The recommended way to run Vökuró is the Docker stack described in the
 ## Requirements
 
 * PHP 8.1 – 8.5 with the extensions: `openssl`, `mbstring`, `intl`, `pdo_mysql`
-* MySQL 8.0 (or SQLite / PostgreSQL — see `DB_ADAPTER` in `.env`)
+* MySQL 8.0 (or SQLite / PostgreSQL - see `DB_ADAPTER` in `.env`)
 * [Composer](https://getcomposer.org/)
 
 ## 1. Install the Phalcon extension (v5)

@@ -66,10 +66,10 @@ Run them inside the container, e.g. `docker compose exec app composer cs`:
 
 ## Updating Phalcon
 
-* **v5** — bump `PHALCON_V5_CONSTRAINT` in `resources/docker/Dockerfile` and rebuild:
+* **v5** - bump `PHALCON_V5_CONSTRAINT` in `resources/docker/Dockerfile` and rebuild:
   `docker compose build app`. PIE compiles the C extension from source (this is the only
   way to update a C extension).
-* **v6** — `docker compose exec app composer update phalcon/phalcon` (no rebuild).
+* **v6** - `docker compose exec app composer update phalcon/phalcon` (no rebuild).
   Dependabot opens the bump PR automatically.
 
 ## Project layout
