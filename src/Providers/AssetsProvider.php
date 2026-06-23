@@ -21,7 +21,7 @@ use Phalcon\Html\TagFactory;
 
 class AssetsProvider implements ServiceProviderInterface
 {
-    protected const VERSION = "1.0.3";
+    protected const VERSION = "1.0.4";
     /**
      * @var string
      */
@@ -38,6 +38,12 @@ class AssetsProvider implements ServiceProviderInterface
 
         $di->setShared($this->providerName, function () use ($assetManager) {
             $assetManager->collection('css')
+                ->addCss(
+                    'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800'
+                    . '&family=JetBrains+Mono:wght@400;500;600&display=swap',
+                    false,
+                    false
+                )
                 ->addCss('/css/style.css?v=' . self::VERSION, true, true, [
                     "media" => "screen,projection"
                 ]);

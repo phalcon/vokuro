@@ -69,16 +69,19 @@ class PermissionsController extends ControllerBase
         ]);
 
         $selected = (string) $this->request->getPost('profileId', null, '');
-        $options  = '<option value="">...</option>';
+
+        $select = $this->tag->inputSelect('', '', [
+            'name'  => 'profileId',
+            'class' => 'select',
+        ]);
+        $select->selected($selected)
+            ->addPlaceholder('...', '');
+
         foreach ($profiles as $profile) {
-            $isSelected = ((string) $profile->id === $selected) ? ' selected="selected"' : '';
-            $options   .= '<option value="' . $profile->id . '"' . $isSelected . '>'
-                . htmlspecialchars((string) $profile->name, ENT_QUOTES) . '</option>';
+            $select->add((string) $profile->name, (string) $profile->id);
         }
 
-        $profilesSelect = '<select name="profileId" class="select">'
-            . $options
-            . '</select>';
+        $profilesSelect = (string) $select;
 
         $this->view->setVar('profilesSelect', $profilesSelect);
     }

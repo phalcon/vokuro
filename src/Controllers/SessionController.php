@@ -138,10 +138,12 @@ class SessionController extends ControllerBase
                 ]);
 
                 if ($user->save()) {
-                    return $this->dispatcher->forward([
+                    $this->dispatcher->forward([
                         'controller' => 'index',
                         'action'     => 'index',
                     ]);
+
+                    return;
                 }
 
                 foreach ($user->getMessages() as $message) {
