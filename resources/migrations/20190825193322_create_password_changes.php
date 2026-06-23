@@ -1,22 +1,24 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Migrations;
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateFailedLogins extends AbstractMigration
+final class CreatePasswordChanges extends AbstractMigration
 {
     public function change(): void
     {
-        $table = $this->table('failed_logins');
+        $table = $this->table('password_changes');
         if ($table->exists()) {
             return;
         }
 
-        $table->addColumn('usersId', 'integer', ['null' => true])
+        $table->addColumn('usersId', 'integer')
             ->addColumn('ipAddress', 'char', ['limit' => 15])
-            ->addColumn('attempted', 'integer')
+            ->addColumn('userAgent', 'text')
+            ->addColumn('createdAt', 'integer')
             ->addIndex(['usersId'])
             ->create();
     }

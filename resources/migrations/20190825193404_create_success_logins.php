@@ -1,24 +1,24 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Vokuro\Migrations;
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateRememberTokens extends AbstractMigration
+final class CreateSuccessLogins extends AbstractMigration
 {
     public function change(): void
     {
-        $table = $this->table('remember_tokens');
+        $table = $this->table('success_logins');
         if ($table->exists()) {
             return;
         }
 
         $table->addColumn('usersId', 'integer')
-            ->addColumn('token', 'char', ['limit' => 32])
+            ->addColumn('ipAddress', 'char', ['limit' => 15])
             ->addColumn('userAgent', 'text')
-            ->addColumn('createdAt', 'integer')
-            ->addIndex(['token'])
+            ->addIndex(['usersId'])
             ->create();
     }
 }
