@@ -32,7 +32,7 @@ composer install
 ## 3. Configure the environment
 
 ```bash
-cp .env.example .env
+cp resources/.env.example .env
 ```
 
 Edit `.env` and point the database at your host (the Docker defaults use the

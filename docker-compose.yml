@@ -10,6 +10,8 @@ services:
         GID: ${GID:-1000}
     container_name: ${PROJECT_PREFIX:-vokuro}-app
     ports:
+      # Host port is configurable (APP_PORT) so multiple apps can coexist;
+      # the container always listens on 8080.
       - "${APP_PORT:-8080}:8080"
     volumes:
       - .:/app
@@ -27,8 +29,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-secret}
       MYSQL_DATABASE: ${DB_NAME:-vokuro}
-    ports:
-      - "${DB_PORT_HOST:-3306}:3306"
+    # No host port published: the app reaches the DB over the internal compose
+    # network as mysql:3306. Not exposed to the host by design.
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_PASSWORD:-secret}"]
       interval: 5s

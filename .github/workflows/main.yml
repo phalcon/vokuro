@@ -108,7 +108,7 @@ jobs:
 
       - name: "Prepare environment"
         run: |
-          cp .env.example .env
+          cp resources/.env.example .env
           sed -i 's/^DB_HOST=.*/DB_HOST=127.0.0.1/' .env
           mkdir -p var/cache/acl var/cache/metaData var/cache/session var/cache/volt var/logs
 

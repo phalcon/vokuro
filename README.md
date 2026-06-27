@@ -20,7 +20,7 @@ It runs on **Phalcon v5** (the C extension, default) and on **Phalcon v6**
 ## Quick start (Docker)
 
 ```bash
-cp .env.example .env
+cp resources/.env.example .env
 docker compose up -d --build
 ```
 
