@@ -1,18 +1,27 @@
 <?php
 
+/**
+ * This file is part of the Vökuró.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Vokuro\Tests\Unit\Plugins;
 
-use Codeception\Test\Unit;
 use Phalcon\Di\Injectable;
+use Phalcon\Talon\PHPUnit\AbstractUnitTestCase;
 use Vokuro\Plugins\Mail\Mail;
 
-final class MailTest extends Unit
+final class MailTest extends AbstractUnitTestCase
 {
     public function testBuildMessageSetsHeadersAndBody(): void
     {
-        $mail = $this->make(Mail::class);
+        $mail = $this->mockWithoutConstructor(Mail::class);
 
         $email = $mail->buildMessage(
             ['jane@example.com' => 'Jane Doe'],
@@ -36,7 +45,7 @@ final class MailTest extends Unit
 
     public function testConstruct(): void
     {
-        $class = $this->make(Mail::class);
+        $class = $this->mockWithoutConstructor(Mail::class);
 
         $this->assertInstanceOf(Injectable::class, $class);
     }
