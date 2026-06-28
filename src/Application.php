@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Vokuro;
 
-use Exception;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Di\ServiceProviderInterface;

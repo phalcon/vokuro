@@ -17,7 +17,7 @@ use Phalcon\Config\Config;
 use Phalcon\Db\Adapter\Pdo;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use RuntimeException;
+use Vokuro\Exception;
 
 use function Vokuro\root_path;
 
@@ -43,7 +43,7 @@ class DbProvider implements ServiceProviderInterface
      * @param DiInterface $di
      *
      * @return void
-     * @throws RuntimeException
+     * @throws Exception
      */
     public function register(DiInterface $di): void
     {
@@ -73,6 +73,9 @@ class DbProvider implements ServiceProviderInterface
                 // Postgres does not allow the charset to be changed in the DSN.
                 unset($dbConfig['charset']);
                 break;
+            default:
+                // MySQL (and any other adapter) needs no DSN adjustments.
+                break;
         }
 
         return $dbConfig;
@@ -84,14 +87,14 @@ class DbProvider implements ServiceProviderInterface
      * @param Config $config
      *
      * @return string
-     * @throws RuntimeException
+     * @throws Exception
      */
     private function getClass(Config $config): string
     {
         $name = $config->get('adapter', 'Unknown');
 
         if (empty($this->adapters[$name])) {
-            throw new RuntimeException(
+            throw new Exception(
                 sprintf(
                     'Adapter "%s" has not been registered',
                     $name

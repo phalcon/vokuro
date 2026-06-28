@@ -36,7 +36,7 @@ class Auth extends Injectable
     public function authUserById($id)
     {
         $user = Users::findFirstById($id);
-        if ($user == false) {
+        if (!$user) {
             throw new Exception('The user does not exist');
         }
 
@@ -59,7 +59,7 @@ class Auth extends Injectable
     {
         // Check if the user exist
         $user = Users::findFirstByEmail($credentials['email']);
-        if ($user == false) {
+        if (!$user) {
             $this->registerUserThrottling(0);
             throw new Exception('Wrong email/password combination');
         }
@@ -118,15 +118,16 @@ class Auth extends Injectable
      */
     public function createRememberEnvironment(Users $user)
     {
-        $userAgent = $this->request->getUserAgent();
-        $token     = md5($user->email . $user->password . $userAgent);
+        // The raw token goes to the cookie; only its hash is stored, so a leaked
+        // database row cannot be replayed as a valid remember-me cookie.
+        $token = bin2hex(random_bytes(16));
 
         $remember            = new RememberTokens();
         $remember->usersId   = $user->id;
-        $remember->token     = $token;
-        $remember->userAgent = $userAgent;
+        $remember->token     = hash('sha256', $token);
+        $remember->userAgent = $this->request->getUserAgent();
 
-        if ($remember->save() != false) {
+        if ($remember->save()) {
             $expire = time() + 86400 * 8;
             $this->cookies->set('RMU', $user->id, $expire);
             $this->cookies->set('RMT', $token, $expire);
@@ -207,7 +208,7 @@ class Auth extends Injectable
         }
 
         $user = Users::findFirstById($identity['id']);
-        if ($user == false) {
+        if (!$user) {
             throw new Exception('The user does not exist');
         }
 
@@ -233,40 +234,36 @@ class Auth extends Injectable
     public function loginWithRememberMe()
     {
         $userId      = $this->cookies->get('RMU')->getValue();
-        $cookieToken = $this->cookies->get('RMT')->getValue();
+        $cookieToken = (string) $this->cookies->get('RMT')->getValue();
 
         $user = Users::findFirstById($userId);
         if ($user) {
-            $userAgent = $this->request->getUserAgent();
-            $token     = md5($user->email . $user->password . $userAgent);
+            $tokenHash = hash('sha256', $cookieToken);
+            $remember  = RememberTokens::findFirst([
+                'usersId = ?0 AND token = ?1',
+                'bind' => [
+                    $user->id,
+                    $tokenHash,
+                ],
+            ]);
 
-            if ($cookieToken == $token) {
-                $remember = RememberTokens::findFirst([
-                    'usersId = ?0 AND token = ?1',
-                    'bind' => [
-                        $user->id,
-                        $token,
-                    ],
+            // Confirm the stored hash in constant time and that the cookie is still valid
+            if (
+                $remember
+                && hash_equals((string) $remember->token, $tokenHash)
+                && ((time() - $remember->createdAt) / (86400 * 8)) < 8
+            ) {
+                $this->checkUserFlags($user);
+
+                $this->session->set('auth-identity', [
+                    'id'      => $user->id,
+                    'name'    => $user->name,
+                    'profile' => $user->profile->name,
                 ]);
-                if ($remember) {
-                    // Check if the cookie has not expired
-                    if (((time() - $remember->createdAt) / (86400 * 8)) < 8) {
-                        // Check if the user was flagged
-                        $this->checkUserFlags($user);
 
-                        // Register identity
-                        $this->session->set('auth-identity', [
-                            'id'      => $user->id,
-                            'name'    => $user->name,
-                            'profile' => $user->profile->name,
-                        ]);
+                $this->saveSuccessLogin($user);
 
-                        // Register the successful login
-                        $this->saveSuccessLogin($user);
-
-                        return $this->response->redirect('users');
-                    }
-                }
+                return $this->response->redirect('users');
             }
         }
 

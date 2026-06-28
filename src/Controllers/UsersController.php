@@ -157,14 +157,12 @@ class UsersController extends ControllerBase
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error((string) $message);
                 }
-            } else {
-                if (!$user->save()) {
-                    foreach ($user->getMessages() as $message) {
-                        $this->flash->error((string) $message);
-                    }
-                } else {
-                    $this->flash->success('User was updated successfully.');
+            } elseif (!$user->save()) {
+                foreach ($user->getMessages() as $message) {
+                    $this->flash->error((string) $message);
                 }
+            } else {
+                $this->flash->success('User was updated successfully.');
             }
         }
 

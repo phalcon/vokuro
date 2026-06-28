@@ -34,33 +34,7 @@ class SessionController extends ControllerBase
         $form = new ForgotPasswordForm();
 
         if ($this->request->isPost()) {
-            // Send emails only is config value is set to true
-            if ($this->getDI()->get('config')->useMail) {
-                if ($form->isValid($this->request->getPost()) == false) {
-                    foreach ($form->getMessages() as $message) {
-                        $this->flash->error($message);
-                    }
-                } else {
-                    $user = Users::findFirstByEmail($this->request->getPost('email'));
-                    if (!$user) {
-                        $this->flash->success('There is no account associated to this email');
-                    } else {
-                        $resetPassword          = new ResetPasswords();
-                        $resetPassword->usersId = $user->id;
-                        if ($resetPassword->save()) {
-                            $this->flash->success('Success! Please check your messages for an email reset password');
-                        } else {
-                            foreach ($resetPassword->getMessages() as $message) {
-                                $this->flash->error((string) $message);
-                            }
-                        }
-                    }
-                }
-            } else {
-                $this->flash->warning(
-                    'Emails are currently disabled. Change config key "useMail" to true to enable emails.'
-                );
-            }
+            $this->handleForgotPassword($form);
         }
 
         $this->view->setVar('form', $form);
@@ -68,6 +42,7 @@ class SessionController extends ControllerBase
 
     public function indexAction(): void
     {
+        // Renders views/session/index.volt via Phalcon's view convention.
     }
     /**
      * Default action. Set the public layout (layouts/public.volt)
@@ -90,7 +65,7 @@ class SessionController extends ControllerBase
                     return $this->auth->loginWithRememberMe();
                 }
             } else {
-                if ($form->isValid($this->request->getPost()) == false) {
+                if (!$form->isValid($this->request->getPost())) {
                     foreach ($form->getMessages() as $message) {
                         $this->flash->error((string) $message);
                     }
@@ -128,30 +103,67 @@ class SessionController extends ControllerBase
     {
         $form = new SignUpForm();
 
-        if ($this->request->isPost()) {
-            if ($form->isValid($this->request->getPost())) {
-                $user = new Users([
-                    'name'       => $this->request->getPost('name', 'striptags'),
-                    'email'      => $this->request->getPost('email'),
-                    'password'   => $this->security->hash($this->request->getPost('password')),
-                    'profilesId' => 2,
+        if ($this->request->isPost() && $form->isValid($this->request->getPost())) {
+            $user = new Users([
+                'name'       => $this->request->getPost('name', 'striptags'),
+                'email'      => $this->request->getPost('email'),
+                'password'   => $this->security->hash($this->request->getPost('password')),
+                'profilesId' => 2,
+            ]);
+
+            if ($user->save()) {
+                $this->dispatcher->forward([
+                    'controller' => 'index',
+                    'action'     => 'index',
                 ]);
 
-                if ($user->save()) {
-                    $this->dispatcher->forward([
-                        'controller' => 'index',
-                        'action'     => 'index',
-                    ]);
+                return;
+            }
 
-                    return;
-                }
-
-                foreach ($user->getMessages() as $message) {
-                    $this->flash->error((string) $message);
-                }
+            foreach ($user->getMessages() as $message) {
+                $this->flash->error((string) $message);
             }
         }
 
         $this->view->setVar('form', $form);
+    }
+
+    /**
+     * Processes the forgot-password submission and flashes the outcome.
+     */
+    private function handleForgotPassword(ForgotPasswordForm $form): void
+    {
+        if (!$this->getDI()->get('config')->useMail) {
+            $this->flash->warning(
+                'Emails are currently disabled. Change config key "useMail" to true to enable emails.'
+            );
+
+            return;
+        }
+
+        if (!$form->isValid($this->request->getPost())) {
+            foreach ($form->getMessages() as $message) {
+                $this->flash->error($message);
+            }
+
+            return;
+        }
+
+        $user = Users::findFirstByEmail($this->request->getPost('email'));
+        if (!$user) {
+            $this->flash->success('There is no account associated to this email');
+
+            return;
+        }
+
+        $resetPassword          = new ResetPasswords();
+        $resetPassword->usersId = $user->id;
+        if ($resetPassword->save()) {
+            $this->flash->success('Success! Please check your messages for an email reset password');
+        } else {
+            foreach ($resetPassword->getMessages() as $message) {
+                $this->flash->error((string) $message);
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ final class CreateRememberTokens extends AbstractMigration
         }
 
         $table->addColumn('usersId', 'integer')
-            ->addColumn('token', 'char', ['limit' => 32])
+            ->addColumn('token', 'char', ['limit' => 64])
             ->addColumn('userAgent', 'text')
             ->addColumn('createdAt', 'integer')
             ->addIndex(['token'])

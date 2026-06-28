@@ -23,6 +23,8 @@ use Phalcon\Mvc\Model;
  */
 class Users extends Model
 {
+    private const CANNOT_DELETE_MESSAGE = 'User cannot be deleted because he/she has activity in the system';
+
     /**
      * @var string
      */
@@ -131,21 +133,21 @@ class Users extends Model
         $this->hasMany('id', SuccessLogins::class, 'usersId', [
             'alias'      => 'successLogins',
             'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system',
+                'message' => self::CANNOT_DELETE_MESSAGE,
             ],
         ]);
 
         $this->hasMany('id', PasswordChanges::class, 'usersId', [
             'alias'      => 'passwordChanges',
             'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system',
+                'message' => self::CANNOT_DELETE_MESSAGE,
             ],
         ]);
 
         $this->hasMany('id', ResetPasswords::class, 'usersId', [
             'alias'      => 'resetPasswords',
             'foreignKey' => [
-                'message' => 'User cannot be deleted because he/she has activity in the system',
+                'message' => self::CANNOT_DELETE_MESSAGE,
             ],
         ]);
     }

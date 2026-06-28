@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Vokuro\Providers;
 
-use Exception;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Router;
 use Vokuro\Application;
+use Vokuro\Exception;
 
 class RouterProvider implements ServiceProviderInterface
 {

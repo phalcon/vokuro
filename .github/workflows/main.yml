@@ -58,7 +58,7 @@ jobs:
         run: composer cs-fixer
 
   tests:
-    name: "Tests (PHP ${{ matrix.php }})"
+    name: "Tests (PHP ${{ matrix.php }}, Phalcon ${{ matrix.variant }})"
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -73,6 +73,10 @@ jobs:
           - '8.3'
           - '8.4'
           - '8.5'
+        variant:
+          # v5 = cphalcon C extension; v6 = phalcon/phalcon composer package
+          - 'v5'
+          - 'v6'
     services:
       mysql:
         image: mysql:8.0
@@ -99,8 +103,10 @@ jobs:
           extensions: ${{ env.EXTENSIONS }}
           tools: composer:v2
 
-      # pecl's phalcon release metadata caps at PHP 8.4; PIE builds it from source.
-      - name: "Install Phalcon (v5) via PIE"
+      # v5 = cphalcon C extension, built from source via PIE (pecl caps at PHP 8.4).
+      # v6 needs no extension: it runs on the phalcon/phalcon composer package (a require-dev dep).
+      - name: "Install Phalcon v5 (cphalcon) via PIE"
+        if: matrix.variant == 'v5'
         run: |
           curl -fsSL https://github.com/php/pie/releases/latest/download/pie.phar -o pie.phar
           sudo "$(which php)" pie.phar install --no-interaction "phalcon/cphalcon:${{ env.PHALCON_CONSTRAINT }}"
