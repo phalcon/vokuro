@@ -22,14 +22,23 @@ It runs on **Phalcon v5** (the C extension, default) and on **Phalcon v6**
 ```bash
 cp resources/.env.example .env
 docker compose up -d --build
+
+# Create and seed the database (migrations are not run on boot)
+docker compose exec app composer migrate
+docker compose exec app composer seed
 ```
+
+> **Note:** `app` is the Compose *service* name, used as-is by `docker compose exec` above. The
+> running container, however, is named `${PROJECT_PREFIX}-app` - `vokuro-app` by default, set via
+> `PROJECT_PREFIX` in `.env`. If you address it with plain `docker exec`, type your container name
+> instead, e.g. `docker exec vokuro-app composer migrate` (substitute your own prefix).
 
 Then open:
 
 * Application: <http://localhost:8080>
 * Mailpit (captured e-mails): <http://localhost:8025>
 
-The container waits for MySQL, runs the migrations and seeds, then serves the app.
+The container waits for MySQL and serves the app; migrations are decoupled from boot - apply them with the commands above.
 Log in with one of the seeded accounts, e.g. `sarah.connor@skynet.dev` / `password1`.
 
 ### Choosing the Phalcon version

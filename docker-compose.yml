@@ -9,13 +9,13 @@ services:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
     container_name: ${PROJECT_PREFIX:-vokuro}-app
+    hostname: ${PROJECT_PREFIX:-vokuro}-app
     ports:
       # Host port is configurable (APP_PORT) so multiple apps can coexist;
       # the container always listens on 8080.
       - "${APP_PORT:-8080}:8080"
     volumes:
-      - .:/app
-      - vendor:/app/vendor
+      - .:/srv
     env_file: .env
     depends_on:
       mysql:
@@ -46,5 +46,4 @@ services:
       - "${MAILPIT_HTTP:-8025}:8025"
 
 volumes:
-  vendor:
   mysqldata:
