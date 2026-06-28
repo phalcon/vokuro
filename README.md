@@ -51,6 +51,29 @@ PHALCON_VARIANT=v6 docker compose up -d --build   # v6 (phalcon/phalcon, alpha)
 The two are mutually exclusive: the v5 image installs the C extension, the v6 image
 installs the pure-PHP package instead.
 
+### Choosing the PHP version
+
+The image is built for one PHP version at a time, selected with the `PHP_VERSION`
+build arg (default `8.5`; supported `8.1`–`8.5`):
+
+```bash
+docker compose up -d --build                  # PHP 8.5 (default)
+PHP_VERSION=8.1 docker compose up -d --build  # PHP 8.1
+PHP_VERSION=8.2 docker compose up -d --build  # PHP 8.2
+PHP_VERSION=8.3 docker compose up -d --build  # PHP 8.3
+PHP_VERSION=8.4 docker compose up -d --build  # PHP 8.4
+```
+
+PIE compiles the Phalcon C extension (and pcov) from source for the selected version.
+The container keeps the same name (`vokuro-app`), so each rebuild **replaces** the
+previous one. To run several versions side by side, give each its own Compose project
+and prefix:
+
+```bash
+PHP_VERSION=8.1 PROJECT_PREFIX=vokuro81 docker compose -p vokuro81 up -d --build
+# then: docker exec -w /srv vokuro81-app composer test
+```
+
 ## Composer scripts
 
 Run them inside the container, e.g. `docker compose exec app composer cs`:
