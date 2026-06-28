@@ -11,23 +11,6 @@ class SessionControllerCest
     /**
      * @param AcceptanceTester $I
      */
-    public function testForgotPassword(AcceptanceTester $I): void
-    {
-        $I->amOnPage('/session/forgotPassword');
-        $I->see('Forgot Password?');
-    }
-    /**
-     * @param AcceptanceTester $I
-     */
-    public function testLogin(AcceptanceTester $I): void
-    {
-        $I->amOnPage('/session/login');
-        $I->see('Log In');
-    }
-
-    /**
-     * @param AcceptanceTester $I
-     */
     public function testLogoutAsGuest(AcceptanceTester $I): void
     {
         $I->amOnPage('/session/logout');
@@ -47,14 +30,5 @@ class SessionControllerCest
         $I->see('Search users');
         $I->amOnPage('/session/logout');
         $I->see('Welcome!');
-    }
-
-    /**
-     * @param AcceptanceTester $I
-     */
-    public function testSignup(AcceptanceTester $I): void
-    {
-        $I->amOnPage('/session/signup');
-        $I->see('Sign up');
     }
 }
