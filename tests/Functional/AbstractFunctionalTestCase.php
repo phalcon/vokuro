@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Vokuro\Tests\Functional;
 
+use Phalcon\Di\Di;
 use Phalcon\Talon\PHPUnit\AbstractFunctionalTestCase as TalonFunctionalTestCase;
 use Vokuro\Application;
 
@@ -21,6 +22,7 @@ abstract class AbstractFunctionalTestCase extends TalonFunctionalTestCase
     protected function appFactory(): callable
     {
         return function () {
+            Di::reset();
             $bootstrap = new Application(dirname(__DIR__, 2));
 
             return $this->getProtectedProperty($bootstrap, 'app');
