@@ -73,5 +73,4 @@ RUN composer install --prefer-dist --no-interaction --no-progress
 
 EXPOSE 8080
 
-ENTRYPOINT ["bash", "bin/docker-entrypoint.sh"]
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "public", ".htrouter.php"]

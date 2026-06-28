@@ -142,22 +142,32 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          # SonarQube needs full history for blame/new-code detection.
           fetch-depth: 0
 
-      - name: "Build image"
+      - name: "Setup PHP"
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with:
+          php-version: '8.3'
+          extensions: ${{ env.EXTENSIONS }}
+          coverage: pcov
+          tools: composer:v2
+
+      # pecl's phalcon release metadata caps at PHP 8.4; PIE builds it from source.
+      - name: "Install Phalcon (v5) via PIE"
         run: |
-          cp resources/.env.example .env
-          sed -i "s/^UID=.*/UID=$(id -u)/" .env
-          sed -i "s/^GID=.*/GID=$(id -g)/" .env
-          docker compose build app
+          curl -fsSL https://github.com/php/pie/releases/latest/download/pie.phar -o pie.phar
+          sudo "$(which php)" pie.phar install --no-interaction "phalcon/cphalcon:${{ env.PHALCON_CONSTRAINT }}"
+          php -m | grep -i phalcon
 
+      - name: "Install dependencies"
+        uses: ramsey/composer-install@26d8a556604053a9612623447203a691f406fbe6 # v4
+        with:
+          composer-options: "--prefer-dist"
+
+      # No .env prep: phpunit loads tests/.env.test via the bootstrap.
       - name: "Tests with coverage"
-        run: docker compose run --rm app composer test-coverage
-
-      # phpunit writes clover with the in-container path (/srv); rewrite it to the
-      # runner workspace so SonarQube can match the coverage to the source files.
-      - name: "Map container paths to the workspace"
-        run: sed -i "s#/srv#${GITHUB_WORKSPACE}#g" tests/_output/coverage.xml
+        run: composer test-coverage
 
       - name: "SonarQube Scan"
         uses: SonarSource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e # v8.2.0
@@ -169,5 +179,5 @@ jobs:
             -Dsonar.projectKey=phalcon_vokuro
             -Dsonar.sources=src
             -Dsonar.tests=tests
-            -Dsonar.exclusions=resources/**,bin/**
+            -Dsonar.exclusions=resources/**
             -Dsonar.php.coverage.reportPaths=tests/_output/coverage.xml

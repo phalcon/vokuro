@@ -24,6 +24,28 @@ function container()
 }
 
 /**
+ * Read an environment variable, falling back from getenv() to $_ENV.
+ *
+ * Dotenv variants populate getenv() and/or $_ENV depending on which adapter is
+ * used, so both are checked: real OS/CI variables win, with the loaded .env file
+ * as the fallback (mirrors the helper used in phalcon/cphalcon's test suite).
+ *
+ * @param string $key
+ * @param mixed  $default
+ *
+ * @return mixed
+ */
+function env(string $key, mixed $default = null): mixed
+{
+    $value = getenv($key);
+    if (false !== $value) {
+        return $value;
+    }
+
+    return $_ENV[$key] ?? $default;
+}
+
+/**
  * Get projects relative root path
  *
  * @param string $prefix

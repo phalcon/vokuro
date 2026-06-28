@@ -86,7 +86,6 @@ Run them inside the container, e.g. `docker compose exec app composer cs`:
 Follows the [PDS skeleton](https://github.com/php-pds/skeleton):
 
 ```
-bin/        executables (docker entrypoint, wait-for-db)
 config/     application configuration
 design/     static HTML snapshot of every screen (for design work)
 docs/       documentation
