@@ -67,7 +67,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.1', '8.2', '8.3', '8.4', '8.5']
+        php:
+          - '8.1'
+          - '8.2'
+          - '8.3'
+          - '8.4'
+          - '8.5'
     services:
       mysql:
         image: mysql:8.0
@@ -122,8 +127,7 @@ jobs:
 
       - name: "Unit and functional tests"
         run: |
-          composer test-unit
-          composer test-functional
+          composer test
 
       - name: "Acceptance tests"
         run: composer test-acceptance
