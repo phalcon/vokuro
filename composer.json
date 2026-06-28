@@ -10,6 +10,13 @@
         { "name": "Anton Vasiliev", "homepage": "https://github.com/Jeckerson" },
         { "name": "Contributors", "homepage": "https://github.com/phalcon/vokuro/graphs/contributors" }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./talon",
+            "options": { "symlink": true }
+        }
+    ],
     "require": {
         "php": ">=8.1",
         "ext-openssl": "*",
@@ -26,6 +33,7 @@
         "pds/skeleton": "^1.0",
         "phalcon/phalcon": "^6.0@alpha",
         "phalcon/phql": "1.0.x-dev",
+        "phalcon/talon": "@dev",
         "phalcon/volt": "1.0.x-dev",
         "phpstan/phpstan": "^2.2",
         "squizlabs/php_codesniffer": "^4.0"
@@ -51,8 +59,9 @@
         "cs-fix": "phpcbf --standard=resources/phpcs.xml",
         "cs-fixer": "php-cs-fixer fix --config=resources/php-cs-fixer.php --dry-run --diff",
         "cs-fixer-fix": "php-cs-fixer fix --config=resources/php-cs-fixer.php",
-        "test": "codecept run -c resources/codeception.yml",
-        "test-unit": "codecept run unit -c resources/codeception.yml",
+        "test": "phpunit -c resources/phpunit.xml.dist",
+        "test-coverage": "phpunit -c resources/phpunit.xml.dist --coverage-clover tests/_output/coverage.xml",
+        "test-coverage-html": "phpunit -c resources/phpunit.xml.dist --coverage-html tests/_output/coverage",
         "test-functional": "codecept run functional -c resources/codeception.yml",
         "test-acceptance": "codecept run acceptance -c resources/codeception.yml",
         "migrate": "phinx migrate -c resources/phinx.php",
