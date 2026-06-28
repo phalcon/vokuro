@@ -11,6 +11,7 @@ $finder = PhpCsFixer\Finder::create()
             __DIR__ . '/seeds',
             __DIR__ . '/../public',
             __DIR__ . '/../tests/Unit',
+            __DIR__ . '/../tests/Functional',
         ]
     );
 
