@@ -12,9 +12,9 @@ mkdir -p \
     var/cache/volt \
     var/logs
 
-# Apply schema and seed data
-vendor/bin/phinx migrate -c resources/phinx.php
-vendor/bin/phinx seed:run -c resources/phinx.php || true
+# Migrations are decoupled from container start - run them on demand with:
+#   docker compose exec app composer migrate
+#   docker compose exec app composer seed
 
 # Hand off to the container command (the web server)
 exec "$@"

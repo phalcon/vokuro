@@ -54,15 +54,15 @@ COPY resources/docker/extra.ini /usr/local/etc/php/conf.d/zz-vokuro.ini
 COPY --chown=${UID}:${GID} resources/docker/.bashrc /home/${USER}/.bashrc
 
 # Writable HOME / Composer home for the unprivileged user. Docker does not reliably set HOME
-# on a USER switch, and we never use /tmp; keep the cache in the user's home (outside /app).
+# on a USER switch, and we never use /tmp; keep the cache in the user's home (outside /srv).
 ENV HOME=/home/${USER} \
     COMPOSER_HOME=/home/${USER}/.composer
 
-# Create /app owned by the unprivileged user so `composer install` can write vendor/
-RUN install -d -m 0775 -o "${USER}" -g "${GROUP}" /app
+# Create /srv owned by the unprivileged user so `composer install` can write vendor/
+RUN install -d -m 0775 -o "${USER}" -g "${GROUP}" /srv
 
-WORKDIR /app
-COPY --chown=${UID}:${GID} . /app
+WORKDIR /srv
+COPY --chown=${UID}:${GID} . /srv
 
 USER ${USER}
 
