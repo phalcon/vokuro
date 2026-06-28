@@ -33,21 +33,21 @@ EOT
 # Composer
 COPY --from=composer/composer:2 /usr/bin/composer /usr/bin/composer
 
-# Phalcon provider, selected at build time (v5 = C extension via PIE, v6 = composer package).
-# PIE (php/pie) replaces pecl; it builds the extension from the Packagist source, so it is not
-# bound by pecl's stale "<= 8.4.99" release metadata, and it auto-enables the extension.
 RUN <<EOT
 set -eux
+apt-get update -y
+apt-get install -yq --no-install-recommends ${PHPIZE_DEPS} libtool
+curl -fsSL https://github.com/php/pie/releases/latest/download/pie.phar -o /usr/local/bin/pie
+chmod +x /usr/local/bin/pie
+# pcov for code coverage (all variants)
+pie install --no-interaction pecl/pcov
+# Phalcon v5 C extension (v5 variant only; v6 uses the phalcon/phalcon composer package)
 if [ "${PHALCON_VARIANT}" = "v5" ]; then
-    apt-get update -y
-    apt-get install -yq --no-install-recommends ${PHPIZE_DEPS}
-    curl -fsSL https://github.com/php/pie/releases/latest/download/pie.phar -o /usr/local/bin/pie
-    chmod +x /usr/local/bin/pie
     pie install --no-interaction phalcon/cphalcon:${PHALCON_V5_CONSTRAINT}
     php -m | grep -i phalcon
-    apt-get clean -y
-    rm -rf /var/lib/apt/lists/*
 fi
+apt-get clean -y
+rm -rf /var/lib/apt/lists/*
 EOT
 
 COPY resources/docker/extra.ini /usr/local/etc/php/conf.d/zz-vokuro.ini
