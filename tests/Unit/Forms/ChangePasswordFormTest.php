@@ -16,6 +16,7 @@ namespace Vokuro\Tests\Unit\Forms;
 use Phalcon\Forms\Form;
 use Phalcon\Talon\PHPUnit\AbstractUnitTestCase;
 use Vokuro\Forms\ChangePasswordForm;
+
 final class ChangePasswordFormTest extends AbstractUnitTestCase
 {
     public function testConstruct(): void
