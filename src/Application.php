@@ -106,7 +106,7 @@ class Application
             throw new Exception('File providers.php does not exist or is not readable.');
         }
 
-        $providers = include_once $filename;
+        $providers = require $filename;
         foreach ($providers as $providerClass) {
             /** @var ServiceProviderInterface $provider */
             $provider = new $providerClass();

@@ -46,7 +46,7 @@ class RouterProvider implements ServiceProviderInterface
                 throw new Exception($routes . ' file does not exist or is not readable.');
             }
 
-            require_once $routes;
+            require $routes;
 
             return $router;
         });

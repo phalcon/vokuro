@@ -22,14 +22,23 @@ It runs on **Phalcon v5** (the C extension, default) and on **Phalcon v6**
 ```bash
 cp resources/.env.example .env
 docker compose up -d --build
+
+# Create and seed the database (migrations are not run on boot)
+docker compose exec app composer migrate
+docker compose exec app composer seed
 ```
+
+> **Note:** `app` is the Compose *service* name, used as-is by `docker compose exec` above. The
+> running container, however, is named `${PROJECT_PREFIX}-app` - `vokuro-app` by default, set via
+> `PROJECT_PREFIX` in `.env`. If you address it with plain `docker exec`, type your container name
+> instead, e.g. `docker exec vokuro-app composer migrate` (substitute your own prefix).
 
 Then open:
 
 * Application: <http://localhost:8080>
 * Mailpit (captured e-mails): <http://localhost:8025>
 
-The container waits for MySQL, runs the migrations and seeds, then serves the app.
+The container waits for MySQL and serves the app; migrations are decoupled from boot - apply them with the commands above.
 Log in with one of the seeded accounts, e.g. `sarah.connor@skynet.dev` / `password1`.
 
 ### Choosing the Phalcon version
@@ -42,6 +51,29 @@ PHALCON_VARIANT=v6 docker compose up -d --build   # v6 (phalcon/phalcon, alpha)
 The two are mutually exclusive: the v5 image installs the C extension, the v6 image
 installs the pure-PHP package instead.
 
+### Choosing the PHP version
+
+The image is built for one PHP version at a time, selected with the `PHP_VERSION`
+build arg (default `8.5`; supported `8.1`–`8.5`):
+
+```bash
+docker compose up -d --build                  # PHP 8.5 (default)
+PHP_VERSION=8.1 docker compose up -d --build  # PHP 8.1
+PHP_VERSION=8.2 docker compose up -d --build  # PHP 8.2
+PHP_VERSION=8.3 docker compose up -d --build  # PHP 8.3
+PHP_VERSION=8.4 docker compose up -d --build  # PHP 8.4
+```
+
+PIE compiles the Phalcon C extension (and pcov) from source for the selected version.
+The container keeps the same name (`vokuro-app`), so each rebuild **replaces** the
+previous one. To run several versions side by side, give each its own Compose project
+and prefix:
+
+```bash
+PHP_VERSION=8.1 PROJECT_PREFIX=vokuro81 docker compose -p vokuro81 up -d --build
+# then: docker exec -w /srv vokuro81-app composer test
+```
+
 ## Composer scripts
 
 Run them inside the container, e.g. `docker compose exec app composer cs`:
@@ -53,10 +85,8 @@ Run them inside the container, e.g. `docker compose exec app composer cs`:
 | `composer cs-fixer` | PHP CS Fixer (dry-run) |
 | `composer cs-fixer-fix` | Apply PHP CS Fixer |
 | `composer analyze` | PHPStan static analysis |
-| `composer test-unit` | Unit test suite |
-| `composer test-functional` | Functional test suite |
-| `composer test-acceptance` | Acceptance test suite |
-| `composer test` | All Codeception suites |
+| `composer test` | PHPUnit suites (unit + functional) |
+| `composer test-coverage` | PHPUnit + Clover coverage (`tests/_output/coverage.xml`) |
 | `composer migrate` | Run database migrations (Phinx) |
 | `composer seed` | Seed the database |
 
@@ -77,14 +107,12 @@ Run them inside the container, e.g. `docker compose exec app composer cs`:
 Follows the [PDS skeleton](https://github.com/php-pds/skeleton):
 
 ```
-bin/        executables (docker entrypoint, wait-for-db)
 config/     application configuration
-design/     static HTML snapshot of every screen (for design work)
 docs/       documentation
 public/     web server root
-resources/  tooling configs, docker, phinx, migrations, seeds, codeception
+resources/  tooling configs, docker, phinx, migrations, seeds
 src/        application source
-tests/      Codeception suites
+tests/      PHPUnit suites (unit, functional)
 themes/     Volt views
 var/        runtime cache and logs
 ```

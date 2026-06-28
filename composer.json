@@ -18,16 +18,15 @@
         "vlucas/phpdotenv": "^5.6"
     },
     "require-dev": {
-        "codeception/codeception": "^5.0",
-        "codeception/module-asserts": "^3.0",
-        "codeception/module-phpbrowser": "^3.0",
         "friendsofphp/php-cs-fixer": "^3.95",
         "pds/composer-script-names": "^1.0",
         "pds/skeleton": "^1.0",
         "phalcon/phalcon": "^6.0@alpha",
         "phalcon/phql": "1.0.x-dev",
+        "phalcon/talon": "^0.2",
         "phalcon/volt": "1.0.x-dev",
         "phpstan/phpstan": "^2.2",
+        "phpunit/phpunit": "^10.5",
         "squizlabs/php_codesniffer": "^4.0"
     },
     "suggest": {
@@ -51,14 +50,13 @@
         "cs-fix": "phpcbf --standard=resources/phpcs.xml",
         "cs-fixer": "php-cs-fixer fix --config=resources/php-cs-fixer.php --dry-run --diff",
         "cs-fixer-fix": "php-cs-fixer fix --config=resources/php-cs-fixer.php",
-        "test": "codecept run -c resources/codeception.yml",
-        "test-unit": "codecept run unit -c resources/codeception.yml",
-        "test-functional": "codecept run functional -c resources/codeception.yml",
-        "test-acceptance": "codecept run acceptance -c resources/codeception.yml",
+        "test": "phpunit -c resources/phpunit.xml.dist",
+        "test-coverage": "phpunit -c resources/phpunit.xml.dist --coverage-clover tests/_output/coverage.xml",
+        "test-coverage-html": "phpunit -c resources/phpunit.xml.dist --coverage-html tests/_output/coverage",
         "migrate": "phinx migrate -c resources/phinx.php",
         "seed": "phinx seed:run -c resources/phinx.php"
     },
     "archive": {
-        "exclude": ["/.ci", ".dockerignore", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "/design"]
+        "exclude": ["/.ci", ".dockerignore", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md"]
     }
 }

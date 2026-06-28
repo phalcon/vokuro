@@ -33,36 +33,36 @@ EOT
 # Composer
 COPY --from=composer/composer:2 /usr/bin/composer /usr/bin/composer
 
-# Phalcon provider, selected at build time (v5 = C extension via PIE, v6 = composer package).
-# PIE (php/pie) replaces pecl; it builds the extension from the Packagist source, so it is not
-# bound by pecl's stale "<= 8.4.99" release metadata, and it auto-enables the extension.
 RUN <<EOT
 set -eux
+apt-get update -y
+apt-get install -yq --no-install-recommends ${PHPIZE_DEPS} libtool
+curl -fsSL https://github.com/php/pie/releases/latest/download/pie.phar -o /usr/local/bin/pie
+chmod +x /usr/local/bin/pie
+# pcov for code coverage (all variants)
+pie install --no-interaction pecl/pcov
+# Phalcon v5 C extension (v5 variant only; v6 uses the phalcon/phalcon composer package)
 if [ "${PHALCON_VARIANT}" = "v5" ]; then
-    apt-get update -y
-    apt-get install -yq --no-install-recommends ${PHPIZE_DEPS}
-    curl -fsSL https://github.com/php/pie/releases/latest/download/pie.phar -o /usr/local/bin/pie
-    chmod +x /usr/local/bin/pie
     pie install --no-interaction phalcon/cphalcon:${PHALCON_V5_CONSTRAINT}
     php -m | grep -i phalcon
-    apt-get clean -y
-    rm -rf /var/lib/apt/lists/*
 fi
+apt-get clean -y
+rm -rf /var/lib/apt/lists/*
 EOT
 
 COPY resources/docker/extra.ini /usr/local/etc/php/conf.d/zz-vokuro.ini
 COPY --chown=${UID}:${GID} resources/docker/.bashrc /home/${USER}/.bashrc
 
 # Writable HOME / Composer home for the unprivileged user. Docker does not reliably set HOME
-# on a USER switch, and we never use /tmp; keep the cache in the user's home (outside /app).
+# on a USER switch, and we never use /tmp; keep the cache in the user's home (outside /srv).
 ENV HOME=/home/${USER} \
     COMPOSER_HOME=/home/${USER}/.composer
 
-# Create /app owned by the unprivileged user so `composer install` can write vendor/
-RUN install -d -m 0775 -o "${USER}" -g "${GROUP}" /app
+# Create /srv owned by the unprivileged user so `composer install` can write vendor/
+RUN install -d -m 0775 -o "${USER}" -g "${GROUP}" /srv
 
-WORKDIR /app
-COPY --chown=${UID}:${GID} . /app
+WORKDIR /srv
+COPY --chown=${UID}:${GID} . /srv
 
 USER ${USER}
 
@@ -73,5 +73,4 @@ RUN composer install --prefer-dist --no-interaction --no-progress
 
 EXPOSE 8080
 
-ENTRYPOINT ["bash", "bin/docker-entrypoint.sh"]
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "public", ".htrouter.php"]

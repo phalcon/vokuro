@@ -13,34 +13,35 @@ declare(strict_types=1);
 
 use Phalcon\Logger\Enum as Logger;
 
+use function Vokuro\env;
 use function Vokuro\root_path;
 
 return [
     'database'    => [
-        'adapter'  => getenv('DB_ADAPTER'),
-        'host'     => getenv('DB_HOST'),
-        'port'     => getenv('DB_PORT'),
-        'username' => getenv('DB_USERNAME'),
-        'password' => getenv('DB_PASSWORD'),
-        'dbname'   => getenv('DB_NAME'),
+        'adapter'  => env('DB_ADAPTER'),
+        'host'     => env('DB_HOST'),
+        'port'     => env('DB_PORT'),
+        'username' => env('DB_USERNAME'),
+        'password' => env('DB_PASSWORD'),
+        'dbname'   => env('DB_NAME'),
     ],
     'application' => [
-        'baseUri'         => getenv('APP_BASE_URI'),
-        'publicUrl'       => getenv('APP_PUBLIC_URL'),
-        'cryptSalt'       => getenv('APP_CRYPT_SALT'),
+        'baseUri'         => env('APP_BASE_URI'),
+        'publicUrl'       => env('APP_PUBLIC_URL'),
+        'cryptSalt'       => env('APP_CRYPT_SALT'),
         'viewsDir'        => root_path('themes/vokuro/'),
         'cacheDir'        => root_path('var/cache/'),
         'sessionSavePath' => root_path('var/cache/session/'),
     ],
     'mail'        => [
-        'fromName'  => getenv('MAIL_FROM_NAME'),
-        'fromEmail' => getenv('MAIL_FROM_EMAIL'),
+        'fromName'  => env('MAIL_FROM_NAME'),
+        'fromEmail' => env('MAIL_FROM_EMAIL'),
         'smtp'      => [
-            'server'   => getenv('MAIL_SMTP_SERVER'),
-            'port'     => getenv('MAIL_SMTP_PORT'),
-            'security' => getenv('MAIL_SMTP_SECURITY'),
-            'username' => getenv('MAIL_SMTP_USERNAME'),
-            'password' => getenv('MAIL_SMTP_PASSWORD'),
+            'server'   => env('MAIL_SMTP_SERVER'),
+            'port'     => env('MAIL_SMTP_PORT'),
+            'security' => env('MAIL_SMTP_SECURITY'),
+            'username' => env('MAIL_SMTP_USERNAME'),
+            'password' => env('MAIL_SMTP_PASSWORD'),
         ],
     ],
     'logger'      => [

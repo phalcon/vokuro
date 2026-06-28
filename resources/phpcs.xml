@@ -15,7 +15,6 @@
     <file>../public/index.php</file>
     <file>migrations</file>
     <file>seeds</file>
-    <file>../tests/unit</file>
-    <file>../tests/functional</file>
-    <file>../tests/acceptance</file>
+    <file>../tests/Unit</file>
+    <file>../tests/Functional</file>
 </ruleset>
