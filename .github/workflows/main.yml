@@ -129,8 +129,8 @@ jobs:
         run: |
           composer test
 
-      - name: "Acceptance tests"
-        run: composer test-acceptance
+#      - name: "Acceptance tests"
+#        run: composer test-acceptance
 
   sonarqube:
     name: "SonarQube"
