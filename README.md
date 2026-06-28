@@ -85,10 +85,8 @@ Run them inside the container, e.g. `docker compose exec app composer cs`:
 | `composer cs-fixer` | PHP CS Fixer (dry-run) |
 | `composer cs-fixer-fix` | Apply PHP CS Fixer |
 | `composer analyze` | PHPStan static analysis |
-| `composer test-unit` | Unit test suite |
-| `composer test-functional` | Functional test suite |
-| `composer test-acceptance` | Acceptance test suite |
-| `composer test` | All Codeception suites |
+| `composer test` | PHPUnit suites (unit + functional) |
+| `composer test-coverage` | PHPUnit + Clover coverage (`tests/_output/coverage.xml`) |
 | `composer migrate` | Run database migrations (Phinx) |
 | `composer seed` | Seed the database |
 
@@ -110,12 +108,11 @@ Follows the [PDS skeleton](https://github.com/php-pds/skeleton):
 
 ```
 config/     application configuration
-design/     static HTML snapshot of every screen (for design work)
 docs/       documentation
 public/     web server root
-resources/  tooling configs, docker, phinx, migrations, seeds, codeception
+resources/  tooling configs, docker, phinx, migrations, seeds
 src/        application source
-tests/      Codeception suites
+tests/      PHPUnit suites (unit, functional)
 themes/     Volt views
 var/        runtime cache and logs
 ```

@@ -14,7 +14,6 @@
 
 vendor
 composer.lock
-design
 
 var/*.sqlite
 var/*.sqlite3

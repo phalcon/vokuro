@@ -26,6 +26,7 @@
         "phalcon/talon": "^0.2",
         "phalcon/volt": "1.0.x-dev",
         "phpstan/phpstan": "^2.2",
+        "phpunit/phpunit": "^10.5",
         "squizlabs/php_codesniffer": "^4.0"
     },
     "suggest": {
@@ -52,12 +53,10 @@
         "test": "phpunit -c resources/phpunit.xml.dist",
         "test-coverage": "phpunit -c resources/phpunit.xml.dist --coverage-clover tests/_output/coverage.xml",
         "test-coverage-html": "phpunit -c resources/phpunit.xml.dist --coverage-html tests/_output/coverage",
-        "test-functional": "codecept run functional -c resources/codeception.yml",
-        "test-acceptance": "codecept run acceptance -c resources/codeception.yml",
         "migrate": "phinx migrate -c resources/phinx.php",
         "seed": "phinx seed:run -c resources/phinx.php"
     },
     "archive": {
-        "exclude": ["/.ci", ".dockerignore", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "/design"]
+        "exclude": ["/.ci", ".dockerignore", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md"]
     }
 }
