@@ -19,10 +19,36 @@ use Vokuro\Plugins\Acl\Acl;
 
 final class AclTest extends AbstractUnitTestCase
 {
+    public function testAddPrivateResourcesIgnoresAnEmptyList(): void
+    {
+        $acl = $this->mockWithoutConstructor(Acl::class);
+
+        $acl->addPrivateResources([]);
+
+        $this->assertSame([], $acl->getResources());
+    }
+
+    public function testAddPrivateResourcesMergesResources(): void
+    {
+        $acl = $this->mockWithoutConstructor(Acl::class);
+
+        $acl->addPrivateResources(['users' => ['index', 'search']]);
+
+        $this->assertSame(['users' => ['index', 'search']], $acl->getResources());
+    }
+
     public function testConstruct(): void
     {
         $class = $this->mockWithoutConstructor(Acl::class);
 
         $this->assertInstanceOf(Injectable::class, $class);
+    }
+
+    public function testGetActionDescriptionFallsBackToTheActionName(): void
+    {
+        $acl = $this->mockWithoutConstructor(Acl::class);
+
+        $this->assertSame('Access', $acl->getActionDescription('index'));
+        $this->assertSame('frobnicate', $acl->getActionDescription('frobnicate'));
     }
 }

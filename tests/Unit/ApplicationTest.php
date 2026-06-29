@@ -15,6 +15,7 @@ namespace Vokuro\Tests\Unit;
 
 use Phalcon\Talon\PHPUnit\AbstractUnitTestCase;
 use Vokuro\Application;
+use Vokuro\Exception;
 
 final class ApplicationTest extends AbstractUnitTestCase
 {
@@ -31,5 +32,22 @@ final class ApplicationTest extends AbstractUnitTestCase
         );
 
         $this->assertEquals($rootPath, $class->getRootPath());
+    }
+
+    public function testRunReturnsRenderedContent(): void
+    {
+        $_SERVER['REQUEST_URI'] = '/';
+
+        $application = new Application(dirname(__DIR__, 2));
+
+        $this->assertStringContainsString('Welcome!', $application->run());
+    }
+
+    public function testThrowsWhenProvidersFileMissing(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('providers.php does not exist');
+
+        new Application('/nonexistent-vokuro-root');
     }
 }
