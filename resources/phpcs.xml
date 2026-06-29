@@ -17,4 +17,6 @@
     <file>seeds</file>
     <file>../tests/Unit</file>
     <file>../tests/Functional</file>
+    <file>../tests/Support</file>
+    <file>../tests/Browser</file>
 </ruleset>
