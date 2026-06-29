@@ -2,6 +2,8 @@
     <h1>Manage Permissions</h1>
 </div>
 
+{{ flash.output() }}
+
 <div class="card">
     <form method="post">
         <div class="field">
