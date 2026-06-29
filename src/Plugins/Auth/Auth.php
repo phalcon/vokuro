@@ -321,7 +321,9 @@ class Auth extends Injectable
         if ($this->cookies->has('RMT')) {
             $token = $this->cookies->get('RMT')->getValue();
 
-            $userId = $this->findFirstByToken($token);
+            // The token is stored hashed (see createRememberEnvironment), so hash
+            // the raw cookie value before looking it up.
+            $userId = $this->findFirstByToken(hash('sha256', (string) $token));
             if ($userId) {
                 $this->deleteToken($userId);
             }
