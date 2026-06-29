@@ -143,7 +143,7 @@ class SessionController extends ControllerBase
 
         if (!$form->isValid($this->request->getPost())) {
             foreach ($form->getMessages() as $message) {
-                $this->flash->error($message);
+                $this->flash->error((string) $message);
             }
 
             return;
