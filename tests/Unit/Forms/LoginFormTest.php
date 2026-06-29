@@ -26,12 +26,16 @@ final class LoginFormTest extends AbstractUnitTestCase
     private const EMAIL_KEY = 'email';
     private const PASS_KEY = 'password';
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $di = new FactoryDefault();
+        (new SecurityProvider())->register($di);
+    }
+
     public static function dataProvider(): array
     {
-        $di = new FactoryDefault();
-        $securityProvider = new SecurityProvider();
-        $securityProvider->register($di);
-
         $emptyData = [];
         $incorrectCsrfData = [
             self::EMAIL_KEY => 'sarah.connor@skynet.dev',
