@@ -62,7 +62,10 @@ class SessionController extends ControllerBase
         try {
             if (!$this->request->isPost()) {
                 if ($this->auth->hasRememberMe()) {
-                    return $this->auth->loginWithRememberMe();
+                    $response = $this->auth->loginWithRememberMe();
+                    if (null !== $response) {
+                        return $response;
+                    }
                 }
             } else {
                 if (!$form->isValid($this->request->getPost())) {

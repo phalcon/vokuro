@@ -39,8 +39,13 @@ abstract class AbstractBrowserTestCase extends TalonBrowserTestCase
         return function () {
             Di::reset();
             $bootstrap = new Application(dirname(__DIR__, 2));
+            $app       = $this->getProtectedProperty($bootstrap, 'app');
 
-            return $this->getProtectedProperty($bootstrap, 'app');
+            // The in-process browser carries raw cookie values in its jar, so the
+            // app must not encrypt/decrypt them. Production keeps encryption on.
+            $app->getDI()->getShared('cookies')->useEncryption(false);
+
+            return $app;
         };
     }
 

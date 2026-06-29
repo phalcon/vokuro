@@ -228,7 +228,8 @@ class Auth extends Injectable
     /**
      * Logs on using the information in the cookies
      *
-     * @return Response
+     * @return Response|null Response to redirect a valid login, null when the
+     *                       cookies no longer authenticate (they are cleared)
      * @throws Exception
      */
     public function loginWithRememberMe()
@@ -270,7 +271,7 @@ class Auth extends Injectable
         $this->cookies->get('RMU')->delete();
         $this->cookies->get('RMT')->delete();
 
-        return $this->response->redirect('session/login');
+        return null;
     }
 
     /**
