@@ -48,18 +48,19 @@ class ControllerBase extends Controller
 
             // If there is no identity available the user is redirected to index/index
             if (!is_array($identity)) {
-                $this->flash->notice('You don\'t have access to this module: private');
+                $this->flash->notice('You do not have access to this module: private');
 
                 $dispatcher->forward([
                     'controller' => 'index',
                     'action'     => 'index',
                 ]);
+
                 return false;
             }
 
             // Check if the user have permission to the current option
             if (!$this->acl->isAllowed($identity['profile'], $controllerName, $actionName)) {
-                $this->flash->notice('You don\'t have access to this module: ' . $controllerName . ':' . $actionName);
+                $this->flash->notice('You do not have access to this module: ' . $controllerName . ':' . $actionName);
 
                 if ($this->acl->isAllowed($identity['profile'], $controllerName, 'index')) {
                     $dispatcher->forward([

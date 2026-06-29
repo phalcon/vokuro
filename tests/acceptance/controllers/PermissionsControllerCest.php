@@ -46,6 +46,6 @@ final class PermissionsControllerCest
     public function testIndexAsGuest(AcceptanceTester $I): void
     {
         $I->amOnPage('/permissions');
-        $I->see('You don\'t have access to this module: private');
+        $I->see('You do not have access to this module: private');
     }
 }

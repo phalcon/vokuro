@@ -97,7 +97,7 @@ final class ProfilesControllerCest
     public function testIndexAsGuest(AcceptanceTester $I): void
     {
         $I->amOnPage('/profiles');
-        $I->see('You don\'t have access to this module: private');
+        $I->see('You do not have access to this module: private');
     }
 
     /**
