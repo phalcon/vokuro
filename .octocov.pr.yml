@@ -1,0 +1,32 @@
+# octocov configuration - https://github.com/k1LoW/octocov
+#
+# Pull-request config: identical to .octocov.yml except the gate adds the
+# no-regression check (diff >= 0), so a PR cannot lower coverage versus the
+# base branch. The default branch deliberately omits this check (floor only)
+# to avoid a coverage blip red-Xing master; keep the rest of this file in sync
+# with .octocov.yml.
+coverage:
+  paths:
+    - tests/_output/coverage.xml
+  acceptable: "current >= 97% && diff >= 0"
+  badge:
+    path: tests/_output/coverage.svg
+codeToTestRatio:
+  code:
+    - src/**/*.php
+  test:
+    - tests/**/*.php
+testExecutionTime:
+  steps:
+    - Tests with coverage
+comment:
+  if: is_pull_request
+summary:
+  if: true
+diff:
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}
+report:
+  if: is_default_branch
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}

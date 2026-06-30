@@ -135,12 +135,13 @@ jobs:
       - name: "Tests"
         run: composer test
 
-  sonarqube:
-    name: "SonarQube"
+  coverage:
+    name: "Coverage"
     permissions:
       contents: read
+      pull-requests: write
+      actions: read
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     services:
       mysql:
         image: mysql:8.0
@@ -162,7 +163,8 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          # SonarQube needs full history for blame/new-code detection.
+          # SonarQube needs full history for blame/new-code detection;
+          # octocov uses it for the base-branch diff.
           fetch-depth: 0
 
       - name: "Setup PHP"
@@ -199,7 +201,9 @@ jobs:
       - name: "Tests with coverage"
         run: composer test-coverage
 
+      # SonarQube first (push only) so a failing octocov gate can't skip the upload.
       - name: "SonarQube Scan"
+        if: github.event_name == 'push'
         uses: SonarSource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e # v8.2.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -211,3 +215,19 @@ jobs:
             -Dsonar.tests=tests
             -Dsonar.exclusions=resources/**
             -Dsonar.php.coverage.reportPaths=tests/_output/coverage.xml
+
+      # octocov last: PR comment + coverage gate (strict on PRs via
+      # .octocov.pr.yml, floor only on pushes via .octocov.yml), stores the
+      # baseline report on the default branch, and writes the badge SVG.
+      - name: "octocov"
+        uses: k1LoW/octocov-action@b3b6ee60482a667950f87553abf1df63217235d9 # v1.5.1
+        with:
+          config: ${{ github.event_name == 'pull_request' && '.octocov.pr.yml' || '.octocov.yml' }}
+
+      - name: "Upload coverage badge"
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: coverage-badge
+          path: tests/_output/coverage.svg
+          if-no-files-found: ignore
