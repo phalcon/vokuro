@@ -3691,12 +3691,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/volt.git",
-                "reference": "50a539290d3678ef284ef0565c3695d734418158"
+                "reference": "a9ad600349d0fefd6677902b00c0598bf5647222"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/volt/zipball/50a539290d3678ef284ef0565c3695d734418158",
-                "reference": "50a539290d3678ef284ef0565c3695d734418158",
+                "url": "https://api.github.com/repos/phalcon/volt/zipball/a9ad600349d0fefd6677902b00c0598bf5647222",
+                "reference": "a9ad600349d0fefd6677902b00c0598bf5647222",
                 "shasum": ""
             },
             "require": {
@@ -3705,6 +3705,7 @@
                 "php": ">=8.1 <9.0"
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.95",
                 "pds/skeleton": "^1.0",
                 "phalcon/ide-stubs": "^5.8",
                 "phpstan/phpstan": "^2.0",
@@ -3766,7 +3767,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-06-24T10:47:04+00:00"
+            "time": "2026-06-30T13:33:29+00:00"
         },
         {
             "name": "phar-io/manifest",
