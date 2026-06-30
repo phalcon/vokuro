@@ -129,7 +129,7 @@ class Auth extends Injectable
 
         if ($remember->save()) {
             $expire = time() + 86400 * 8;
-            $this->cookies->set('RMU', $user->id, $expire);
+            $this->cookies->set('RMU', (string) $user->id, $expire);
             $this->cookies->set('RMT', $token, $expire);
         }
     }
