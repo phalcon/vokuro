@@ -53,7 +53,7 @@ class UserControlController extends ControllerBase
         $user = Users::findFirst($confirmation->user->id);
         $user->active = 'Y';
         if (!$user->save()) {
-            foreach ($confirmation->user->getMessages() as $message) {
+            foreach ($user->getMessages() as $message) {
                 $this->flash->error((string) $message);
             }
 

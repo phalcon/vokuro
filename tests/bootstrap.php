@@ -7,6 +7,7 @@ use Phalcon\Talon\Settings;
 use Phalcon\Talon\Talon;
 
 require_once dirname(__FILE__, 2) . "/vendor/autoload.php";
+require_once __DIR__ . '/Support/sleep_override.php';
 
 /**
  * Load the test environment into $_ENV. Real OS/CI variables (read first by

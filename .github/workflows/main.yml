@@ -90,6 +90,10 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      mailpit:
+        image: axllent/mailpit:latest
+        ports:
+          - "1025:1025"
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -128,15 +132,8 @@ jobs:
           composer migrate
           composer seed
 
-      - name: "Start web server"
-        run: php -S 127.0.0.1:8888 -t public .htrouter.php &>/dev/null &
-
-      - name: "Unit and functional tests"
-        run: |
-          composer test
-
-#      - name: "Acceptance tests"
-#        run: composer test-acceptance
+      - name: "Tests"
+        run: composer test
 
   sonarqube:
     name: "SonarQube"
@@ -144,6 +141,23 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - "3306:3306"
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_DATABASE: vokuro
+        options: >-
+          --health-cmd "mysqladmin ping --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      mailpit:
+        image: axllent/mailpit:latest
+        ports:
+          - "1025:1025"
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -171,7 +185,17 @@ jobs:
         with:
           composer-options: "--prefer-dist"
 
-      # No .env prep: phpunit loads tests/.env.test via the bootstrap.
+      - name: "Prepare environment"
+        run: |
+          cp resources/.env.example .env
+          sed -i 's/^DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          mkdir -p var/cache/acl var/cache/metaData var/cache/session var/cache/volt var/logs
+
+      - name: "Migrate and seed"
+        run: |
+          composer migrate
+          composer seed
+
       - name: "Tests with coverage"
         run: composer test-coverage
 

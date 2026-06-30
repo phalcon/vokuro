@@ -9,6 +9,9 @@
         <testsuite name="functional">
             <directory>../tests/Functional</directory>
         </testsuite>
+        <testsuite name="browser">
+            <directory>../tests/Browser</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>

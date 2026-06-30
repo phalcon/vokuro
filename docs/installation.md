@@ -92,6 +92,6 @@ Open <http://localhost:8080> and log in with a seeded account, e.g.
 composer cs            # coding standard (PSR-12)
 composer analyze       # static analysis (run without the v5 extension loaded)
 composer cs-fixer      # PHP CS Fixer (dry-run)
-composer test          # PHPUnit suites (unit + functional)
+composer test          # PHPUnit suites (unit, functional, browser)
 composer test-coverage # PHPUnit + Clover coverage (tests/_output/coverage.xml)
 ```

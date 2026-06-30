@@ -40,9 +40,12 @@ class SessionController extends ControllerBase
         $this->view->setVar('form', $form);
     }
 
-    public function indexAction(): void
+    /**
+     * The bare /session route has no page of its own; send it to the login form.
+     */
+    public function indexAction()
     {
-        // Renders views/session/index.volt via Phalcon's view convention.
+        return $this->response->redirect('session/login');
     }
     /**
      * Default action. Set the public layout (layouts/public.volt)
@@ -62,7 +65,10 @@ class SessionController extends ControllerBase
         try {
             if (!$this->request->isPost()) {
                 if ($this->auth->hasRememberMe()) {
-                    return $this->auth->loginWithRememberMe();
+                    $response = $this->auth->loginWithRememberMe();
+                    if (null !== $response) {
+                        return $response;
+                    }
                 }
             } else {
                 if (!$form->isValid($this->request->getPost())) {
@@ -143,7 +149,7 @@ class SessionController extends ControllerBase
 
         if (!$form->isValid($this->request->getPost())) {
             foreach ($form->getMessages() as $message) {
-                $this->flash->error($message);
+                $this->flash->error((string) $message);
             }
 
             return;

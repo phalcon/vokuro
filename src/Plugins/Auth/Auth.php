@@ -129,7 +129,7 @@ class Auth extends Injectable
 
         if ($remember->save()) {
             $expire = time() + 86400 * 8;
-            $this->cookies->set('RMU', $user->id, $expire);
+            $this->cookies->set('RMU', (string) $user->id, $expire);
             $this->cookies->set('RMT', $token, $expire);
         }
     }
@@ -228,7 +228,8 @@ class Auth extends Injectable
     /**
      * Logs on using the information in the cookies
      *
-     * @return Response
+     * @return Response|null Response to redirect a valid login, null when the
+     *                       cookies no longer authenticate (they are cleared)
      * @throws Exception
      */
     public function loginWithRememberMe()
@@ -270,7 +271,7 @@ class Auth extends Injectable
         $this->cookies->get('RMU')->delete();
         $this->cookies->get('RMT')->delete();
 
-        return $this->response->redirect('session/login');
+        return null;
     }
 
     /**
@@ -321,7 +322,9 @@ class Auth extends Injectable
         if ($this->cookies->has('RMT')) {
             $token = $this->cookies->get('RMT')->getValue();
 
-            $userId = $this->findFirstByToken($token);
+            // The token is stored hashed (see createRememberEnvironment), so hash
+            // the raw cookie value before looking it up.
+            $userId = $this->findFirstByToken(hash('sha256', (string) $token));
             if ($userId) {
                 $this->deleteToken($userId);
             }

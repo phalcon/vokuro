@@ -36,14 +36,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 12
-    volumes:
-      - mysqldata:/var/lib/mysql
 
   mailpit:
     image: axllent/mailpit:latest
     container_name: ${PROJECT_PREFIX:-vokuro}-mailpit
     ports:
       - "${MAILPIT_HTTP:-8025}:8025"
-
-volumes:
-  mysqldata:
