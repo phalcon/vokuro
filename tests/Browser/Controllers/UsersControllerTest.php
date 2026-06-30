@@ -70,6 +70,19 @@ final class UsersControllerTest extends AbstractBrowserTestCase
         $this->assertPageContainsText('User was created successfully');
     }
 
+    public function testCreateShowsFormValidationErrors(): void
+    {
+        $this->loginAsAdmin();
+
+        $this->visitPage('/users/create');
+        $this->fillField('name', '');
+        $this->fillField('email', 'not-an-email');
+        $this->selectOption('profilesId', '1');
+        $this->pressButton('Save');
+
+        $this->assertPageContainsText('The e-mail is not valid');
+    }
+
     public function testCreateShowsValidationErrors(): void
     {
         $this->loginAsAdmin();
@@ -119,6 +132,14 @@ final class UsersControllerTest extends AbstractBrowserTestCase
 
         $this->visitPage('/users/edit/1');
         $this->assertPageContainsText('Edit users');
+    }
+
+    public function testEditNotFound(): void
+    {
+        $this->loginAsAdmin();
+
+        $this->visitPage('/users/edit/999');
+        $this->assertPageContainsText('User was not found.');
     }
 
     public function testEditShowsValidationErrors(): void

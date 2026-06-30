@@ -18,6 +18,7 @@ use Phalcon\Di\Injectable;
 use Phalcon\Talon\PHPUnit\AbstractUnitTestCase;
 use Vokuro\Application;
 use Vokuro\Plugins\Auth\Auth;
+use Vokuro\Plugins\Auth\Exception;
 use Vokuro\Tests\Support\DatabaseSeedTrait;
 
 use function hash;
@@ -28,10 +29,21 @@ final class AuthTest extends AbstractUnitTestCase
 
     protected function tearDown(): void
     {
-        // Don't leak the remember-me cookies into later tests.
+        // Don't leak remember-me cookies or session identity into later tests.
         unset($_COOKIE['RMU'], $_COOKIE['RMT']);
+        $_SESSION = [];
 
         parent::tearDown();
+    }
+
+    public function testAuthUserByIdThrowsWhenUserDoesNotExist(): void
+    {
+        $this->reseedDatabase();
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The user does not exist');
+
+        $this->bootAuth()->authUserById(999);
     }
 
     public function testConstruct(): void
@@ -39,6 +51,33 @@ final class AuthTest extends AbstractUnitTestCase
         $class = $this->mockWithoutConstructor(Auth::class);
 
         $this->assertInstanceOf(Injectable::class, $class);
+    }
+
+    public function testGetUserThrowsWhenSessionIsBroken(): void
+    {
+        $auth = $this->bootAuth();
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Session was broken');
+
+        $auth->getUser();
+    }
+
+    public function testGetUserThrowsWhenUserDoesNotExist(): void
+    {
+        $this->reseedDatabase();
+
+        $auth = $this->bootAuth();
+        Di::getDefault()->getShared('session')->set('auth-identity', [
+            'id'      => 999,
+            'name'    => 'Ghost',
+            'profile' => 'Administrators',
+        ]);
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The user does not exist');
+
+        $auth->getUser();
     }
 
     public function testRemoveRevokesTheStoredToken(): void
@@ -50,23 +89,25 @@ final class AuthTest extends AbstractUnitTestCase
             ->prepare('INSERT INTO remember_tokens (usersId, token, userAgent, createdAt) VALUES (1, ?, ?, ?)')
             ->execute([hash('sha256', 'pescadero'), 'phpunit', time()]);
 
-        $this->bootAuth('1', 'pescadero')->remove();
+        $_COOKIE['RMU'] = '1';
+        $_COOKIE['RMT'] = 'pescadero';
+
+        $this->bootAuth()->remove();
 
         $count = (int) $this->pdo()->query('SELECT COUNT(*) FROM remember_tokens')->fetchColumn();
 
         $this->assertSame(0, $count);
     }
 
-    private function bootAuth(string $userId, string $rawToken): Auth
+    private function bootAuth(): Auth
     {
+        $_SESSION = [];
+
         new Application(dirname(__DIR__, 3));
         $container = Di::getDefault();
 
         // The harness carries raw cookie values, so read them unencrypted.
         $container->getShared('cookies')->useEncryption(false);
-
-        $_COOKIE['RMU'] = $userId;
-        $_COOKIE['RMT'] = $rawToken;
 
         return $container->getShared('auth');
     }

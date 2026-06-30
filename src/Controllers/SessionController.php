@@ -40,9 +40,12 @@ class SessionController extends ControllerBase
         $this->view->setVar('form', $form);
     }
 
-    public function indexAction(): void
+    /**
+     * The bare /session route has no page of its own; send it to the login form.
+     */
+    public function indexAction()
     {
-        // Renders views/session/index.volt via Phalcon's view convention.
+        return $this->response->redirect('session/login');
     }
     /**
      * Default action. Set the public layout (layouts/public.volt)

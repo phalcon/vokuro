@@ -45,6 +45,32 @@ final class UserControlControllerTest extends AbstractBrowserTestCase
         $this->assertPageContainsText('Log In');
     }
 
+    public function testConfirmEmailFlashesWhenActivationFails(): void
+    {
+        // Two accounts share an email - only the model enforces uniqueness - so
+        // activating the first one fails its uniqueness check on save.
+        $this->pdo()->exec(
+            "INSERT INTO users"
+            . " (id, name, email, password, mustChangePassword, profilesId, banned, suspended, active)"
+            . " VALUES"
+            . " (10, 'Tarissa Clone', 'clone@cyberdyne.dev', 'x', 'N', 1, 'N', 'N', 'N'),"
+            . " (11, 'Tarissa Twin', 'clone@cyberdyne.dev', 'x', 'N', 1, 'N', 'N', 'Y')"
+        );
+        $this->pdo()->exec(
+            "INSERT INTO email_confirmations (usersId, code, createdAt, confirmed)"
+            . " VALUES (10, 'confirmdupemail', UNIX_TIMESTAMP(), 'N')"
+        );
+
+        $this->visitPage('/confirm/confirmdupemail/clone@cyberdyne.dev');
+
+        // The save failure is now surfaced to the user...
+        $this->assertPageContainsText('The email is already registered');
+
+        // ...and the account is still inactive.
+        $active = $this->pdo()->query('SELECT active FROM users WHERE id = 10')->fetchColumn();
+        $this->assertSame('N', $active);
+    }
+
     public function testConfirmEmailRequiringPasswordChange(): void
     {
         // A user created by an admin gets a generated password and so must change

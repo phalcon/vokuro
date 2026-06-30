@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Vokuro\Tests\Browser;
 
-use Phalcon\Http\Response;
 use Phalcon\Talon\Browser\Client;
 use Phalcon\Talon\PHPUnit\AbstractUnitTestCase;
 use Symfony\Component\BrowserKit\Exception\LogicException;
+use Vokuro\Tests\Support\FakeRedirectingApp;
 
 /**
  * Guards against the segfault captured in core.771: an app that redirects to
@@ -27,18 +27,7 @@ final class RedirectLoopGuardTest extends AbstractUnitTestCase
 {
     public function testClientCapsRunawayRedirects(): void
     {
-        $client = new Client(static function () {
-            return new class {
-                public function handle(string $uri): Response
-                {
-                    $response = new Response();
-                    $response->setStatusCode(302);
-                    $response->setHeader('Location', 'http://localhost/loop');
-
-                    return $response;
-                }
-            };
-        });
+        $client = new Client(static fn () => new FakeRedirectingApp());
 
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('maximum number');
