@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75561258140b2c39245c8cebfb625f14",
+    "content-hash": "84069a8b1d829f7aef786a051d66be69",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -3549,16 +3549,16 @@
         },
         {
             "name": "phalcon/talon",
-            "version": "v0.4.0",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/talon.git",
-                "reference": "2f89620d9afe209ffb64eea58a2c14ca5c1db198"
+                "reference": "df20b55840bbfbe38b0443710e90946f1bcf5e5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/talon/zipball/2f89620d9afe209ffb64eea58a2c14ca5c1db198",
-                "reference": "2f89620d9afe209ffb64eea58a2c14ca5c1db198",
+                "url": "https://api.github.com/repos/phalcon/talon/zipball/df20b55840bbfbe38b0443710e90946f1bcf5e5b",
+                "reference": "df20b55840bbfbe38b0443710e90946f1bcf5e5b",
                 "shasum": ""
             },
             "require": {
@@ -3572,6 +3572,7 @@
                 "friendsofphp/php-cs-fixer": "^3",
                 "pds/composer-script-names": "^1",
                 "pds/skeleton": "^1",
+                "phalcon/phalcon": "^6.0@alpha",
                 "phpstan/phpstan": "^2",
                 "phpunit/phpunit": "^10.5",
                 "predis/predis": "^2 || ^3",
@@ -3603,7 +3604,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phalcon/talon/issues",
-                "source": "https://github.com/phalcon/talon/tree/v0.4.0"
+                "source": "https://github.com/phalcon/talon/tree/v0.5.0"
             },
             "funding": [
                 {
@@ -3615,7 +3616,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-06-30T01:57:41+00:00"
+            "time": "2026-07-01T22:12:00+00:00"
         },
         {
             "name": "phalcon/traits",
@@ -3691,12 +3692,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/volt.git",
-                "reference": "a9ad600349d0fefd6677902b00c0598bf5647222"
+                "reference": "6502ceaab7f691358904e64ceaaf9a5ed9caede4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/volt/zipball/a9ad600349d0fefd6677902b00c0598bf5647222",
-                "reference": "a9ad600349d0fefd6677902b00c0598bf5647222",
+                "url": "https://api.github.com/repos/phalcon/volt/zipball/6502ceaab7f691358904e64ceaaf9a5ed9caede4",
+                "reference": "6502ceaab7f691358904e64ceaaf9a5ed9caede4",
                 "shasum": ""
             },
             "require": {
@@ -3767,7 +3768,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-06-30T13:33:29+00:00"
+            "time": "2026-07-01T13:31:35+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -3889,11 +3890,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e5cc34d491a90e79c216d824f60fe21fd4d93bd6",
-                "reference": "e5cc34d491a90e79c216d824f60fe21fd4d93bd6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4048833dd47b377287818841877fb3087289509c",
+                "reference": "4048833dd47b377287818841877fb3087289509c",
                 "shasum": ""
             },
             "require": {
@@ -3949,7 +3950,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-05T09:00:01+00:00"
+            "time": "2026-06-30T21:15:26+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
