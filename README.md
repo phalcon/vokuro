@@ -86,6 +86,23 @@ PHP_VERSION=8.1 PROJECT_PREFIX=vokuro81 docker compose -p vokuro81 up -d --build
 # then: docker exec -w /srv vokuro81-app composer test
 ```
 
+## Quick start (Composer)
+
+Prefer a local PHP over Docker? Bootstrap a fresh copy straight from Packagist:
+
+```bash
+composer create-project phalcon/vokuro vokuro
+cd vokuro
+```
+
+The post-create hook copies `resources/.env.example` to `.env` and prints the next
+steps; [docs/installation.md](docs/installation.md) has the full local walkthrough
+(environment, database, serving). Out of the box the app runs on the bundled
+`phalcon/phalcon` (v6) package - no extension needed. To run on the Phalcon v5
+C extension instead, install it with [PIE](https://github.com/php/pie) as described
+in step 1 of the local setup; once the extension is loaded, PHP prefers it
+automatically and the bundled v6 package is simply shadowed - it can stay installed.
+
 ## Composer scripts
 
 Run them inside the container, e.g. `docker compose exec app composer cs`:

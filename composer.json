@@ -54,7 +54,11 @@
         "test-coverage": "talon run unit -- --coverage-clover tests/_output/coverage.xml",
         "test-coverage-html": "talon run unit -- --coverage-html tests/_output/coverage",
         "migrate": "phinx migrate -c resources/phinx.php",
-        "seed": "phinx seed:run -c resources/phinx.php"
+        "seed": "phinx seed:run -c resources/phinx.php",
+        "post-create-project-cmd": [
+            "@php -r \"file_exists('.env') || copy('resources/.env.example', '.env');\"",
+            "@php -r \"echo PHP_EOL . 'Vokuro is ready (.env created from resources/.env.example). Next steps:' . PHP_EOL . '  docker: docker compose up -d --build, then composer migrate && composer seed' . PHP_EOL . '  local:  see docs/installation.md (PIE installs the v5 extension; v6 runs as-is)' . PHP_EOL . '  tests:  vendor/bin/talon run' . PHP_EOL;\""
+        ]
     },
     "archive": {
         "exclude": ["/.ci", ".dockerignore", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md"]
