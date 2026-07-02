@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84069a8b1d829f7aef786a051d66be69",
+    "content-hash": "d9f35ff62040af7a15c9b86ae167f627",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -3391,6 +3391,86 @@
             "time": "2017-01-25T23:30:41+00:00"
         },
         {
+            "name": "phalcon/cli-options-parser",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phalcon/cli-options-parser.git",
+                "reference": "ec4d4cd0b7e61046b88957a4028ad01dfa14f4e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phalcon/cli-options-parser/zipball/ec4d4cd0b7e61046b88957a4028ad01dfa14f4e6",
+                "reference": "ec4d4cd0b7e61046b88957a4028ad01dfa14f4e6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "pds/skeleton": "^1.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.6",
+                "squizlabs/php_codesniffer": "^3.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phalcon\\Cop\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Phalcon Team",
+                    "email": "team@phalconphp.com",
+                    "homepage": "https://phalconphp.com/en/team"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/phalcon/cli-options-parser/graphs/contributors"
+                }
+            ],
+            "description": "Command line arguments/options parser.",
+            "homepage": "https://phalconphp.com",
+            "keywords": [
+                "argparse",
+                "cli",
+                "command",
+                "command-line",
+                "getopt",
+                "line",
+                "option",
+                "optparse",
+                "parser",
+                "terminal"
+            ],
+            "support": {
+                "discord": "https://phalcon.io/discord/",
+                "issues": "https://github.com/phalcon/cli-options-parser/issues",
+                "source": "https://github.com/phalcon/cli-options-parser"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/phalcon",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/phalcon",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2023-11-24T16:04:00+00:00"
+        },
+        {
             "name": "phalcon/phalcon",
             "version": "v6.0.0alpha3",
             "source": {
@@ -3549,19 +3629,20 @@
         },
         {
             "name": "phalcon/talon",
-            "version": "v0.5.0",
+            "version": "v0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/talon.git",
-                "reference": "df20b55840bbfbe38b0443710e90946f1bcf5e5b"
+                "reference": "93018138c2c50f7225d5994bc506b35069b2de36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/talon/zipball/df20b55840bbfbe38b0443710e90946f1bcf5e5b",
-                "reference": "df20b55840bbfbe38b0443710e90946f1bcf5e5b",
+                "url": "https://api.github.com/repos/phalcon/talon/zipball/93018138c2c50f7225d5994bc506b35069b2de36",
+                "reference": "93018138c2c50f7225d5994bc506b35069b2de36",
                 "shasum": ""
             },
             "require": {
+                "phalcon/cli-options-parser": "^2.0",
                 "php": "^8.1",
                 "symfony/browser-kit": "^6.4 || ^7.0",
                 "symfony/dom-crawler": "^6.4 || ^7.0"
@@ -3570,6 +3651,7 @@
                 "ext-pdo": "*",
                 "ext-sqlite3": "*",
                 "friendsofphp/php-cs-fixer": "^3",
+                "infection/infection": "^0.29.9",
                 "pds/composer-script-names": "^1",
                 "pds/skeleton": "^1",
                 "phalcon/phalcon": "^6.0@alpha",
@@ -3584,6 +3666,9 @@
                 "phalcon/phalcon": "Phalcon PHP implementation (^6) - alternative to the C extension",
                 "predis/predis": "For the Services (Redis) helpers"
             },
+            "bin": [
+                "bin/talon"
+            ],
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3604,7 +3689,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phalcon/talon/issues",
-                "source": "https://github.com/phalcon/talon/tree/v0.5.0"
+                "source": "https://github.com/phalcon/talon/tree/v0.6.0"
             },
             "funding": [
                 {
@@ -3616,7 +3701,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-07-01T22:12:00+00:00"
+            "time": "2026-07-02T20:38:17+00:00"
         },
         {
             "name": "phalcon/traits",
