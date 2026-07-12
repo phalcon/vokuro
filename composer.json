@@ -23,7 +23,7 @@
         "pds/skeleton": "^1.0",
         "phalcon/phalcon": "^6.0@alpha",
         "phalcon/phql": "1.0.x-dev",
-        "phalcon/talon": "^0.6",
+        "phalcon/talon": "^0.7",
         "phalcon/volt": "1.0.x-dev",
         "phpstan/phpstan": "^2.2",
         "phpunit/phpunit": "^10.5",
