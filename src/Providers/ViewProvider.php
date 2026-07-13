@@ -16,6 +16,7 @@ namespace Vokuro\Providers;
 use Phalcon\Config\Config;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
+use Phalcon\Events\ManagerInterface;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt;
 
@@ -41,6 +42,11 @@ class ViewProvider implements ServiceProviderInterface
         $di->setShared($this->providerName, function () use ($viewsDir, $cacheDir, $di) {
             $view = new View();
             $view->setViewsDir($viewsDir);
+
+            /** @var ManagerInterface $eventsManager */
+            $eventsManager = $di->getShared('eventsManager');
+            $view->setEventsManager($eventsManager);
+
             $view->registerEngines([
                 '.volt' => function (View $view) use ($cacheDir, $di) {
                     $volt = new Volt($view, $di);
