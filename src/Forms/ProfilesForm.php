@@ -23,9 +23,9 @@ class ProfilesForm extends Form
 {
     /**
      * @param null $entity
-     * @param array $options
+     * @param array<string, mixed> $options
      */
-    public function initialize($entity = null, array $options = [])
+    public function initialize($entity = null, array $options = []): void
     {
         if (!empty($options['edit'])) {
             $id = new Hidden('id');

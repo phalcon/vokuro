@@ -10,17 +10,19 @@ use Phalcon\Di\DiInterface;
 /**
  * Call Dependency Injection container
  *
- * @return mixed|null|DiInterface
+ * @param string ...$args Service name to resolve; none returns the container.
+ *
+ * @return mixed|DiInterface|null
  */
-function container()
+function container(string ...$args): mixed
 {
+    /** @var DiInterface|null $default */
     $default = Di::getDefault();
-    $args    = func_get_args();
-    if (empty($args)) {
+    if ([] === $args || null === $default) {
         return $default;
     }
 
-    return call_user_func_array([$default, 'get'], $args);
+    return $default->get(...$args);
 }
 
 /**

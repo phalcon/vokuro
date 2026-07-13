@@ -23,7 +23,7 @@ class FlashProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'flash';
+    protected string $providerName = 'flash';
 
     /**
      * @param DiInterface $di

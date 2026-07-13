@@ -5,7 +5,7 @@ parameters:
         - ../public/index.php
         - migrations
         - seeds
-    level: 1
+    level: 7
     reportUnmatchedIgnoredErrors: false
     tmpDir: ../tests/_output
     bootstrapFiles:
@@ -18,3 +18,14 @@ parameters:
         # MetaData\Stream: v6 source / autoloading needs lowercase 'Metadata'; the loaded v5
         # extension reports 'MetaData'. Both resolve at runtime (class names are case-insensitive).
         - '#Class Phalcon\\Mvc\\Model\\MetaData\\Stream referenced with incorrect case#'
+        # Phalcon\Mvc\Model is generic (@template T) in the v6 source; the loaded v5
+        # runtime model is not, so the models do not parametrize it.
+        - '#extends generic class Phalcon\\Mvc\\Model but does not specify its types#'
+        # The persistent Bag exposes arbitrary keys through __get/__set magic.
+        - '#Access to an undefined property Phalcon\\Session\\BagInterface::\$#'
+        # Criteria::fromInput() is typed to the interface; the concrete Criteria
+        # it returns carries createBuilder().
+        - '#Call to an undefined method Phalcon\\Mvc\\Model\\CriteriaInterface::createBuilder\(\)#'
+        # v6 stub mistypes Memory::addComponent()'s access list as
+        # array<string, ComponentInterface>; it accepts action-name strings.
+        - '#Parameter \#2 \$accessList of method Phalcon\\Acl\\Adapter\\Memory::addComponent\(\) expects#'

@@ -29,11 +29,11 @@ class Mail extends Injectable
      * Builds the e-mail message. Pure and unit-testable: all inputs are passed
      * in, nothing is read from the container.
      *
-     * @param array  $to associative array of address => name
-     * @param string $subject
-     * @param string $html
-     * @param string $fromEmail
-     * @param string $fromName
+     * @param array<string, string> $to associative array of address => name
+     * @param string                $subject
+     * @param string                $html
+     * @param string                $fromEmail
+     * @param string                $fromName
      *
      * @return Email
      */
@@ -59,8 +59,8 @@ class Mail extends Injectable
     /**
      * Applies a template to be used in the e-mail
      *
-     * @param string $name
-     * @param array  $params
+     * @param string               $name
+     * @param array<string, mixed> $params
      *
      * @return string
      */
@@ -78,10 +78,10 @@ class Mail extends Injectable
     /**
      * Sends e-mails based on predefined templates
      *
-     * @param array  $to
-     * @param string $subject
-     * @param string $name
-     * @param array  $params
+     * @param array<string, string> $to
+     * @param string                $subject
+     * @param string                $name
+     * @param array<string, mixed>  $params
      *
      * @return int Number of recipients the message was addressed to
      */

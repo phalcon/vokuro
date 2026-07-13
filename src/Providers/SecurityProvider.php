@@ -22,7 +22,7 @@ class SecurityProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'security';
+    protected string $providerName = 'security';
 
     /**
      * @param DiInterface $di

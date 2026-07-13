@@ -25,7 +25,7 @@ class AssetsProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'assets';
+    protected string $providerName = 'assets';
 
     /**
      * @param DiInterface $di
@@ -34,9 +34,8 @@ class AssetsProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $assetManager = new Manager(new TagFactory(new Escaper()));
-
-        $di->setShared($this->providerName, function () use ($assetManager) {
+        $di->setShared($this->providerName, function () {
+            $assetManager = new Manager(new TagFactory(new Escaper()));
             $assetManager->collection('css')
                 ->addCss(
                     'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800'

@@ -22,7 +22,7 @@ class SessionBagProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'sessionBag';
+    protected string $providerName = 'sessionBag';
 
     /**
      * @param DiInterface $di

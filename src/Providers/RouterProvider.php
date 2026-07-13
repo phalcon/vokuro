@@ -25,7 +25,7 @@ class RouterProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'router';
+    protected string $providerName = 'router';
 
     /**
      * @param DiInterface $di

@@ -29,19 +29,19 @@ class Application
     /**
      * @var MvcApplication
      */
-    protected $app;
+    protected MvcApplication $app;
 
     /**
      * @var DiInterface
      */
-    protected $di;
+    protected DiInterface $di;
 
     /**
      * Project root path
      *
      * @var string
      */
-    protected $rootPath;
+    protected string $rootPath;
 
     /**
      * @param string $rootPath
@@ -60,6 +60,14 @@ class Application
     }
 
     /**
+     * @return MvcApplication
+     */
+    public function getApplication(): MvcApplication
+    {
+        return $this->app;
+    }
+
+    /**
      * Get Project root path
      *
      * @return string
@@ -67,14 +75,6 @@ class Application
     public function getRootPath(): string
     {
         return $this->rootPath;
-    }
-
-    /**
-     * @return MvcApplication
-     */
-    public function getApplication(): MvcApplication
-    {
-        return $this->app;
     }
 
     /**

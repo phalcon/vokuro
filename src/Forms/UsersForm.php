@@ -25,9 +25,9 @@ class UsersForm extends Form
 {
     /**
      * @param null $entity
-     * @param array $options
+     * @param array<string, mixed> $options
      */
-    public function initialize($entity = null, array $options = [])
+    public function initialize($entity = null, array $options = []): void
     {
         // In edition the id is hidden
         if (!empty($options['edit'])) {

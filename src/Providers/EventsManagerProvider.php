@@ -22,7 +22,7 @@ class EventsManagerProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'eventsManager';
+    protected string $providerName = 'eventsManager';
 
     /**
      * @param DiInterface $di

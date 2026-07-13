@@ -28,9 +28,9 @@ class DbProvider implements ServiceProviderInterface
     /**
      * Class map of database adapters, indexed by PDO::ATTR_DRIVER_NAME.
      *
-     * @var array
+     * @var array<string, class-string>
      */
-    protected $adapters = [
+    protected array $adapters = [
         'mysql'  => Pdo\Mysql::class,
         'pgsql'  => Pdo\Postgresql::class,
         'sqlite' => Pdo\Sqlite::class,
@@ -38,7 +38,7 @@ class DbProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'db';
+    protected string $providerName = 'db';
 
 
     /**
@@ -66,6 +66,11 @@ class DbProvider implements ServiceProviderInterface
         });
     }
 
+    /**
+     * @param Config $config
+     *
+     * @return array<string, mixed>
+     */
     private function createConfig(Config $config): array
     {
         // To prevent error: SQLSTATE[08006] [7] invalid connection option "adapter"

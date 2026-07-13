@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Vokuro\Plugins\Auth;
 
 use Phalcon\Di\Injectable;
-use Phalcon\Http\Response;
+use Phalcon\Http\ResponseInterface;
 use Vokuro\Models\FailedLogins;
 use Vokuro\Models\RememberTokens;
 use Vokuro\Models\SuccessLogins;
@@ -33,7 +33,7 @@ class Auth extends Injectable
      *
      * @throws Exception
      */
-    public function authUserById($id)
+    public function authUserById(int $id): void
     {
         $user = Users::findFirstById($id);
         if (!$user) {
@@ -51,11 +51,11 @@ class Auth extends Injectable
     /**
      * Checks the user credentials
      *
-     * @param array $credentials
+     * @param array<string, mixed> $credentials
      *
      * @throws Exception
      */
-    public function check($credentials)
+    public function check(array $credentials): void
     {
         // Check if the user exist
         $user = Users::findFirstByEmail($credentials['email']);
@@ -95,7 +95,7 @@ class Auth extends Injectable
      *
      * @throws Exception
      */
-    public function checkUserFlags(Users $user)
+    public function checkUserFlags(Users $user): void
     {
         if ($user->active != 'Y') {
             throw new Exception('The user is inactive');
@@ -116,7 +116,7 @@ class Auth extends Injectable
      *
      * @param Users $user
      */
-    public function createRememberEnvironment(Users $user)
+    public function createRememberEnvironment(Users $user): void
     {
         // The raw token goes to the cookie; only its hash is stored, so a leaked
         // database row cannot be replayed as a valid remember-me cookie.
@@ -141,16 +141,15 @@ class Auth extends Injectable
      */
     public function deleteToken(int $userId): void
     {
-        $user = RememberTokens::find([
+        /** @var RememberTokens|null $user */
+        $user = RememberTokens::findFirst([
             'conditions' => 'usersId = :userId:',
             'bind'       => [
                 'userId' => $userId,
             ],
         ]);
 
-        if ($user) {
-            $user->delete();
-        }
+        $user?->delete();
     }
 
     /**
@@ -169,13 +168,13 @@ class Auth extends Injectable
             ],
         ]);
 
-        return $userToken ? $userToken->usersId : null;
+        return $userToken?->usersId;
     }
 
     /**
      * Returns the current identity
      *
-     * @return array|null
+     * @return array<string, mixed>|null
      */
     public function getIdentity()
     {
@@ -228,11 +227,12 @@ class Auth extends Injectable
     /**
      * Logs on using the information in the cookies
      *
-     * @return Response|null Response to redirect a valid login, null when the
-     *                       cookies no longer authenticate (they are cleared)
+     * @return ResponseInterface|null Response to redirect a valid login, null
+     *                                when the cookies no longer authenticate
+     *                                (they are cleared)
      * @throws Exception
      */
-    public function loginWithRememberMe()
+    public function loginWithRememberMe(): ?ResponseInterface
     {
         $userId      = $this->cookies->get('RMU')->getValue();
         $cookieToken = (string) $this->cookies->get('RMT')->getValue();
@@ -251,7 +251,7 @@ class Auth extends Injectable
             // Confirm the stored hash in constant time and that the cookie is still valid
             if (
                 $remember
-                && hash_equals((string) $remember->token, $tokenHash)
+                && hash_equals($remember->token, $tokenHash)
                 && ((time() - $remember->createdAt) / (86400 * 8)) < 8
             ) {
                 $this->checkUserFlags($user);
@@ -280,11 +280,11 @@ class Auth extends Injectable
      *
      * @param int $userId
      */
-    public function registerUserThrottling($userId)
+    public function registerUserThrottling(int $userId): void
     {
         $failedLogin            = new FailedLogins();
         $failedLogin->usersId   = $userId;
-        $failedLogin->ipAddress = $this->request->getClientAddress();
+        $failedLogin->ipAddress = (string) $this->request->getClientAddress();
         $failedLogin->attempted = time();
         $failedLogin->save();
 
@@ -314,7 +314,7 @@ class Auth extends Injectable
     /**
      * Removes the user identity information from session
      */
-    public function remove()
+    public function remove(): void
     {
         if ($this->cookies->has('RMU')) {
             $this->cookies->get('RMU')->delete();
@@ -343,15 +343,15 @@ class Auth extends Injectable
      *
      * @throws Exception
      */
-    public function saveSuccessLogin($user)
+    public function saveSuccessLogin(Users $user): void
     {
         $successLogin            = new SuccessLogins();
         $successLogin->usersId   = $user->id;
-        $successLogin->ipAddress = $this->request->getClientAddress();
+        $successLogin->ipAddress = (string) $this->request->getClientAddress();
         $successLogin->userAgent = $this->request->getUserAgent();
         if (!$successLogin->save()) {
             $messages = $successLogin->getMessages();
-            throw new Exception($messages[0]);
+            throw new Exception((string) $messages[0]);
         }
     }
 }

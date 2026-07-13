@@ -25,7 +25,7 @@ class ViewProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'view';
+    protected string $providerName = 'view';
 
     /**
      * @param DiInterface $di

@@ -40,7 +40,7 @@ class FailedLogins extends Model
      */
     public $usersId;
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->belongsTo('usersId', Users::class, 'id', [
             'alias' => 'user',

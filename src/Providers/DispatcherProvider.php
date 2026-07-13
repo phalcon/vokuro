@@ -23,7 +23,7 @@ class DispatcherProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'dispatcher';
+    protected string $providerName = 'dispatcher';
 
     /**
      * @param DiInterface $di

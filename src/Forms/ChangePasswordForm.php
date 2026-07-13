@@ -21,7 +21,7 @@ use Phalcon\Forms\Form;
 
 class ChangePasswordForm extends Form
 {
-    public function initialize()
+    public function initialize(): void
     {
         // Password
         $password = new Password('password');

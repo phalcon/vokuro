@@ -22,7 +22,7 @@ class ModelsMetadataProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'modelsMetadata';
+    protected string $providerName = 'modelsMetadata';
 
     /**
      * @param DiInterface $di

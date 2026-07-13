@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Vokuro\Controllers;
 
+use Phalcon\Http\ResponseInterface;
 use Vokuro\Forms\ForgotPasswordForm;
 use Vokuro\Forms\LoginForm;
 use Vokuro\Forms\SignUpForm;
@@ -43,7 +44,7 @@ class SessionController extends ControllerBase
     /**
      * The bare /session route has no page of its own; send it to the login form.
      */
-    public function indexAction()
+    public function indexAction(): ResponseInterface
     {
         return $this->response->redirect('session/login');
     }
@@ -58,7 +59,7 @@ class SessionController extends ControllerBase
     /**
      * Starts a session in the admin backend
      */
-    public function loginAction()
+    public function loginAction(): ?ResponseInterface
     {
         $form = new LoginForm();
 
@@ -90,12 +91,14 @@ class SessionController extends ControllerBase
         }
 
         $this->view->setVar('form', $form);
+
+        return null;
     }
 
     /**
      * Closes the session
      */
-    public function logoutAction()
+    public function logoutAction(): ResponseInterface
     {
         $this->auth->remove();
 
@@ -105,7 +108,7 @@ class SessionController extends ControllerBase
     /**
      * Allow a user to signup to the system
      */
-    public function signupAction()
+    public function signupAction(): void
     {
         $form = new SignUpForm();
 

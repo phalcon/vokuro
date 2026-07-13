@@ -31,7 +31,7 @@ class Acl extends Injectable
     /**
      * The ACL Object
      *
-     * @var AbstractAdapter|mixed
+     * @var AbstractAdapter|null
      */
     private $acl;
 
@@ -39,9 +39,9 @@ class Acl extends Injectable
      * Human-readable descriptions of the actions used in
      * {@see $privateResources}
      *
-     * @var array
+     * @var array<string, string>
      */
-    private $actionDescriptions = [
+    private array $actionDescriptions = [
         'index'          => 'Access',
         'search'         => 'Search',
         'create'         => 'Create',
@@ -55,22 +55,22 @@ class Acl extends Injectable
      *
      * @var string
      */
-    private $filePath;
+    private string $filePath;
 
     /**
      * Define the resources that are considered "private". These controller =>
      * actions require authentication.
      *
-     * @var array
+     * @var array<string, list<string>>
      */
-    private $privateResources = [];
+    private array $privateResources = [];
 
     /**
      * Adds an array of private resources to the ACL object.
      *
-     * @param array $resources
+     * @param array<string, list<string>> $resources
      */
-    public function addPrivateResources(array $resources)
+    public function addPrivateResources(array $resources): void
     {
         if (empty($resources)) {
             return;
@@ -113,7 +113,7 @@ class Acl extends Injectable
         }
 
         // Get the ACL from the data file
-        $data      = file_get_contents($filePath);
+        $data      = (string) file_get_contents($filePath);
         $this->acl = unserialize($data);
 
         // Store the ACL in APC
@@ -131,7 +131,7 @@ class Acl extends Injectable
      *
      * @return string
      */
-    public function getActionDescription($action): string
+    public function getActionDescription(string $action): string
     {
         return $this->actionDescriptions[$action] ?? $action;
     }
@@ -141,12 +141,12 @@ class Acl extends Injectable
      *
      * @param Profiles $profile
      *
-     * @return array
+     * @return array<string, bool>
      */
     public function getPermissions(Profiles $profile): array
     {
         $permissions = [];
-        foreach ($profile->getPermissions() as $permission) {
+        foreach ($profile->getRelated('permissions') as $permission) {
             $permissions[$permission->resource . '.' . $permission->action] = true;
         }
 
@@ -156,7 +156,7 @@ class Acl extends Injectable
     /**
      * Returns all the resources and their actions available in the application
      *
-     * @return array
+     * @return array<string, list<string>>
      */
     public function getResources(): array
     {
@@ -217,7 +217,7 @@ class Acl extends Injectable
         // Grant access to private area to role Users
         foreach ($profiles as $profile) {
             // Grant permissions in "permissions" model
-            foreach ($profile->getPermissions() as $permission) {
+            foreach ($profile->getRelated('permissions') as $permission) {
                 $acl->allow($profile->name, $permission->resource, $permission->action);
             }
 

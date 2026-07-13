@@ -29,9 +29,9 @@ class SignUpForm extends Form
 {
     /**
      * @param null $entity
-     * @param array $options
+     * @param array<string, mixed> $options
      */
-    public function initialize($entity = null, array $options = [])
+    public function initialize($entity = null, array $options = []): void
     {
         $name = new Text('name');
         $name->setLabel('Name');
@@ -124,11 +124,11 @@ class SignUpForm extends Form
      *
      * @return string
      */
-    public function messages(string $name)
+    public function messages(string $name): string
     {
         if ($this->hasMessagesFor($name)) {
             foreach ($this->getMessagesFor($name) as $message) {
-                return $message;
+                return (string) $message;
             }
         }
 
