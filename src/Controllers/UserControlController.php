@@ -27,24 +27,28 @@ class UserControlController extends ControllerBase
      * Confirms an e-mail, if the user must change their password then changes
      * it
      */
-    public function confirmEmailAction()
+    public function confirmEmailAction(): void
     {
         $code = $this->dispatcher->getParam('code');
 
         /** @var EmailConfirmations|false $confirmation */
         $confirmation = EmailConfirmations::findFirstByCode($code);
         if (!$confirmation instanceof EmailConfirmations) {
-            return $this->dispatcher->forward([
+            $this->dispatcher->forward([
                 'controller' => 'index',
                 'action'     => 'index',
             ]);
+
+            return;
         }
 
         if ($confirmation->confirmed != 'N') {
-            return $this->dispatcher->forward([
+            $this->dispatcher->forward([
                 'controller' => 'session',
                 'action'     => 'login',
             ]);
+
+            return;
         }
 
         /**
@@ -57,10 +61,12 @@ class UserControlController extends ControllerBase
                 $this->flash->error((string) $message);
             }
 
-            return $this->dispatcher->forward([
+            $this->dispatcher->forward([
                 'controller' => 'index',
                 'action'     => 'index',
             ]);
+
+            return;
         }
 
         /**
@@ -72,10 +78,12 @@ class UserControlController extends ControllerBase
                 $this->flash->error((string) $message);
             }
 
-            return $this->dispatcher->forward([
+            $this->dispatcher->forward([
                 'controller' => 'index',
                 'action'     => 'index',
             ]);
+
+            return;
         }
 
         /**
@@ -87,17 +95,15 @@ class UserControlController extends ControllerBase
          * Check if the user must change his/her password
          */
         if ($confirmation->user->mustChangePassword == 'Y') {
-            $this->flash->success('The email was successfully confirmed. Now you must change your password');
-
-            return $this->dispatcher->forward([
+            $this->flashForward('success', 'The email was successfully confirmed. Now you must change your password', [
                 'controller' => 'users',
                 'action'     => 'changePassword',
             ]);
+
+            return;
         }
 
-        $this->flash->success('The email was successfully confirmed');
-
-        return $this->dispatcher->forward([
+        $this->flashForward('success', 'The email was successfully confirmed', [
             'controller' => 'users',
             'action'     => 'index',
         ]);
@@ -109,24 +115,28 @@ class UserControlController extends ControllerBase
         }
     }
 
-    public function resetPasswordAction()
+    public function resetPasswordAction(): void
     {
         $code = $this->dispatcher->getParam('code');
 
         /** @var ResetPasswords|false $resetPassword */
         $resetPassword = ResetPasswords::findFirstByCode($code);
         if (!$resetPassword instanceof ResetPasswords) {
-            return $this->dispatcher->forward([
+            $this->dispatcher->forward([
                 'controller' => 'index',
                 'action'     => 'index',
             ]);
+
+            return;
         }
 
         if ($resetPassword->reset != 'N') {
-            return $this->dispatcher->forward([
+            $this->dispatcher->forward([
                 'controller' => 'session',
                 'action'     => 'login',
             ]);
+
+            return;
         }
 
         $resetPassword->reset = 'Y';
@@ -139,10 +149,12 @@ class UserControlController extends ControllerBase
                 $this->flash->error((string) $message);
             }
 
-            return $this->dispatcher->forward([
+            $this->dispatcher->forward([
                 'controller' => 'index',
                 'action'     => 'index',
             ]);
+
+            return;
         }
 
         /**
@@ -150,9 +162,7 @@ class UserControlController extends ControllerBase
          */
         $this->auth->authUserById($resetPassword->usersId);
 
-        $this->flash->success('Please reset your password');
-
-        return $this->dispatcher->forward([
+        $this->flashForward('success', 'Please reset your password', [
             'controller' => 'users',
             'action'     => 'changePassword',
         ]);

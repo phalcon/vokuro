@@ -50,17 +50,15 @@ class ProfilesController extends ControllerBase
     /**
      * Deletes a Profile
      *
-     * @param int $id
+     * @param string $id
      */
-    public function deleteAction($id)
+    public function deleteAction(string $id): void
     {
         $profile = Profiles::findFirstById($id);
         if (!$profile) {
-            $this->flash->error("Profile was not found");
+            $this->flashForward('error', 'Profile was not found', ['action' => 'index']);
 
-            return $this->dispatcher->forward([
-                'action' => 'index',
-            ]);
+            return;
         }
 
         if (!$profile->delete()) {
@@ -71,29 +69,30 @@ class ProfilesController extends ControllerBase
             $this->flash->success("Profile was deleted");
         }
 
-        return $this->dispatcher->forward([
+        $this->dispatcher->forward([
             'action' => 'index',
         ]);
+
+        return;
     }
 
     /**
      * Edits an existing Profile
      *
-     * @param int $id
+     * @param string $id
      */
-    public function editAction($id)
+    public function editAction(string $id): void
     {
         $profile = Profiles::findFirstById($id);
         if (!$profile) {
-            $this->flash->error("Profile was not found");
-            return $this->dispatcher->forward([
-                'action' => 'index',
-            ]);
+            $this->flashForward('error', 'Profile was not found', ['action' => 'index']);
+
+            return;
         }
 
         if ($this->request->isPost()) {
             $profile->assign([
-                'name' => $this->request->getPost('name', 'striptags'),
+                'name'   => $this->request->getPost('name', 'striptags'),
                 'active' => $this->request->getPost('active'),
             ]);
 
@@ -107,7 +106,7 @@ class ProfilesController extends ControllerBase
         }
 
         $this->view->setVars([
-            'form' => new ProfilesForm(null, ['edit' => true]),
+            'form'    => new ProfilesForm(null, ['edit' => true]),
             'profile' => $profile,
         ]);
     }
@@ -141,10 +140,10 @@ class ProfilesController extends ControllerBase
     /**
      * Searches for profiles
      */
-    public function searchAction()
+    public function searchAction(): void
     {
         if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, Profiles::class, $this->request->getPost());
+            $query        = Criteria::fromInput($this->di, Profiles::class, $this->request->getPost());
             $searchparams = $query->getParams();
             unset($searchparams['di']);
             $this->persistent->searchParams = $searchparams;
@@ -156,20 +155,20 @@ class ProfilesController extends ControllerBase
         }
 
         $profiles = Profiles::find($parameters);
-        if (count($profiles) == 0) {
-            $this->flash->notice("The search did not find any profiles");
+        if (count($profiles) === 0) {
+            $this->flashForward('notice', 'The search did not find any profiles', ['action' => 'index']);
 
-            return $this->dispatcher->forward([
-                "action" => "index",
-            ]);
+            return;
         }
 
-        $paginator = new Paginator([
-            'model' => Profiles::class,
-            'parameters' => $parameters,
-            'limit' => 10,
-            'page' => $this->request->getQuery('page', 'int', 1),
-        ]);
+        $paginator = new Paginator(
+            [
+                'model'     => Profiles::class,
+                'parameters' => $parameters,
+                'limit'      => 10,
+                'page'       => $this->request->getQuery('page', 'int', 1),
+            ]
+        );
 
         $this->view->setVar('page', $paginator->paginate());
     }
