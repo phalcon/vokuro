@@ -70,6 +70,14 @@ class Application
     }
 
     /**
+     * @return MvcApplication
+     */
+    public function getApplication(): MvcApplication
+    {
+        return $this->app;
+    }
+
+    /**
      * Run Vökuró Application
      *
      * @return string
@@ -84,7 +92,7 @@ class Application
         /** @var ResponseInterface $response */
         $response = $this->app->handle($uri);
 
-        return (string)$response->getContent();
+        return $response->getContent();
     }
 
     /**
