@@ -19,6 +19,8 @@ use Phalcon\Acl\Component as AclComponent;
 use Phalcon\Acl\Enum as AclEnum;
 use Phalcon\Acl\Role as AclRole;
 use Phalcon\Di\Injectable;
+use Phalcon\Traits\Php\ApcuTrait;
+use Phalcon\Traits\Php\InfoTrait;
 use Vokuro\Models\Profiles;
 
 /**
@@ -26,7 +28,10 @@ use Vokuro\Models\Profiles;
  */
 class Acl extends Injectable
 {
-    private const APC_CACHE_VARIABLE_KEY = 'vokuro-acl';
+    use ApcuTrait;
+    use InfoTrait;
+
+    private const APCU_CACHE_VARIABLE_KEY = 'vokuro-acl';
 
     /**
      * The ACL Object
@@ -94,9 +99,9 @@ class Acl extends Injectable
             return $this->acl;
         }
 
-        // Check if the ACL is in APC
-        if (function_exists('apc_fetch')) {
-            $acl = apc_fetch(self::APC_CACHE_VARIABLE_KEY);
+        // Check if the ACL is in APCu
+        if ($this->phpExtensionLoaded('apcu')) {
+            $acl = $this->phpApcuFetch(self::APCU_CACHE_VARIABLE_KEY);
             if ($acl !== false) {
                 $this->acl = $acl;
 
@@ -116,9 +121,9 @@ class Acl extends Injectable
         $data      = (string) file_get_contents($filePath);
         $this->acl = unserialize($data);
 
-        // Store the ACL in APC
-        if (function_exists('apc_store')) {
-            apc_store(self::APC_CACHE_VARIABLE_KEY, $this->acl);
+        // Store the ACL in APCu
+        if ($this->phpExtensionLoaded('apcu')) {
+            $this->phpApcuStore(self::APCU_CACHE_VARIABLE_KEY, $this->acl);
         }
 
         return $this->acl;
@@ -229,9 +234,9 @@ class Acl extends Injectable
         if (touch($filePath) && is_writable($filePath)) {
             file_put_contents($filePath, serialize($acl));
 
-            // Store the ACL in APC
-            if (function_exists('apc_store')) {
-                apc_store(self::APC_CACHE_VARIABLE_KEY, $acl);
+            // Store the ACL in APCu
+            if ($this->phpExtensionLoaded('apcu')) {
+                $this->phpApcuStore(self::APCU_CACHE_VARIABLE_KEY, $acl);
             }
         } else {
             $this->flash->error('The user does not have write permissions to create the ACL list at ' . $filePath);
