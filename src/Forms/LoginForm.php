@@ -25,7 +25,7 @@ use Phalcon\Forms\Form;
 
 class LoginForm extends Form
 {
-    public function initialize()
+    public function initialize(): void
     {
         // Email
         $email = new Text('email', [

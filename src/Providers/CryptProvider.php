@@ -22,7 +22,7 @@ class CryptProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'crypt';
+    protected string $providerName = 'crypt';
 
     /**
      * @param DiInterface $di

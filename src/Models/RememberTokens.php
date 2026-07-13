@@ -48,13 +48,13 @@ class RememberTokens extends Model
     /**
      * Before create the user assign a password
      */
-    public function beforeValidationOnCreate()
+    public function beforeValidationOnCreate(): void
     {
         // Timestamp the confirmation
         $this->createdAt = time();
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->belongsTo('usersId', Users::class, 'id', [
             'alias' => 'user',

@@ -17,7 +17,9 @@ use Vokuro\Providers\AuthProvider;
 use Vokuro\Providers\ConfigProvider;
 use Vokuro\Providers\CryptProvider;
 use Vokuro\Providers\DbProvider;
+use Vokuro\Providers\DebugBarProvider;
 use Vokuro\Providers\DispatcherProvider;
+use Vokuro\Providers\EventsManagerProvider;
 use Vokuro\Providers\FlashProvider;
 use Vokuro\Providers\LoggerProvider;
 use Vokuro\Providers\MailProvider;
@@ -30,6 +32,7 @@ use Vokuro\Providers\UrlProvider;
 use Vokuro\Providers\ViewProvider;
 
 return [
+    EventsManagerProvider::class,
     AclProvider::class,
     AuthProvider::class,
     ConfigProvider::class,
@@ -47,4 +50,5 @@ return [
     UrlProvider::class,
     ViewProvider::class,
     AssetsProvider::class,
+    DebugBarProvider::class,
 ];

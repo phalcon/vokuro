@@ -23,7 +23,7 @@ class SessionProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'session';
+    protected string $providerName = 'session';
 
     /**
      * @param DiInterface $di

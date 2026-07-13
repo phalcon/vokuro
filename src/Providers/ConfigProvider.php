@@ -26,7 +26,7 @@ class ConfigProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'config';
+    protected string $providerName = 'config';
 
     /**
      * @param DiInterface $di

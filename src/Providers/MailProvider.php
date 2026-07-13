@@ -22,7 +22,7 @@ class MailProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'mail';
+    protected string $providerName = 'mail';
 
     /**
      * @param DiInterface $di

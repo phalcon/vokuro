@@ -29,19 +29,19 @@ class Application
     /**
      * @var MvcApplication
      */
-    protected $app;
+    protected MvcApplication $app;
 
     /**
      * @var DiInterface
      */
-    protected $di;
+    protected DiInterface $di;
 
     /**
      * Project root path
      *
      * @var string
      */
-    protected $rootPath;
+    protected string $rootPath;
 
     /**
      * @param string $rootPath
@@ -57,6 +57,14 @@ class Application
         $this->di->setShared(self::APPLICATION_PROVIDER, $this);
 
         $this->initializeProviders();
+    }
+
+    /**
+     * @return MvcApplication
+     */
+    public function getApplication(): MvcApplication
+    {
+        return $this->app;
     }
 
     /**
@@ -84,7 +92,7 @@ class Application
         /** @var ResponseInterface $response */
         $response = $this->app->handle($uri);
 
-        return (string)$response->getContent();
+        return $response->getContent();
     }
 
     /**

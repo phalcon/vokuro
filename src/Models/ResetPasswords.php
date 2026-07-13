@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Vokuro\Models;
 
 use Phalcon\Mvc\Model;
+use Vokuro\Plugins\Mail\Mail;
 
 /**
  * ResetPasswords
@@ -55,22 +56,26 @@ class ResetPasswords extends Model
     /**
      * Send an e-mail to users allowing him/her to reset his/her password
      */
-    public function afterCreate()
+    public function afterCreate(): void
     {
-        $this->getDI()
-             ->getMail()
-             ->send([
-                 $this->user->email => $this->user->name,
-             ], "Reset your password", 'reset', [
-                 'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email,
-             ])
-        ;
+        /** @var Mail $mail */
+        $mail = $this->getDI()->get('mail');
+        $mail->send(
+            [
+                $this->user->email => $this->user->name,
+            ],
+            "Reset your password",
+            'reset',
+            [
+                'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email,
+            ]
+        );
     }
 
     /**
      * Before create the user assign a password
      */
-    public function beforeValidationOnCreate()
+    public function beforeValidationOnCreate(): void
     {
         // Timestamp the confirmation
         $this->createdAt = time();
@@ -85,13 +90,13 @@ class ResetPasswords extends Model
     /**
      * Sets the timestamp before update the confirmation
      */
-    public function beforeValidationOnUpdate()
+    public function beforeValidationOnUpdate(): void
     {
         // Timestamp the confirmation
         $this->modifiedAt = time();
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->belongsTo('usersId', Users::class, 'id', [
             'alias' => 'user',

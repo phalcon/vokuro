@@ -27,7 +27,7 @@ class LoggerProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'logger';
+    protected string $providerName = 'logger';
 
     /**
      * @param DiInterface $di

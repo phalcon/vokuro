@@ -15,14 +15,14 @@ namespace Vokuro\Providers;
 
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Encryption\Security;
+use Phalcon\Events\Manager as EventsManager;
 
-class SecurityProvider implements ServiceProviderInterface
+class EventsManagerProvider implements ServiceProviderInterface
 {
     /**
      * @var string
      */
-    protected string $providerName = 'security';
+    protected string $providerName = 'eventsManager';
 
     /**
      * @param DiInterface $di
@@ -31,11 +31,8 @@ class SecurityProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $di->set($this->providerName, function () use ($di) {
-            $security = new Security();
-            $security->setDI($di);
-
-            return $security;
+        $di->setShared($this->providerName, function () {
+            return new EventsManager();
         });
     }
 }

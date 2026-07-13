@@ -21,7 +21,7 @@ use Phalcon\Forms\Form;
 
 class ForgotPasswordForm extends Form
 {
-    public function initialize()
+    public function initialize(): void
     {
         $email = new Text('email', [
             'placeholder' => 'Email',

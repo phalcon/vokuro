@@ -16,6 +16,7 @@ namespace Vokuro\Models;
 use Phalcon\Encryption\Security;
 use Phalcon\Filter\Validation;
 use Phalcon\Filter\Validation\Validator\Uniqueness;
+use Phalcon\Flash\Direct as Flash;
 use Phalcon\Mvc\Model;
 
 /**
@@ -72,7 +73,7 @@ class Users extends Model
     /**
      * Send a confirmation e-mail to the user if the account is not active
      */
-    public function afterCreate()
+    public function afterCreate(): void
     {
         // Only send the confirmation email if emails are turned on in the config
         if ($this->getDI()->get('config')->useMail && $this->active == 'N') {
@@ -80,9 +81,9 @@ class Users extends Model
             $emailConfirmation->usersId = $this->id;
 
             if ($emailConfirmation->save()) {
-                $this->getDI()
-                    ->getFlash()
-                    ->notice('A confirmation mail has been sent to ' . $this->email);
+                /** @var Flash $flash */
+                $flash = $this->getDI()->get('flash');
+                $flash->notice('A confirmation mail has been sent to ' . $this->email);
             }
         }
     }
@@ -90,7 +91,7 @@ class Users extends Model
     /**
      * Before create the user assign a password
      */
-    public function beforeValidationOnCreate()
+    public function beforeValidationOnCreate(): void
     {
         if (empty($this->password)) {
             // Generate a plain temporary password
@@ -127,7 +128,7 @@ class Users extends Model
         $this->banned = 'N';
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->hasOne('profilesId', Profiles::class, 'id', [
             'alias'    => 'profile',
@@ -159,7 +160,7 @@ class Users extends Model
     /**
      * Validate that emails are unique across users
      */
-    public function validation()
+    public function validation(): bool
     {
         $validator = new Validation();
 

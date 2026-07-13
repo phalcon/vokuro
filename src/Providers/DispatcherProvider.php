@@ -15,6 +15,7 @@ namespace Vokuro\Providers;
 
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
+use Phalcon\Events\ManagerInterface;
 use Phalcon\Mvc\Dispatcher;
 
 class DispatcherProvider implements ServiceProviderInterface
@@ -22,7 +23,7 @@ class DispatcherProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'dispatcher';
+    protected string $providerName = 'dispatcher';
 
     /**
      * @param DiInterface $di
@@ -31,9 +32,13 @@ class DispatcherProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        $di->set($this->providerName, function () {
+        $di->set($this->providerName, function () use ($di) {
             $dispatcher = new Dispatcher();
             $dispatcher->setDefaultNamespace('Vokuro\Controllers');
+
+            /** @var ManagerInterface $eventsManager */
+            $eventsManager = $di->getShared('eventsManager');
+            $dispatcher->setEventsManager($eventsManager);
 
             return $dispatcher;
         });

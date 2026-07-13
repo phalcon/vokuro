@@ -15,6 +15,7 @@ namespace Vokuro\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
+use Phalcon\Mvc\View;
 use Vokuro\Plugins\Acl\Acl;
 use Vokuro\Plugins\Auth\Auth;
 
@@ -22,8 +23,10 @@ use Vokuro\Plugins\Auth\Auth;
  * ControllerBase
  * This is the base controller for all controllers in the application
  *
- * @property Auth auth
- * @property Acl  acl
+ * @property Acl        $acl
+ * @property Auth       $auth
+ * @property Dispatcher $dispatcher
+ * @property View       $view
  */
 class ControllerBase extends Controller
 {
@@ -34,7 +37,7 @@ class ControllerBase extends Controller
      *
      * @param Dispatcher $dispatcher
      *
-     * @return boolean
+     * @return bool
      */
     public function beforeExecuteRoute(Dispatcher $dispatcher): bool
     {
@@ -48,9 +51,7 @@ class ControllerBase extends Controller
 
             // If there is no identity available the user is redirected to index/index
             if (!is_array($identity)) {
-                $this->flash->notice('You do not have access to this module: private');
-
-                $dispatcher->forward([
+                $this->flashForward('notice', 'You do not have access to this module: private', [
                     'controller' => 'index',
                     'action'     => 'index',
                 ]);
@@ -60,24 +61,38 @@ class ControllerBase extends Controller
 
             // Check if the user have permission to the current option
             if (!$this->acl->isAllowed($identity['profile'], $controllerName, $actionName)) {
-                $this->flash->notice('You do not have access to this module: ' . $controllerName . ':' . $actionName);
+                $controller = $this->acl->isAllowed($identity['profile'], $controllerName, 'index')
+                    ? $controllerName
+                    : 'index';
 
-                if ($this->acl->isAllowed($identity['profile'], $controllerName, 'index')) {
-                    $dispatcher->forward([
-                        'controller' => $controllerName,
+                $this->flashForward(
+                    'notice',
+                    'You do not have access to this module: ' . $controllerName . ':' . $actionName,
+                    [
+                        'controller' => $controller,
                         'action'     => 'index',
-                    ]);
-                } else {
-                    $dispatcher->forward([
-                        'controller' => 'index',
-                        'action'     => 'index',
-                    ]);
-                }
+                    ]
+                );
 
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * Flashes a message of the given type and forwards to another action.
+     *
+     * @param string               $type    One of error, notice, success, warning.
+     * @param string               $message
+     * @param array<string, mixed> $forward Forward target (controller, action, params).
+     *
+     * @return void
+     */
+    protected function flashForward(string $type, string $message, array $forward): void
+    {
+        $this->flash->message($type, $message);
+        $this->dispatcher->forward($forward);
     }
 }

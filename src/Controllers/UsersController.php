@@ -46,7 +46,7 @@ class UsersController extends ControllerBase
 
                 $passwordChange            = new PasswordChanges();
                 $passwordChange->user      = $user;
-                $passwordChange->ipAddress = $this->request->getClientAddress();
+                $passwordChange->ipAddress = (string) $this->request->getClientAddress();
                 $passwordChange->userAgent = $this->request->getUserAgent();
 
                 if (!$passwordChange->save()) {
@@ -97,17 +97,15 @@ class UsersController extends ControllerBase
     /**
      * Deletes a User
      *
-     * @param int $id
+     * @param string $id
      */
-    public function deleteAction($id)
+    public function deleteAction(string $id): void
     {
         $user = Users::findFirstById($id);
         if (!$user) {
-            $this->flash->error('User was not found.');
+            $this->flashForward('error', 'User was not found.', ['action' => 'index']);
 
-            return $this->dispatcher->forward([
-                'action' => 'index',
-            ]);
+            return;
         }
 
         if (!$user->delete()) {
@@ -118,7 +116,7 @@ class UsersController extends ControllerBase
             $this->flash->success('User was deleted.');
         }
 
-        return $this->dispatcher->forward([
+        $this->dispatcher->forward([
             'action' => 'index',
         ]);
     }
@@ -126,22 +124,23 @@ class UsersController extends ControllerBase
     /**
      * Saves the user from the 'edit' action
      *
-     * @param int $id
+     * @param string $id
      */
-    public function editAction($id)
+    public function editAction(string $id): void
     {
         $user = Users::findFirstById($id);
         if (!$user) {
-            $this->flash->error('User was not found.');
+            $this->flashForward('error', 'User was not found.', ['action' => 'index']);
 
-            return $this->dispatcher->forward([
-                'action' => 'index',
-            ]);
+            return;
         }
 
-        $form = new UsersForm($user, [
-            'edit' => true,
-        ]);
+        $form = new UsersForm(
+            $user,
+            [
+                'edit' => true,
+            ]
+        );
 
         if ($this->request->isPost()) {
             $user->assign([
@@ -201,10 +200,7 @@ class UsersController extends ControllerBase
 
         $count = Users::count($builder->getParams());
         if ($count === 0) {
-            $this->flash->notice('The search did not find any users');
-            $this->dispatcher->forward([
-                'action' => 'index',
-            ]);
+            $this->flashForward('notice', 'The search did not find any users', ['action' => 'index']);
 
             return;
         }

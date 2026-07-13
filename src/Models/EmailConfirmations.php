@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Vokuro\Models;
 
 use Phalcon\Mvc\Model;
+use Vokuro\Plugins\Mail\Mail;
 
 /**
  * EmailConfirmations
@@ -56,22 +57,26 @@ class EmailConfirmations extends Model
     /**
      * Send a confirmation e-mail to the user after create the account
      */
-    public function afterCreate()
+    public function afterCreate(): void
     {
-        $this->getDI()
-             ->getMail()
-             ->send([
+        /** @var Mail $mail */
+        $mail = $this->getDI()->get('mail');
+        $mail ->send(
+            [
                  $this->user->email => $this->user->name,
-             ], "Please confirm your email", 'confirmation', [
-                 'confirmUrl' => '/confirm/' . $this->code . '/' . $this->user->email,
-             ])
-        ;
+            ],
+            "Please confirm your email",
+            'confirmation',
+            [
+                'confirmUrl' => '/confirm/' . $this->code . '/' . $this->user->email,
+            ]
+        );
     }
 
     /**
      * Before create the user assign a password
      */
-    public function beforeValidationOnCreate()
+    public function beforeValidationOnCreate(): void
     {
         // Timestamp the confirmation
         $this->createdAt = time();
@@ -86,13 +91,13 @@ class EmailConfirmations extends Model
     /**
      * Sets the timestamp before update the confirmation
      */
-    public function beforeValidationOnUpdate()
+    public function beforeValidationOnUpdate(): void
     {
         // Timestamp the confirmation
         $this->modifiedAt = time();
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->belongsTo('usersId', Users::class, 'id', [
             'alias' => 'user',

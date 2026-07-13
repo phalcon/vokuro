@@ -23,7 +23,7 @@ class AclProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'acl';
+    protected string $providerName = 'acl';
 
     /**
      * @param DiInterface $di

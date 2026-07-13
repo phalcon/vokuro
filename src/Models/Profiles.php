@@ -39,7 +39,7 @@ class Profiles extends Model
     /**
      * Define relationships to Users and Permissions
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->hasMany('id', Users::class, 'profilesId', [
             'alias'      => 'users',

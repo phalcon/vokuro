@@ -22,7 +22,7 @@ class UrlProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'url';
+    protected string $providerName = 'url';
 
     /**
      * @param DiInterface $di

@@ -22,7 +22,7 @@ class AuthProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'auth';
+    protected string $providerName = 'auth';
 
     /**
      * @param DiInterface $di

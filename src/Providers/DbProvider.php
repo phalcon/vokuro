@@ -14,9 +14,11 @@ declare(strict_types=1);
 namespace Vokuro\Providers;
 
 use Phalcon\Config\Config;
+use Phalcon\Db\Adapter\AbstractAdapter;
 use Phalcon\Db\Adapter\Pdo;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
+use Phalcon\Events\ManagerInterface;
 use Vokuro\Exception;
 
 use function Vokuro\root_path;
@@ -26,9 +28,9 @@ class DbProvider implements ServiceProviderInterface
     /**
      * Class map of database adapters, indexed by PDO::ATTR_DRIVER_NAME.
      *
-     * @var array
+     * @var array<string, class-string>
      */
-    protected $adapters = [
+    protected array $adapters = [
         'mysql'  => Pdo\Mysql::class,
         'pgsql'  => Pdo\Postgresql::class,
         'sqlite' => Pdo\Sqlite::class,
@@ -36,7 +38,7 @@ class DbProvider implements ServiceProviderInterface
     /**
      * @var string
      */
-    protected $providerName = 'db';
+    protected string $providerName = 'db';
 
 
     /**
@@ -52,11 +54,23 @@ class DbProvider implements ServiceProviderInterface
         $class  = $this->getClass($config);
         $config = $this->createConfig($config);
 
-        $di->set($this->providerName, function () use ($class, $config) {
-            return new $class($config);
+        $di->set($this->providerName, function () use ($class, $config, $di) {
+            /** @var ManagerInterface $eventsManager */
+            $eventsManager = $di->getShared('eventsManager');
+
+            /** @var AbstractAdapter $connection */
+            $connection = new $class($config);
+            $connection->setEventsManager($eventsManager);
+
+            return $connection;
         });
     }
 
+    /**
+     * @param Config $config
+     *
+     * @return array<string, mixed>
+     */
     private function createConfig(Config $config): array
     {
         // To prevent error: SQLSTATE[08006] [7] invalid connection option "adapter"

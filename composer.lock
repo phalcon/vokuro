@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d51a5033ee6c3498c998cac4e8145db",
+    "content-hash": "57a013e089e8477245b1439ce498fec6",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -617,6 +617,208 @@
                 }
             ],
             "time": "2025-05-20T12:55:37+00:00"
+        },
+        {
+            "name": "matthiasmullie/minify",
+            "version": "1.3.75",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/minify.git",
+                "reference": "76ba4a5f555fd7bf4aa408af608e991569076671"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/76ba4a5f555fd7bf4aa408af608e991569076671",
+                "reference": "76ba4a5f555fd7bf4aa408af608e991569076671",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "matthiasmullie/path-converter": "~1.1",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": ">=2.0",
+                "matthiasmullie/scrapbook": ">=1.3",
+                "phpunit/phpunit": ">=4.8"
+            },
+            "suggest": {
+                "psr/cache-implementation": "Cache implementation to use with Minify::cache"
+            },
+            "bin": [
+                "bin/minifycss",
+                "bin/minifyjs"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MatthiasMullie\\Minify\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "email": "minify@mullie.eu",
+                    "homepage": "https://www.mullie.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CSS & JavaScript minifier, in PHP. Removes whitespace, strips comments, combines files (incl. @import statements and small assets in CSS files), and optimizes/shortens a few common programming patterns.",
+            "homepage": "https://github.com/matthiasmullie/minify",
+            "keywords": [
+                "JS",
+                "css",
+                "javascript",
+                "minifier",
+                "minify"
+            ],
+            "support": {
+                "issues": "https://github.com/matthiasmullie/minify/issues",
+                "source": "https://github.com/matthiasmullie/minify/tree/1.3.75"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/matthiasmullie",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-06-25T09:56:19+00:00"
+        },
+        {
+            "name": "matthiasmullie/path-converter",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/path-converter.git",
+                "reference": "e7d13b2c7e2f2268e1424aaed02085518afa02d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/e7d13b2c7e2f2268e1424aaed02085518afa02d9",
+                "reference": "e7d13b2c7e2f2268e1424aaed02085518afa02d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MatthiasMullie\\PathConverter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "email": "pathconverter@mullie.eu",
+                    "homepage": "http://www.mullie.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Relative path converter",
+            "homepage": "http://github.com/matthiasmullie/path-converter",
+            "keywords": [
+                "converter",
+                "path",
+                "paths",
+                "relative"
+            ],
+            "support": {
+                "issues": "https://github.com/matthiasmullie/path-converter/issues",
+                "source": "https://github.com/matthiasmullie/path-converter/tree/1.1.3"
+            },
+            "time": "2019-02-05T23:41:09+00:00"
+        },
+        {
+            "name": "phalcon/debugbar",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phalcon/debugbar.git",
+                "reference": "dfc5437426088d891f25bd48244f56d6945e9764"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phalcon/debugbar/zipball/dfc5437426088d891f25bd48244f56d6945e9764",
+                "reference": "dfc5437426088d891f25bd48244f56d6945e9764",
+                "shasum": ""
+            },
+            "require": {
+                "matthiasmullie/minify": "^1.3",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3",
+                "pds/composer-script-names": "^1",
+                "pds/skeleton": "^1",
+                "phalcon/phalcon": "6.0.x-dev",
+                "phalcon/talon": "^0.6 || ^0.7",
+                "phalcon/traits": "^4.0",
+                "phpstan/phpstan": "^2",
+                "phpunit/phpunit": "^10.5",
+                "squizlabs/php_codesniffer": "^4.0"
+            },
+            "suggest": {
+                "ext-phalcon": "Phalcon C extension (^5) - run the debug bar on Phalcon v5",
+                "phalcon/phalcon": "Phalcon PHP implementation (^6) - run the debug bar on Phalcon v6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phalcon\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Phalcon Team",
+                    "email": "team@phalcon.io",
+                    "homepage": "https://phalcon.io"
+                },
+                {
+                    "name": "snowair",
+                    "homepage": "https://github.com/snowair/phalcon-debugbar",
+                    "role": "Original Phalcon Debugbar author"
+                }
+            ],
+            "description": "Web Debug bar and debugger for the Phalcon Framework",
+            "keywords": [
+                "debug",
+                "debugbar",
+                "phalcon",
+                "php",
+                "profiler"
+            ],
+            "support": {
+                "issues": "https://github.com/phalcon/debugbar/issues",
+                "source": "https://github.com/phalcon/debugbar/tree/v0.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/phalcon",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/phalcon",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2026-07-13T14:49:03+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -3088,129 +3290,6 @@
             "time": "2026-06-23T18:43:15+00:00"
         },
         {
-            "name": "matthiasmullie/minify",
-            "version": "1.3.75",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "76ba4a5f555fd7bf4aa408af608e991569076671"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/76ba4a5f555fd7bf4aa408af608e991569076671",
-                "reference": "76ba4a5f555fd7bf4aa408af608e991569076671",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "matthiasmullie/path-converter": "~1.1",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": ">=2.0",
-                "matthiasmullie/scrapbook": ">=1.3",
-                "phpunit/phpunit": ">=4.8"
-            },
-            "suggest": {
-                "psr/cache-implementation": "Cache implementation to use with Minify::cache"
-            },
-            "bin": [
-                "bin/minifycss",
-                "bin/minifyjs"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MatthiasMullie\\Minify\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Matthias Mullie",
-                    "email": "minify@mullie.eu",
-                    "homepage": "https://www.mullie.eu",
-                    "role": "Developer"
-                }
-            ],
-            "description": "CSS & JavaScript minifier, in PHP. Removes whitespace, strips comments, combines files (incl. @import statements and small assets in CSS files), and optimizes/shortens a few common programming patterns.",
-            "homepage": "https://github.com/matthiasmullie/minify",
-            "keywords": [
-                "JS",
-                "css",
-                "javascript",
-                "minifier",
-                "minify"
-            ],
-            "support": {
-                "issues": "https://github.com/matthiasmullie/minify/issues",
-                "source": "https://github.com/matthiasmullie/minify/tree/1.3.75"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/matthiasmullie",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-06-25T09:56:19+00:00"
-        },
-        {
-            "name": "matthiasmullie/path-converter",
-            "version": "1.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/matthiasmullie/path-converter.git",
-                "reference": "e7d13b2c7e2f2268e1424aaed02085518afa02d9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/e7d13b2c7e2f2268e1424aaed02085518afa02d9",
-                "reference": "e7d13b2c7e2f2268e1424aaed02085518afa02d9",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MatthiasMullie\\PathConverter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Matthias Mullie",
-                    "email": "pathconverter@mullie.eu",
-                    "homepage": "http://www.mullie.eu",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Relative path converter",
-            "homepage": "http://github.com/matthiasmullie/path-converter",
-            "keywords": [
-                "converter",
-                "path",
-                "paths",
-                "relative"
-            ],
-            "support": {
-                "issues": "https://github.com/matthiasmullie/path-converter/issues",
-                "source": "https://github.com/matthiasmullie/path-converter/tree/1.1.3"
-            },
-            "time": "2019-02-05T23:41:09+00:00"
-        },
-        {
             "name": "myclabs/deep-copy",
             "version": "1.13.4",
             "source": {
@@ -3272,20 +3351,19 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.7.0",
+            "version": "v5.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "dca41cd15c2ac9d055ad70dbfd011130757d1f82"
+                "reference": "044a6a392ff8ad0d61f14370a5fbbd0a0107152f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/dca41cd15c2ac9d055ad70dbfd011130757d1f82",
-                "reference": "dca41cd15c2ac9d055ad70dbfd011130757d1f82",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/044a6a392ff8ad0d61f14370a5fbbd0a0107152f",
+                "reference": "044a6a392ff8ad0d61f14370a5fbbd0a0107152f",
                 "shasum": ""
             },
             "require": {
-                "ext-ctype": "*",
                 "ext-json": "*",
                 "ext-tokenizer": "*",
                 "php": ">=7.4"
@@ -3324,9 +3402,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.7.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.8.0"
             },
-            "time": "2025-12-06T11:56:16+00:00"
+            "time": "2026-07-04T14:30:18+00:00"
         },
         {
             "name": "pds/composer-script-names",
@@ -3472,16 +3550,16 @@
         },
         {
             "name": "phalcon/phalcon",
-            "version": "v6.0.0alpha3",
+            "version": "v6.0.0alpha4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/phalcon.git",
-                "reference": "a8233051d7839e2ea2bdd477447251fbdeeb7c70"
+                "reference": "4568057c441baf0a729c3eca7585dcb0c5c97d2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/phalcon/zipball/a8233051d7839e2ea2bdd477447251fbdeeb7c70",
-                "reference": "a8233051d7839e2ea2bdd477447251fbdeeb7c70",
+                "url": "https://api.github.com/repos/phalcon/phalcon/zipball/4568057c441baf0a729c3eca7585dcb0c5c97d2f",
+                "reference": "4568057c441baf0a729c3eca7585dcb0c5c97d2f",
                 "shasum": ""
             },
             "require": {
@@ -3491,7 +3569,7 @@
                 "ext-pdo": "*",
                 "ext-xml": "*",
                 "matthiasmullie/minify": "^1.3",
-                "phalcon/traits": "^3.0",
+                "phalcon/traits": "^4.0",
                 "php": ">=8.1 <9.0",
                 "psr/event-dispatcher": "^1.0"
             },
@@ -3502,6 +3580,7 @@
                 "pds/composer-script-names": "^1.0",
                 "pds/skeleton": "^1.0",
                 "phalcon/phql": "1.0.x-dev",
+                "phalcon/talon": "^0.6.0",
                 "phalcon/volt": "1.0.x-dev",
                 "phpbench/phpbench": "^1.4",
                 "phpstan/phpstan": "^2.2",
@@ -3538,7 +3617,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phalcon/phalcon/issues",
-                "source": "https://github.com/phalcon/phalcon/tree/v6.0.0alpha3"
+                "source": "https://github.com/phalcon/phalcon/tree/v6.0.0alpha4"
             },
             "funding": [
                 {
@@ -3550,7 +3629,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-06-29T17:24:45+00:00"
+            "time": "2026-07-13T18:05:01+00:00"
         },
         {
             "name": "phalcon/phql",
@@ -3558,12 +3637,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/phql.git",
-                "reference": "446cc3c2b26870b8015f4f2aa8313b87f52fb470"
+                "reference": "eb0500b5ca39245576ce6608cf6efcc2ca6df058"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/phql/zipball/446cc3c2b26870b8015f4f2aa8313b87f52fb470",
-                "reference": "446cc3c2b26870b8015f4f2aa8313b87f52fb470",
+                "url": "https://api.github.com/repos/phalcon/phql/zipball/eb0500b5ca39245576ce6608cf6efcc2ca6df058",
+                "reference": "eb0500b5ca39245576ce6608cf6efcc2ca6df058",
                 "shasum": ""
             },
             "require": {
@@ -3571,8 +3650,10 @@
                 "php": ">=8.1 <9.0"
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.95",
                 "pds/composer-script-names": "^1.0",
                 "pds/skeleton": "^1.0",
+                "phalcon/talon": "^0.6.0 || ^0.7.0",
                 "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^10.5",
                 "squizlabs/php_codesniffer": "^4.0"
@@ -3625,7 +3706,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-06-15T01:14:39+00:00"
+            "time": "2026-07-12T21:11:02+00:00"
         },
         {
             "name": "phalcon/talon",
@@ -3705,16 +3786,16 @@
         },
         {
             "name": "phalcon/traits",
-            "version": "3.0.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/traits.git",
-                "reference": "978b7fd9a4756ce66e3c05c146438cd44c981379"
+                "reference": "4e4412a78475af2d08f7e82e48e577e2a40b6896"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/traits/zipball/978b7fd9a4756ce66e3c05c146438cd44c981379",
-                "reference": "978b7fd9a4756ce66e3c05c146438cd44c981379",
+                "url": "https://api.github.com/repos/phalcon/traits/zipball/4e4412a78475af2d08f7e82e48e577e2a40b6896",
+                "reference": "4e4412a78475af2d08f7e82e48e577e2a40b6896",
                 "shasum": ""
             },
             "require": {
@@ -3723,41 +3804,55 @@
                 "php": ">=8.1 <9.0"
             },
             "require-dev": {
-                "codeception/codeception": "^5.0",
-                "codeception/module-asserts": "^3.0",
-                "codeception/module-filesystem": "^3.0",
-                "codeception/module-phpbrowser": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "infection/infection": "^0.29.9",
+                "pds/composer-script-names": "^1.0",
                 "pds/skeleton": "^1.0",
-                "phpstan/phpstan": "^1.9",
+                "phalcon/talon": "^0.7",
+                "phpstan/phpstan": "^2.2",
                 "phpunit/phpunit": "^10.5",
-                "squizlabs/php_codesniffer": "^3.7",
-                "vlucas/phpdotenv": "^5.5"
+                "squizlabs/php_codesniffer": "^4.0"
             },
             "suggest": {
-                "ext-gettext": "*",
-                "ext-yaml": "*"
+                "ext-apcu": "For Php\\ApcuTrait",
+                "ext-gettext": "For the gettext-based translation helpers",
+                "ext-igbinary": "For Php\\IgbinaryTrait",
+                "ext-msgpack": "For Php\\MsgpackTrait",
+                "ext-yaml": "For Php\\YamlTrait"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Phalcon\\Traits\\": "src/",
-                    "Phalcon\\Tests\\Unit\\": "tests/unit/",
-                    "Phalcon\\Tests\\Fixtures\\": "tests/support/fixtures/"
+                    "Phalcon\\Traits\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "BSD-3-Clause"
             ],
-            "description": "Phalcon Framework Traits",
+            "authors": [
+                {
+                    "name": "Phalcon Team",
+                    "email": "team@phalcon.io",
+                    "homepage": "https://phalcon.io/en/team"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/phalcon/traits/graphs/contributors"
+                }
+            ],
+            "description": "Phalcon Framework reusable traits",
+            "homepage": "https://phalcon.io",
             "keywords": [
                 "framework",
+                "phalcon",
                 "php",
                 "traits"
             ],
             "support": {
+                "discord": "https://phalcon.io/discord/",
                 "issues": "https://github.com/phalcon/traits/issues",
-                "source": "https://github.com/phalcon/traits/tree/3.0.0"
+                "source": "https://github.com/phalcon/traits"
             },
             "funding": [
                 {
@@ -3769,7 +3864,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-02-11T15:46:57+00:00"
+            "time": "2026-07-10T19:24:02+00:00"
         },
         {
             "name": "phalcon/volt",
@@ -3777,12 +3872,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/volt.git",
-                "reference": "6502ceaab7f691358904e64ceaaf9a5ed9caede4"
+                "reference": "630984dd29b614f72d74ee87743a344c1708409e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/volt/zipball/6502ceaab7f691358904e64ceaaf9a5ed9caede4",
-                "reference": "6502ceaab7f691358904e64ceaaf9a5ed9caede4",
+                "url": "https://api.github.com/repos/phalcon/volt/zipball/630984dd29b614f72d74ee87743a344c1708409e",
+                "reference": "630984dd29b614f72d74ee87743a344c1708409e",
                 "shasum": ""
             },
             "require": {
@@ -3794,6 +3889,7 @@
                 "friendsofphp/php-cs-fixer": "^3.95",
                 "pds/skeleton": "^1.0",
                 "phalcon/ide-stubs": "^5.8",
+                "phalcon/talon": "^0.6.0",
                 "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^10.5",
                 "squizlabs/php_codesniffer": "^4.0"
@@ -3853,7 +3949,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-07-01T13:31:35+00:00"
+            "time": "2026-07-08T14:55:49+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -4360,24 +4456,24 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.63",
+            "version": "10.5.64",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "33198268dad71e926626b618f3ec3966661e4d90"
+                "reference": "0e8c1d19cea35ad97d4887f363d07c78e30fbf06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/33198268dad71e926626b618f3ec3966661e4d90",
-                "reference": "33198268dad71e926626b618f3ec3966661e4d90",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0e8c1d19cea35ad97d4887f363d07c78e30fbf06",
+                "reference": "0e8c1d19cea35ad97d4887f363d07c78e30fbf06",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
+                "ext-filter": "*",
                 "ext-json": "*",
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
-                "ext-xml": "*",
                 "ext-xmlwriter": "*",
                 "myclabs/deep-copy": "^1.13.4",
                 "phar-io/manifest": "^2.0.4",
@@ -4441,31 +4537,15 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.63"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.64"
             },
             "funding": [
                 {
-                    "url": "https://phpunit.de/sponsors.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/sebastianbergmann",
-                    "type": "github"
-                },
-                {
-                    "url": "https://liberapay.com/sebastianbergmann",
-                    "type": "liberapay"
-                },
-                {
-                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
-                    "type": "thanks_dev"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/phpunit/phpunit",
-                    "type": "tidelift"
+                    "url": "https://phpunit.de/sponsoring.html",
+                    "type": "other"
                 }
             ],
-            "time": "2026-01-27T05:48:37+00:00"
+            "time": "2026-07-06T14:50:35+00:00"
         },
         {
             "name": "react/cache",

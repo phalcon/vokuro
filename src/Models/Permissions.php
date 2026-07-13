@@ -41,7 +41,7 @@ class Permissions extends Model
      */
     public $resource;
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->belongsTo('profilesId', Profiles::class, 'id', [
             'alias' => 'profile',
