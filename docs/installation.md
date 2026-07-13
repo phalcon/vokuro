@@ -18,6 +18,8 @@ Open <http://localhost:8080> and log in with a seeded account, e.g.
 `sarah.connor@skynet.dev` / `password1`. E-mails are captured by Mailpit at
 <http://localhost:8025>.
 
+The [Phalcon debug bar](https://github.com/phalcon/debugbar) appears at the bottom of every page in development (`APP_ENV=development`), showing per-request timing, routing, database, and session diagnostics.
+
 To run on a specific PHP version (default `8.5`, supported `8.1`–`8.5`):
 
 ```bash

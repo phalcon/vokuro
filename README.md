@@ -123,6 +123,12 @@ Run them inside the container, e.g. `docker compose exec app composer cs`:
 > so run it where the v5 C extension is **not** loaded (the CI `quality` job, or a plain
 > host). The coding-standard and test scripts are unaffected.
 
+## Debug Bar
+
+Vökuró wires up the [Phalcon debug bar][debugbar]. A single events manager is registered as a shared service (`src/Providers/EventsManagerProvider.php`) and handed to the database, view, router, and dispatcher providers; `src/Providers/DebugBarProvider.php` then boots the bar against the application. Once the app is running, a status bar appears at the bottom of every HTML page with per-request diagnostics - timing, the matched route, database queries and their bound parameters, rendered views, and the session, config, and request data.
+
+The bar runs in development only. It is gated by `APP_ENV`, which `resources/.env.example` sets to `development`; it does not boot when `APP_ENV` is `production` or `prod`. See the [debug bar package][debugbar] for configuration and the full list of collectors.
+
 ## Running the tests
 
 The suite is split into three PHPUnit testsuites - `unit`, `functional`, and `browser`
@@ -206,3 +212,6 @@ Vökuró is open-sourced software licensed under the New BSD License. See [LICEN
 [oc-backers-link]:           https://opencollective.com/phalcon
 [oc-sponsors-badge]:         https://img.shields.io/opencollective/sponsors/phalcon?style=flat-square&logo=opencollective&logoColor=white
 [oc-sponsors-link]:          https://opencollective.com/phalcon
+
+<!-- Links -->
+[debugbar]:                  https://github.com/phalcon/debugbar
