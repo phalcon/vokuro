@@ -2,7 +2,7 @@
 
 All notable changes to `phalcon/vokuro` are documented here. The format is based on [Keep a Changelog][keep_a_changelog] and this project adheres to [Semantic Versioning][semantic_versioning].
 
-## [Unreleased]
+## [5.0.3](https://github.com/phalcon/vokuro/releases/tag/v5.0.3) (2026-07-13)
 
 ### Added
 
