@@ -13,93 +13,47 @@ declare(strict_types=1);
 
 namespace Vokuro\Models;
 
-use Phalcon\Mvc\Model;
-use Vokuro\Plugins\Mail\Mail;
-
 /**
  * ResetPasswords
  * Stores the reset password codes and their evolution
  *
  * @method static ResetPasswords findFirstByCode(string $code)
  */
-class ResetPasswords extends Model
+class ResetPasswords extends AbstractEmailCode
 {
-    /**
-     * @var string
-     */
-    public $code;
-
-    /**
-     * @var integer
-     */
-    public $createdAt;
-    /**
-     * @var integer
-     */
-    public $id;
-
-    /**
-     * @var integer
-     */
-    public $modifiedAt;
-
     /**
      * @var string
      */
     public $reset;
 
     /**
-     * @var integer
-     */
-    public $usersId;
-
-    /**
-     * Send an e-mail to users allowing him/her to reset his/her password
-     */
-    public function afterCreate(): void
-    {
-        /** @var Mail $mail */
-        $mail = $this->getDI()->get('mail');
-        $mail->send(
-            [
-                $this->user->email => $this->user->name,
-            ],
-            "Reset your password",
-            'reset',
-            [
-                'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email,
-            ]
-        );
-    }
-
-    /**
      * Before create the user assign a password
      */
     public function beforeValidationOnCreate(): void
     {
-        // Timestamp the confirmation
-        $this->createdAt = time();
-
-        // Generate a random confirmation code
-        $this->code = preg_replace('/[^a-zA-Z0-9]/', '', base64_encode(openssl_random_pseudo_bytes(24)));
+        parent::beforeValidationOnCreate();
 
         // Set status to non-confirmed
         $this->reset = 'N';
     }
 
     /**
-     * Sets the timestamp before update the confirmation
+     * @return array<string, string>
      */
-    public function beforeValidationOnUpdate(): void
+    protected function getMailParameters(): array
     {
-        // Timestamp the confirmation
-        $this->modifiedAt = time();
+        return [
+            'resetUrl' => '/reset-password/' . $this->code . '/' . $this->user->email,
+        ];
     }
 
-    public function initialize(): void
+    protected function getMailSubject(): string
     {
-        $this->belongsTo('usersId', Users::class, 'id', [
-            'alias' => 'user',
-        ]);
+        return 'Reset your password';
+    }
+
+    protected function getMailTemplate(): string
+    {
+        return 'reset';
     }
 }
