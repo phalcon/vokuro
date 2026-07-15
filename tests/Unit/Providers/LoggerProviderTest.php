@@ -16,7 +16,7 @@ namespace Vokuro\Tests\Unit\Providers;
 use Phalcon\Config\Config;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Logger\Adapter\Stream;
+use Phalcon\Logger\Logger;
 use Phalcon\Talon\PHPUnit\AbstractUnitTestCase;
 use Vokuro\Providers\LoggerProvider;
 
@@ -43,6 +43,6 @@ final class LoggerProviderTest extends AbstractUnitTestCase
 
         (new LoggerProvider())->register($di);
 
-        $this->assertInstanceOf(Stream::class, $di->get('logger'));
+        $this->assertInstanceOf(Logger::class, $di->get('logger'));
     }
 }
