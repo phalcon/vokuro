@@ -9,31 +9,32 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use Phalcon\Debug;
 use Vokuro\Application as VokuroApplication;
 
 error_reporting(E_ALL);
 $rootPath = dirname(__DIR__);
 
-try {
-    require_once $rootPath . '/vendor/autoload.php';
+require_once $rootPath . '/vendor/autoload.php';
 
-    /**
-     * Load .env configurations
-     */
-    Dotenv\Dotenv::createUnsafeImmutable($rootPath)->safeLoad();
+/**
+ * Register the Phalcon\Debug exception renderer. With no surrounding try/catch,
+ * uncaught exceptions unwind to set_exception_handler() and are shown as the
+ * debug page.
+ *
+ * BE VERY CAREFUL - the debug page exposes sensitive information (backtrace,
+ * request/server globals, source fragments).
+ *
+ * !!! DO NOT USE IN PRODUCTION !!!
+ */
+(new Debug())->listen();
 
-    /**
-     * Run Vökuró!
-     */
-    echo (new VokuroApplication($rootPath))->run();
-} catch (Exception $e) {
-    /**
-     * BE VERY CAREFUL WITH THIS CODE - IT IS A SAMPLE NOT PRODUCTION CODE
-     *
-     * Exceptions can carry sensitive information such as database credentials.
-     *
-     * !!! DO NOT USE THE CODE BELOW IN PRODUCTION !!!
-     */
-    echo $e->getMessage(), '<br>';
-    echo nl2br(htmlentities($e->getTraceAsString()));
-}
+/**
+ * Load .env configurations
+ */
+Dotenv\Dotenv::createUnsafeImmutable($rootPath)->safeLoad();
+
+/**
+ * Run Vökuró!
+ */
+echo (new VokuroApplication($rootPath))->run();
