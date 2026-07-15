@@ -72,8 +72,6 @@ class ProfilesController extends ControllerBase
         $this->dispatcher->forward([
             'action' => 'index',
         ]);
-
-        return;
     }
 
     /**
