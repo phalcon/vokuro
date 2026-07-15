@@ -53,7 +53,8 @@ class LoggerProvider implements ServiceProviderInterface
                 $path     = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
 
                 $formatter = new FormatterLine(
-                    $loggerConfigs->get('format'), $loggerConfigs->get('date')
+                    $loggerConfigs->get('format'),
+                    $loggerConfigs->get('date')
                 );
 
                 $fileAdapter = new FileAdapter($path . $filename);
