@@ -14,13 +14,20 @@ declare(strict_types=1);
 namespace Vokuro\Providers;
 
 use Phalcon\Config\Config;
+use Phalcon\DebugBar\Debug;
+use Phalcon\DebugBar\Logger\Adapter as DebugBarAdapter;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Phalcon\Logger\Adapter\Stream as FileLogger;
+use Phalcon\Logger\Adapter\Stream as FileAdapter;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
+use Phalcon\Logger\Logger;
 
 /**
  * Logger service
+ *
+ * Wraps the adapters in a Phalcon\Logger\Logger so multiple adapters can be
+ * attached: the file (Stream) adapter and the debug bar adapter, which streams
+ * every logged item into the debug bar's "Logs" panel.
  */
 class LoggerProvider implements ServiceProviderInterface
 {
@@ -39,16 +46,27 @@ class LoggerProvider implements ServiceProviderInterface
         /** @var Config $loggerConfigs */
         $loggerConfigs = $di->getShared('config')->get('logger');
 
-        $di->set($this->providerName, function () use ($loggerConfigs) {
-            $filename = trim($loggerConfigs->get('filename'), '\\/');
-            $path     = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
+        $di->set(
+            $this->providerName,
+            function () use ($loggerConfigs) {
+                $filename = trim($loggerConfigs->get('filename'), '\\/');
+                $path     = rtrim($loggerConfigs->get('path'), '\\/') . DIRECTORY_SEPARATOR;
 
-            $formatter = new FormatterLine($loggerConfigs->get('format'), $loggerConfigs->get('date'));
-            $logger    = new FileLogger($path . $filename);
+                $formatter = new FormatterLine(
+                    $loggerConfigs->get('format'), $loggerConfigs->get('date')
+                );
 
-            $logger->setFormatter($formatter);
+                $fileAdapter = new FileAdapter($path . $filename);
+                $fileAdapter->setFormatter($formatter);
 
-            return $logger;
-        });
+                return new Logger(
+                    'vokuro',
+                    [
+                        'file'     => $fileAdapter,
+                        'debugbar' => new DebugBarAdapter(Debug::getBar()),
+                    ]
+                );
+            }
+        );
     }
 }
