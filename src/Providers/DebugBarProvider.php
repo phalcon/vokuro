@@ -37,6 +37,11 @@ class DebugBarProvider implements ServiceProviderInterface
         $app = $bootstrap->getApplication();
         $app->setEventsManager($eventsManager);
 
-        (new DebugBar($app))->boot();
+        (new DebugBar(
+            $app,
+            [
+                'collectors' => ['exceptions' => false],
+            ]
+        ))->boot();
     }
 }
