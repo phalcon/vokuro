@@ -20,7 +20,7 @@ Open <http://localhost:8080> and log in with a seeded account, e.g.
 
 The [Phalcon debug bar](https://github.com/phalcon/debugbar) appears at the bottom of every page in development (`APP_ENV=development`), showing per-request timing, routing, database, and session diagnostics.
 
-To run on a specific PHP version (default `8.5`, supported `8.1`–`8.5`):
+To run on a specific PHP version (default `8.5`, supported `8.1`-`8.5`):
 
 ```bash
 PHP_VERSION=8.1 docker compose up -d --build   # or 8.2 / 8.3 / 8.4 / 8.5
@@ -35,7 +35,7 @@ Prefer to run Vökuró directly on your host? Follow the steps below instead.
 
 ### Requirements
 
-* PHP 8.1 – 8.5 with the extensions: `openssl`, `mbstring`, `intl`, `pdo_mysql`
+* PHP 8.1 - 8.5 with the extensions: `openssl`, `mbstring`, `intl`, `pdo_mysql`
 * MySQL 8.0 (or SQLite / PostgreSQL - see `DB_ADAPTER` in `.env`)
 * [Composer](https://getcomposer.org/)
 

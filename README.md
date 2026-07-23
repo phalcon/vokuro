@@ -24,7 +24,7 @@ It runs on **Phalcon v5** (the C extension, default) and on **Phalcon v6**
 
 ## Requirements
 
-* PHP 8.1 – 8.5
+* PHP 8.1 - 8.5
 * MySQL 8.0 (provided by the Docker stack)
 * Docker + Docker Compose (recommended), or a local PHP with the Phalcon extension
   (see [docs/installation.md](docs/installation.md))
@@ -66,7 +66,7 @@ installs the pure-PHP package instead.
 ### Choosing the PHP version
 
 The image is built for one PHP version at a time, selected with the `PHP_VERSION`
-build arg (default `8.5`; supported `8.1`–`8.5`):
+build arg (default `8.5`; supported `8.1`-`8.5`):
 
 ```bash
 docker compose up -d --build                  # PHP 8.5 (default)
