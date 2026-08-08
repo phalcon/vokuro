@@ -38,7 +38,7 @@ jobs:
           extensions: ${{ env.EXTENSIONS }}
           tools: composer:v2
 
-      # The quality tools do not need the Phalcon extension: phpstan analyses the
+      # The quality tools do not need the Phalcon extension: phpstan analyzes the
       # phalcon/phalcon (v6) source pulled in by Composer.
       - name: "Validate composer"
         run: composer validate --no-check-all --no-check-publish
