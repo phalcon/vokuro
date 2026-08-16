@@ -3711,16 +3711,16 @@
         },
         {
             "name": "phalcon/talon",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/talon.git",
-                "reference": "0289a3e0794520269a133fd3a789981329bb612c"
+                "reference": "21d9bfa6b334fe137a041967ea9e7bc18dbdc575"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/talon/zipball/0289a3e0794520269a133fd3a789981329bb612c",
-                "reference": "0289a3e0794520269a133fd3a789981329bb612c",
+                "url": "https://api.github.com/repos/phalcon/talon/zipball/21d9bfa6b334fe137a041967ea9e7bc18dbdc575",
+                "reference": "21d9bfa6b334fe137a041967ea9e7bc18dbdc575",
                 "shasum": ""
             },
             "require": {
@@ -3773,7 +3773,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phalcon/talon/issues",
-                "source": "https://github.com/phalcon/talon/tree/v1.0.1"
+                "source": "https://github.com/phalcon/talon/tree/v1.0.2"
             },
             "funding": [
                 {
@@ -3785,7 +3785,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-08-07T15:49:55+00:00"
+            "time": "2026-08-09T00:57:08+00:00"
         },
         {
             "name": "phalcon/traits",
