@@ -3119,16 +3119,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.95.18",
+            "version": "v3.95.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "a8b4e4216faabf67f4e96110ee99a48c96e4e683"
+                "reference": "8a06c4ad6bd580b7920bd5ff81b271ca1158507e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/a8b4e4216faabf67f4e96110ee99a48c96e4e683",
-                "reference": "a8b4e4216faabf67f4e96110ee99a48c96e4e683",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/8a06c4ad6bd580b7920bd5ff81b271ca1158507e",
+                "reference": "8a06c4ad6bd580b7920bd5ff81b271ca1158507e",
                 "shasum": ""
             },
             "require": {
@@ -3212,7 +3212,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.18"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.19"
             },
             "funding": [
                 {
@@ -3220,7 +3220,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-30T15:46:02+00:00"
+            "time": "2026-08-17T16:24:07+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -3291,20 +3291,20 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.13.4",
+            "version": "1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "07d290f0c47959fd5eed98c95ee5602db07e0b6a"
+                "reference": "8680aa248f8e07bc8fb43f56f0f5fc77a0c96aae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/07d290f0c47959fd5eed98c95ee5602db07e0b6a",
-                "reference": "07d290f0c47959fd5eed98c95ee5602db07e0b6a",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/8680aa248f8e07bc8fb43f56f0f5fc77a0c96aae",
+                "reference": "8680aa248f8e07bc8fb43f56f0f5fc77a0c96aae",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1 || ^8.0"
+                "php": "^8.0"
             },
             "conflict": {
                 "doctrine/collections": "<1.6.8",
@@ -3339,15 +3339,15 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.4"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.14.0"
             },
             "funding": [
                 {
-                    "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
-                    "type": "tidelift"
+                    "url": "https://github.com/mnapoli",
+                    "type": "github"
                 }
             ],
-            "time": "2025-08-01T08:46:24+00:00"
+            "time": "2026-08-11T10:17:44+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3638,12 +3638,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/phql.git",
-                "reference": "355a43b3a04cca6b8a0d7eff99fdeff90f342d9d"
+                "reference": "59b2dabc4b9cef1e4f4ef3081f2be4600245ce49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/phql/zipball/355a43b3a04cca6b8a0d7eff99fdeff90f342d9d",
-                "reference": "355a43b3a04cca6b8a0d7eff99fdeff90f342d9d",
+                "url": "https://api.github.com/repos/phalcon/phql/zipball/59b2dabc4b9cef1e4f4ef3081f2be4600245ce49",
+                "reference": "59b2dabc4b9cef1e4f4ef3081f2be4600245ce49",
                 "shasum": ""
             },
             "require": {
@@ -3707,20 +3707,20 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-08-08T01:32:41+00:00"
+            "time": "2026-08-16T01:54:30+00:00"
         },
         {
             "name": "phalcon/talon",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/talon.git",
-                "reference": "0289a3e0794520269a133fd3a789981329bb612c"
+                "reference": "21d9bfa6b334fe137a041967ea9e7bc18dbdc575"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/talon/zipball/0289a3e0794520269a133fd3a789981329bb612c",
-                "reference": "0289a3e0794520269a133fd3a789981329bb612c",
+                "url": "https://api.github.com/repos/phalcon/talon/zipball/21d9bfa6b334fe137a041967ea9e7bc18dbdc575",
+                "reference": "21d9bfa6b334fe137a041967ea9e7bc18dbdc575",
                 "shasum": ""
             },
             "require": {
@@ -3773,7 +3773,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phalcon/talon/issues",
-                "source": "https://github.com/phalcon/talon/tree/v1.0.1"
+                "source": "https://github.com/phalcon/talon/tree/v1.0.2"
             },
             "funding": [
                 {
@@ -3785,7 +3785,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-08-07T15:49:55+00:00"
+            "time": "2026-08-09T00:57:08+00:00"
         },
         {
             "name": "phalcon/traits",
@@ -3875,12 +3875,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/volt.git",
-                "reference": "50629982a240ab6aaaa407fd048bceb1106b75f2"
+                "reference": "50438db285804a0dc40702ef13d9404d25f95a5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/volt/zipball/50629982a240ab6aaaa407fd048bceb1106b75f2",
-                "reference": "50629982a240ab6aaaa407fd048bceb1106b75f2",
+                "url": "https://api.github.com/repos/phalcon/volt/zipball/50438db285804a0dc40702ef13d9404d25f95a5e",
+                "reference": "50438db285804a0dc40702ef13d9404d25f95a5e",
                 "shasum": ""
             },
             "require": {
@@ -3892,7 +3892,7 @@
                 "friendsofphp/php-cs-fixer": "^3.95",
                 "pds/skeleton": "^1.0",
                 "phalcon/ide-stubs": "^5.8",
-                "phalcon/talon": "^0.6.0 || ^0.8.0 || ^0.9.0",
+                "phalcon/talon": "^1.0.0",
                 "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^10.5",
                 "squizlabs/php_codesniffer": "^4.0"
@@ -3952,7 +3952,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-08-05T14:03:55+00:00"
+            "time": "2026-08-12T13:30:58+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -5846,16 +5846,16 @@
         },
         {
             "name": "sebastian/recursion-context",
-            "version": "5.0.1",
+            "version": "5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "47e34210757a2f37a97dcd207d032e1b01e64c7a"
+                "reference": "5d32fe257a9b39cb63146924d6b4e32a22d4502a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/47e34210757a2f37a97dcd207d032e1b01e64c7a",
-                "reference": "47e34210757a2f37a97dcd207d032e1b01e64c7a",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/5d32fe257a9b39cb63146924d6b4e32a22d4502a",
+                "reference": "5d32fe257a9b39cb63146924d6b4e32a22d4502a",
                 "shasum": ""
             },
             "require": {
@@ -5898,7 +5898,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/recursion-context/issues",
                 "security": "https://github.com/sebastianbergmann/recursion-context/security/policy",
-                "source": "https://github.com/sebastianbergmann/recursion-context/tree/5.0.1"
+                "source": "https://github.com/sebastianbergmann/recursion-context/tree/5.0.2"
             },
             "funding": [
                 {
@@ -5918,7 +5918,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-10T07:50:56+00:00"
+            "time": "2026-08-11T05:27:39+00:00"
         },
         {
             "name": "sebastian/type",

@@ -43,16 +43,31 @@ final class FakeApcuAcl extends Acl
         self::$stored  = [];
     }
 
-    protected static function phpApcuFetch(array | string $key): mixed
+    /**
+     * The parameter stays untyped to remain compatible with both parents: the
+     * v5 C extension compiles the trait from Zephir with untyped parameters,
+     * while the phalcon/traits package types them.
+     *
+     * @param array<string>|string $key
+     *
+     * @return mixed
+     */
+    protected static function phpApcuFetch($key): mixed
     {
         return self::$fetched;
     }
 
-    protected static function phpApcuStore(
-        array | string $key,
-        mixed $payload,
-        int $ttl = 0
-    ): bool | array {
+    /**
+     * The parameters stay untyped for the same reason as {@see phpApcuFetch()}.
+     *
+     * @param array<array-key, mixed>|string $key
+     * @param mixed                          $payload
+     * @param int                            $ttl
+     *
+     * @return array<array-key, mixed>|bool
+     */
+    protected static function phpApcuStore($key, $payload, int $ttl = 0): bool | array
+    {
         self::$stored[(string) $key] = $payload;
 
         return true;
