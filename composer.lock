@@ -2573,23 +2573,23 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v5.6.4",
+            "version": "v5.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "416df702837983f8d5ff48c9c3fee4f5f57b980b"
+                "reference": "301c07936b16d88628b126b01d082ba153cf4c40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/416df702837983f8d5ff48c9c3fee4f5f57b980b",
-                "reference": "416df702837983f8d5ff48c9c3fee4f5f57b980b",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/301c07936b16d88628b126b01d082ba153cf4c40",
+                "reference": "301c07936b16d88628b126b01d082ba153cf4c40",
                 "shasum": ""
             },
             "require": {
                 "ext-pcre": "*",
-                "graham-campbell/result-type": "^1.1.4",
+                "graham-campbell/result-type": "^1.2",
                 "php": "^7.2.5 || ^8.0",
-                "phpoption/phpoption": "^1.9.5",
+                "phpoption/phpoption": "^1.10",
                 "symfony/polyfill-ctype": "^1.26",
                 "symfony/polyfill-mbstring": "^1.26",
                 "symfony/polyfill-php80": "^1.26"
@@ -2633,7 +2633,7 @@
                     "homepage": "https://github.com/vlucas"
                 }
             ],
-            "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
+            "description": "Loads environment variables from `.env` to `$_ENV` and `$_SERVER` automagically, and optionally to `getenv()`.",
             "keywords": [
                 "dotenv",
                 "env",
@@ -2641,7 +2641,7 @@
             ],
             "support": {
                 "issues": "https://github.com/vlucas/phpdotenv/issues",
-                "source": "https://github.com/vlucas/phpdotenv/tree/v5.6.4"
+                "source": "https://github.com/vlucas/phpdotenv/tree/v5.7.0"
             },
             "funding": [
                 {
@@ -2653,7 +2653,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-06T19:11:50+00:00"
+            "time": "2026-08-24T18:07:49+00:00"
         }
     ],
     "packages-dev": [
@@ -3119,16 +3119,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.95.22",
+            "version": "v3.95.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "482722e0783c16325a07a998a0d9eda560f9be99"
+                "reference": "b2932a5af3157a0c28324b1efe5e3b556dee09c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/482722e0783c16325a07a998a0d9eda560f9be99",
-                "reference": "482722e0783c16325a07a998a0d9eda560f9be99",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/b2932a5af3157a0c28324b1efe5e3b556dee09c4",
+                "reference": "b2932a5af3157a0c28324b1efe5e3b556dee09c4",
                 "shasum": ""
             },
             "require": {
@@ -3211,7 +3211,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.22"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.23"
             },
             "funding": [
                 {
@@ -3219,7 +3219,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-24T10:37:43+00:00"
+            "time": "2026-08-26T19:54:54+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -3553,12 +3553,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/phalcon.git",
-                "reference": "58fa581a1525870874d615847e4daa4bef7ecf56"
+                "reference": "8f071f994504711d3a4075dc8fae976f2ac9a34a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/phalcon/zipball/58fa581a1525870874d615847e4daa4bef7ecf56",
-                "reference": "58fa581a1525870874d615847e4daa4bef7ecf56",
+                "url": "https://api.github.com/repos/phalcon/phalcon/zipball/8f071f994504711d3a4075dc8fae976f2ac9a34a",
+                "reference": "8f071f994504711d3a4075dc8fae976f2ac9a34a",
                 "shasum": ""
             },
             "require": {
@@ -3630,7 +3630,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-08-24T13:19:28+00:00"
+            "time": "2026-08-29T00:14:27+00:00"
         },
         {
             "name": "phalcon/phql",
@@ -3638,12 +3638,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/phql.git",
-                "reference": "38775d10a250e8959e3d1626978fbe2dc6053da0"
+                "reference": "4a2c8c2453cb22b69b3ad1291512aaa5665d1b06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/phql/zipball/38775d10a250e8959e3d1626978fbe2dc6053da0",
-                "reference": "38775d10a250e8959e3d1626978fbe2dc6053da0",
+                "url": "https://api.github.com/repos/phalcon/phql/zipball/4a2c8c2453cb22b69b3ad1291512aaa5665d1b06",
+                "reference": "4a2c8c2453cb22b69b3ad1291512aaa5665d1b06",
                 "shasum": ""
             },
             "require": {
@@ -3707,20 +3707,20 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-08-23T02:51:57+00:00"
+            "time": "2026-08-27T18:03:00+00:00"
         },
         {
             "name": "phalcon/talon",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/talon.git",
-                "reference": "21d9bfa6b334fe137a041967ea9e7bc18dbdc575"
+                "reference": "02e017c369e454bf04979d4ea0a06c1eb715e0c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/talon/zipball/21d9bfa6b334fe137a041967ea9e7bc18dbdc575",
-                "reference": "21d9bfa6b334fe137a041967ea9e7bc18dbdc575",
+                "url": "https://api.github.com/repos/phalcon/talon/zipball/02e017c369e454bf04979d4ea0a06c1eb715e0c5",
+                "reference": "02e017c369e454bf04979d4ea0a06c1eb715e0c5",
                 "shasum": ""
             },
             "require": {
@@ -3737,7 +3737,7 @@
                 "friendsofphp/php-cs-fixer": "^3",
                 "pds/composer-script-names": "^1",
                 "pds/skeleton": "^1",
-                "phalcon/phalcon": "^6.0@alpha || ^6.0 || ^6.0 || ^6.0",
+                "phalcon/phalcon": "^6.0@beta || ^6.0",
                 "phpstan/phpstan": "^2",
                 "phpunit/phpcov": "^9",
                 "phpunit/phpunit": "^10.5",
@@ -3773,7 +3773,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phalcon/talon/issues",
-                "source": "https://github.com/phalcon/talon/tree/v1.0.2"
+                "source": "https://github.com/phalcon/talon/tree/v1.0.3"
             },
             "funding": [
                 {
@@ -3785,7 +3785,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-08-09T00:57:08+00:00"
+            "time": "2026-08-28T14:58:27+00:00"
         },
         {
             "name": "phalcon/traits",
@@ -3875,12 +3875,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/volt.git",
-                "reference": "50438db285804a0dc40702ef13d9404d25f95a5e"
+                "reference": "1c0bb97defb0e3612cfd0afa9dcf471a33bdf69d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/volt/zipball/50438db285804a0dc40702ef13d9404d25f95a5e",
-                "reference": "50438db285804a0dc40702ef13d9404d25f95a5e",
+                "url": "https://api.github.com/repos/phalcon/volt/zipball/1c0bb97defb0e3612cfd0afa9dcf471a33bdf69d",
+                "reference": "1c0bb97defb0e3612cfd0afa9dcf471a33bdf69d",
                 "shasum": ""
             },
             "require": {
@@ -3952,7 +3952,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-08-12T13:30:58+00:00"
+            "time": "2026-08-27T17:56:49+00:00"
         },
         {
             "name": "phar-io/manifest",
