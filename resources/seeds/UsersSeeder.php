@@ -12,48 +12,48 @@ final class UsersSeeder extends AbstractSeed
     {
         $data = [
             [
-                'id' => 1,
-                'name' => 'Sarah Connor',
-                'email' => 'sarah.connor@skynet.dev',
-                'password' => '$2y$08$L3Vqdk9ydm9PZktqMWRQO.bjO.rV4a7GJACZKEeCskzxWbT570Z2a', // password1
+                'id'                 => 1,
+                'name'               => 'Sarah Connor',
+                'email'              => 'sarah.connor@skynet.dev',
+                'password'           => '$2y$08$L3Vqdk9ydm9PZktqMWRQO.bjO.rV4a7GJACZKEeCskzxWbT570Z2a', // password1
                 'mustChangePassword' => 'N',
-                'profilesId' => 1,
-                'banned' => 'N',
-                'suspended' => 'N',
-                'active' => 'Y',
+                'profilesId'         => 1,
+                'banned'             => 'N',
+                'suspended'          => 'N',
+                'active'             => 'Y',
             ],
             [
-                'id' => 2,
-                'name' => 'John Connor',
-                'email' => 'john.connor@skynet.dev',
-                'password' => '$2y$08$YU16R3VJV2tVQ3ZhYkdPROaeb9Pvem5jvCPsb95/aB8B6T12wB6Qy', // password2
+                'id'                 => 2,
+                'name'               => 'John Connor',
+                'email'              => 'john.connor@skynet.dev',
+                'password'           => '$2y$08$YU16R3VJV2tVQ3ZhYkdPROaeb9Pvem5jvCPsb95/aB8B6T12wB6Qy', // password2
                 'mustChangePassword' => 'N',
-                'profilesId' => 1,
-                'banned' => 'N',
-                'suspended' => 'N',
-                'active' => 'Y',
+                'profilesId'         => 1,
+                'banned'             => 'N',
+                'suspended'          => 'N',
+                'active'             => 'Y',
             ],
             [
-                'id' => 3,
-                'name' => 'Miles Dyson',
-                'email' => 'miles.dyson@cyberdyne.dev',
-                'password' => '$2y$08$VHR0Q2FyMDIzUkdpQllrQeSXJUl.H91aLDm/tclX2VGvpqxpFog52', // password3
+                'id'                 => 3,
+                'name'               => 'Miles Dyson',
+                'email'              => 'miles.dyson@cyberdyne.dev',
+                'password'           => '$2y$08$VHR0Q2FyMDIzUkdpQllrQeSXJUl.H91aLDm/tclX2VGvpqxpFog52', // password3
                 'mustChangePassword' => 'N',
-                'profilesId' => 1,
-                'banned' => 'N',
-                'suspended' => 'N',
-                'active' => 'Y',
+                'profilesId'         => 1,
+                'banned'             => 'N',
+                'suspended'          => 'N',
+                'active'             => 'Y',
             ],
             [
-                'id' => 4,
-                'name' => 'Tarissa Dyson',
-                'email' => 'tarissa.dyson@cyberdyne.dev',
-                'password' => '$2y$08$Ykw4b0ZNU3VYZUxWRlpEZ.2f0p3OPhjIEVJbh6CGHlYm8XtIeLRqy', // password4
+                'id'                 => 4,
+                'name'               => 'Tarissa Dyson',
+                'email'              => 'tarissa.dyson@cyberdyne.dev',
+                'password'           => '$2y$08$Ykw4b0ZNU3VYZUxWRlpEZ.2f0p3OPhjIEVJbh6CGHlYm8XtIeLRqy', // password4
                 'mustChangePassword' => 'N',
-                'profilesId' => 2,
-                'banned' => 'N',
-                'suspended' => 'N',
-                'active' => 'Y',
+                'profilesId'         => 2,
+                'banned'             => 'N',
+                'suspended'          => 'N',
+                'active'             => 'Y',
             ],
         ];
 

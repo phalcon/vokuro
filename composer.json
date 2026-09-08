@@ -24,6 +24,7 @@
         "pds/skeleton": "^1.0",
         "phalcon/phalcon": "^6.0@dev",
         "phalcon/phql": "1.0.x-dev",
+        "phalcon/code-quality": "^1.0",
         "phalcon/talon": "^1.0.0",
         "phalcon/volt": "1.0.x-dev",
         "phpstan/phpstan": "^2.2",
@@ -43,7 +44,9 @@
     },
     "config": {
         "sort-packages": true,
-        "allow-plugins": {}
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "scripts": {
         "analyze": "phpstan analyse -c resources/phpstan.neon --memory-limit 1024M",
