@@ -23,7 +23,9 @@ use Vokuro\Providers\SecurityProvider;
 final class LoginFormTest extends AbstractUnitTestCase
 {
     private const CSRF_KEY = 'csrf';
+
     private const EMAIL_KEY = 'email';
+
     private const PASS_KEY = 'password';
 
     protected function setUp(): void
@@ -36,11 +38,11 @@ final class LoginFormTest extends AbstractUnitTestCase
 
     public static function dataProvider(): array
     {
-        $emptyData = [];
+        $emptyData         = [];
         $incorrectCsrfData = [
             self::EMAIL_KEY => 'sarah.connor@skynet.dev',
-            self::PASS_KEY => 'password1',
-            self::CSRF_KEY => 'invalid',
+            self::PASS_KEY  => 'password1',
+            self::CSRF_KEY  => 'invalid',
         ];
 
         return [

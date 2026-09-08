@@ -22,14 +22,8 @@ use Phalcon\Mvc\View\Engine\Volt;
 
 class ViewProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'view';
 
-    /**
-     * @param DiInterface $di
-     */
     public function register(DiInterface $di): void
     {
         /** @var Config $config */

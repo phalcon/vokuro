@@ -12,7 +12,7 @@ use Phalcon\Di\DiInterface;
  *
  * @param string ...$args Service name to resolve; none returns the container.
  *
- * @return mixed|DiInterface|null
+ * @return DiInterface|mixed|null
  */
 function container(string ...$args): mixed
 {
@@ -31,11 +31,6 @@ function container(string ...$args): mixed
  * Dotenv variants populate getenv() and/or $_ENV depending on which adapter is
  * used, so both are checked: real OS/CI variables win, with the loaded .env file
  * as the fallback (mirrors the helper used in phalcon/cphalcon's test suite).
- *
- * @param string $key
- * @param mixed  $default
- *
- * @return mixed
  */
 function env(string $key, mixed $default = null): mixed
 {
@@ -49,10 +44,6 @@ function env(string $key, mixed $default = null): mixed
 
 /**
  * Get projects relative root path
- *
- * @param string $prefix
- *
- * @return string
  */
 function root_path(string $prefix = ''): string
 {

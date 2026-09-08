@@ -20,21 +20,13 @@ use Phalcon\Html\Escaper;
 
 class FlashProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'flash';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         $di->set($this->providerName, function () {
             $escaper = new Escaper();
-            $flash = new Flash($escaper);
+            $flash   = new Flash($escaper);
             $flash->setImplicitFlush(false);
             $flash->setCssClasses([
                 'error'   => 'flash flash-error',

@@ -40,6 +40,7 @@ class Users extends Model
      * @var string
      */
     public $email;
+
     /**
      * @var integer
      */

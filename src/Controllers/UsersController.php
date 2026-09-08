@@ -96,8 +96,6 @@ class UsersController extends ControllerBase
 
     /**
      * Deletes a User
-     *
-     * @param string $id
      */
     public function deleteAction(string $id): void
     {
@@ -123,8 +121,6 @@ class UsersController extends ControllerBase
 
     /**
      * Saves the user from the 'edit' action
-     *
-     * @param string $id
      */
     public function editAction(string $id): void
     {
@@ -186,6 +182,7 @@ class UsersController extends ControllerBase
 
         $this->view->setVar('page', $paginator->paginate());
     }
+
     public function initialize(): void
     {
         $this->view->setTemplateBefore('private');
@@ -207,8 +204,8 @@ class UsersController extends ControllerBase
 
         $paginator = new Paginator([
             'builder'  => $builder->createBuilder(),
-            'limit' => 10,
-            'page'  => $this->request->getQuery('page', 'int', 1),
+            'limit'    => 10,
+            'page'     => $this->request->getQuery('page', 'int', 1),
         ]);
 
         $this->view->setVar('page', $paginator->paginate());

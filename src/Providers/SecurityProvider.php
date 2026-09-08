@@ -19,16 +19,8 @@ use Phalcon\Encryption\Security;
 
 class SecurityProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'security';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         $di->set($this->providerName, function () use ($di) {

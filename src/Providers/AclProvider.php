@@ -20,16 +20,8 @@ use Vokuro\Plugins\Acl\Acl;
 
 class AclProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'acl';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         /** @var Application $application */

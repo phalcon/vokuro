@@ -23,16 +23,8 @@ use Vokuro\Application;
  */
 class ConfigProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'config';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         /** @var Application $application */

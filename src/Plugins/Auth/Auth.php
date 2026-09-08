@@ -29,8 +29,6 @@ class Auth extends Injectable
     /**
      * Auths the user by his/her id
      *
-     * @param int $id
-     *
      * @throws Exception
      */
     public function authUserById(int $id): void
@@ -48,6 +46,7 @@ class Auth extends Injectable
             'profile' => $user->profile->name,
         ]);
     }
+
     /**
      * Checks the user credentials
      *
@@ -91,8 +90,6 @@ class Auth extends Injectable
     /**
      * Checks if the user is banned/inactive/suspended
      *
-     * @param Users $user
-     *
      * @throws Exception
      */
     public function checkUserFlags(Users $user): void
@@ -113,8 +110,6 @@ class Auth extends Injectable
     /**
      * Creates the remember me environment settings the related cookies and
      * generating tokens
-     *
-     * @param Users $user
      */
     public function createRememberEnvironment(Users $user): void
     {
@@ -136,8 +131,6 @@ class Auth extends Injectable
 
     /**
      * Delete the current user token in session
-     *
-     * @param int $userId
      */
     public function deleteToken(int $userId): void
     {
@@ -277,8 +270,6 @@ class Auth extends Injectable
     /**
      * Implements login throttling
      * Reduces the effectiveness of brute force attacks
-     *
-     * @param int $userId
      */
     public function registerUserThrottling(int $userId): void
     {
@@ -338,8 +329,6 @@ class Auth extends Injectable
     /**
      * Creates the remember me environment settings the related cookies and
      * generating tokens
-     *
-     * @param Users $user
      *
      * @throws Exception
      */

@@ -54,7 +54,7 @@ class UserControlController extends ControllerBase
         /**
          * Activate user
          */
-        $user = Users::findFirst($confirmation->user->id);
+        $user         = Users::findFirst($confirmation->user->id);
         $user->active = 'Y';
         if (!$user->save()) {
             foreach ($user->getMessages() as $message) {
@@ -108,6 +108,7 @@ class UserControlController extends ControllerBase
             'action'     => 'index',
         ]);
     }
+
     public function initialize(): void
     {
         if ($this->session->has('auth-identity')) {
@@ -119,7 +120,7 @@ class UserControlController extends ControllerBase
     {
         $code = $this->dispatcher->getParam('code');
 
-        /** @var ResetPasswords|false $resetPassword */
+        /** @var false|ResetPasswords $resetPassword */
         $resetPassword = ResetPasswords::findFirstByCode($code);
         if (!$resetPassword instanceof ResetPasswords) {
             $this->dispatcher->forward([

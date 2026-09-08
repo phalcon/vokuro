@@ -35,16 +35,10 @@ class DbProvider implements ServiceProviderInterface
         'pgsql'  => Pdo\Postgresql::class,
         'sqlite' => Pdo\Sqlite::class,
     ];
-    /**
-     * @var string
-     */
+
     protected string $providerName = 'db';
 
-
     /**
-     * @param DiInterface $di
-     *
-     * @return void
      * @throws Exception
      */
     public function register(DiInterface $di): void
@@ -67,8 +61,6 @@ class DbProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param Config $config
-     *
      * @return array<string, mixed>
      */
     private function createConfig(Config $config): array
@@ -98,9 +90,6 @@ class DbProvider implements ServiceProviderInterface
     /**
      * Get an adapter class by name.
      *
-     * @param Config $config
-     *
-     * @return string
      * @throws Exception
      */
     private function getClass(Config $config): string

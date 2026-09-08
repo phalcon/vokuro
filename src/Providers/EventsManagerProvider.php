@@ -19,16 +19,8 @@ use Phalcon\Events\Manager as EventsManager;
 
 class EventsManagerProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'eventsManager';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         $di->setShared($this->providerName, function () {

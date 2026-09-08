@@ -19,16 +19,8 @@ use Phalcon\Mvc\Model\MetaData\Stream as MetaDataAdapter;
 
 class ModelsMetadataProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'modelsMetadata';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         /** @var string $cacheDir */

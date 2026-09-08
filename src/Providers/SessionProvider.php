@@ -20,16 +20,8 @@ use Phalcon\Session\Manager as SessionManager;
 
 class SessionProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'session';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         /** @var string $savePath */

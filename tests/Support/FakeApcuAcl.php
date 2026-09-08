@@ -25,8 +25,6 @@ final class FakeApcuAcl extends Acl
 {
     /**
      * Value the faked APCu fetch returns (false simulates a cache miss).
-     *
-     * @var mixed
      */
     public static mixed $fetched = false;
 
@@ -49,8 +47,6 @@ final class FakeApcuAcl extends Acl
      * while the phalcon/traits package types them.
      *
      * @param array<string>|string $key
-     *
-     * @return mixed
      */
     protected static function phpApcuFetch($key): mixed
     {
@@ -62,11 +58,10 @@ final class FakeApcuAcl extends Acl
      *
      * @param array<array-key, mixed>|string $key
      * @param mixed                          $payload
-     * @param int                            $ttl
      *
      * @return array<array-key, mixed>|bool
      */
-    protected static function phpApcuStore($key, $payload, int $ttl = 0): bool | array
+    protected static function phpApcuStore($key, $payload, int $ttl = 0): array | bool
     {
         self::$stored[(string) $key] = $payload;
 

@@ -31,7 +31,7 @@ class ProfilesController extends ControllerBase
     {
         if ($this->request->isPost()) {
             $profile = new Profiles([
-                'name' => $this->request->getPost('name', 'striptags'),
+                'name'   => $this->request->getPost('name', 'striptags'),
                 'active' => $this->request->getPost('active'),
             ]);
 
@@ -49,8 +49,6 @@ class ProfilesController extends ControllerBase
 
     /**
      * Deletes a Profile
-     *
-     * @param string $id
      */
     public function deleteAction(string $id): void
     {
@@ -76,8 +74,6 @@ class ProfilesController extends ControllerBase
 
     /**
      * Edits an existing Profile
-     *
-     * @param string $id
      */
     public function editAction(string $id): void
     {
@@ -126,6 +122,7 @@ class ProfilesController extends ControllerBase
 
         $this->view->setVar('page', $paginator->paginate());
     }
+
     /**
      * Default action. Set the private (authenticated) layout
      * (layouts/private.volt)
@@ -161,7 +158,7 @@ class ProfilesController extends ControllerBase
 
         $paginator = new Paginator(
             [
-                'model'     => Profiles::class,
+                'model'      => Profiles::class,
                 'parameters' => $parameters,
                 'limit'      => 10,
                 'page'       => $this->request->getQuery('page', 'int', 1),

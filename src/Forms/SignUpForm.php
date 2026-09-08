@@ -28,7 +28,7 @@ use Phalcon\Forms\Form;
 class SignUpForm extends Form
 {
     /**
-     * @param null $entity
+     * @param null                 $entity
      * @param array<string, mixed> $options
      */
     public function initialize($entity = null, array $options = []): void
@@ -119,10 +119,6 @@ class SignUpForm extends Form
 
     /**
      * Prints messages for a specific element
-     *
-     * @param string $name
-     *
-     * @return string
      */
     public function messages(string $name): string
     {

@@ -19,16 +19,8 @@ use Phalcon\Session\Bag;
 
 class SessionBagProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'sessionBag';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         $di->set($this->providerName, function () use ($di) {

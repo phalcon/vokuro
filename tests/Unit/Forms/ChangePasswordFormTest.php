@@ -21,36 +21,37 @@ use Vokuro\Forms\ChangePasswordForm;
 final class ChangePasswordFormTest extends AbstractUnitTestCase
 {
     private const CONFIRM_PASS_KEY = 'confirmPassword';
+
     private const PASS_KEY = 'password';
 
     public static function dataProvider(): array
     {
-        $emptyData = [];
+        $emptyData         = [];
         $emptyPasswordData = [
-            self::PASS_KEY => '',
+            self::PASS_KEY         => '',
             self::CONFIRM_PASS_KEY => '',
         ];
         $shortPasswordData = [
-            self::PASS_KEY => '123',
+            self::PASS_KEY         => '123',
             self::CONFIRM_PASS_KEY => '123',
         ];
         $emptyConfirmPasswordData = [
             self::PASS_KEY => 'valid password empty config',
         ];
         $missMatchConfigPasswordData = [
-            self::PASS_KEY => '123456780',
+            self::PASS_KEY         => '123456780',
             self::CONFIRM_PASS_KEY => '123456789',
         ];
         $correctData1 = [
-            self::PASS_KEY => '12345678',
+            self::PASS_KEY         => '12345678',
             self::CONFIRM_PASS_KEY => '12345678',
         ];
         $correctData2 = [
-            self::PASS_KEY => 'valid password',
+            self::PASS_KEY         => 'valid password',
             self::CONFIRM_PASS_KEY => 'valid password',
         ];
         $correctData3 = [
-            self::PASS_KEY => '(*%^%$#@#$%^',
+            self::PASS_KEY         => '(*%^%$#@#$%^',
             self::CONFIRM_PASS_KEY => '(*%^%$#@#$%^',
         ];
 

@@ -19,14 +19,8 @@ use Phalcon\Mvc\Url as UrlResolver;
 
 class UrlProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'url';
 
-    /**
-     * @param DiInterface $di
-     */
     public function register(DiInterface $di): void
     {
         /** @var string $baseUri */

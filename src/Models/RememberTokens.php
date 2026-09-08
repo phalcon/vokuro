@@ -25,6 +25,7 @@ class RememberTokens extends Model
      * @var integer
      */
     public $createdAt;
+
     /**
      * @var integer
      */

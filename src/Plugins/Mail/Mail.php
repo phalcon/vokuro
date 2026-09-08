@@ -30,12 +30,6 @@ class Mail extends Injectable
      * in, nothing is read from the container.
      *
      * @param array<string, string> $to associative array of address => name
-     * @param string                $subject
-     * @param string                $html
-     * @param string                $fromEmail
-     * @param string                $fromName
-     *
-     * @return Email
      */
     public function buildMessage(
         array $to,
@@ -59,10 +53,7 @@ class Mail extends Injectable
     /**
      * Applies a template to be used in the e-mail
      *
-     * @param string               $name
      * @param array<string, mixed> $params
-     *
-     * @return string
      */
     public function getTemplate(string $name, array $params): string
     {
@@ -79,8 +70,6 @@ class Mail extends Injectable
      * Sends e-mails based on predefined templates
      *
      * @param array<string, string> $to
-     * @param string                $subject
-     * @param string                $name
      * @param array<string, mixed>  $params
      *
      * @return int Number of recipients the message was addressed to

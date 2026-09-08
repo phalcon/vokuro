@@ -48,6 +48,7 @@ class SessionController extends ControllerBase
     {
         return $this->response->redirect('session/login');
     }
+
     /**
      * Default action. Set the public layout (layouts/public.volt)
      */

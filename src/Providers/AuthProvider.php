@@ -19,16 +19,8 @@ use Vokuro\Plugins\Auth\Auth;
 
 class AuthProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'auth';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         $di->setShared($this->providerName, Auth::class);

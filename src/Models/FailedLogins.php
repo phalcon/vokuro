@@ -25,6 +25,7 @@ class FailedLogins extends Model
      * @var integer
      */
     public $attempted;
+
     /**
      * @var integer
      */

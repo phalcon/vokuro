@@ -22,30 +22,26 @@ use Phalcon\Mvc\Model;
 class PasswordChanges extends Model
 {
     /**
-     *
      * @var integer
      */
     public $createdAt;
+
     /**
-     *
      * @var integer
      */
     public $id;
 
     /**
-     *
      * @var string
      */
     public $ipAddress;
 
     /**
-     *
      * @var string
      */
     public $userAgent;
 
     /**
-     *
      * @var integer
      */
     public $usersId;

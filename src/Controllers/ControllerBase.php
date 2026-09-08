@@ -34,10 +34,6 @@ class ControllerBase extends Controller
      * Execute before the router so we can determine if this is a private
      * controller, and must be authenticated, or a public controller that is
      * open to all.
-     *
-     * @param Dispatcher $dispatcher
-     *
-     * @return bool
      */
     public function beforeExecuteRoute(Dispatcher $dispatcher): bool
     {
@@ -85,10 +81,7 @@ class ControllerBase extends Controller
      * Flashes a message of the given type and forwards to another action.
      *
      * @param string               $type    One of error, notice, success, warning.
-     * @param string               $message
      * @param array<string, mixed> $forward Forward target (controller, action, params).
-     *
-     * @return void
      */
     protected function flashForward(string $type, string $message, array $forward): void
     {

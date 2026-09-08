@@ -22,16 +22,8 @@ use Vokuro\Exception;
 
 class RouterProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'router';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         /** @var Application $application */

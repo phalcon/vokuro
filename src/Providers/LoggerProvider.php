@@ -31,16 +31,8 @@ use Phalcon\Logger\Logger;
  */
 class LoggerProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'logger';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         /** @var Config $loggerConfigs */

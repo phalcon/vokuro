@@ -57,8 +57,6 @@ class Acl extends Injectable
 
     /**
      * The file path of the ACL cache file.
-     *
-     * @var string
      */
     private string $filePath;
 
@@ -131,10 +129,6 @@ class Acl extends Injectable
 
     /**
      * Returns the action description according to its simplified name
-     *
-     * @param string $action
-     *
-     * @return string
      */
     public function getActionDescription(string $action): string
     {
@@ -143,8 +137,6 @@ class Acl extends Injectable
 
     /**
      * Returns the permissions assigned to a profile
-     *
-     * @param Profiles $profile
      *
      * @return array<string, bool>
      */
@@ -197,8 +189,6 @@ class Acl extends Injectable
 
     /**
      * Rebuilds the access list into a file
-     *
-     * @return AclMemory
      */
     public function rebuild(): AclMemory
     {
@@ -244,7 +234,6 @@ class Acl extends Injectable
 
         return $acl;
     }
-
 
     /**
      * Set the acl cache file path

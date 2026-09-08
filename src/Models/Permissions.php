@@ -26,6 +26,7 @@ class Permissions extends Model
      * @var string
      */
     public $action;
+
     /**
      * @var integer
      */

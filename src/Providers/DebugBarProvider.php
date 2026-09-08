@@ -21,11 +21,6 @@ use Vokuro\Application;
 
 class DebugBarProvider implements ServiceProviderInterface
 {
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         /** @var Application $bootstrap */

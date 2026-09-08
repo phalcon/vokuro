@@ -19,16 +19,8 @@ use Phalcon\Encryption\Crypt;
 
 class CryptProvider implements ServiceProviderInterface
 {
-    /**
-     * @var string
-     */
     protected string $providerName = 'crypt';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         /** @var string $cryptSalt */

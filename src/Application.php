@@ -26,32 +26,22 @@ class Application
 {
     public const APPLICATION_PROVIDER = 'bootstrap';
 
-    /**
-     * @var MvcApplication
-     */
     protected MvcApplication $app;
 
-    /**
-     * @var DiInterface
-     */
     protected DiInterface $di;
 
     /**
      * Project root path
-     *
-     * @var string
      */
     protected string $rootPath;
 
     /**
-     * @param string $rootPath
-     *
      * @throws Exception
      */
     public function __construct(string $rootPath)
     {
-        $this->di = new FactoryDefault();
-        $this->app = $this->createApplication();
+        $this->di       = new FactoryDefault();
+        $this->app      = $this->createApplication();
         $this->rootPath = $rootPath;
 
         $this->di->setShared(self::APPLICATION_PROVIDER, $this);
@@ -59,9 +49,6 @@ class Application
         $this->initializeProviders();
     }
 
-    /**
-     * @return MvcApplication
-     */
     public function getApplication(): MvcApplication
     {
         return $this->app;
@@ -69,8 +56,6 @@ class Application
 
     /**
      * Get Project root path
-     *
-     * @return string
      */
     public function getRootPath(): string
     {
@@ -80,14 +65,13 @@ class Application
     /**
      * Run Vökuró Application
      *
-     * @return string
      * @throws Exception
      */
     public function run(): string
     {
-        $baseUri = $this->di->getShared('url')->getBaseUri();
+        $baseUri  = $this->di->getShared('url')->getBaseUri();
         $position = strpos($_SERVER['REQUEST_URI'], $baseUri) + strlen($baseUri);
-        $uri = '/' . substr($_SERVER['REQUEST_URI'], $position);
+        $uri      = '/' . substr($_SERVER['REQUEST_URI'], $position);
 
         /** @var ResponseInterface $response */
         $response = $this->app->handle($uri);
@@ -95,9 +79,6 @@ class Application
         return $response->getContent();
     }
 
-    /**
-     * @return MvcApplication
-     */
     protected function createApplication(): MvcApplication
     {
         return new MvcApplication($this->di);

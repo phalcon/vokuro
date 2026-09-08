@@ -22,16 +22,9 @@ use Phalcon\Html\TagFactory;
 class AssetsProvider implements ServiceProviderInterface
 {
     protected const VERSION = "1.0.4";
-    /**
-     * @var string
-     */
+
     protected string $providerName = 'assets';
 
-    /**
-     * @param DiInterface $di
-     *
-     * @return void
-     */
     public function register(DiInterface $di): void
     {
         $di->setShared($this->providerName, function () {

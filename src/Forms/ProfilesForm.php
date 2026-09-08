@@ -22,7 +22,7 @@ use Phalcon\Forms\Form;
 class ProfilesForm extends Form
 {
     /**
-     * @param null $entity
+     * @param null                 $entity
      * @param array<string, mixed> $options
      */
     public function initialize($entity = null, array $options = []): void

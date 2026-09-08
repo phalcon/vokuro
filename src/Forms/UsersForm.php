@@ -24,7 +24,7 @@ use Vokuro\Models\Profiles;
 class UsersForm extends Form
 {
     /**
-     * @param null $entity
+     * @param null                 $entity
      * @param array<string, mixed> $options
      */
     public function initialize($entity = null, array $options = []): void

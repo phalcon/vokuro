@@ -22,11 +22,11 @@ final class ApplicationTest extends AbstractUnitTestCase
     public function testConstructAndGetRootPath(): void
     {
         $rootPath = 'test/path';
-        $class = $this->mockWithConstructor(
+        $class    = $this->mockWithConstructor(
             Application::class,
             [$rootPath],
             [
-                'createApplication' => null,
+                'createApplication'   => null,
                 'initializeProviders' => null,
             ]
         );
