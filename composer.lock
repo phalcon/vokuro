@@ -3868,16 +3868,16 @@
         },
         {
             "name": "phalcon/talon",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/talon.git",
-                "reference": "02e017c369e454bf04979d4ea0a06c1eb715e0c5"
+                "reference": "714766c29770c4f50719765d7f2076e4be1f95c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/talon/zipball/02e017c369e454bf04979d4ea0a06c1eb715e0c5",
-                "reference": "02e017c369e454bf04979d4ea0a06c1eb715e0c5",
+                "url": "https://api.github.com/repos/phalcon/talon/zipball/714766c29770c4f50719765d7f2076e4be1f95c7",
+                "reference": "714766c29770c4f50719765d7f2076e4be1f95c7",
                 "shasum": ""
             },
             "require": {
@@ -3894,6 +3894,7 @@
                 "friendsofphp/php-cs-fixer": "^3",
                 "pds/composer-script-names": "^1",
                 "pds/skeleton": "^1",
+                "phalcon/code-quality": "^1.0",
                 "phalcon/phalcon": "^6.0@beta || ^6.0",
                 "phpstan/phpstan": "^2",
                 "phpunit/phpcov": "^9",
@@ -3930,7 +3931,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phalcon/talon/issues",
-                "source": "https://github.com/phalcon/talon/tree/v1.0.3"
+                "source": "https://github.com/phalcon/talon/tree/v1.0.4"
             },
             "funding": [
                 {
@@ -3942,7 +3943,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-08-28T14:58:27+00:00"
+            "time": "2026-09-09T02:58:32+00:00"
         },
         {
             "name": "phalcon/traits",

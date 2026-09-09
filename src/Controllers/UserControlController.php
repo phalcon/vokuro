@@ -53,6 +53,8 @@ class UserControlController extends ControllerBase
 
         /**
          * Activate user
+         *
+         * @var Users $user
          */
         $user         = Users::findFirst($confirmation->user->id);
         $user->active = 'Y';
