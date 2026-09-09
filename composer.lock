@@ -3645,16 +3645,16 @@
         },
         {
             "name": "phalcon/code-quality",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/code-quality.git",
-                "reference": "28852044c71b7c32f997f5b9d9b66506606ff590"
+                "reference": "07316915d0e76574ed26908de7c1aaa636fa6d60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/code-quality/zipball/28852044c71b7c32f997f5b9d9b66506606ff590",
-                "reference": "28852044c71b7c32f997f5b9d9b66506606ff590",
+                "url": "https://api.github.com/repos/phalcon/code-quality/zipball/07316915d0e76574ed26908de7c1aaa636fa6d60",
+                "reference": "07316915d0e76574ed26908de7c1aaa636fa6d60",
                 "shasum": ""
             },
             "require": {
@@ -3688,7 +3688,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phalcon/code-quality/issues",
-                "source": "https://github.com/phalcon/code-quality/tree/1.0.0"
+                "source": "https://github.com/phalcon/code-quality/tree/1.0.1"
             },
             "funding": [
                 {
@@ -3700,7 +3700,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-09-08T20:19:13+00:00"
+            "time": "2026-09-09T01:45:02+00:00"
         },
         {
             "name": "phalcon/phalcon",
@@ -3708,12 +3708,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/phalcon.git",
-                "reference": "521871a976f94a8fc4aa287957a88c4c20f674b8"
+                "reference": "68bd55646b7533c3b1a4f5f46f3adf8bb0db604d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/phalcon/zipball/521871a976f94a8fc4aa287957a88c4c20f674b8",
-                "reference": "521871a976f94a8fc4aa287957a88c4c20f674b8",
+                "url": "https://api.github.com/repos/phalcon/phalcon/zipball/68bd55646b7533c3b1a4f5f46f3adf8bb0db604d",
+                "reference": "68bd55646b7533c3b1a4f5f46f3adf8bb0db604d",
                 "shasum": ""
             },
             "require": {
@@ -3786,7 +3786,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-09-08T21:36:41+00:00"
+            "time": "2026-09-09T01:19:21+00:00"
         },
         {
             "name": "phalcon/phql",
@@ -3794,12 +3794,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/phql.git",
-                "reference": "4a2c8c2453cb22b69b3ad1291512aaa5665d1b06"
+                "reference": "41ce4994a02ae0b9af944935fda49de56f4a5cdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/phql/zipball/4a2c8c2453cb22b69b3ad1291512aaa5665d1b06",
-                "reference": "4a2c8c2453cb22b69b3ad1291512aaa5665d1b06",
+                "url": "https://api.github.com/repos/phalcon/phql/zipball/41ce4994a02ae0b9af944935fda49de56f4a5cdd",
+                "reference": "41ce4994a02ae0b9af944935fda49de56f4a5cdd",
                 "shasum": ""
             },
             "require": {
@@ -3810,6 +3810,7 @@
                 "friendsofphp/php-cs-fixer": "^3.95",
                 "pds/composer-script-names": "^1.0",
                 "pds/skeleton": "^1.0",
+                "phalcon/code-quality": "^1.0",
                 "phalcon/talon": "^1.0.0",
                 "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^10.5",
@@ -3863,7 +3864,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-08-27T18:03:00+00:00"
+            "time": "2026-09-09T02:18:46+00:00"
         },
         {
             "name": "phalcon/talon",
@@ -4030,12 +4031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/volt.git",
-                "reference": "ccd55a67e5a3a79b12657c43e1c03630a23b528b"
+                "reference": "071c0fb2347bba1b91463e897c3481fbfc3d5b8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/volt/zipball/ccd55a67e5a3a79b12657c43e1c03630a23b528b",
-                "reference": "ccd55a67e5a3a79b12657c43e1c03630a23b528b",
+                "url": "https://api.github.com/repos/phalcon/volt/zipball/071c0fb2347bba1b91463e897c3481fbfc3d5b8c",
+                "reference": "071c0fb2347bba1b91463e897c3481fbfc3d5b8c",
                 "shasum": ""
             },
             "require": {
@@ -4046,6 +4047,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.95",
                 "pds/skeleton": "^1.0",
+                "phalcon/code-quality": "^1.0",
                 "phalcon/ide-stubs": "^5.8",
                 "phalcon/talon": "^1.0.0",
                 "phpstan/phpstan": "^2.0",
@@ -4107,7 +4109,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-09-02T10:14:26+00:00"
+            "time": "2026-09-09T02:07:08+00:00"
         },
         {
             "name": "phar-io/manifest",
