@@ -33,7 +33,6 @@ use Vokuro\Providers\ViewProvider;
 
 return [
     EventsManagerProvider::class,
-    DebugBarProvider::class,
     ConfigProvider::class,
     LoggerProvider::class,
     AclProvider::class,
@@ -51,4 +50,5 @@ return [
     UrlProvider::class,
     ViewProvider::class,
     AssetsProvider::class,
+    DebugBarProvider::class,
 ];

@@ -36,6 +36,10 @@ class DebugBarProvider implements ServiceProviderInterface
             $app,
             [
                 'collectors' => ['exceptions' => false],
+                'history'    => [
+                    'enabled' => true,
+                    'path'    => $bootstrap->getRootPath() . '/tests/_output/debugbar-history',
+                ],
             ]
         ))->boot();
     }

@@ -25,7 +25,7 @@
         "phalcon/phalcon": "^6.0@dev",
         "phalcon/phql": "1.0.x-dev",
         "phalcon/code-quality": "^1.0",
-        "phalcon/talon": "^1.0.0",
+        "phalcon/talon": "^1.0",
         "phalcon/volt": "1.0.x-dev",
         "phpstan/phpstan": "^2.2",
         "phpunit/phpunit": "^10.5",
