@@ -3760,12 +3760,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/phalcon.git",
-                "reference": "42ebdf6ae86973055e146875fbccfd0ca3803b18"
+                "reference": "305946d315d96309c29793d31b69626cd8778ca9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/phalcon/zipball/42ebdf6ae86973055e146875fbccfd0ca3803b18",
-                "reference": "42ebdf6ae86973055e146875fbccfd0ca3803b18",
+                "url": "https://api.github.com/repos/phalcon/phalcon/zipball/305946d315d96309c29793d31b69626cd8778ca9",
+                "reference": "305946d315d96309c29793d31b69626cd8778ca9",
                 "shasum": ""
             },
             "require": {
@@ -3813,7 +3813,11 @@
             "autoload": {
                 "psr-4": {
                     "Phalcon\\": "src/"
-                }
+                },
+                "exclude-from-classmap": [
+                    "tests/support/assets/",
+                    "tests/_output/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -3838,8 +3842,8 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-11-01T00:06:49+00:00",
-            "published-time": "2026-11-01T00:06:56+00:00"
+            "time": "2026-11-02T20:13:50+00:00",
+            "published-time": "2026-11-02T20:13:57+00:00"
         },
         {
             "name": "phalcon/phql",
@@ -4089,12 +4093,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/volt.git",
-                "reference": "4b6631fd4396fe6ff54a08716e00d7807396ab03"
+                "reference": "1e5a8d3d8cab8baf11ee14847e1e2382e1481139"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/volt/zipball/4b6631fd4396fe6ff54a08716e00d7807396ab03",
-                "reference": "4b6631fd4396fe6ff54a08716e00d7807396ab03",
+                "url": "https://api.github.com/repos/phalcon/volt/zipball/1e5a8d3d8cab8baf11ee14847e1e2382e1481139",
+                "reference": "1e5a8d3d8cab8baf11ee14847e1e2382e1481139",
                 "shasum": ""
             },
             "require": {
@@ -4118,9 +4122,6 @@
             "default-branch": true,
             "type": "library",
             "autoload": {
-                "files": [
-                    "resources/files/parser.php"
-                ],
                 "psr-4": {
                     "Phalcon\\Volt\\": "src/"
                 }
@@ -4167,8 +4168,8 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-10-31T03:19:22+00:00",
-            "published-time": "2026-10-31T03:19:32+00:00"
+            "time": "2026-11-01T17:18:52+00:00",
+            "published-time": "2026-11-01T17:18:58+00:00"
         },
         {
             "name": "phar-io/manifest",
