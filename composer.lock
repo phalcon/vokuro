@@ -3258,16 +3258,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.95.29",
+            "version": "v3.95.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "60e424d3e54b15b0174924fb123783aae0de7b0c"
+                "reference": "e85cafc4d861c122839d5409eda3325ac0ec0300"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/60e424d3e54b15b0174924fb123783aae0de7b0c",
-                "reference": "60e424d3e54b15b0174924fb123783aae0de7b0c",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/e85cafc4d861c122839d5409eda3325ac0ec0300",
+                "reference": "e85cafc4d861c122839d5409eda3325ac0ec0300",
                 "shasum": ""
             },
             "require": {
@@ -3350,7 +3350,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.29"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.30"
             },
             "funding": [
                 {
@@ -3358,8 +3358,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-06T16:25:42+00:00",
-            "published-time": "2026-11-06T16:25:52+00:00"
+            "time": "2026-11-09T14:32:19+00:00",
+            "published-time": "2026-11-09T14:32:30+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -3760,12 +3760,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/phalcon.git",
-                "reference": "b5f324a358d06474bb1fe9b62c3f1eb0038059a2"
+                "reference": "caab80ed8abac29fc5a092a5555f49988c46255b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/phalcon/zipball/b5f324a358d06474bb1fe9b62c3f1eb0038059a2",
-                "reference": "b5f324a358d06474bb1fe9b62c3f1eb0038059a2",
+                "url": "https://api.github.com/repos/phalcon/phalcon/zipball/caab80ed8abac29fc5a092a5555f49988c46255b",
+                "reference": "caab80ed8abac29fc5a092a5555f49988c46255b",
                 "shasum": ""
             },
             "require": {
@@ -3842,8 +3842,8 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-11-06T16:01:01+00:00",
-            "published-time": "2026-11-06T16:01:10+00:00"
+            "time": "2026-11-09T17:58:15+00:00",
+            "published-time": "2026-11-09T17:58:23+00:00"
         },
         {
             "name": "phalcon/phql",
@@ -3851,16 +3851,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/phql.git",
-                "reference": "fa5b6388842ab1703425c10014351bfd0f376346"
+                "reference": "ba914329d74a3b2b1da037bdbaa10774f6db6e53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/phql/zipball/fa5b6388842ab1703425c10014351bfd0f376346",
-                "reference": "fa5b6388842ab1703425c10014351bfd0f376346",
+                "url": "https://api.github.com/repos/phalcon/phql/zipball/ba914329d74a3b2b1da037bdbaa10774f6db6e53",
+                "reference": "ba914329d74a3b2b1da037bdbaa10774f6db6e53",
                 "shasum": ""
             },
             "require": {
-                "ext-mbstring": "*",
                 "php": ">=8.1 <9.0"
             },
             "require-dev": {
@@ -3879,9 +3878,6 @@
             "default-branch": true,
             "type": "library",
             "autoload": {
-                "files": [
-                    "resources/files/parser.php"
-                ],
                 "psr-4": {
                     "Phalcon\\Phql\\": "src/"
                 }
@@ -3921,8 +3917,8 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-10-31T03:30:07+00:00",
-            "published-time": "2026-10-31T03:30:15+00:00"
+            "time": "2026-11-08T11:30:56+00:00",
+            "published-time": "2026-11-08T11:31:02+00:00"
         },
         {
             "name": "phalcon/talon",
@@ -4093,12 +4089,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phalcon/volt.git",
-                "reference": "1e5a8d3d8cab8baf11ee14847e1e2382e1481139"
+                "reference": "94183830b6ec872a8fa4759a09b8caa187d7b248"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phalcon/volt/zipball/1e5a8d3d8cab8baf11ee14847e1e2382e1481139",
-                "reference": "1e5a8d3d8cab8baf11ee14847e1e2382e1481139",
+                "url": "https://api.github.com/repos/phalcon/volt/zipball/94183830b6ec872a8fa4759a09b8caa187d7b248",
+                "reference": "94183830b6ec872a8fa4759a09b8caa187d7b248",
                 "shasum": ""
             },
             "require": {
@@ -4168,8 +4164,8 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-11-01T17:18:52+00:00",
-            "published-time": "2026-11-01T17:18:58+00:00"
+            "time": "2026-11-08T11:31:14+00:00",
+            "published-time": "2026-11-08T11:31:19+00:00"
         },
         {
             "name": "phar-io/manifest",
