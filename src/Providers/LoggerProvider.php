@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Vokuro\Providers;
 
 use Phalcon\Config\Config;
-use Phalcon\DebugBar\Debug;
 use Phalcon\DebugBar\Logger\Adapter as DebugBarAdapter;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
@@ -56,7 +55,7 @@ class LoggerProvider implements ServiceProviderInterface
                     'vokuro',
                     [
                         'file'     => $fileAdapter,
-                        'debugbar' => new DebugBarAdapter(Debug::getBar()),
+                        'debugbar' => new DebugBarAdapter(),
                     ]
                 );
             }
